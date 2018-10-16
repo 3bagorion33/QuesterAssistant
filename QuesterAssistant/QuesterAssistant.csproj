@@ -81,9 +81,6 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Astral">
-      <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral.exe</HintPath>
-    </Reference>
     <Reference Include="Astral_updated">
       <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral_updated.exe</HintPath>
     </Reference>
@@ -114,6 +111,7 @@
     <Compile Include="Actions\DiscardItem.cs" />
     <Compile Include="Actions\ConsoleCommand.cs" />
     <Compile Include="Actions\MoonMask.cs" />
+    <Compile Include="Actions\Notify.cs" />
     <Compile Include="ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="ItemFilter\MyItemFilterEntry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

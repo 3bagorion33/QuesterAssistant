@@ -1,7 +1,7 @@
-namespace MyNW.Classes
+﻿namespace MyNW.Classes
 {
-    using ;
-    using ;
+    //using ;
+    //using ;
     using MyNW;
     using MyNW.Internals;
     using MyNW.Patchables.Enums;

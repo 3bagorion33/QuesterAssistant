@@ -34,6 +34,8 @@ namespace QuesterAssistant
         {
             if (VIP.CanSummonProfessionVendor)
             {
+                bool flag = API.CurrentSettings.DiscardIfCantSale;
+
                 API.CurrentSettings.DiscardIfCantSale = true;
                 VIP.SummonProfessionVendor();
                 Thread.Sleep(0x7d0);
@@ -41,7 +43,7 @@ namespace QuesterAssistant
                 Thread.Sleep(200);
                 Interact.SellItems();
                 Thread.Sleep(0x7d0);
-                API.CurrentSettings.DiscardIfCantSale = false;
+                API.CurrentSettings.DiscardIfCantSale = flag;
                 Astral.Logic.NW.Inventory.FreeOverFlowBags();
                 return ActionResult.Completed;
             }
