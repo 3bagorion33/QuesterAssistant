@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuesterAssistant", "QuesterAssistant\QuesterAssistant.csproj", "{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPatcher", "ClassPatcher\ClassPatcher.csproj", "{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug into folder|Any CPU = Debug into folder|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Debug into folder|Any CPU.ActiveCfg = Debug into folder|Any CPU
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Debug into folder|Any CPU.Build.0 = Debug into folder|Any CPU
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC82BCCB-637A-423C-8AD9-5BBDB3C4E795}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Debug into folder|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Debug into folder|Any CPU.Build.0 = Debug|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEF2EAC5-BC55-42B6-B62A-DD61922661D5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {47791582-3BA0-4B1E-8D51-EE09608B007A}
+	EndGlobalSection
+EndGlobal
