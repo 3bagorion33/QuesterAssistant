@@ -49,7 +49,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\..\LazyLauncher\Astral_RU_1\Plugins\</OutputPath>
+    <OutputPath>..\..\..\LazyLauncher\Astral_RU_1\Plugins\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -83,9 +83,11 @@
   <ItemGroup>
     <Reference Include="Astral_updated">
       <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral_updated.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.Utils.v18.1">
       <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.Utils.v18.1.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
@@ -93,6 +95,7 @@
     </Reference>
     <Reference Include="MyNW">
       <HintPath>..\..\..\LazyLauncher\Astral_RU_1\MyNW.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>

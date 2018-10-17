@@ -69,6 +69,7 @@ namespace QuesterAssistant.Properties {
         ///- ConsoleCommand - execute any ingame command
         ///- DiscardItem - delete items using filter
         ///- MoonMask - travel to MoonMask if possible
+        ///- Notify - show popup window
         ///- PathFinding - enable or disable navigation core
         ///- RefineAD - refine astral diamonds if possible
         ///- VIPSell - sale items to VIP vendor if possible using global sale filter (forced flag &quot;Discard if can&apos;t sell&quot;).

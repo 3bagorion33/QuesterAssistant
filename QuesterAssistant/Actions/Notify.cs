@@ -38,20 +38,27 @@ namespace QuesterAssistant.Actions
 
         protected override ActionValidity InternalValidity => new ActionValidity();
 
-        public override void OnMapDraw(GraphicsNW graph)
+        [Description("Text of message")]
+        public string Message { get; set; }
+
+        [Description("Enable or disable Alert")]
+        public AStat Type { get; set; }
+
+        public enum AStat
         {
+            Information,
+            Alert
         }
 
-        public override void GatherInfos()
-        {
-        }
+        public override void OnMapDraw(GraphicsNW graph) {}
 
-        public override void InternalReset()
-        {
-        }
+        public override void GatherInfos() {}
+
+        public override void InternalReset() {}
 
         public override ActionResult Run()
         {
+            Logger.Notify(this.Message, (this.Type == AStat.Alert)? true : false);
             return ActionResult.Completed;
         }
     }
