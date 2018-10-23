@@ -68,11 +68,12 @@ namespace QuesterAssistant.Properties {
         ///Actions:
         ///- ConsoleCommand - execute any ingame command
         ///- DiscardItem - delete items using filter
+        ///- InventoryLog - write contents of bags to file using pattern
         ///- MoonMask - travel to MoonMask if possible
         ///- Notify - show popup window
         ///- PathFinding - enable or disable navigation core
         ///- RefineAD - refine astral diamonds if possible
-        ///- VIPSell - sale items to VIP vendor if possible using global sale filter (forced flag &quot;Discard if can&apos;t sell&quot;).
+        ///- VIPRewards - claim account and char rewards and o [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string Description {
             get {

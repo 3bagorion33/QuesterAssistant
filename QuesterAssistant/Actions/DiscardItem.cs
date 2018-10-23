@@ -62,7 +62,6 @@ namespace QuesterAssistant
                     Item item = slot.Item;
                     if (filter.IsMatch(item))
                     {
-                        //Logger.WriteLine(item.DisplayName);
                         list.Add(slot);
                     }
                 }
@@ -77,21 +76,7 @@ namespace QuesterAssistant
         internal static void DeleteItems(MyItemFilter.MyItemFilterCore filter)
         {
             List<InventorySlot> list = DeletingItems(filter);
-            List<InventorySlot>.Enumerator enumerator = list.GetEnumerator();
-            try
-            {
-                while (enumerator.MoveNext())
-                {
-                    InventorySlot slot = enumerator.Current;
-                    Item item = slot.Item;
-                    Logger.WriteLine("Discard '" + item.DisplayName + "'");
-                    slot.RemoveAll();
-                }
-            }
-            finally
-            {
-                enumerator.Dispose();
-            }
+            list.ForEach(Interact.DiscardItem);
         }
 
         public override ActionResult Run()

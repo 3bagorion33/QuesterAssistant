@@ -125,10 +125,12 @@ Threads:
 Actions:
 - ConsoleCommand - execute any ingame command
 - DiscardItem - delete items using filter
+- InventoryLog - write contents of bags to file using pattern
 - MoonMask - travel to MoonMask if possible
 - Notify - show popup window
 - PathFinding - enable or disable navigation core
 - RefineAD - refine astral diamonds if possible
+- VIPRewards - claim account and char rewards and open boxes
 - VIPSell - sale items to VIP vendor if possible using global sale filter (forced flag "Discard if can't sell")</value>
   </data>
 </root>

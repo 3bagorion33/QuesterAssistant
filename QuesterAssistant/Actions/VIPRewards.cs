@@ -18,8 +18,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
-namespace QuesterAssistant.Actions
+namespace QuesterAssistant
 {
+    [Serializable]
     public class VIPRewards : Astral.Quester.Classes.Action
     {
         private bool IsAccountRewardClaimed = false;
@@ -39,14 +40,21 @@ namespace QuesterAssistant.Actions
 
         protected override ActionValidity InternalValidity => new ActionValidity();
 
-        [Description("")]
-        bool ClaimAccountReward => false;
+        [Description("Claim account reward if possible")]
+        public bool ClaimAccountReward { get; set; }
 
-        [Description("")]
-        bool ClaimCharacterReward => true;
+        [Description("Claim character reward if possible")]
+        public bool ClaimCharacterReward { get; set; }
 
-        [Description("")]
-        bool OpenRewards => true;
+        [Description("Open this rewards")]
+        public bool OpenRewards { get; set; }
+
+        public VIPRewards()
+        {
+            this.ClaimAccountReward = false;
+            this.ClaimCharacterReward = true;
+            this.OpenRewards = true;
+        }
 
         public override void GatherInfos()
         {
@@ -70,9 +78,11 @@ namespace QuesterAssistant.Actions
                 {
                     InventorySlot slot = enumerator.Current;
                     Item item = slot.Item;
-                    if (item.ItemDef.InternalName.Contains("Vip"))
+                    uint num = item.Count;
+                    if (item.ItemDef.RewardPackInfo.IsValid && item.ItemDef.InternalName.Contains("Vip"))
                     {
-                        for (uint i = 0; i < item.Count; i++)
+                        Core.DebugWriteLine("Count: " + item.Count.ToString());
+                        for (uint i = 0; i < num; i++)
                         {
                             Logger.WriteLine("Open '" + item.ItemDef.DisplayName + "'");
                             slot.Equip();
@@ -84,34 +94,39 @@ namespace QuesterAssistant.Actions
             finally
             {
                 enumerator.Dispose();
-                if (Game.IsRewardpackviewerFrameVisible()) Game.CloseRewardpackviewerFrame();
+                if (Game.IsRewardpackviewerFrameVisible())
+                {
+                    Core.DebugWriteLine("IsRewardpackviewerFrameVisible");
+                    Game.CloseRewardpackviewerFrame();
+                }
             }
         }
 
         public override ActionResult Run()
         {
+            Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
             while (this.ClaimAccountReward && VIP.AccountRewardAvailable)
             {
-                Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
                 Core.DebugWriteLine("ClaimAccountReward");
                 VIP.ClaimAccountReward();
-                Thread.Sleep(100);
-                Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
+                Thread.Sleep(1000);
                 this.IsAccountRewardClaimed = true;
             }
+            Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
 
+            Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             while (this.ClaimCharacterReward && VIP.CharacterRewardAvailable)
             {
-                Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
                 Core.DebugWriteLine("ClaimCharacterReward");
                 VIP.ClaimCharacterReward();
-                Thread.Sleep(100);
-                Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
+                Thread.Sleep(500);
                 this.IsCharacterRewardClaimed = true;
             }
+            Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
 
             if (this.IsCharacterRewardClaimed || this.IsAccountRewardClaimed)
             {
+                Thread.Sleep(100);
                 Core.DebugWriteLine("Try open rewards");
                 OpenRewardBoxes();
             }
