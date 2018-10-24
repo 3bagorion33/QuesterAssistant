@@ -136,28 +136,28 @@
     <Compile Include="Actions\PathFinding.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Temp\ItemFilterCore.cs" />
-    <None Include="Temp\Inventory.cs" />
-    <None Include="Temp\Refine.cs" />
-    <None Include="Temp\InventoryBag.cs" />
-    <None Include="Temp\InventorySlot.cs" />
-    <None Include="Temp\Item.cs" />
-    <None Include="Temp\PathfindEnable.cs">
-      <SubType>Code</SubType>
-    </None>
     <Compile Include="Actions\RefineAD.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Temp\UseItem.cs" />
-    <None Include="Temp\Sale.cs" />
-    <None Include="Temp\OpenRewardBoxes.cs" />
-    <None Include="Temp\MailSendEntity.cs" />
-    <None Include="Temp\UIEditors.cs" />
-    <None Include="Temp\ChangeProfileValue.cs" />
-    <None Include="Temp\SpecialAction.cs" />
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="Temp\ChangeProfileValue.cs" />
+    <None Include="Temp\Interact.cs" />
+    <None Include="Temp\Inventory.cs" />
+    <None Include="Temp\InventoryBag.cs" />
+    <None Include="Temp\InventorySlot.cs" />
+    <None Include="Temp\Item.cs" />
+    <None Include="Temp\ItemFilterCore.cs" />
+    <None Include="Temp\JoinQueue.cs" />
+    <None Include="Temp\MailSendEntity.cs" />
+    <None Include="Temp\OpenRewardBoxes.cs" />
+    <None Include="Temp\PathfindEnable.cs" />
+    <None Include="Temp\Refine.cs" />
+    <None Include="Temp\Sale.cs" />
+    <None Include="Temp\SpecialAction.cs" />
+    <None Include="Temp\UIEditors.cs" />
+    <None Include="Temp\UseItem.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>

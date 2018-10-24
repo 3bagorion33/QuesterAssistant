@@ -60,7 +60,7 @@ namespace QuesterAssistant
                 {
                     InventorySlot slot = enumerator.Current;
                     Item item = slot.Item;
-                    if (filter.IsMatch(item))
+                    if (!item.ItemDef.CantDiscard && filter.IsMatch(item))
                     {
                         list.Add(slot);
                     }

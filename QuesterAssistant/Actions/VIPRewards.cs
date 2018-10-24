@@ -94,11 +94,11 @@ namespace QuesterAssistant
             finally
             {
                 enumerator.Dispose();
-                if (Game.IsRewardpackviewerFrameVisible())
-                {
-                    Core.DebugWriteLine("IsRewardpackviewerFrameVisible");
-                    Game.CloseRewardpackviewerFrame();
-                }
+            }
+            if (Game.IsRewardpackviewerFrameVisible())
+            {
+                Core.DebugWriteLine("IsRewardpackviewerFrameVisible");
+                Game.CloseRewardpackviewerFrame();
             }
         }
 
