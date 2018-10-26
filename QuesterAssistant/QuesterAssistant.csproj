@@ -89,6 +89,14 @@
       <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.Utils.v18.1.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.XtraBars.v18.1">
+      <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.XtraBars.v18.1.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraEditors.v18.1">
+      <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.XtraEditors.v18.1.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
@@ -111,6 +119,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\Deprecated\PathfindDisable.cs" />
+    <Compile Include="Actions\Deprecated\PathfindEnable.cs" />
     <Compile Include="Actions\DiscardItem.cs" />
     <Compile Include="Actions\ConsoleCommand.cs" />
     <Compile Include="Actions\InventoryLog.cs" />

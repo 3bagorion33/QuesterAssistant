@@ -26,6 +26,7 @@ namespace ClassPatcher
                     if (enumerator.Current.Name == "ItemIdFilterEditor" ||
                         enumerator.Current.Name == "ItemIdEditor" ||
                         enumerator.Current.Name == "GetMailItems" ||
+                        enumerator.Current.Name == "Roles" ||
                         action == "/show")
                     {
                         Console.WriteLine(enumerator.Current.Name);
