@@ -58,7 +58,7 @@ namespace QuesterAssistant
             if (IntenalConditions)
             {
                 VIP.TeleportToMoonstoneMask();
-                Thread.Sleep(3000);
+                Thread.Sleep(5000);
                 while (EntityManager.LocalPlayer.IsLoading)
                     Thread.Sleep(500);
                 return ActionResult.Completed;

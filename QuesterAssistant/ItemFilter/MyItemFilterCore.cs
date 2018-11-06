@@ -63,8 +63,7 @@ namespace QuesterAssistant.MyItemFilter
                                 flag = true;
                                 break;
                             case ItemFilterMode.Exclude:
-                                flag = false;
-                                break;
+                                return false;
                         }
                     }
                 }

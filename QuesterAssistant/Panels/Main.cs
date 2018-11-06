@@ -15,7 +15,6 @@ namespace QuesterAssistant
     public class Main : BasePanel
     {
         // Fields
-        //private IContainer components;
         private Label label1;
         private Label label2;
         private Label label3;
@@ -27,20 +26,6 @@ namespace QuesterAssistant
             this.InitializeComponent();
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            Logger.WriteLine(" vip status " + VIP.CanSummonProfessionVendor.ToString());
-        }
-        /*
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (this.components != null))
-            {
-                this.components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-        */
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
@@ -77,7 +62,6 @@ namespace QuesterAssistant
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox1.Size = new System.Drawing.Size(344, 310);
             this.textBox1.TabIndex = 2;
-            //this.textBox1.Lines = Properties.Resources.Description.ToArray();
             this.textBox1.Text = Properties.Resources.Description;
             // 
             // label3

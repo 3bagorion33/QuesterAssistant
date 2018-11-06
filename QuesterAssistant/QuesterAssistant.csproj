@@ -152,6 +152,9 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="Temp\Main_1.cs">
+      <SubType>UserControl</SubType>
+    </None>
     <None Include="Temp\ChangeProfileValue.cs" />
     <None Include="Temp\Interact.cs" />
     <None Include="Temp\Inventory.cs" />
