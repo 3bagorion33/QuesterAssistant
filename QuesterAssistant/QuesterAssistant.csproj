@@ -85,18 +85,8 @@
       <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral_updated.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.Utils.v18.1">
-      <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.Utils.v18.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.XtraBars.v18.1">
-      <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.XtraBars.v18.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.XtraEditors.v18.1">
-      <HintPath>..\..\..\LazyLauncher\DevExpress\DevExpress.XtraEditors.v18.1.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
@@ -109,6 +99,9 @@
       <Name>System</Name>
       <HintPath>System.dll</HintPath>
     </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
       <HintPath>System.Drawing.dll</HintPath>
@@ -117,6 +110,7 @@
       <Name>System.Windows.Forms</Name>
       <HintPath>System.Windows.Forms.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\Deprecated\PathfindDisable.cs" />
@@ -152,6 +146,7 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Temp\Main_1.cs">
       <SubType>UserControl</SubType>
     </None>
