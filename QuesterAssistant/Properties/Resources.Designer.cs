@@ -66,14 +66,14 @@ namespace QuesterAssistant.Properties {
         ///- Identify items every 2 sec if any and scrolls
         ///
         ///Actions:
-        ///- ConsoleCommand - execute any ingame command
+        ///- ConsoleCommand - execute any ingame console command
         ///- DiscardItem - delete items using filter
         ///- InventoryLog - write contents of bags to file using pattern
         ///- MoonMask - travel to MoonMask if possible
-        ///- Notify - show popup window
+        ///- Notify - show popup notification window
         ///- PathFinding - enable or disable navigation core
         ///- RefineAD - refine astral diamonds if possible
-        ///- VIPRewards - claim account and char rewards and o [остаток строки не уместился]&quot;;.
+        ///- VIPRewards - claim account a [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string Description {
             get {
