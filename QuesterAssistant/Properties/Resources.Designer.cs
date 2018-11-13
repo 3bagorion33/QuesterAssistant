@@ -62,8 +62,9 @@ namespace QuesterAssistant.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на This plugin adds some threads and actions into Quester role.
+        ///
         ///Threads:
-        ///- Identify items every 2 sec if any and scrolls
+        ///- Identify items every 2 sec if any and scrolls are present
         ///
         ///Actions:
         ///- ConsoleCommand - execute any ingame command
@@ -73,7 +74,7 @@ namespace QuesterAssistant.Properties {
         ///- Notify - show popup window
         ///- PathFinding - enable or disable navigation core
         ///- RefineAD - refine astral diamonds if possible
-        ///- VIPRewards - claim account and char rewards and o [остаток строки не уместился]&quot;;.
+        ///- VIPRewards - claim account and char [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string Description {
             get {

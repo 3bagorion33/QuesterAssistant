@@ -2,6 +2,7 @@ using Astral;
 using Astral.Forms;
 using Astral.Logic.NW;
 using DevExpress.Utils.Extensions;
+using MyNW.Internals;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -14,13 +15,11 @@ namespace QuesterAssistant
 {
     public class Main : BasePanel
     {
-        private DevExpress.XtraEditors.LabelControl labelControl2;
-        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.XtraEditors.LabelControl labelVersion;
+        private DevExpress.XtraEditors.LabelControl labelAuthor;
         private DevExpress.XtraTab.XtraTabControl xtraTabControl1;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage1;
-        private TextBox textBox1;
-        private DevExpress.XtraEditors.LabelControl labelCharacterClass;
-        private DevExpress.XtraTab.XtraTabPage xtraTabPage2;
+        private TextBox textBoxDesc;
+        private DevExpress.XtraTab.XtraTabPage xtraTabAbout;
 
         // Methods
         public Main() : base("Quester Assistant")
@@ -31,36 +30,33 @@ namespace QuesterAssistant
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelVersion = new DevExpress.XtraEditors.LabelControl();
+            this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
-            this.xtraTabPage1 = new DevExpress.XtraTab.XtraTabPage();
-            this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
-            this.xtraTabPage2 = new DevExpress.XtraTab.XtraTabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.xtraTabAbout = new DevExpress.XtraTab.XtraTabPage();
+            this.textBoxDesc = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
-            this.xtraTabPage1.SuspendLayout();
-            this.xtraTabPage2.SuspendLayout();
+            this.xtraTabAbout.SuspendLayout();
             this.SuspendLayout();
             // 
-            // labelControl2
+            // labelVersion
             // 
-            this.labelControl2.Location = new System.Drawing.Point(3, 3);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Padding = new System.Windows.Forms.Padding(3);
-            this.labelControl2.Size = new System.Drawing.Size(31, 19);
-            this.labelControl2.TabIndex = 5;
-            this.labelControl2.Text = "v 1.0";
+            this.labelVersion.Location = new System.Drawing.Point(3, 3);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Padding = new System.Windows.Forms.Padding(3);
+            this.labelVersion.Size = new System.Drawing.Size(31, 19);
+            this.labelVersion.TabIndex = 5;
+            this.labelVersion.Text = "v 1.0";
             // 
-            // labelControl3
+            // labelAuthor
             // 
-            this.labelControl3.Location = new System.Drawing.Point(306, 3);
-            this.labelControl3.Name = "labelControl3";
-            this.labelControl3.Padding = new System.Windows.Forms.Padding(3);
-            this.labelControl3.Size = new System.Drawing.Size(59, 19);
-            this.labelControl3.TabIndex = 6;
-            this.labelControl3.Text = "by Orion33";
+            this.labelAuthor.Location = new System.Drawing.Point(306, 3);
+            this.labelAuthor.Name = "labelAuthor";
+            this.labelAuthor.Padding = new System.Windows.Forms.Padding(3);
+            this.labelAuthor.Size = new System.Drawing.Size(59, 19);
+            this.labelAuthor.TabIndex = 6;
+            this.labelAuthor.Text = "by Orion33";
             // 
             // xtraTabControl1
             // 
@@ -69,50 +65,33 @@ namespace QuesterAssistant
             this.xtraTabControl1.LookAndFeel.SkinName = "Office 2013 Light Gray";
             this.xtraTabControl1.LookAndFeel.UseDefaultLookAndFeel = false;
             this.xtraTabControl1.Name = "xtraTabControl1";
-            this.xtraTabControl1.SelectedTabPage = this.xtraTabPage1;
+            this.xtraTabControl1.SelectedTabPage = this.xtraTabAbout;
             this.xtraTabControl1.Size = new System.Drawing.Size(370, 416);
             this.xtraTabControl1.TabIndex = 7;
             this.xtraTabControl1.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.xtraTabPage1,
-            this.xtraTabPage2});
+            this.xtraTabAbout});
             // 
-            // xtraTabPage1
+            // xtraTabAbout
             // 
-            this.xtraTabPage1.Controls.Add(this.labelCharacterClass);
-            this.xtraTabPage1.Name = "xtraTabPage1";
-            this.xtraTabPage1.Size = new System.Drawing.Size(368, 391);
-            this.xtraTabPage1.Text = "Power Switcher";
+            this.xtraTabAbout.Controls.Add(this.textBoxDesc);
+            this.xtraTabAbout.Controls.Add(this.labelAuthor);
+            this.xtraTabAbout.Controls.Add(this.labelVersion);
+            this.xtraTabAbout.Name = "xtraTabAbout";
+            this.xtraTabAbout.Size = new System.Drawing.Size(368, 391);
+            this.xtraTabAbout.Text = "About";
             // 
-            // labelCharacterClass
+            // textBoxDesc
             // 
-            this.labelCharacterClass.Location = new System.Drawing.Point(3, 3);
-            this.labelCharacterClass.Name = "labelCharacterClass";
-            this.labelCharacterClass.Padding = new System.Windows.Forms.Padding(3);
-            this.labelCharacterClass.Size = new System.Drawing.Size(125, 19);
-            this.labelCharacterClass.TabIndex = 0;
-            this.labelCharacterClass.Text = "Current character class: ";
-            // 
-            // xtraTabPage2
-            // 
-            this.xtraTabPage2.Controls.Add(this.textBox1);
-            this.xtraTabPage2.Controls.Add(this.labelControl3);
-            this.xtraTabPage2.Controls.Add(this.labelControl2);
-            this.xtraTabPage2.Name = "xtraTabPage2";
-            this.xtraTabPage2.Size = new System.Drawing.Size(368, 391);
-            this.xtraTabPage2.Text = "About";
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Location = new System.Drawing.Point(3, 28);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(362, 360);
-            this.textBox1.TabIndex = 4;
-            this.textBox1.Text = Properties.Resources.Description;
+            this.textBoxDesc.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.textBoxDesc.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBoxDesc.Location = new System.Drawing.Point(3, 28);
+            this.textBoxDesc.Multiline = true;
+            this.textBoxDesc.Name = "textBoxDesc";
+            this.textBoxDesc.ReadOnly = true;
+            this.textBoxDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBoxDesc.Size = new System.Drawing.Size(362, 360);
+            this.textBoxDesc.TabIndex = 4;
+            this.textBoxDesc.Text = Properties.Resources.Description;
             // 
             // Main
             // 
@@ -122,14 +101,11 @@ namespace QuesterAssistant
             this.Name = "Main";
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
-            this.xtraTabPage1.ResumeLayout(false);
-            this.xtraTabPage1.PerformLayout();
-            this.xtraTabPage2.ResumeLayout(false);
-            this.xtraTabPage2.PerformLayout();
+            this.xtraTabAbout.ResumeLayout(false);
+            this.xtraTabAbout.PerformLayout();
             this.ResumeLayout(false);
 
         }
-
     }
 }
 
