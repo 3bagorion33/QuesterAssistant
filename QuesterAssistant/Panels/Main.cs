@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant
 {
-    public class Main : BasePanel
+    public partial class Main : BasePanel
     {
         private DevExpress.XtraEditors.LabelControl labelVersion;
         private DevExpress.XtraEditors.LabelControl labelAuthor;
@@ -23,8 +23,6 @@ namespace QuesterAssistant
         private DevExpress.XtraEditors.LabelControl labelCharacterClass;
         private DevExpress.XtraTab.XtraTabPage xtraTabAbout;
 
-        private IContainer timersCont;
-        private Timer timerGetCharInfo;
 
         // Methods
         public Main() : base("Quester Assistant")
@@ -33,24 +31,7 @@ namespace QuesterAssistant
 
             this.OnPanelLeave += new EventHandler(this.Dispose);
 
-            this.timersCont = new Container();
-            this.timerGetCharInfo = new Timer(this.timersCont)
-            {
-                Enabled = true,
-                Interval = 1000
-            };
-            this.timerGetCharInfo.Tick += new EventHandler(this.timerGetCharInfo_Tick);
-        }
-
-        private void timerGetCharInfo_Tick(object sender, EventArgs e)
-        {
-            Core.DebugWriteLine("timerGetCharInfo_Tick");
-            if (!EntityManager.LocalPlayer.IsLoading)
-            {
-                this.labelCharacterClass.Text = string.Format("{0}: {1}",
-                    this.labelCharacterClass.Name,
-                    EntityManager.LocalPlayer.Character.Class.DisplayName);
-            }
+            this.Initialize();
         }
 
         private void InitializeComponent()
@@ -157,7 +138,7 @@ namespace QuesterAssistant
         private void Dispose(object sender, EventArgs e)
         {
             this.Dispose(true);
-            this.timersCont.Dispose();
+            this.timersContainer.Dispose();
         }
     }
 }
