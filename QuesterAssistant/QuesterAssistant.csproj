@@ -172,6 +172,9 @@
     <None Include="Temp\SpecialAction.cs" />
     <None Include="Temp\UIEditors.cs" />
     <None Include="Temp\UseItem.cs" />
+    <EmbeddedResource Include="Panels\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>

@@ -53,8 +53,12 @@ namespace QuesterAssistant
         protected void FormUpdate(object sender, EventArgs e)
         {
             Core.DebugWriteLine("FormUpdate Event");
+            this.labelCharacterName.Text = string.Format("{0}: {1}",
+                "Name",
+                EntityManager.LocalPlayer.Name);
+
             this.labelCharacterClass.Text = string.Format("{0}: {1}",
-                this.labelCharacterClass.Name,
+                "Class",
                 EntityManager.LocalPlayer.Character.Class.DisplayName);
         }
     }

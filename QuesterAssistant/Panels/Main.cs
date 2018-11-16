@@ -21,6 +21,9 @@ namespace QuesterAssistant
         private DevExpress.XtraTab.XtraTabPage xtraTabPowersSwitcher;
         private TextBox textBoxDesc;
         private DevExpress.XtraEditors.LabelControl labelCharacterClass;
+        private DevExpress.XtraEditors.GroupControl groupControlCharInfo;
+        private DevExpress.XtraEditors.LabelControl labelCharacterName;
+        private DevExpress.XtraEditors.GroupControl groupControlPowersList;
         private DevExpress.XtraTab.XtraTabPage xtraTabAbout;
 
 
@@ -41,12 +44,18 @@ namespace QuesterAssistant
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPowersSwitcher = new DevExpress.XtraTab.XtraTabPage();
+            this.groupControlPowersList = new DevExpress.XtraEditors.GroupControl();
+            this.groupControlCharInfo = new DevExpress.XtraEditors.GroupControl();
+            this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
             this.xtraTabAbout = new DevExpress.XtraTab.XtraTabPage();
             this.textBoxDesc = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPowersSwitcher.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).BeginInit();
+            this.groupControlCharInfo.SuspendLayout();
             this.xtraTabAbout.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -84,19 +93,55 @@ namespace QuesterAssistant
             // 
             // xtraTabPowersSwitcher
             // 
-            this.xtraTabPowersSwitcher.Controls.Add(this.labelCharacterClass);
+            this.xtraTabPowersSwitcher.Controls.Add(this.groupControlPowersList);
+            this.xtraTabPowersSwitcher.Controls.Add(this.groupControlCharInfo);
             this.xtraTabPowersSwitcher.Name = "xtraTabPowersSwitcher";
             this.xtraTabPowersSwitcher.Size = new System.Drawing.Size(368, 391);
             this.xtraTabPowersSwitcher.Text = "Powers Switcher";
             // 
+            // groupControlPowersList
+            // 
+            this.groupControlPowersList.AutoSize = true;
+            this.groupControlPowersList.GroupStyle = DevExpress.Utils.GroupStyle.Light;
+            this.groupControlPowersList.Location = new System.Drawing.Point(10, 51);
+            this.groupControlPowersList.LookAndFeel.SkinName = "Office 2013 Light Gray";
+            this.groupControlPowersList.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.groupControlPowersList.Name = "groupControlPowersList";
+            this.groupControlPowersList.Size = new System.Drawing.Size(348, 329);
+            this.groupControlPowersList.TabIndex = 1;
+            this.groupControlPowersList.Text = "Powers List";
+            // 
+            // groupControlCharInfo
+            // 
+            this.groupControlCharInfo.AutoSize = true;
+            this.groupControlCharInfo.Controls.Add(this.labelCharacterName);
+            this.groupControlCharInfo.Controls.Add(this.labelCharacterClass);
+            this.groupControlCharInfo.GroupStyle = DevExpress.Utils.GroupStyle.Light;
+            this.groupControlCharInfo.Location = new System.Drawing.Point(10, 3);
+            this.groupControlCharInfo.LookAndFeel.SkinName = "Office 2013 Light Gray";
+            this.groupControlCharInfo.LookAndFeel.UseDefaultLookAndFeel = false;
+            this.groupControlCharInfo.Name = "groupControlCharInfo";
+            this.groupControlCharInfo.Size = new System.Drawing.Size(348, 42);
+            this.groupControlCharInfo.TabIndex = 1;
+            this.groupControlCharInfo.Text = "Current Character Info";
+            // 
+            // labelCharacterName
+            // 
+            this.labelCharacterName.Location = new System.Drawing.Point(9, 20);
+            this.labelCharacterName.Name = "labelCharacterName";
+            this.labelCharacterName.Padding = new System.Windows.Forms.Padding(3);
+            this.labelCharacterName.Size = new System.Drawing.Size(40, 19);
+            this.labelCharacterName.TabIndex = 0;
+            this.labelCharacterName.Text = "Name: ";
+            // 
             // labelCharacterClass
             // 
-            this.labelCharacterClass.Location = new System.Drawing.Point(3, 3);
-            this.labelCharacterClass.Name = "Current character class";
+            this.labelCharacterClass.Location = new System.Drawing.Point(163, 20);
+            this.labelCharacterClass.Name = "labelCharacterClass";
             this.labelCharacterClass.Padding = new System.Windows.Forms.Padding(3);
-            this.labelCharacterClass.Size = new System.Drawing.Size(125, 19);
+            this.labelCharacterClass.Size = new System.Drawing.Size(38, 19);
             this.labelCharacterClass.TabIndex = 0;
-            this.labelCharacterClass.Text = "Current character class: ";
+            this.labelCharacterClass.Text = "Class: ";
             // 
             // xtraTabAbout
             // 
@@ -118,7 +163,7 @@ namespace QuesterAssistant
             this.textBoxDesc.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBoxDesc.Size = new System.Drawing.Size(362, 360);
             this.textBoxDesc.TabIndex = 4;
-            this.textBoxDesc.Text = Properties.Resources.Description;
+            this.textBoxDesc.Text = resources.GetString("textBoxDesc.Text");
             // 
             // Main
             // 
@@ -130,9 +175,14 @@ namespace QuesterAssistant
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPowersSwitcher.ResumeLayout(false);
             this.xtraTabPowersSwitcher.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).EndInit();
+            this.groupControlCharInfo.ResumeLayout(false);
+            this.groupControlCharInfo.PerformLayout();
             this.xtraTabAbout.ResumeLayout(false);
             this.xtraTabAbout.PerformLayout();
             this.ResumeLayout(false);
+
         }
 
         private void Dispose(object sender, EventArgs e)
