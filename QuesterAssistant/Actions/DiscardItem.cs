@@ -27,17 +27,12 @@ namespace QuesterAssistant
 
         // Properties
         public override string ActionLabel => "DiscardItem";
-
+        public override string Category => "QuesterAssistant";
         public override bool NeedToRun => true;
-
         public override string InternalDisplayName => "DiscardItem";
-
         public override bool UseHotSpots => false;
-
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity => new ActionValidity();
 
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
@@ -45,9 +40,7 @@ namespace QuesterAssistant
         
         // Methods
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
-
         public override void OnMapDraw(GraphicsNW graph) {}
 
         internal static List<InventorySlot> DeletingItems(MyItemFilter.MyItemFilterCore filter)

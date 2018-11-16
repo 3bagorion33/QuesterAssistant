@@ -25,11 +25,9 @@ namespace QuesterAssistant
     {
         // Properties
         public override string ActionLabel => "MoonMask";
-
+        public override string Category => "QuesterAssistant";
         public override bool NeedToRun => true;
-
         public override string InternalDisplayName => "MoonMask";
-
         public override bool UseHotSpots => false;
 
         protected override bool IntenalConditions
@@ -43,14 +41,11 @@ namespace QuesterAssistant
         }
 
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity => new ActionValidity();
 
         // Methods
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
-
         public override void OnMapDraw(GraphicsNW graph) {}
 
         public override ActionResult Run()

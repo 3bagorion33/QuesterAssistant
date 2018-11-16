@@ -11,17 +11,12 @@ namespace QuesterAssistant
     {
         // Properties
         public override string ActionLabel => "PathFinding: " + this.Value;
-
+        public override string Category => "QuesterAssistant";
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         public override string InternalDisplayName => "PathFinding";
-
         protected override ActionValidity InternalValidity => new ActionValidity();
-
         public override bool NeedToRun => true;
-
         public override bool UseHotSpots => false;
 
         public PStat Value { get; set; }
@@ -34,9 +29,7 @@ namespace QuesterAssistant
 
         // Methods
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
-
         public override void OnMapDraw(GraphicsNW graph) {}
 
         public PathFinding()
