@@ -10,24 +10,17 @@ namespace QuesterAssistant
     {
         // Properties
         public override string ActionLabel => "VIPSell";
-
+        public override string Category => "QuesterAssistant";
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         public override string InternalDisplayName => "VIPSell";
-
         protected override ActionValidity InternalValidity => new ActionValidity();
-
         public override bool NeedToRun => true;
-
         public override bool UseHotSpots => false;
 
         // Methods
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
-
         public override void OnMapDraw(GraphicsNW graph) {}
 
         public override ActionResult Run()

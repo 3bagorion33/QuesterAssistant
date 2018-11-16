@@ -25,17 +25,12 @@ namespace QuesterAssistant.Actions
     public class Notify : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => "Notify";
-
+        public override string Category => "QuesterAssistant";
         public override bool NeedToRun => true;
-
         public override string InternalDisplayName => string.Empty;
-
         public override bool UseHotSpots => false;
-
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity => new ActionValidity();
 
         [Description("Text of message")]
@@ -51,9 +46,7 @@ namespace QuesterAssistant.Actions
         }
 
         public override void OnMapDraw(GraphicsNW graph) {}
-
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
 
         public override ActionResult Run()

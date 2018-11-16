@@ -23,22 +23,17 @@ namespace QuesterAssistant
     [Serializable]
     public class VIPRewards : Astral.Quester.Classes.Action
     {
+        public override string ActionLabel => "VIPRewards";
+        public override string Category => "QuesterAssistant";
+        public override bool NeedToRun => true;
+        public override string InternalDisplayName => string.Empty;
+        public override bool UseHotSpots => false;
+        protected override bool IntenalConditions => true;
+        protected override Vector3 InternalDestination => new Vector3();
+        protected override ActionValidity InternalValidity => new ActionValidity();
+
         private bool IsAccountRewardClaimed = false;
         private bool IsCharacterRewardClaimed = false;
-
-        public override string ActionLabel => "VIPRewards";
-
-        public override bool NeedToRun => true;
-
-        public override string InternalDisplayName => string.Empty;
-
-        public override bool UseHotSpots => false;
-
-        protected override bool IntenalConditions => true;
-
-        protected override Vector3 InternalDestination => new Vector3();
-
-        protected override ActionValidity InternalValidity => new ActionValidity();
 
         [Description("Claim account reward if possible")]
         public bool ClaimAccountReward { get; set; }
@@ -49,23 +44,15 @@ namespace QuesterAssistant
         [Description("Open this rewards")]
         public bool OpenRewards { get; set; }
 
+        public override void GatherInfos() { }
+        public override void InternalReset() { }
+        public override void OnMapDraw(GraphicsNW graph) { }
+
         public VIPRewards()
         {
             this.ClaimAccountReward = false;
             this.ClaimCharacterReward = true;
             this.OpenRewards = true;
-        }
-
-        public override void GatherInfos()
-        {
-        }
-
-        public override void InternalReset()
-        {
-        }
-
-        public override void OnMapDraw(GraphicsNW graph)
-        {
         }
 
         private void OpenRewardBoxes()
@@ -97,7 +84,7 @@ namespace QuesterAssistant
             }
             if (Game.IsRewardpackviewerFrameVisible())
             {
-                Thread.Sleep(200);
+                Thread.Sleep(800);
                 Core.DebugWriteLine("IsRewardpackviewerFrameVisible");
                 Game.CloseRewardpackviewerFrame();
             }
@@ -114,7 +101,6 @@ namespace QuesterAssistant
                 this.IsAccountRewardClaimed = true;
             }
             Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
-
             Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             while (this.ClaimCharacterReward && VIP.CharacterRewardAvailable)
             {
@@ -124,14 +110,12 @@ namespace QuesterAssistant
                 this.IsCharacterRewardClaimed = true;
             }
             Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
-
             if (this.IsCharacterRewardClaimed || this.IsAccountRewardClaimed)
             {
                 Thread.Sleep(100);
                 Core.DebugWriteLine("Try open rewards");
                 OpenRewardBoxes();
             }
-
             return ActionResult.Completed;
         }
     }
