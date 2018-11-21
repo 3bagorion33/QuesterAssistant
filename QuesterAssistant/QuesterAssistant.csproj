@@ -85,12 +85,17 @@
       <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral_updated.exe</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
     </Reference>
+    <Reference Include="DevExpress.XtraGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
@@ -127,8 +132,11 @@
     <Compile Include="Actions\VIPRewards.cs" />
     <Compile Include="ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="ItemFilter\MyItemFilterEntry.cs" />
-    <Compile Include="Panels\Main.Core.cs">
+    <Compile Include="Panels\Main.cs">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -140,9 +148,6 @@
     </Compile>
     <Compile Include="Core.cs">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Panels\Main.cs">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Actions\PathFinding.cs">
       <SubType>Code</SubType>
@@ -175,6 +180,7 @@
     <EmbeddedResource Include="Panels\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>

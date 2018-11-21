@@ -18,7 +18,7 @@ namespace QuesterAssistant
         public override string Author => "Orion33";
         public override Image Icon => null;
         public override string Name => "QuesterAssistant";
-        public override BasePanel Settings => new Main();
+        public override BasePanel Settings => new Panels.Main();
 
         // Methods
         private void Identification(object sender, EventArgs e)
