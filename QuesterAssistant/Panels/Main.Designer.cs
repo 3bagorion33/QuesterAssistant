@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPowersSwitcher = new DevExpress.XtraTab.XtraTabPage();
             this.groupControlPowersList = new DevExpress.XtraEditors.GroupControl();
+            this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
             this.groupControlCharInfo = new DevExpress.XtraEditors.GroupControl();
             this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
@@ -39,18 +41,17 @@
             this.textBoxDesc = new System.Windows.Forms.TextBox();
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.labelVersion = new DevExpress.XtraEditors.LabelControl();
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPowersSwitcher.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).BeginInit();
             this.groupControlPowersList.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).BeginInit();
             this.groupControlCharInfo.SuspendLayout();
             this.xtraTabAbout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // xtraTabControl1
@@ -78,7 +79,7 @@
             // groupControlPowersList
             // 
             this.groupControlPowersList.AutoSize = true;
-            this.groupControlPowersList.Controls.Add(this.gridControl1);
+            this.groupControlPowersList.Controls.Add(this.gridControlPowers);
             this.groupControlPowersList.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             this.groupControlPowersList.Location = new System.Drawing.Point(10, 51);
             this.groupControlPowersList.LookAndFeel.SkinName = "Office 2013 Light Gray";
@@ -87,6 +88,22 @@
             this.groupControlPowersList.Size = new System.Drawing.Size(348, 329);
             this.groupControlPowersList.TabIndex = 1;
             this.groupControlPowersList.Text = "Powers List";
+            // 
+            // gridControlPowers
+            // 
+            this.gridControlPowers.Location = new System.Drawing.Point(3, 29);
+            this.gridControlPowers.MainView = gridViewPowers;
+            this.gridControlPowers.Name = "gridControlPowers";
+            this.gridControlPowers.Size = new System.Drawing.Size(342, 297);
+            this.gridControlPowers.TabIndex = 0;
+            this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            gridViewPowers});
+            // 
+            // gridViewPowers
+            // 
+            gridViewPowers.GridControl = this.gridControlPowers;
+            gridViewPowers.Name = "gridViewPowers";
+            gridViewPowers.OptionsView.ShowGroupPanel = false;
             // 
             // groupControlCharInfo
             // 
@@ -160,21 +177,6 @@
             this.labelVersion.TabIndex = 5;
             this.labelVersion.Text = "v 1.0";
             // 
-            // gridControl1
-            // 
-            this.gridControl1.Location = new System.Drawing.Point(11, 29);
-            this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.Size = new System.Drawing.Size(326, 200);
-            this.gridControl1.TabIndex = 0;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridView1});
-            // 
-            // gridView1
-            // 
-            this.gridView1.GridControl = this.gridControl1;
-            this.gridView1.Name = "gridView1";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -187,13 +189,13 @@
             this.xtraTabPowersSwitcher.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).EndInit();
             this.groupControlPowersList.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).EndInit();
             this.groupControlCharInfo.ResumeLayout(false);
             this.groupControlCharInfo.PerformLayout();
             this.xtraTabAbout.ResumeLayout(false);
             this.xtraTabAbout.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -210,7 +212,6 @@
         private System.Windows.Forms.TextBox textBoxDesc;
         private DevExpress.XtraEditors.LabelControl labelAuthor;
         private DevExpress.XtraEditors.LabelControl labelVersion;
-        private DevExpress.XtraGrid.GridControl gridControl1;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.GridControl gridControlPowers;
     }
 }
