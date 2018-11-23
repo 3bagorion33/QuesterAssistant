@@ -14,17 +14,12 @@ namespace QuesterAssistant
     public class InventoryLog : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => "InventoryLog";
-
+        public override string Category => "QuesterAssistant";
         public override string InternalDisplayName => string.Empty;
-
         public override bool NeedToRun => true;
-
         public override bool UseHotSpots => false;
-
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity => new ActionValidity();
 
         public string LogPath { get; set; }
@@ -36,9 +31,7 @@ namespace QuesterAssistant
         public bool LogCraftingRes { get; set; }
 
         public override void GatherInfos() {}
-
         public override void InternalReset() {}
-
         public override void OnMapDraw(GraphicsNW graph) {}
 
         public InventoryLog()

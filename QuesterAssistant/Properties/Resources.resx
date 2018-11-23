@@ -119,8 +119,9 @@
   </resheader>
   <data name="Description" xml:space="preserve">
     <value>This plugin adds some threads and actions into Quester role.
+
 Threads:
-- Identify items every 2 sec if any and scrolls
+- Identify items every 2 sec if any and scrolls are present
 
 Actions:
 - ConsoleCommand - execute any ingame console command
