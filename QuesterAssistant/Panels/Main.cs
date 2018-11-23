@@ -13,15 +13,18 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Resources;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Timer = System.Windows.Forms.Timer;
 
 namespace QuesterAssistant.Panels
 {
     public partial class Main : BasePanel
     {
-        protected Timer timerIsConnecting;
+        private Timer timerIsConnecting;
 
-        protected void Initialize()
+        private void Initialize()
         {
             this.components = new Container();
             this.timerIsConnecting = new Timer(this.components)
@@ -33,28 +36,28 @@ namespace QuesterAssistant.Panels
             this.CharClassChanging += new EventHandler(this.FormUpdate);
         }
 
-        protected event EventHandler CharClassChanging;
-        protected void OnCharClassChanged()
+        private void Dispose(object s, EventArgs e) { this.Dispose(true); }
+
+        private event EventHandler CharClassChanging;
+        private void OnCharClassChanged()
         {
             CharClassChanging?.Invoke(this, EventArgs.Empty);
         }
 
-        protected CharClassCategory prevCharacterClass;
-        protected void IsConnectingTick(object sender, EventArgs e)
+        private CharClassCategory prevCharacterClass;
+        private void IsConnectingTick(object sender, EventArgs e)
         {
             //Core.DebugWriteLine("timerIsConnecting.Tick");
-            if (EntityManager.LocalPlayer.IsValid &&
-                !EntityManager.LocalPlayer.IsLoading &&
-                (EntityManager.LocalPlayer.Character.Class.Category != prevCharacterClass))
+            if (SlottedPower.CanUpdate && (EntityManager.LocalPlayer.Character.Class.Category != prevCharacterClass))
             {
                 OnCharClassChanged();
                 prevCharacterClass = EntityManager.LocalPlayer.Character.Class.Category;
             }
         }
 
-        List<PowerData> powerList = new List<PowerData>();
+        internal Dictionary<TraySlot, Power> slottedPowers;
 
-        protected void FormUpdate(object sender, EventArgs e)
+        private void FormUpdate(object sender, EventArgs e)
         {
             Core.DebugWriteLine("FormUpdate Event");
             this.labelCharacterName.Text = string.Format("{0}: {1}",
@@ -65,17 +68,7 @@ namespace QuesterAssistant.Panels
                 "Class",
                 EntityManager.LocalPlayer.Character.Class.DisplayName);
 
-            //this.gridViewPowers. = EntityManager.LocalPlayer.Character.SlottedPowers;
-            //this.gridControlPowers.DataSource = EntityManager.LocalPlayer.Character.SlottedPowers;
-
-            Dictionary<TraySlot, Power> slottedPowers = new Dictionary<TraySlot, Power>();
-            slottedPowers.Add(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic));
-
-            for (int i = 0; i < 10; i++)
-            {
-                slottedPowers.Add((TraySlot)i, Powers.GetPowerBySlot(i));
-            }
-
+            slottedPowers = SlottedPower.GetSlottedPowers();
             this.gridControlPowers.DataSource = slottedPowers;
         }
 
@@ -83,6 +76,26 @@ namespace QuesterAssistant.Panels
         {
             InitializeComponent();
             Initialize();
+            OnPanelLeave += this.Dispose;
+        }
+
+        private void ButtonGetPowers_Click(object sender, EventArgs e)
+        {
+            if (SlottedPower.CanUpdate)
+            {
+                OnCharClassChanged();
+            }
+        }
+
+        private void ButtonSetPowers_Click(object sender, EventArgs e)
+        {
+            if (SlottedPower.CanUpdate)
+            {
+                foreach (var pwr in slottedPowers)
+                {
+                    new Thread(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value)).Start();
+                }
+            }
         }
     }
 }

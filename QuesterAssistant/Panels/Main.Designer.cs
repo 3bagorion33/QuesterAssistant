@@ -30,10 +30,12 @@
         {
             DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPowersSwitcher = new DevExpress.XtraTab.XtraTabPage();
             this.groupControlPowersList = new DevExpress.XtraEditors.GroupControl();
-            this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
+            this.buttonGetPowers = new DevExpress.XtraEditors.SimpleButton();
+            this.buttonSetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.groupControlCharInfo = new DevExpress.XtraEditors.GroupControl();
             this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
@@ -42,17 +44,33 @@
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.labelVersion = new DevExpress.XtraEditors.LabelControl();
             gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
+            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
             this.xtraTabPowersSwitcher.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).BeginInit();
             this.groupControlPowersList.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).BeginInit();
             this.groupControlCharInfo.SuspendLayout();
             this.xtraTabAbout.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // gridViewPowers
+            // 
+            gridViewPowers.GridControl = this.gridControlPowers;
+            gridViewPowers.Name = "gridViewPowers";
+            gridViewPowers.OptionsView.ShowGroupPanel = false;
+            // 
+            // gridControlPowers
+            // 
+            this.gridControlPowers.Location = new System.Drawing.Point(3, 53);
+            this.gridControlPowers.MainView = gridViewPowers;
+            this.gridControlPowers.Name = "gridControlPowers";
+            this.gridControlPowers.Size = new System.Drawing.Size(342, 273);
+            this.gridControlPowers.TabIndex = 0;
+            this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            gridViewPowers});
             // 
             // xtraTabControl1
             // 
@@ -79,6 +97,8 @@
             // groupControlPowersList
             // 
             this.groupControlPowersList.AutoSize = true;
+            this.groupControlPowersList.Controls.Add(this.buttonGetPowers);
+            this.groupControlPowersList.Controls.Add(this.buttonSetPowers);
             this.groupControlPowersList.Controls.Add(this.gridControlPowers);
             this.groupControlPowersList.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             this.groupControlPowersList.Location = new System.Drawing.Point(10, 51);
@@ -89,21 +109,25 @@
             this.groupControlPowersList.TabIndex = 1;
             this.groupControlPowersList.Text = "Powers List";
             // 
-            // gridControlPowers
+            // buttonGetPowers
             // 
-            this.gridControlPowers.Location = new System.Drawing.Point(3, 29);
-            this.gridControlPowers.MainView = gridViewPowers;
-            this.gridControlPowers.Name = "gridControlPowers";
-            this.gridControlPowers.Size = new System.Drawing.Size(342, 297);
-            this.gridControlPowers.TabIndex = 0;
-            this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            gridViewPowers});
+            this.buttonGetPowers.Location = new System.Drawing.Point(187, 24);
+            this.buttonGetPowers.Name = "buttonGetPowers";
+            this.buttonGetPowers.Size = new System.Drawing.Size(75, 23);
+            this.buttonGetPowers.TabIndex = 1;
+            this.buttonGetPowers.Text = "Get Powers";
+            this.buttonGetPowers.ToolTip = "Get powers list from the game";
+            this.buttonGetPowers.Click += new System.EventHandler(this.ButtonGetPowers_Click);
             // 
-            // gridViewPowers
+            // buttonSetPowers
             // 
-            gridViewPowers.GridControl = this.gridControlPowers;
-            gridViewPowers.Name = "gridViewPowers";
-            gridViewPowers.OptionsView.ShowGroupPanel = false;
+            this.buttonSetPowers.Location = new System.Drawing.Point(268, 24);
+            this.buttonSetPowers.Name = "buttonSetPowers";
+            this.buttonSetPowers.Size = new System.Drawing.Size(75, 23);
+            this.buttonSetPowers.TabIndex = 1;
+            this.buttonSetPowers.Text = "Set Powers";
+            this.buttonSetPowers.ToolTip = "Set powers list to the game";
+            this.buttonSetPowers.Click += new System.EventHandler(this.ButtonSetPowers_Click);
             // 
             // groupControlCharInfo
             // 
@@ -183,14 +207,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "Main";
+            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
             this.xtraTabPowersSwitcher.ResumeLayout(false);
             this.xtraTabPowersSwitcher.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlPowersList)).EndInit();
             this.groupControlPowersList.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).EndInit();
             this.groupControlCharInfo.ResumeLayout(false);
             this.groupControlCharInfo.PerformLayout();
@@ -213,5 +237,7 @@
         private DevExpress.XtraEditors.LabelControl labelAuthor;
         private DevExpress.XtraEditors.LabelControl labelVersion;
         private DevExpress.XtraGrid.GridControl gridControlPowers;
+        private DevExpress.XtraEditors.SimpleButton buttonGetPowers;
+        private DevExpress.XtraEditors.SimpleButton buttonSetPowers;
     }
 }
