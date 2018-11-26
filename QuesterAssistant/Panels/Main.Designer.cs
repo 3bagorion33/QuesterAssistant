@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
+            this.gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPowersSwitcher = new DevExpress.XtraTab.XtraTabPage();
@@ -43,8 +43,7 @@
             this.textBoxDesc = new System.Windows.Forms.TextBox();
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.labelVersion = new DevExpress.XtraEditors.LabelControl();
-            gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
-            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).BeginInit();
             this.xtraTabControl1.SuspendLayout();
@@ -58,19 +57,46 @@
             // 
             // gridViewPowers
             // 
-            gridViewPowers.GridControl = this.gridControlPowers;
-            gridViewPowers.Name = "gridViewPowers";
-            gridViewPowers.OptionsView.ShowGroupPanel = false;
+            this.gridViewPowers.GridControl = this.gridControlPowers;
+            this.gridViewPowers.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Never;
+            this.gridViewPowers.Name = "gridViewPowers";
+            this.gridViewPowers.OptionsBehavior.AutoUpdateTotalSummary = false;
+            this.gridViewPowers.OptionsBehavior.Editable = false;
+            this.gridViewPowers.OptionsBehavior.KeepGroupExpandedOnSorting = false;
+            this.gridViewPowers.OptionsCustomization.AllowColumnMoving = false;
+            this.gridViewPowers.OptionsCustomization.AllowColumnResizing = false;
+            this.gridViewPowers.OptionsCustomization.AllowFilter = false;
+            this.gridViewPowers.OptionsCustomization.AllowGroup = false;
+            this.gridViewPowers.OptionsCustomization.AllowSort = false;
+            this.gridViewPowers.OptionsDetail.AllowZoomDetail = false;
+            this.gridViewPowers.OptionsDetail.EnableMasterViewMode = false;
+            this.gridViewPowers.OptionsDetail.ShowDetailTabs = false;
+            this.gridViewPowers.OptionsDetail.SmartDetailExpand = false;
+            this.gridViewPowers.OptionsFilter.AllowColumnMRUFilterList = false;
+            this.gridViewPowers.OptionsFilter.AllowMRUFilterList = false;
+            this.gridViewPowers.OptionsMenu.EnableColumnMenu = false;
+            this.gridViewPowers.OptionsMenu.EnableFooterMenu = false;
+            this.gridViewPowers.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridViewPowers.OptionsPrint.UsePrintStyles = false;
+            this.gridViewPowers.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridViewPowers.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridViewPowers.OptionsSelection.UseIndicatorForSelection = false;
+            this.gridViewPowers.OptionsView.ShowColumnHeaders = false;
+            this.gridViewPowers.OptionsView.ShowDetailButtons = false;
+            this.gridViewPowers.OptionsView.ShowGroupPanel = false;
+            this.gridViewPowers.OptionsView.ShowIndicator = false;
+            this.gridViewPowers.ScrollStyle = DevExpress.XtraGrid.Views.Grid.ScrollStyleFlags.None;
+            this.gridViewPowers.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Never;
             // 
             // gridControlPowers
             // 
-            this.gridControlPowers.Location = new System.Drawing.Point(3, 53);
-            this.gridControlPowers.MainView = gridViewPowers;
+            this.gridControlPowers.Location = new System.Drawing.Point(3, 135);
+            this.gridControlPowers.MainView = this.gridViewPowers;
             this.gridControlPowers.Name = "gridControlPowers";
-            this.gridControlPowers.Size = new System.Drawing.Size(342, 273);
+            this.gridControlPowers.Size = new System.Drawing.Size(342, 191);
             this.gridControlPowers.TabIndex = 0;
             this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            gridViewPowers});
+            this.gridViewPowers});
             // 
             // xtraTabControl1
             // 
@@ -207,7 +233,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.xtraTabControl1);
             this.Name = "Main";
-            ((System.ComponentModel.ISupportInitialize)(gridViewPowers)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xtraTabControl1)).EndInit();
             this.xtraTabControl1.ResumeLayout(false);
@@ -239,5 +265,6 @@
         private DevExpress.XtraGrid.GridControl gridControlPowers;
         private DevExpress.XtraEditors.SimpleButton buttonGetPowers;
         private DevExpress.XtraEditors.SimpleButton buttonSetPowers;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
     }
 }
