@@ -2,6 +2,8 @@
 using Astral.Forms;
 using Astral.Logic.NW;
 using DevExpress.Utils.Extensions;
+using DevExpress.XtraEditors;
+using DevExpress.XtraEditors.Controls;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
@@ -95,6 +97,36 @@ namespace QuesterAssistant.Panels
                 {
                     Task.Factory.StartNew(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value));
                 }
+            }
+        }
+
+        private void setsList_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Tag));
+
+            switch (e.Button.Tag.ToString())
+            {
+                case "Select":
+                    //setsList.Properties.Items.Add("New item");
+                    
+                    break;
+                case "Add":
+                    Core.DebugWriteLine("Switch to Add");
+                    string str = InputBox.MessageText("Enter a new profile name:");
+                    setsList.Properties.Items.Add(str);
+                    setsList.Refresh();
+                    setsList.SelectedItem = str;
+                    break;
+                case "Delete":
+                    if (XtraMessageBox.Show(Form.ActiveForm, "Caption", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        setsList.Properties.Items.Remove(setsList.SelectedItem);
+                        setsList.Refresh();
+                        setsList.SelectedIndex = setsList.Properties.Items.Count - 1;
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

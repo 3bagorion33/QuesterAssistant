@@ -143,6 +143,18 @@
     <Compile Include="Classes\PowersSwitcher.cs" />
     <Compile Include="ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="ItemFilter\MyItemFilterEntry.cs" />
+    <Compile Include="Panels\ChangeListOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\ChangeListOrder.Designer.cs">
+      <DependentUpon>ChangeListOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Panels\InputBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Panels\InputBox.Designer.cs">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panels\Main.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -169,6 +181,10 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="App.config" />
+    <None Include="Temp\InputBox.cs">
+      <SubType>Form</SubType>
+    </None>
     <None Include="Temp\Main_1.cs">
       <SubType>UserControl</SubType>
     </None>
@@ -188,6 +204,12 @@
     <None Include="Temp\SpecialAction.cs" />
     <None Include="Temp\UIEditors.cs" />
     <None Include="Temp\UseItem.cs" />
+    <EmbeddedResource Include="Panels\ChangeListOrder.resx">
+      <DependentUpon>ChangeListOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\InputBox.resx">
+      <DependentUpon>InputBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Panels\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
