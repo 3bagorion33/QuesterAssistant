@@ -93,7 +93,7 @@ namespace QuesterAssistant.Panels
             {
                 foreach (var pwr in slottedPowers)
                 {
-                    new Thread(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value)).Start();
+                    Task.Factory.StartNew(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value), TaskCreationOptions.LongRunning);
                 }
             }
         }
