@@ -13,6 +13,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Resources;
 using System.Threading;
@@ -25,6 +26,7 @@ namespace QuesterAssistant.Panels
     public partial class Main : BasePanel
     {
         private Timer timerIsConnecting;
+        PManager pManager = new PManager();
 
         private void Initialize()
         {
@@ -46,14 +48,18 @@ namespace QuesterAssistant.Panels
             CharClassChanging?.Invoke(this, EventArgs.Empty);
         }
 
-        private CharClassCategory prevCharacterClass;
+        private CharClassCategory currCharClass;
+        private CharClassCategory prevCharClass;
         private void IsConnectingTick(object sender, EventArgs e)
         {
-            //Core.DebugWriteLine("timerIsConnecting.Tick");
-            if (SlottedPower.CanUpdate && (EntityManager.LocalPlayer.Character.Class.Category != prevCharacterClass))
+            currCharClass = EntityManager.LocalPlayer.Character.Class.Category;
+            if (SlottedPower.CanUpdate)
             {
-                OnCharClassChanged();
-                prevCharacterClass = EntityManager.LocalPlayer.Character.Class.Category;
+                if (currCharClass != prevCharClass)
+                {
+                    OnCharClassChanged();
+                    prevCharClass = currCharClass;
+                }
             }
         }
 
@@ -62,12 +68,10 @@ namespace QuesterAssistant.Panels
         private void FormUpdate(object sender, EventArgs e)
         {
             Core.DebugWriteLine("FormUpdate Event");
-            this.labelCharacterName.Text = string.Format("{0}: {1}",
-                "Name",
+            this.labelCharacterName.Text = string.Format("Name:  {0}",
                 EntityManager.LocalPlayer.Name);
 
-            this.labelCharacterClass.Text = string.Format("{0}: {1}",
-                "Class",
+            this.labelCharacterClass.Text = string.Format("Class:  {0}",
                 EntityManager.LocalPlayer.Character.Class.DisplayName);
 
             slottedPowers = SlottedPower.GetSlottedPowers();
@@ -81,7 +85,7 @@ namespace QuesterAssistant.Panels
             OnPanelLeave += this.Dispose;
         }
 
-        private void ButtonGetPowers_Click(object sender, EventArgs e)
+        private void buttonGetPowers_Click(object sender, EventArgs e)
         {
             if (SlottedPower.CanUpdate)
             {
@@ -89,13 +93,13 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        private void ButtonSetPowers_Click(object sender, EventArgs e)
+        private void buttonSetPowers_Click(object sender, EventArgs e)
         {
             if (SlottedPower.CanUpdate)
             {
                 foreach (var pwr in slottedPowers)
                 {
-                    Task.Factory.StartNew(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value));
+                    Task.Factory.StartNew(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value.PowerDef.InternalName));
                 }
             }
         }
@@ -127,6 +131,38 @@ namespace QuesterAssistant.Panels
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            PList pList = new PList
+            {
+                Powers = SlottedPower.GetSlottedPowersNames()
+            };
+
+            pManager.CharClasses[currCharClass].PLists.Add("Test Preset", pList);
+            pManager.CharClasses[currCharClass].PLists.Add("Test Preset2", pList);
+
+            try
+            {
+                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"), pManager);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
+            }
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pManager = Astral.Functions.XmlSerializer.Deserialize<PManager>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
             }
         }
     }
