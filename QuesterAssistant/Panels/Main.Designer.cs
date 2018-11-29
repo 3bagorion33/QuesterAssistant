@@ -54,7 +54,7 @@
             this.xtraTabControl1 = new DevExpress.XtraTab.XtraTabControl();
             this.xtraTabPowersManager = new DevExpress.XtraTab.XtraTabPage();
             this.gCtrlPowersPresets = new DevExpress.XtraEditors.GroupControl();
-            this.presetsList = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.cmbPresetsList = new DevExpress.XtraEditors.ComboBoxEdit();
             this.buttonSave = new DevExpress.XtraEditors.SimpleButton();
             this.buttonLoad = new DevExpress.XtraEditors.SimpleButton();
             this.buttonGetPowers = new DevExpress.XtraEditors.SimpleButton();
@@ -73,7 +73,7 @@
             this.xtraTabPowersManager.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
             this.gCtrlPowersPresets.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.presetsList.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).BeginInit();
             this.groupControlCharInfo.SuspendLayout();
             this.xtraTabAbout.SuspendLayout();
@@ -147,7 +147,7 @@
             // gCtrlPowersPresets
             // 
             this.gCtrlPowersPresets.AutoSize = true;
-            this.gCtrlPowersPresets.Controls.Add(this.presetsList);
+            this.gCtrlPowersPresets.Controls.Add(this.cmbPresetsList);
             this.gCtrlPowersPresets.Controls.Add(this.buttonSave);
             this.gCtrlPowersPresets.Controls.Add(this.buttonLoad);
             this.gCtrlPowersPresets.Controls.Add(this.buttonGetPowers);
@@ -162,20 +162,20 @@
             this.gCtrlPowersPresets.TabIndex = 1;
             this.gCtrlPowersPresets.Text = "Powers Preset";
             // 
-            // presetsList
+            // cmbPresetsList
             // 
-            this.presetsList.Location = new System.Drawing.Point(86, 1);
-            this.presetsList.Name = "presetsList";
-            this.presetsList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.cmbPresetsList.Location = new System.Drawing.Point(86, 1);
+            this.cmbPresetsList.Name = "cmbPresetsList";
+            this.cmbPresetsList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a set", "Select", null, DevExpress.Utils.ToolTipAnchor.Default),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new set", "Add", null, DevExpress.Utils.ToolTipAnchor.Default),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Change set list order", "Sort", null, DevExpress.Utils.ToolTipAnchor.Default),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Delete current set", "Delete", null, DevExpress.Utils.ToolTipAnchor.Default)});
-            this.presetsList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.presetsList.Size = new System.Drawing.Size(259, 20);
-            this.presetsList.TabIndex = 4;
-            this.presetsList.SelectedIndexChanged += new System.EventHandler(this.setsList_SelectItem);
-            this.presetsList.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.setsList_ButtonClick);
+            this.cmbPresetsList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cmbPresetsList.Size = new System.Drawing.Size(259, 20);
+            this.cmbPresetsList.TabIndex = 4;
+            this.cmbPresetsList.SelectedIndexChanged += new System.EventHandler(this.cmbPresetsList_SelectItem);
+            this.cmbPresetsList.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.cmbPresetsList_ButtonClick);
             // 
             // buttonSave
             // 
@@ -303,7 +303,7 @@
             this.xtraTabPowersManager.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();
             this.gCtrlPowersPresets.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.presetsList.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).EndInit();
             this.groupControlCharInfo.ResumeLayout(false);
             this.groupControlCharInfo.PerformLayout();
@@ -329,7 +329,7 @@
         private DevExpress.XtraEditors.SimpleButton buttonGetPowers;
         private DevExpress.XtraEditors.SimpleButton buttonSetPowers;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
-        private DevExpress.XtraEditors.ComboBoxEdit presetsList;
+        private DevExpress.XtraEditors.ComboBoxEdit cmbPresetsList;
         private DevExpress.XtraEditors.SimpleButton buttonSave;
         private DevExpress.XtraEditors.SimpleButton buttonLoad;
     }

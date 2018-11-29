@@ -141,7 +141,7 @@
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <Compile Include="Classes\PowersManager.cs" />
-    <Compile Include="Classes\SerializableDictionary.cs" />
+    <None Include="Classes\SerializableDictionary.cs" />
     <Compile Include="ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="ItemFilter\MyItemFilterEntry.cs" />
     <Compile Include="Panels\ChangeListOrder.cs">

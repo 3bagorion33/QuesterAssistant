@@ -13,62 +13,84 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes
 {
-    public class PManagerData
+    public class PowerManagerData
     {
-        public SerializableDictionary<CharClassCategory, PSet> CharClasses { get; set; }
+        public List<CharClass> CharClassesList { get; set; }
         //public bool hkeys = false;
 
-        public PManagerData()
+        public PowerManagerData() { }
+        public PowerManagerData(bool b)
         {
-            CharClasses = new SerializableDictionary<CharClassCategory, PSet>
+            CharClassesList = new List<CharClass>
             {
-                { CharClassCategory.ControlWizard, new PSet() },
-                { CharClassCategory.DevotedCleric, new PSet() },
-                { CharClassCategory.GreatWeaponFigher, new PSet() },
-                { CharClassCategory.GuardianFighter, new PSet() },
-                { CharClassCategory.HunterRanger, new PSet() },
-                { CharClassCategory.OathboundPaladin, new PSet() },
-                { CharClassCategory.SourgeWarlock, new PSet() },
-                { CharClassCategory.TricksterRogue, new PSet() }
+                { new CharClass(CharClassCategory.ControlWizard) },
+                { new CharClass(CharClassCategory.DevotedCleric) },
+                { new CharClass(CharClassCategory.GreatWeaponFigher) },
+                { new CharClass(CharClassCategory.GuardianFighter) },
+                { new CharClass(CharClassCategory.HunterRanger) },
+                { new CharClass(CharClassCategory.OathboundPaladin) },
+                { new CharClass(CharClassCategory.SourgeWarlock) },
+                { new CharClass(CharClassCategory.TricksterRogue) }
             };
         }
     }
 
-    public class PSet
+    public class CharClass
     {
-        public SerializableDictionary<string, PList> PLists { get; set; }
+        public CharClassCategory CharClassCategory { get; set; }
+        public List<Preset> PresetsList { get; set; }
 
-        public PSet()
+        public CharClass() { }
+        public CharClass(CharClassCategory charClass)
         {
-            PLists = new SerializableDictionary<string, PList>();
+            CharClassCategory = charClass;
+            PresetsList = new List<Preset>();
         }
     }
 
-    public class PList
+    public class Preset
     {
-        public SerializableDictionary<TraySlot, string> Powers { get; set; }
-        public PList()
+        public string Name { get; set; }
+        public List<Power> PowersList { get; set; }
+        public Preset() { }
+        public Preset(bool b)
         {
-            Powers = new SerializableDictionary<TraySlot, string>
+            PowersList = new List<Power>()
             {
-                { TraySlot.AtWill1, string.Empty }, { TraySlot.AtWill2, string.Empty },
-                { TraySlot.ClassFeature1, string.Empty }, { TraySlot.ClassFeature2, string.Empty },
-                { TraySlot.Daily1, string.Empty }, { TraySlot.Daily2, string.Empty },
-                { TraySlot.Encounter1, string.Empty },{ TraySlot.Encounter2, string.Empty },{ TraySlot.Encounter3, string.Empty },
-                { TraySlot.Mechanic, string.Empty },
+                { new Power(TraySlot.AtWill1, string.Empty) },
+                { new Power(TraySlot.AtWill2, string.Empty) },
+                { new Power(TraySlot.ClassFeature1, string.Empty) },
+                { new Power(TraySlot.ClassFeature2, string.Empty) },
+                { new Power(TraySlot.Daily1, string.Empty) },
+                { new Power(TraySlot.Daily2, string.Empty) },
+                { new Power(TraySlot.Encounter1, string.Empty) },
+                { new Power(TraySlot.Encounter2, string.Empty) },
+                { new Power(TraySlot.Encounter3, string.Empty) },
+                { new Power(TraySlot.Mechanic, string.Empty) },
             };
         }
     }
 
+    public class Power
+    {
+        public TraySlot TraySlot { get; set; }
+        public string InternalName { get; set; }
 
+        public Power() { }
+        public Power(TraySlot traySlot, string iName)
+        {
+            this.TraySlot = traySlot;
+            this.InternalName = iName;
+        }
+    }
 
     internal static class PManager
     {
         internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid && !EntityManager.LocalPlayer.IsLoading;
 
-        internal static Dictionary<TraySlot, Power> GetSlottedPowers()
+        internal static Dictionary<TraySlot, MyNW.Classes.Power> GetSlottedPowers()
         {
-            Dictionary<TraySlot, Power> slottedPowers = new Dictionary<TraySlot, Power>();
+            Dictionary<TraySlot, MyNW.Classes.Power> slottedPowers = new Dictionary<TraySlot, MyNW.Classes.Power>();
             slottedPowers.Add(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic));
 
             for (int i = 0; i < 9; i++)
@@ -79,14 +101,14 @@ namespace QuesterAssistant.Classes
             return slottedPowers;
         }
 
-        internal static SerializableDictionary<TraySlot, string> GetSlottedPowersNames()
+        internal static List<Power> GetSlottedPowersNames()
         {
-            SerializableDictionary<TraySlot, string> slottedPowers = new SerializableDictionary<TraySlot, string>();
-            slottedPowers.Add(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic).PowerDef.InternalName);
+            List<Power> slottedPowers = new List<Power>();
+            slottedPowers.Add(new Power(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic).PowerDef.InternalName));
 
             for (int i = 0; i < 9; i++)
             {
-                slottedPowers.Add((TraySlot)i, Powers.GetPowerBySlot(i).PowerDef.InternalName);
+                slottedPowers.Add(new Power((TraySlot)i, Powers.GetPowerBySlot(i).PowerDef.InternalName));
             }
 
             return slottedPowers;
@@ -94,7 +116,7 @@ namespace QuesterAssistant.Classes
 
         internal static bool ApplyPower(TraySlot slot, string newPowerInternalName)
         {
-            Power newPower = Powers.GetPowerByInternalName(newPowerInternalName);
+            MyNW.Classes.Power newPower = Powers.GetPowerByInternalName(newPowerInternalName);
             if (!newPower.IsValid)
             {
                 Core.DebugWriteLine(string.Format("{0} not valid", newPower.PowerDef.InternalName));
@@ -119,26 +141,54 @@ namespace QuesterAssistant.Classes
             return true;
         }
 
-        internal static PManagerData LoadSettings()
+        internal static PowerManagerData LoadSettings()
         {
+            PowerManagerData pManager;
             try
             {
-                var pManager = Astral.Functions.XmlSerializer.Deserialize<PManagerData>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
-                return pManager;
+                pManager = Astral.Functions.XmlSerializer.Deserialize<PowerManagerData>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
             }
             catch (Exception ex)
             {
                 XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                return new PManagerData();
+                pManager = new PowerManagerData(true);
             }
+            if (pManager.CharClassesList == null)
+            {
+                pManager = new PowerManagerData(true);
+            }
+            return pManager;
         }
 
-        internal static void SaveSettings(PManagerData pManager, CharClassCategory currCharClass)
+        internal static void SaveSettings(PowerManagerData pManager, CharClassCategory currCharClass)
         {
-            PList pList = new PList
+            Preset preset = new Preset
             {
-                Powers = PManager.GetSlottedPowersNames()
+                PowersList = GetSlottedPowersNames(),
+                Name = "Test"
             };
+
+            var idxCharClass = pManager.CharClassesList.FindIndex(x => x.CharClassCategory == currCharClass);
+            Core.DebugWriteLine(string.Format("Class: {0}[{1}] ", currCharClass, idxCharClass));
+            if (idxCharClass < 0)
+            {
+                XtraMessageBox.AllowCustomLookAndFeel = true;
+                XtraMessageBox.Show("Invalid character class!");
+                return;
+            }
+
+            var idxPreset = pManager.CharClassesList[idxCharClass].PresetsList.FindIndex(x => x.Name == preset.Name);
+            Core.DebugWriteLine(string.Format("Class: {0}[{1}] => Preset {2}[{3}]", currCharClass, idxCharClass, preset.Name, idxPreset));
+
+            if (idxPreset < 0)
+            {
+                pManager.CharClassesList[idxCharClass].PresetsList.Add(preset);
+            }
+            else
+            {
+                pManager.CharClassesList[idxCharClass].PresetsList.RemoveAt(idxPreset);
+                pManager.CharClassesList[idxCharClass].PresetsList.Insert(idxPreset, preset);
+            }
 
             //pManager.CharClasses[currCharClass].PLists.Add("Test Preset", pList);
             //pManager.CharClasses[currCharClass].PLists.Add("Test Preset2", pList);

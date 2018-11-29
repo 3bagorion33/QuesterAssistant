@@ -26,7 +26,7 @@ namespace QuesterAssistant.Panels
     public partial class Main : BasePanel
     {
         private Timer timerIsConnecting;
-        PManagerData pManager = new PManagerData();
+        PowerManagerData pManager = new PowerManagerData(true);
 
         private void Initialize()
         {
@@ -63,7 +63,7 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        internal Dictionary<TraySlot, Power> slottedPowers;
+        internal Dictionary<TraySlot, MyNW.Classes.Power> slottedPowers;
 
         private void FormUpdate(object sender, EventArgs e)
         {
@@ -74,26 +74,31 @@ namespace QuesterAssistant.Panels
             this.labelCharacterClass.Text = string.Format("Class:  {0}",
                 EntityManager.LocalPlayer.Character.Class.DisplayName);
 
-            //slottedPowers = SlottedPower.GetSlottedPowers();
+            //slottedPowers = PManager.GetSlottedPowers();
             //this.gridControlPowers.DataSource = slottedPowers;
 
             pManager = PManager.LoadSettings();
-
-            presetsList.Properties.Items.Clear();
+            //PowerManagerData pManager = new PowerManagerData(true);
+            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager_deb.xml"), pManager);
+            
+            cmbPresetsList.Properties.Items.Clear();
             gridControlPowers.RefreshDataSource();
 
-            if (pManager.CharClasses[currCharClass].PLists.Count == 0)
+            var charClass = pManager.CharClassesList.Find(x => x.CharClassCategory == currCharClass);
+            var presList = charClass.PresetsList;
+
+            if (presList.Count == 0)
             {
-                presetsList.Properties.Items.Add("Create a new preset");
+                cmbPresetsList.Properties.Items.Add("Create a new preset");
             }
             else
             {
-                presetsList.Properties.Items.BeginUpdate();
-                try { presetsList.Properties.Items.AddRange(pManager.CharClasses[currCharClass].PLists); }
-                finally { presetsList.Properties.Items.EndUpdate(); }
+                cmbPresetsList.Properties.Items.BeginUpdate();
+                try { cmbPresetsList.Properties.Items.AddRange(presList); }
+                finally { cmbPresetsList.Properties.Items.EndUpdate(); }
             }
 
-            presetsList.SelectedIndex = 0;
+            cmbPresetsList.SelectedIndex = 0;
         }
 
         public Main() : base ("Quester Assistant")
@@ -122,7 +127,7 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        private void setsList_ButtonClick(object sender, ButtonPressedEventArgs e)
+        private void cmbPresetsList_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
             Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Tag));
 
@@ -135,16 +140,16 @@ namespace QuesterAssistant.Panels
                 case "Add":
                     Core.DebugWriteLine("Switch to Add");
                     string str = InputBox.MessageText("Enter a new profile name:");
-                    presetsList.Properties.Items.Add(str);
-                    presetsList.Refresh();
-                    presetsList.SelectedItem = str;
+                    cmbPresetsList.Properties.Items.Add(str);
+                    cmbPresetsList.Refresh();
+                    cmbPresetsList.SelectedItem = str;
                     break;
                 case "Delete":
                     if (XtraMessageBox.Show(Form.ActiveForm, "Caption", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        presetsList.Properties.Items.Remove(presetsList.SelectedItem);
-                        presetsList.Refresh();
-                        presetsList.SelectedIndex = presetsList.Properties.Items.Count - 1;
+                        cmbPresetsList.Properties.Items.Remove(cmbPresetsList.SelectedItem);
+                        cmbPresetsList.Refresh();
+                        cmbPresetsList.SelectedIndex = cmbPresetsList.Properties.Items.Count - 1;
                     }
                     break;
                 default:
@@ -154,18 +159,18 @@ namespace QuesterAssistant.Panels
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            PManager.SaveSettings(pManager, currCharClass);
+            //PManager.SaveSettings(pManager, currCharClass);
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
-            pManager = PManager.LoadSettings();
+            //pManager = PManager.LoadSettings();
         }
 
-        private void setsList_SelectItem(object sender, EventArgs e)
+        private void cmbPresetsList_SelectItem(object sender, EventArgs e)
         {
+            /*
             var s = (KeyValuePair<string, PList>)presetsList.Properties.Items[presetsList.SelectedIndex];
-
             Core.DebugWriteLine(string.Format("Key = {0}", s.Key));
 
             try
@@ -177,6 +182,7 @@ namespace QuesterAssistant.Panels
 
                 throw;
             }
+            */
         }
     }
 }
