@@ -26,7 +26,7 @@ namespace QuesterAssistant.Panels
     public partial class Main : BasePanel
     {
         private Timer timerIsConnecting;
-        PManager pManager = new PManager();
+        PManagerData pManager = new PManagerData();
 
         private void Initialize()
         {
@@ -53,7 +53,7 @@ namespace QuesterAssistant.Panels
         private void IsConnectingTick(object sender, EventArgs e)
         {
             currCharClass = EntityManager.LocalPlayer.Character.Class.Category;
-            if (SlottedPower.CanUpdate)
+            if (PManager.CanUpdate)
             {
                 if (currCharClass != prevCharClass)
                 {
@@ -74,8 +74,26 @@ namespace QuesterAssistant.Panels
             this.labelCharacterClass.Text = string.Format("Class:  {0}",
                 EntityManager.LocalPlayer.Character.Class.DisplayName);
 
-            slottedPowers = SlottedPower.GetSlottedPowers();
-            this.gridControlPowers.DataSource = slottedPowers;
+            //slottedPowers = SlottedPower.GetSlottedPowers();
+            //this.gridControlPowers.DataSource = slottedPowers;
+
+            pManager = PManager.LoadSettings();
+
+            presetsList.Properties.Items.Clear();
+            gridControlPowers.RefreshDataSource();
+
+            if (pManager.CharClasses[currCharClass].PLists.Count == 0)
+            {
+                presetsList.Properties.Items.Add("Create a new preset");
+            }
+            else
+            {
+                presetsList.Properties.Items.BeginUpdate();
+                try { presetsList.Properties.Items.AddRange(pManager.CharClasses[currCharClass].PLists); }
+                finally { presetsList.Properties.Items.EndUpdate(); }
+            }
+
+            presetsList.SelectedIndex = 0;
         }
 
         public Main() : base ("Quester Assistant")
@@ -87,7 +105,7 @@ namespace QuesterAssistant.Panels
 
         private void buttonGetPowers_Click(object sender, EventArgs e)
         {
-            if (SlottedPower.CanUpdate)
+            if (PManager.CanUpdate)
             {
                 OnCharClassChanged();
             }
@@ -95,11 +113,11 @@ namespace QuesterAssistant.Panels
 
         private void buttonSetPowers_Click(object sender, EventArgs e)
         {
-            if (SlottedPower.CanUpdate)
+            if (PManager.CanUpdate)
             {
                 foreach (var pwr in slottedPowers)
                 {
-                    Task.Factory.StartNew(() => SlottedPower.ApplyPower(pwr.Key, pwr.Value.PowerDef.InternalName));
+                    Task.Factory.StartNew(() => PManager.ApplyPower(pwr.Key, pwr.Value.PowerDef.InternalName));
                 }
             }
         }
@@ -117,16 +135,16 @@ namespace QuesterAssistant.Panels
                 case "Add":
                     Core.DebugWriteLine("Switch to Add");
                     string str = InputBox.MessageText("Enter a new profile name:");
-                    setsList.Properties.Items.Add(str);
-                    setsList.Refresh();
-                    setsList.SelectedItem = str;
+                    presetsList.Properties.Items.Add(str);
+                    presetsList.Refresh();
+                    presetsList.SelectedItem = str;
                     break;
                 case "Delete":
                     if (XtraMessageBox.Show(Form.ActiveForm, "Caption", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        setsList.Properties.Items.Remove(setsList.SelectedItem);
-                        setsList.Refresh();
-                        setsList.SelectedIndex = setsList.Properties.Items.Count - 1;
+                        presetsList.Properties.Items.Remove(presetsList.SelectedItem);
+                        presetsList.Refresh();
+                        presetsList.SelectedIndex = presetsList.Properties.Items.Count - 1;
                     }
                     break;
                 default:
@@ -136,33 +154,28 @@ namespace QuesterAssistant.Panels
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            PList pList = new PList
-            {
-                Powers = SlottedPower.GetSlottedPowersNames()
-            };
-
-            pManager.CharClasses[currCharClass].PLists.Add("Test Preset", pList);
-            pManager.CharClasses[currCharClass].PLists.Add("Test Preset2", pList);
-
-            try
-            {
-                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"), pManager);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
-            }
+            PManager.SaveSettings(pManager, currCharClass);
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
+            pManager = PManager.LoadSettings();
+        }
+
+        private void setsList_SelectItem(object sender, EventArgs e)
+        {
+            var s = (KeyValuePair<string, PList>)presetsList.Properties.Items[presetsList.SelectedIndex];
+
+            Core.DebugWriteLine(string.Format("Key = {0}", s.Key));
+
             try
             {
-                pManager = Astral.Functions.XmlSerializer.Deserialize<PManager>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
+                this.gridControlPowers.DataSource = s.Value.Powers;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+
+                throw;
             }
         }
     }

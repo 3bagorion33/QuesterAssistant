@@ -1,9 +1,11 @@
 ﻿using Astral.Logic.NW;
+using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -11,12 +13,12 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes
 {
-    public class PManager
+    public class PManagerData
     {
         public SerializableDictionary<CharClassCategory, PSet> CharClasses { get; set; }
         //public bool hkeys = false;
 
-        public PManager()
+        public PManagerData()
         {
             CharClasses = new SerializableDictionary<CharClassCategory, PSet>
             {
@@ -57,7 +59,10 @@ namespace QuesterAssistant.Classes
             };
         }
     }
-        internal static class SlottedPower
+
+
+
+    internal static class PManager
     {
         internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid && !EntityManager.LocalPlayer.IsLoading;
 
@@ -112,6 +117,40 @@ namespace QuesterAssistant.Classes
             Injection.cmdwrapper_PowerTray_Slot(playerPower, slot);
             Core.DebugWriteLine(string.Format("Slot power => {0}", newPower.PowerDef.InternalName));
             return true;
+        }
+
+        internal static PManagerData LoadSettings()
+        {
+            try
+            {
+                var pManager = Astral.Functions.XmlSerializer.Deserialize<PManagerData>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
+                return pManager;
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                return new PManagerData();
+            }
+        }
+
+        internal static void SaveSettings(PManagerData pManager, CharClassCategory currCharClass)
+        {
+            PList pList = new PList
+            {
+                Powers = PManager.GetSlottedPowersNames()
+            };
+
+            //pManager.CharClasses[currCharClass].PLists.Add("Test Preset", pList);
+            //pManager.CharClasses[currCharClass].PLists.Add("Test Preset2", pList);
+
+            try
+            {
+                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"), pManager);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
+            }
         }
     }
 }
