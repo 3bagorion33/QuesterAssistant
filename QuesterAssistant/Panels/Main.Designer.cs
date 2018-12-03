@@ -55,10 +55,10 @@
             this.xtraTabPowersManager = new DevExpress.XtraTab.XtraTabPage();
             this.gCtrlPowersPresets = new DevExpress.XtraEditors.GroupControl();
             this.cmbPresetsList = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.buttonSave = new DevExpress.XtraEditors.SimpleButton();
-            this.buttonLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.buttonGetPowers = new DevExpress.XtraEditors.SimpleButton();
-            this.buttonSetPowers = new DevExpress.XtraEditors.SimpleButton();
+            this.btnSave = new DevExpress.XtraEditors.SimpleButton();
+            this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
+            this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
+            this.btnSetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.groupControlCharInfo = new DevExpress.XtraEditors.GroupControl();
             this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
@@ -148,10 +148,10 @@
             // 
             this.gCtrlPowersPresets.AutoSize = true;
             this.gCtrlPowersPresets.Controls.Add(this.cmbPresetsList);
-            this.gCtrlPowersPresets.Controls.Add(this.buttonSave);
-            this.gCtrlPowersPresets.Controls.Add(this.buttonLoad);
-            this.gCtrlPowersPresets.Controls.Add(this.buttonGetPowers);
-            this.gCtrlPowersPresets.Controls.Add(this.buttonSetPowers);
+            this.gCtrlPowersPresets.Controls.Add(this.btnSave);
+            this.gCtrlPowersPresets.Controls.Add(this.btnLoad);
+            this.gCtrlPowersPresets.Controls.Add(this.btnGetPowers);
+            this.gCtrlPowersPresets.Controls.Add(this.btnSetPowers);
             this.gCtrlPowersPresets.Controls.Add(this.gridControlPowers);
             this.gCtrlPowersPresets.GroupStyle = DevExpress.Utils.GroupStyle.Light;
             this.gCtrlPowersPresets.Location = new System.Drawing.Point(10, 63);
@@ -167,55 +167,57 @@
             this.cmbPresetsList.Location = new System.Drawing.Point(86, 1);
             this.cmbPresetsList.Name = "cmbPresetsList";
             this.cmbPresetsList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a set", "Select", null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new set", "Add", null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Change set list order", "Sort", null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Delete current set", "Delete", null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a preset", "Select", null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new preset", "Add", null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Change preset list order", "Sort", null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Delete current preset", "Delete", null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.cmbPresetsList.Properties.NullText = "Create a new preset";
             this.cmbPresetsList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cmbPresetsList.Properties.PropertiesChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
             this.cmbPresetsList.Size = new System.Drawing.Size(259, 20);
             this.cmbPresetsList.TabIndex = 4;
-            this.cmbPresetsList.SelectedIndexChanged += new System.EventHandler(this.cmbPresetsList_SelectItem);
+            this.cmbPresetsList.SelectedIndexChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
             this.cmbPresetsList.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.cmbPresetsList_ButtonClick);
             // 
-            // buttonSave
+            // btnSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(86, 67);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 1;
-            this.buttonSave.Text = "Save";
-            this.buttonSave.ToolTip = "Save settings";
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.btnSave.Location = new System.Drawing.Point(86, 67);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 1;
+            this.btnSave.Text = "Save";
+            this.btnSave.ToolTip = "Save settings";
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // buttonLoad
+            // btnLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(5, 67);
-            this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(75, 23);
-            this.buttonLoad.TabIndex = 1;
-            this.buttonLoad.Text = "Load";
-            this.buttonLoad.ToolTip = "Load settings";
-            this.buttonLoad.Click += new System.EventHandler(this.buttonLoad_Click);
+            this.btnLoad.Location = new System.Drawing.Point(5, 67);
+            this.btnLoad.Name = "btnLoad";
+            this.btnLoad.Size = new System.Drawing.Size(75, 23);
+            this.btnLoad.TabIndex = 1;
+            this.btnLoad.Text = "Load";
+            this.btnLoad.ToolTip = "Load settings";
+            this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // buttonGetPowers
+            // btnGetPowers
             // 
-            this.buttonGetPowers.Location = new System.Drawing.Point(187, 67);
-            this.buttonGetPowers.Name = "buttonGetPowers";
-            this.buttonGetPowers.Size = new System.Drawing.Size(75, 23);
-            this.buttonGetPowers.TabIndex = 1;
-            this.buttonGetPowers.Text = "Get Powers";
-            this.buttonGetPowers.ToolTip = "Get powers list from the game";
-            this.buttonGetPowers.Click += new System.EventHandler(this.buttonGetPowers_Click);
+            this.btnGetPowers.Location = new System.Drawing.Point(187, 67);
+            this.btnGetPowers.Name = "btnGetPowers";
+            this.btnGetPowers.Size = new System.Drawing.Size(75, 23);
+            this.btnGetPowers.TabIndex = 1;
+            this.btnGetPowers.Text = "Get Powers";
+            this.btnGetPowers.ToolTip = "Get powers list from the game";
+            this.btnGetPowers.Click += new System.EventHandler(this.btnGetPowers_Click);
             // 
-            // buttonSetPowers
+            // btnSetPowers
             // 
-            this.buttonSetPowers.Location = new System.Drawing.Point(268, 67);
-            this.buttonSetPowers.Name = "buttonSetPowers";
-            this.buttonSetPowers.Size = new System.Drawing.Size(75, 23);
-            this.buttonSetPowers.TabIndex = 1;
-            this.buttonSetPowers.Text = "Set Powers";
-            this.buttonSetPowers.ToolTip = "Set powers list to the game";
-            this.buttonSetPowers.Click += new System.EventHandler(this.buttonSetPowers_Click);
+            this.btnSetPowers.Location = new System.Drawing.Point(268, 67);
+            this.btnSetPowers.Name = "btnSetPowers";
+            this.btnSetPowers.Size = new System.Drawing.Size(75, 23);
+            this.btnSetPowers.TabIndex = 1;
+            this.btnSetPowers.Text = "Set Powers";
+            this.btnSetPowers.ToolTip = "Send powers list to the game";
+            this.btnSetPowers.Click += new System.EventHandler(this.btnSetPowers_Click);
             // 
             // groupControlCharInfo
             // 
@@ -326,11 +328,11 @@
         private DevExpress.XtraEditors.LabelControl labelAuthor;
         private DevExpress.XtraEditors.LabelControl labelVersion;
         private DevExpress.XtraGrid.GridControl gridControlPowers;
-        private DevExpress.XtraEditors.SimpleButton buttonGetPowers;
-        private DevExpress.XtraEditors.SimpleButton buttonSetPowers;
+        private DevExpress.XtraEditors.SimpleButton btnGetPowers;
+        private DevExpress.XtraEditors.SimpleButton btnSetPowers;
         private DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
         private DevExpress.XtraEditors.ComboBoxEdit cmbPresetsList;
-        private DevExpress.XtraEditors.SimpleButton buttonSave;
-        private DevExpress.XtraEditors.SimpleButton buttonLoad;
+        private DevExpress.XtraEditors.SimpleButton btnSave;
+        private DevExpress.XtraEditors.SimpleButton btnLoad;
     }
 }

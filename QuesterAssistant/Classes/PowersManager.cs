@@ -1,4 +1,5 @@
 ﻿using Astral.Logic.NW;
+using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
@@ -53,8 +54,9 @@ namespace QuesterAssistant.Classes
         public string Name { get; set; }
         public List<Power> PowersList { get; set; }
         public Preset() { }
-        public Preset(bool b)
+        public Preset(string name)
         {
+            Name = name;
             PowersList = new List<Power>()
             {
                 { new Power(TraySlot.AtWill1, string.Empty) },
@@ -69,6 +71,11 @@ namespace QuesterAssistant.Classes
                 { new Power(TraySlot.Mechanic, string.Empty) },
             };
         }
+        public Preset(string name, List<Power> powers)
+        {
+            Name = name;
+            PowersList = powers;
+        }
     }
 
     public class Power
@@ -82,26 +89,20 @@ namespace QuesterAssistant.Classes
             this.TraySlot = traySlot;
             this.InternalName = iName;
         }
+
+        internal Power ToDispName()
+        {
+            return new Power(this.TraySlot, Powers.GetPowerByInternalName(this.InternalName).PowerDef.DisplayName);
+        }
     }
 
     internal static class PManager
     {
-        internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid && !EntityManager.LocalPlayer.IsLoading;
+        //internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid && !EntityManager.LocalPlayer.IsLoading;
+        internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid;
+        internal static CharacterClass CurrCharClass => EntityManager.LocalPlayer.Character.Class;
 
-        internal static Dictionary<TraySlot, MyNW.Classes.Power> GetSlottedPowers()
-        {
-            Dictionary<TraySlot, MyNW.Classes.Power> slottedPowers = new Dictionary<TraySlot, MyNW.Classes.Power>();
-            slottedPowers.Add(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic));
-
-            for (int i = 0; i < 9; i++)
-            {
-                slottedPowers.Add((TraySlot)i, Powers.GetPowerBySlot(i));
-            }
-
-            return slottedPowers;
-        }
-
-        internal static List<Power> GetSlottedPowersNames()
+        internal static List<Power> GetSlottedPowers()
         {
             List<Power> slottedPowers = new List<Power>();
             slottedPowers.Add(new Power(TraySlot.Mechanic, Powers.GetPowerBySlot((int)TraySlot.Mechanic).PowerDef.InternalName));
@@ -143,55 +144,39 @@ namespace QuesterAssistant.Classes
 
         internal static PowerManagerData LoadSettings()
         {
-            PowerManagerData pManager;
-            try
+            var path = Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml");
+
+            if (File.Exists(path))
             {
-                pManager = Astral.Functions.XmlSerializer.Deserialize<PowerManagerData>(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"));
+                PowerManagerData pManager;
+                try
+                {
+                    pManager = Astral.Functions.XmlSerializer.Deserialize<PowerManagerData>(path);
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    pManager = new PowerManagerData(true);
+                }
+                if (pManager.CharClassesList == null)
+                {
+                    pManager = new PowerManagerData(true);
+                }
+                return pManager;
             }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
-                pManager = new PowerManagerData(true);
-            }
-            if (pManager.CharClassesList == null)
-            {
-                pManager = new PowerManagerData(true);
-            }
-            return pManager;
+            return new PowerManagerData(true);
         }
 
-        internal static void SaveSettings(PowerManagerData pManager, CharClassCategory currCharClass)
+        internal static void SaveSettings(PowerManagerData pManager)
         {
-            Preset preset = new Preset
-            {
-                PowersList = GetSlottedPowersNames(),
-                Name = "Test"
-            };
-
-            var idxCharClass = pManager.CharClassesList.FindIndex(x => x.CharClassCategory == currCharClass);
-            Core.DebugWriteLine(string.Format("Class: {0}[{1}] ", currCharClass, idxCharClass));
+            var idxCharClass = pManager.CharClassesList.FindIndex(x => x.CharClassCategory == CurrCharClass.Category);
+            Core.DebugWriteLine(string.Format("Class: {0}[{1}] ", CurrCharClass, idxCharClass));
             if (idxCharClass < 0)
             {
                 XtraMessageBox.AllowCustomLookAndFeel = true;
                 XtraMessageBox.Show("Invalid character class!");
                 return;
             }
-
-            var idxPreset = pManager.CharClassesList[idxCharClass].PresetsList.FindIndex(x => x.Name == preset.Name);
-            Core.DebugWriteLine(string.Format("Class: {0}[{1}] => Preset {2}[{3}]", currCharClass, idxCharClass, preset.Name, idxPreset));
-
-            if (idxPreset < 0)
-            {
-                pManager.CharClassesList[idxCharClass].PresetsList.Add(preset);
-            }
-            else
-            {
-                pManager.CharClassesList[idxCharClass].PresetsList.RemoveAt(idxPreset);
-                pManager.CharClassesList[idxCharClass].PresetsList.Insert(idxPreset, preset);
-            }
-
-            //pManager.CharClasses[currCharClass].PLists.Add("Test Preset", pList);
-            //pManager.CharClasses[currCharClass].PLists.Add("Test Preset2", pList);
 
             try
             {
