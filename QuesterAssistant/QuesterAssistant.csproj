@@ -182,7 +182,6 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="App.config" />
     <None Include="Temp\InputBox.cs">
       <SubType>Form</SubType>
     </None>

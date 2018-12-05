@@ -14,6 +14,7 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes
 {
+    [Serializable]
     public class PowerManagerData
     {
         public List<CharClass> CharClassesList { get; set; }
@@ -35,7 +36,7 @@ namespace QuesterAssistant.Classes
             };
         }
     }
-
+    [Serializable]
     public class CharClass
     {
         public CharClassCategory CharClassCategory { get; set; }
@@ -48,7 +49,7 @@ namespace QuesterAssistant.Classes
             PresetsList = new List<Preset>();
         }
     }
-
+    [Serializable]
     public class Preset
     {
         public string Name { get; set; }
@@ -77,7 +78,7 @@ namespace QuesterAssistant.Classes
             PowersList = powers;
         }
     }
-
+    [Serializable]
     public class Power
     {
         public TraySlot TraySlot { get; set; }
@@ -131,13 +132,15 @@ namespace QuesterAssistant.Classes
             }
 
             var currPower = Powers.GetPowerBySlot((int)slot);
-            while (currPower.IsOnCooldown())
+
+            while (currPower.RechargeTime > 0 || currPower.SubCombatStatePowers.Exists(x => x.RechargeTime > 0))
             {
+                Core.DebugWriteLine(currPower.PowerDef.DisplayName);
                 Thread.Sleep(200);
             }
+            Core.DebugWriteLine(currPower.PowerDef.DisplayName);
             Thread.Sleep(400);
-            var playerPower = EntityManager.LocalPlayer.Character.Powers.Find(x => x.PowerDef.InternalName == newPowerInternalName);
-            Injection.cmdwrapper_PowerTray_Slot(playerPower, slot);
+            Injection.cmdwrapper_PowerTray_Slot(newPower, slot);
             Core.DebugWriteLine(string.Format("Slot power => {0}", newPower.PowerDef.InternalName));
             return true;
         }

@@ -24,7 +24,18 @@ namespace QuesterAssistant.Panels
 {
     public partial class Main : BasePanel
     {
-        private Timer timerIsConnecting;
+        public Main() : base("Quester Assistant")
+        {
+            InitializeComponent();
+            InitializePManager();
+            components = new Container();
+            components.Add(timerCharCheck);
+            OnPanelLeave += this.Dispose;
+        }
+
+        private void Dispose(object s, EventArgs e) { this.Dispose(true); }
+
+        #region Power Manager Tab
         PowerManagerData pManager = new PowerManagerData(true);
         private CharClassCategory prevCharClass;
         private List<Preset> CurrPresets
@@ -39,15 +50,8 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        private void Initialize()
+        private void InitializePManager()
         {
-            this.components = new Container();
-            this.timerIsConnecting = new Timer(this.components)
-            {
-                Enabled = true,
-                Interval = 1000
-            };
-            this.timerIsConnecting.Tick += new EventHandler(this.IsConnectingTick);
             this.CharClassChanging += new EventHandler(this.FormUpdate);
 
             pManager = PManager.LoadSettings();
@@ -56,18 +60,9 @@ namespace QuesterAssistant.Panels
 #endif
         }
 
-        public Main() : base("Quester Assistant")
-        {
-            InitializeComponent();
-            Initialize();
-            OnPanelLeave += this.Dispose;
-        }
-
-        private void Dispose(object s, EventArgs e) { this.Dispose(true); }
-
         private event EventHandler CharClassChanging;
 
-        private void IsConnectingTick(object sender, EventArgs e)
+        private void CharCheck(object sender, EventArgs e)
         {
             if (PManager.CanUpdate)
             {
@@ -90,6 +85,14 @@ namespace QuesterAssistant.Panels
                 PManager.CurrCharClass.DisplayName);
 
             cmbPresetsList_Update();
+            foreach (var treeBuild in MyNW.Internals.EntityManager.LocalPlayer.Character.PowerTreeBuilds)
+            {
+                foreach (var secondaryPath in treeBuild.SecondaryPaths)
+                {
+                    Astral.Logger.WriteLine("Paragon Path : " + secondaryPath.Path.DisplayName);
+                    return;
+                }
+            }
         }
 
         private void btnGetPowers_Click(object sender, EventArgs e)
@@ -124,6 +127,7 @@ namespace QuesterAssistant.Panels
                         //setsList.Properties.Items.Add("New item");
 
                         break;
+
                     case "Add":
                         string str = InputBox.MessageText("Enter a new profile name:");
                         if (str.Any())
@@ -132,6 +136,7 @@ namespace QuesterAssistant.Panels
                             cmbPresetsList_Update(cmbPresetsList.Properties.Items.Count);
                         }
                         break;
+
                     case "Delete":
                         if (CurrPresets.Any() &&
                             (XtraMessageBox.Show(Form.ActiveForm, "Delete this preset?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
@@ -140,6 +145,10 @@ namespace QuesterAssistant.Panels
                             cmbPresetsList_Update();
                         }
                         break;
+
+                    case "Sort":
+                        break;
+
                     default:
                         break;
                 }
@@ -168,30 +177,58 @@ namespace QuesterAssistant.Panels
 
         private void gridControlPowers_Update()
         {
-            Core.DebugWriteLine(string.Format("gridControlPowers_Update => \ncmbPresetsList.SelectedIndex: {0}", cmbPresetsList.SelectedIndex));
-            List<Power> pList = new List<Power>();
-            if (cmbPresetsList.SelectedIndex < 0) { gridControlPowers.DataSource = pList; return; }
-            if (CurrPresets.Any())
+            gridControlPowers.BeginUpdate();
+            try
             {
-                pList = CurrPresets[cmbPresetsList.SelectedIndex].PowersList.Select(delegate (Power x) { return x.ToDispName(); }).ToList();
+                gridControlPowers.DataSource = null;
+                Core.DebugWriteLine(string.Format("gridControlPowers_Update => \ncmbPresetsList.SelectedIndex: {0}", cmbPresetsList.SelectedIndex));
+                List<Power> pList = new List<Power>();
+                if (cmbPresetsList.SelectedIndex < 0) { gridControlPowers.DataSource = pList; return; }
+                if (CurrPresets.Any())
+                {
+                    pList = CurrPresets[cmbPresetsList.SelectedIndex].PowersList.Select(x => x.ToDispName()).ToList();
+                }
+                gridControlPowers.DataSource = pList;
             }
-            gridControlPowers.DataSource = pList;
+            finally
+            {
+                gridControlPowers.EndUpdate();
+            }
         }
 
         private void cmbPresetsList_Update(int selIdx = -1)
         {
             cmbPresetsList.Properties.Items.Clear();
             cmbPresetsList.Properties.Items.BeginUpdate();
-            if (CurrPresets.Any())
+            try
             {
-                foreach (var item in CurrPresets)
+                if (CurrPresets.Any())
                 {
-                    cmbPresetsList.Properties.Items.Add(item.Name);
+                    foreach (var item in CurrPresets)
+                    {
+                        cmbPresetsList.Properties.Items.Add(item.Name);
+                    }
+                    if (selIdx == -1) selIdx = 0;
                 }
-                if (selIdx == -1) selIdx = 0;
             }
-            cmbPresetsList.Properties.Items.EndUpdate();
+            finally
+            {
+                cmbPresetsList.Properties.Items.EndUpdate();
+            }
             cmbPresetsList.SelectedIndex = selIdx;
+        }
+        #endregion
+
+        private void tedHotKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            var tmp = (int)e.KeyData;
+            KeysConverter kc = new KeysConverter();
+
+            tedHotKey.Text = kc.ConvertToString((Keys.Modifiers | Keys.KeyCode) & e.KeyData);
+            //tedHotKey.Text = kc.ConvertToString(e.KeyCode | Control.ModifierKeys);
+            // KeyCode - последняя нажатая клавиша
+            // KeyData - все нажатые клавиши
+            //tedHotKey.Text = (e.KeyData & Keys.Modifiers).ToString();
         }
     }
 }
