@@ -53,6 +53,20 @@ namespace QuesterAssistant.Classes
     public class Preset
     {
         public string Name { get; set; }
+        public string HotKeys
+        {
+            get
+            {
+                var kc = new KeysConverter();
+                return kc.ConvertToString(Keys);
+            }
+            set
+            {
+                var kc = new KeysConverter();
+                Keys = (Keys)kc.ConvertFromString(value);
+            }
+        }
+        internal Keys Keys;
         public List<Power> PowersList { get; set; }
         public Preset() { }
         public Preset(string name)
@@ -99,8 +113,7 @@ namespace QuesterAssistant.Classes
 
     internal static class PManager
     {
-        //internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid && !EntityManager.LocalPlayer.IsLoading;
-        internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid;
+        internal static bool CanUpdate => EntityManager.LocalPlayer.IsValid; //&& !EntityManager.LocalPlayer.IsLoading;
         internal static CharacterClass CurrCharClass => EntityManager.LocalPlayer.Character.Class;
 
         internal static List<Power> GetSlottedPowers()

@@ -12,6 +12,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Resources;
@@ -155,24 +156,11 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            if (PManager.CanUpdate)
-            {
-                PManager.SaveSettings(pManager);
-            }
-        }
-
-        private void btnLoad_Click(object sender, EventArgs e)
-        {
-            pManager = PManager.LoadSettings();
-            cmbPresetsList_Update();
-        }
-
         private void cmbPresetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             Core.DebugWriteLine(string.Format("SelectedIndexChanged => {0}", cmbPresetsList.SelectedIndex));
             gridControlPowers_Update();
+            tedHotKey_Update();
         }
 
         private void gridControlPowers_Update()
@@ -217,18 +205,55 @@ namespace QuesterAssistant.Panels
             }
             cmbPresetsList.SelectedIndex = selIdx;
         }
-        #endregion
 
         private void tedHotKey_KeyDown(object sender, KeyEventArgs e)
         {
-            var tmp = (int)e.KeyData;
-            KeysConverter kc = new KeysConverter();
-
-            tedHotKey.Text = kc.ConvertToString((Keys.Modifiers | Keys.KeyCode) & e.KeyData);
-            //tedHotKey.Text = kc.ConvertToString(e.KeyCode | Control.ModifierKeys);
+            //var keymask = Keys.LWin | Keys.RWin | Keys.ShiftKey | Keys.ControlKey | Keys.Menu | Keys.Apps;
             // KeyCode - последняя нажатая клавиша
             // KeyData - все нажатые клавиши
-            //tedHotKey.Text = (e.KeyData & Keys.Modifiers).ToString();
+            if (PManager.CanUpdate)
+            {
+                KeysConverter kc = new KeysConverter();
+                if (e.Shift || e.Control || e.Alt)
+                {
+                    string str = kc.ConvertToString(e.Modifiers);
+                    tedHotKey.Text = str.Remove(str.Length - 4);
+                }
+
+                if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
+                    e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
+                {
+                    base.ActiveControl = null;
+                    CurrPresets[cmbPresetsList.SelectedIndex].Keys = e.KeyData;
+                    tedHotKey_Update();
+                }
+            }
+        }
+
+        private void tedHotKey_Update()
+        {
+            if (PManager.CanUpdate && (cmbPresetsList.SelectedIndex != -1))
+            {
+                tedHotKey.Text = CurrPresets[cmbPresetsList.SelectedIndex].HotKeys;
+            }
+        }
+        #endregion
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            if (mainTabControl.SelectedTabPage.Equals(pManagerTab) && PManager.CanUpdate)
+            {
+                PManager.SaveSettings(pManager);
+            }
+        }
+
+        private void btnLoad_Click(object sender, EventArgs e)
+        {
+            if (mainTabControl.SelectedTabPage.Equals(pManagerTab))
+            {
+                pManager = PManager.LoadSettings();
+                cmbPresetsList_Update();
+            }
         }
     }
 }
