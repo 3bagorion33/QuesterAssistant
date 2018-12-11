@@ -107,7 +107,9 @@ namespace QuesterAssistant.Classes
 
         internal Power ToDispName()
         {
-            return new Power(this.TraySlot, Powers.GetPowerByInternalName(this.InternalName).PowerDef.DisplayName);
+            var pwr = Powers.GetPowerByInternalName(this.InternalName);
+            if (!pwr.IsValid) return new Power(this.TraySlot, "Unknown spell");
+            return new Power(this.TraySlot, (pwr.IsInTray ? "[Slotted] " : "") + pwr.PowerDef.DisplayName);
         }
     }
 

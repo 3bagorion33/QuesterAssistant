@@ -73,43 +73,50 @@ namespace QuesterAssistant.Panels
                     prevCharClass = PManager.CurrCharClass.Category;
                 }
             }
+            gridControlPowers_Update();
         }
 
         private void FormUpdate(object sender, EventArgs e)
         {
             Core.DebugWriteLine("FormUpdate Event");
-            this.labelCharacterName.Text = string.Format("Name:  {0}",
-                //EntityManager.LocalPlayer.Character.Class.GetPaths().Find(x => x.PowerTree.TreeTypeDef.Name == "Paragon").DisplayName);
-                EntityManager.LocalPlayer.Name);
+            this.labelCharacterName.Text = "Paragon:  " +
+                EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName;
 
-            this.labelCharacterClass.Text = string.Format("Class:  {0}",
-                PManager.CurrCharClass.DisplayName);
+            this.labelCharacterClass.Text = "Class:  " +
+                PManager.CurrCharClass.DisplayName;
 
             cmbPresetsList_Update();
-            foreach (var treeBuild in MyNW.Internals.EntityManager.LocalPlayer.Character.PowerTreeBuilds)
+            //Core.DebugWriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
+            //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
+        }
+
+        private void gridControlPowers_Update()
+        {
+            gridControlPowers.BeginUpdate();
+            try
             {
-                foreach (var secondaryPath in treeBuild.SecondaryPaths)
-                {
-                    Astral.Logger.WriteLine("Paragon Path : " + secondaryPath.Path.DisplayName);
-                    return;
-                }
+                gridControlPowers.DataSource = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
+            }
+            finally
+            {
+                gridControlPowers.EndUpdate();
             }
         }
 
         private void btnGetPowers_Click(object sender, EventArgs e)
         {
-            if (PManager.CanUpdate && (cmbPresetsList.SelectedIndex != -1))
+            if (PManager.CanUpdate && CurrPresets.Any())
             {
-                CurrPresets[cmbPresetsList.SelectedIndex].PowersList = PManager.GetSlottedPowers();
+                CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = PManager.GetSlottedPowers();
                 gridControlPowers_Update();
             }
         }
 
         private void btnSetPowers_Click(object sender, EventArgs e)
         {
-            if (PManager.CanUpdate && (cmbPresetsList.SelectedIndex != -1))
+            if (PManager.CanUpdate && CurrPresets.Any())
             {
-                foreach (var pwr in CurrPresets[cmbPresetsList.SelectedIndex].PowersList)
+                foreach (var pwr in CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList)
                 {
                     Task.Factory.StartNew(() => PManager.ApplyPower(pwr.TraySlot, pwr.InternalName));
                 }
@@ -163,27 +170,6 @@ namespace QuesterAssistant.Panels
             tedHotKey_Update();
         }
 
-        private void gridControlPowers_Update()
-        {
-            gridControlPowers.BeginUpdate();
-            try
-            {
-                gridControlPowers.DataSource = null;
-                Core.DebugWriteLine(string.Format("gridControlPowers_Update => \ncmbPresetsList.SelectedIndex: {0}", cmbPresetsList.SelectedIndex));
-                List<Power> pList = new List<Power>();
-                if (cmbPresetsList.SelectedIndex < 0) { gridControlPowers.DataSource = pList; return; }
-                if (CurrPresets.Any())
-                {
-                    pList = CurrPresets[cmbPresetsList.SelectedIndex].PowersList.Select(x => x.ToDispName()).ToList();
-                }
-                gridControlPowers.DataSource = pList;
-            }
-            finally
-            {
-                gridControlPowers.EndUpdate();
-            }
-        }
-
         private void cmbPresetsList_Update(int selIdx = -1)
         {
             cmbPresetsList.Properties.Items.Clear();
@@ -224,7 +210,7 @@ namespace QuesterAssistant.Panels
                     e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
                 {
                     base.ActiveControl = null;
-                    CurrPresets[cmbPresetsList.SelectedIndex].Keys = e.KeyData;
+                    CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = e.KeyData;
                     tedHotKey_Update();
                 }
             }
@@ -232,9 +218,9 @@ namespace QuesterAssistant.Panels
 
         private void tedHotKey_Update()
         {
-            if (PManager.CanUpdate && (cmbPresetsList.SelectedIndex != -1))
+            if (PManager.CanUpdate && CurrPresets.Any())
             {
-                tedHotKey.Text = CurrPresets[cmbPresetsList.SelectedIndex].HotKeys;
+                tedHotKey.Text = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys;
             }
         }
         #endregion
