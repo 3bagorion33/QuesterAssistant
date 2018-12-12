@@ -73,7 +73,7 @@ namespace QuesterAssistant.Panels
                     prevCharClass = PManager.CurrCharClass.Category;
                 }
             }
-            gridControlPowers_Update();
+            powerListSource_Update();
         }
 
         private void FormUpdate(object sender, EventArgs e)
@@ -90,17 +90,9 @@ namespace QuesterAssistant.Panels
             //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
         }
 
-        private void gridControlPowers_Update()
+        private void powerListSource_Update()
         {
-            gridControlPowers.BeginUpdate();
-            try
-            {
-                gridControlPowers.DataSource = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
-            }
-            finally
-            {
-                gridControlPowers.EndUpdate();
-            }
+            powerListSource.DataSource = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
         }
 
         private void btnGetPowers_Click(object sender, EventArgs e)
@@ -108,7 +100,7 @@ namespace QuesterAssistant.Panels
             if (PManager.CanUpdate && CurrPresets.Any())
             {
                 CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = PManager.GetSlottedPowers();
-                gridControlPowers_Update();
+                powerListSource_Update();
             }
         }
 
@@ -118,7 +110,7 @@ namespace QuesterAssistant.Panels
             {
                 foreach (var pwr in CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList)
                 {
-                    Task.Factory.StartNew(() => PManager.ApplyPower(pwr.TraySlot, pwr.InternalName));
+                    Task.Factory.StartNew(() => PManager.ApplyPower(pwr));
                 }
             }
         }
@@ -129,7 +121,7 @@ namespace QuesterAssistant.Panels
             {
                 Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Tag));
 
-                switch (e.Button.Tag.ToString())
+                switch (e.Button.Caption)
                 {
                     case "Select":
                         //setsList.Properties.Items.Add("New item");
@@ -166,7 +158,7 @@ namespace QuesterAssistant.Panels
         private void cmbPresetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             Core.DebugWriteLine(string.Format("SelectedIndexChanged => {0}", cmbPresetsList.SelectedIndex));
-            gridControlPowers_Update();
+            powerListSource_Update();
             tedHotKey_Update();
         }
 
@@ -223,6 +215,49 @@ namespace QuesterAssistant.Panels
                 tedHotKey.Text = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys;
             }
         }
+
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        private static extern short GetAsyncKeyState(Keys vKey);
+
+        private Thread keyboardT;
+
+        private static bool IsKeyPressed(Keys vKey)
+        {
+            if (GetAsyncKeyState(vKey) == 1 || GetAsyncKeyState(vKey) == short.MinValue) return true;
+            return false;
+        }
+
+        private void KeyLogger()
+        {
+            Core.DebugWriteLine("Keylogger is started");
+            while (true)
+            {
+                Core.DebugWriteLine("Keylogger tick");
+                //Core.DebugWriteLine(CurrPresets?.Find(x => IsKeyPressed(x.Keys))?.Name);
+                //var a = CurrPresets?.Find(x => IsKeyPressed(x.Keys))?.PowersList;
+                //a?.ForEach(PManager.ApplyPower);
+                Thread.Sleep(200);
+            }
+        }
+
+        private void chkHotKeys_CheckedChanged(object sender, EventArgs e)
+        {
+            switch (chkHotKeys.EditValue)
+            {
+                case true:
+                    Core.DebugWriteLine("Start Keylogger");
+                    keyboardT = new Thread(() => KeyLogger());
+                    if (!keyboardT.IsAlive) keyboardT.Start(); //= Task.Factory.StartNew(KeyLogger);
+                    break;
+                case false:
+                    Core.DebugWriteLine("Stop Keylogger");
+                    if (keyboardT.IsAlive) keyboardT.Abort();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         #endregion
 
         private void btnSave_Click(object sender, EventArgs e)

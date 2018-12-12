@@ -131,22 +131,22 @@ namespace QuesterAssistant.Classes
             return slottedPowers;
         }
 
-        internal static bool ApplyPower(TraySlot slot, string newPowerInternalName)
+        internal static void ApplyPower(Power pwr)
         {
-            MyNW.Classes.Power newPower = Powers.GetPowerByInternalName(newPowerInternalName);
+            MyNW.Classes.Power newPower = Powers.GetPowerByInternalName(pwr.InternalName);
             if (!newPower.IsValid)
             {
                 Core.DebugWriteLine(string.Format("{0} not valid", newPower.PowerDef.InternalName));
-                return false;
+                return;
             }
 
-            if (newPower.TraySlot == (uint)slot)
+            if (newPower.TraySlot == (uint)pwr.TraySlot)
             {
-                Core.DebugWriteLine(string.Format("{0} => {1}", newPowerInternalName, newPower.PowerDef.InternalName));
-                return true;
+                Core.DebugWriteLine(string.Format("{0} => {1}", pwr.InternalName, newPower.PowerDef.InternalName));
+                return;
             }
 
-            var currPower = Powers.GetPowerBySlot((int)slot);
+            var currPower = Powers.GetPowerBySlot((int)pwr.TraySlot);
 
             while (currPower.RechargeTime > 0 || currPower.SubCombatStatePowers.Exists(x => x.RechargeTime > 0))
             {
@@ -155,9 +155,9 @@ namespace QuesterAssistant.Classes
             }
             Core.DebugWriteLine(currPower.PowerDef.DisplayName);
             Thread.Sleep(400);
-            Injection.cmdwrapper_PowerTray_Slot(newPower, slot);
+            Injection.cmdwrapper_PowerTray_Slot(newPower, pwr.TraySlot);
             Core.DebugWriteLine(string.Format("Slot power => {0}", newPower.PowerDef.InternalName));
-            return true;
+            return;
         }
 
         internal static PowerManagerData LoadSettings()
