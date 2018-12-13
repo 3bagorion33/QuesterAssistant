@@ -7,6 +7,7 @@ using DevExpress.XtraEditors.Controls;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Hooks;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +35,11 @@ namespace QuesterAssistant.Panels
             OnPanelLeave += this.Dispose;
         }
 
-        private void Dispose(object s, EventArgs e) { this.Dispose(true); }
+        private void Dispose(object s, EventArgs e)
+        {
+            Core.DebugWriteLine("Dispose event");
+            this.Dispose(true);
+        }
 
         #region Power Manager Tab
         PowerManagerData pManager = new PowerManagerData(true);
@@ -45,7 +50,7 @@ namespace QuesterAssistant.Panels
             {
                 if (PManager.CanUpdate)
                 {
-                    return pManager.CharClassesList.Find(x => x.CharClassCategory == PManager.CurrCharClass.Category).PresetsList;
+                    return pManager?.CharClassesList?.Find(x => x.CharClassCategory == PManager.CurrCharClass.Category).PresetsList ?? new List<Preset>();
                 }
                 return new List<Preset>();
             }
@@ -53,25 +58,26 @@ namespace QuesterAssistant.Panels
 
         private void InitializePManager()
         {
-            this.CharClassChanging += new EventHandler(this.FormUpdate);
+            this.CharClassChanging += this.FormUpdate;
 
             pManager = PManager.LoadSettings();
 #if DEBUG
             Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager_deb.xml"), pManager);
 #endif
+            keyboardHook.KeysMask.AddRange(keysMask);
+            keyboardHook.KeyDown += keyboardHook_KeyDown;
+
+            chkHotKeys.Checked = pManager.HotKeysEnabled;
         }
 
         private event EventHandler CharClassChanging;
 
         private void CharCheck(object sender, EventArgs e)
         {
-            if (PManager.CanUpdate)
+            if (PManager.CurrCharClass.Category != prevCharClass)
             {
-                if (PManager.CurrCharClass.Category != prevCharClass)
-                {
-                    CharClassChanging?.Invoke(this, EventArgs.Empty);
-                    prevCharClass = PManager.CurrCharClass.Category;
-                }
+                CharClassChanging?.Invoke(this, EventArgs.Empty);
+                prevCharClass = PManager.CurrCharClass.Category;
             }
             powerListSource_Update();
         }
@@ -108,10 +114,7 @@ namespace QuesterAssistant.Panels
         {
             if (PManager.CanUpdate && CurrPresets.Any())
             {
-                foreach (var pwr in CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList)
-                {
-                    Task.Factory.StartNew(() => PManager.ApplyPower(pwr));
-                }
+                PManager.ApplyPowers(CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
             }
         }
 
@@ -123,11 +126,6 @@ namespace QuesterAssistant.Panels
 
                 switch (e.Button.Caption)
                 {
-                    case "Select":
-                        //setsList.Properties.Items.Add("New item");
-
-                        break;
-
                     case "Add":
                         string str = InputBox.MessageText("Enter a new profile name:");
                         if (str.Any())
@@ -184,9 +182,16 @@ namespace QuesterAssistant.Panels
             cmbPresetsList.SelectedIndex = selIdx;
         }
 
+        private static List<Keys> keysMask = new List<Keys> {
+            Keys.LWin, Keys.RWin,
+            Keys.LShiftKey, Keys.RShiftKey,
+            Keys.LControlKey, Keys.RControlKey,
+            Keys.LMenu, Keys.RMenu,
+            Keys.Apps, Keys.Back
+        };
+
         private void tedHotKey_KeyDown(object sender, KeyEventArgs e)
         {
-            //var keymask = Keys.LWin | Keys.RWin | Keys.ShiftKey | Keys.ControlKey | Keys.Menu | Keys.Apps;
             // KeyCode - последняя нажатая клавиша
             // KeyData - все нажатые клавиши
             if (PManager.CanUpdate)
@@ -202,7 +207,7 @@ namespace QuesterAssistant.Panels
                     e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
                 {
                     base.ActiveControl = null;
-                    CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = e.KeyData;
+                    CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
                     tedHotKey_Update();
                 }
             }
@@ -210,51 +215,39 @@ namespace QuesterAssistant.Panels
 
         private void tedHotKey_Update()
         {
-            if (PManager.CanUpdate && CurrPresets.Any())
-            {
-                tedHotKey.Text = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys;
-            }
+            tedHotKey.Text = CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
         }
 
-        [System.Runtime.InteropServices.DllImport("User32.dll")]
-        private static extern short GetAsyncKeyState(Keys vKey);
-
-        private Thread keyboardT;
-
-        private static bool IsKeyPressed(Keys vKey)
-        {
-            if (GetAsyncKeyState(vKey) == 1 || GetAsyncKeyState(vKey) == short.MinValue) return true;
-            return false;
-        }
-
-        private void KeyLogger()
-        {
-            Core.DebugWriteLine("Keylogger is started");
-            while (true)
-            {
-                Core.DebugWriteLine("Keylogger tick");
-                //Core.DebugWriteLine(CurrPresets?.Find(x => IsKeyPressed(x.Keys))?.Name);
-                //var a = CurrPresets?.Find(x => IsKeyPressed(x.Keys))?.PowersList;
-                //a?.ForEach(PManager.ApplyPower);
-                Thread.Sleep(200);
-            }
-        }
+        private KeyboardHook keyboardHook = new KeyboardHook();
 
         private void chkHotKeys_CheckedChanged(object sender, EventArgs e)
         {
-            switch (chkHotKeys.EditValue)
+            keyboardHook_Toggle();
+            pManager.HotKeysEnabled = chkHotKeys.Checked;
+        }
+
+        private void keyboardHook_Toggle()
+        {
+            if (chkHotKeys.Checked)
             {
-                case true:
-                    Core.DebugWriteLine("Start Keylogger");
-                    keyboardT = new Thread(() => KeyLogger());
-                    if (!keyboardT.IsAlive) keyboardT.Start(); //= Task.Factory.StartNew(KeyLogger);
-                    break;
-                case false:
-                    Core.DebugWriteLine("Stop Keylogger");
-                    if (keyboardT.IsAlive) keyboardT.Abort();
-                    break;
-                default:
-                    break;
+                Core.DebugWriteLine("Hook is starting");
+                keyboardHook.Start();
+            }
+            else
+            {
+                Core.DebugWriteLine("Hook is stopping");
+                keyboardHook.Stop();
+            }
+        }
+
+        private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
+        {
+            Core.DebugWriteLine("Hooked " + CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
+            var _pres = CurrPresets?.Find(x => x.Keys == e.KeyData);
+            if (_pres != null)
+            {
+                Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
+                PManager.ApplyPowers(_pres?.PowersList);
             }
         }
 
@@ -262,7 +255,7 @@ namespace QuesterAssistant.Panels
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (mainTabControl.SelectedTabPage.Equals(pManagerTab) && PManager.CanUpdate)
+            if (mainTabControl.SelectedTabPage.Equals(pManagerTab))
             {
                 PManager.SaveSettings(pManager);
             }

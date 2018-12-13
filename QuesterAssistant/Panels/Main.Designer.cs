@@ -58,7 +58,7 @@
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
             this.gCtrlPowersPresets = new DevExpress.XtraEditors.GroupControl();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
             this.tedHotKey = new DevExpress.XtraEditors.TextEdit();
             this.cmbPresetsList = new DevExpress.XtraEditors.ComboBoxEdit();
             this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
@@ -76,7 +76,6 @@
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();
@@ -85,6 +84,7 @@
             this.pManagerTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
             this.gCtrlPowersPresets.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tedHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).BeginInit();
@@ -92,7 +92,6 @@
             this.aboutTab.SuspendLayout();
             this.sidePanel1.SuspendLayout();
             this.sidePanel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // gridViewPowers
@@ -196,14 +195,14 @@
             this.gCtrlPowersPresets.TabIndex = 1;
             this.gCtrlPowersPresets.Text = "Powers Preset";
             // 
-            // labelControl1
+            // chkHotKeys
             // 
-            this.labelControl1.Location = new System.Drawing.Point(182, 11);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Padding = new System.Windows.Forms.Padding(3);
-            this.labelControl1.Size = new System.Drawing.Size(52, 19);
-            this.labelControl1.TabIndex = 8;
-            this.labelControl1.Text = "Hot keys:";
+            this.chkHotKeys.Location = new System.Drawing.Point(9, 29);
+            this.chkHotKeys.Name = "chkHotKeys";
+            this.chkHotKeys.Properties.Caption = "Hot keys:";
+            this.chkHotKeys.Size = new System.Drawing.Size(71, 19);
+            this.chkHotKeys.TabIndex = 9;
+            this.chkHotKeys.CheckedChanged += new System.EventHandler(this.chkHotKeys_CheckedChanged);
             // 
             // tedHotKey
             // 
@@ -370,7 +369,6 @@
             this.sidePanel2.AllowSnap = false;
             this.sidePanel2.BorderThickness = 0;
             this.sidePanel2.Controls.Add(this.btnLoad);
-            this.sidePanel2.Controls.Add(this.labelControl1);
             this.sidePanel2.Controls.Add(this.btnSave);
             this.sidePanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.sidePanel2.Location = new System.Drawing.Point(0, 375);
@@ -382,15 +380,6 @@
             // defaultLookAndFeel1
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2013 Light Gray";
-            // 
-            // chkHotKeys
-            // 
-            this.chkHotKeys.Location = new System.Drawing.Point(9, 29);
-            this.chkHotKeys.Name = "chkHotKeys";
-            this.chkHotKeys.Properties.Caption = "Hot keys:";
-            this.chkHotKeys.Size = new System.Drawing.Size(71, 19);
-            this.chkHotKeys.TabIndex = 9;
-            this.chkHotKeys.CheckedChanged += new System.EventHandler(this.chkHotKeys_CheckedChanged);
             // 
             // Main
             // 
@@ -408,6 +397,7 @@
             this.pManagerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();
             this.gCtrlPowersPresets.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tedHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControlCharInfo)).EndInit();
@@ -417,8 +407,6 @@
             this.aboutTab.PerformLayout();
             this.sidePanel1.ResumeLayout(false);
             this.sidePanel2.ResumeLayout(false);
-            this.sidePanel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -446,7 +434,6 @@
         private DevExpress.XtraEditors.SidePanel sidePanel1;
         private DevExpress.XtraEditors.SidePanel sidePanel2;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel1;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.TextEdit tedHotKey;
         private System.Windows.Forms.BindingSource powerListSource;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;

@@ -1,4 +1,5 @@
-﻿using Astral.Logic.NW;
+﻿using Astral;
+using Astral.Logic.NW;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using MyNW.Classes;
@@ -10,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes
@@ -18,7 +20,7 @@ namespace QuesterAssistant.Classes
     public class PowerManagerData
     {
         public List<CharClass> CharClassesList { get; set; }
-        //public bool hkeys = false;
+        public bool HotKeysEnabled { get; set; }
 
         public PowerManagerData() { }
         public PowerManagerData(bool b)
@@ -34,6 +36,7 @@ namespace QuesterAssistant.Classes
                 { new CharClass(CharClassCategory.SourgeWarlock) },
                 { new CharClass(CharClassCategory.TricksterRogue) }
             };
+            HotKeysEnabled = false;
         }
     }
     [Serializable]
@@ -131,6 +134,14 @@ namespace QuesterAssistant.Classes
             return slottedPowers;
         }
 
+        internal static void ApplyPowers(List<Power> powers)
+        {
+            foreach (var pwr in powers)
+            {
+                Task.Factory.StartNew(() => PManager.ApplyPower(pwr));
+            }
+        }
+
         internal static void ApplyPower(Power pwr)
         {
             MyNW.Classes.Power newPower = Powers.GetPowerByInternalName(pwr.InternalName);
@@ -142,7 +153,7 @@ namespace QuesterAssistant.Classes
 
             if (newPower.TraySlot == (uint)pwr.TraySlot)
             {
-                Core.DebugWriteLine(string.Format("{0} => {1}", pwr.InternalName, newPower.PowerDef.InternalName));
+                Core.DebugWriteLine(string.Format("{0} => \n{1}", pwr.InternalName, newPower.PowerDef.InternalName));
                 return;
             }
 
@@ -156,7 +167,7 @@ namespace QuesterAssistant.Classes
             Core.DebugWriteLine(currPower.PowerDef.DisplayName);
             Thread.Sleep(400);
             Injection.cmdwrapper_PowerTray_Slot(newPower, pwr.TraySlot);
-            Core.DebugWriteLine(string.Format("Slot power => {0}", newPower.PowerDef.InternalName));
+            Core.DebugWriteLine(string.Format("Slot power => \n{0}", newPower.PowerDef.InternalName));
             return;
         }
 
@@ -174,35 +185,36 @@ namespace QuesterAssistant.Classes
                 catch (Exception ex)
                 {
                     XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    Logger.WriteLine("Powers Manager settings is wrong, using default...");
                     pManager = new PowerManagerData(true);
                 }
+                
                 if (pManager.CharClassesList == null)
                 {
+                    Logger.WriteLine("Powers Manager settings is wrong, using default...");
                     pManager = new PowerManagerData(true);
                 }
+                else
+                {
+                    Logger.WriteLine("Powers Manager settings has been loaded...");
+                }
+
                 return pManager;
             }
+            Logger.WriteLine("Powers Manager settings not found, using default...");
             return new PowerManagerData(true);
         }
 
         internal static void SaveSettings(PowerManagerData pManager)
         {
-            var idxCharClass = pManager.CharClassesList.FindIndex(x => x.CharClassCategory == CurrCharClass.Category);
-            Core.DebugWriteLine(string.Format("Class: {0}[{1}] ", CurrCharClass, idxCharClass));
-            if (idxCharClass < 0)
-            {
-                XtraMessageBox.AllowCustomLookAndFeel = true;
-                XtraMessageBox.Show("Invalid character class!");
-                return;
-            }
-
             try
             {
                 Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"), pManager);
+                Logger.WriteLine("Powers Manager settings has been saved...");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
+                XtraMessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
             }
         }
     }
