@@ -18,6 +18,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant
 {
@@ -43,7 +44,7 @@ namespace QuesterAssistant
         public override void InternalReset() {}
         public override void OnMapDraw(GraphicsNW graph) {}
 
-        internal static List<InventorySlot> DeletingItems(MyItemFilter.MyItemFilterCore filter)
+        internal static List<InventorySlot> DeletingItems(MyItemFilterCore filter)
         {
             List<InventorySlot> list = new List<InventorySlot>();
             List<InventorySlot>.Enumerator enumerator = EntityManager.LocalPlayer.BagsItems.GetEnumerator();
@@ -66,7 +67,7 @@ namespace QuesterAssistant
             return list;
         }
 
-        internal static void DeleteItems(MyItemFilter.MyItemFilterCore filter)
+        internal static void DeleteItems(MyItemFilterCore filter)
         {
             List<InventorySlot> list = DeletingItems(filter);
             list.ForEach(Interact.DiscardItem);
@@ -74,7 +75,7 @@ namespace QuesterAssistant
 
         public override ActionResult Run()
         {
-            DeleteItems((MyItemFilter.MyItemFilterCore)this.ItemIdFilter);
+            DeleteItems((MyItemFilterCore)this.ItemIdFilter);
             return ActionResult.Completed;
         }
     }

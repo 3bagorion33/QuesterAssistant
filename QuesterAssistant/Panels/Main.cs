@@ -1,6 +1,5 @@
 ﻿using Astral;
 using Astral.Forms;
-using Astral.Logic.NW;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
@@ -8,6 +7,7 @@ using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Hooks;
+using QuesterAssistant.Classes.PowersManager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -42,25 +42,15 @@ namespace QuesterAssistant.Panels
         }
 
         #region Power Manager Tab
-        PowerManagerData pManager = new PowerManagerData(true);
+
+        PowersManagerData pManager = new PowersManagerData(true);
         private CharClassCategory prevCharClass;
-        private List<Preset> CurrPresets
-        {
-            get
-            {
-                if (PManager.CanUpdate)
-                {
-                    return pManager?.CharClassesList?.Find(x => x.CharClassCategory == PManager.CurrCharClass.Category).PresetsList ?? new List<Preset>();
-                }
-                return new List<Preset>();
-            }
-        }
 
         private void InitializePManager()
         {
             this.CharClassChanging += this.FormUpdate;
 
-            pManager = PManager.LoadSettings();
+            pManager.LoadSettings();
 #if DEBUG
             Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager_deb.xml"), pManager);
 #endif
@@ -74,10 +64,10 @@ namespace QuesterAssistant.Panels
 
         private void CharCheck(object sender, EventArgs e)
         {
-            if (PManager.CurrCharClass.Category != prevCharClass)
+            if (EntityManager.LocalPlayer.Character.Class.Category != prevCharClass)
             {
                 CharClassChanging?.Invoke(this, EventArgs.Empty);
-                prevCharClass = PManager.CurrCharClass.Category;
+                prevCharClass = EntityManager.LocalPlayer.Character.Class.Category;
             }
             powerListSource_Update();
         }
@@ -89,7 +79,7 @@ namespace QuesterAssistant.Panels
                 EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName;
 
             this.labelCharacterClass.Text = "Class:  " +
-                PManager.CurrCharClass.DisplayName;
+                EntityManager.LocalPlayer.Character.Class.DisplayName;
 
             cmbPresetsList_Update();
             //Core.DebugWriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
@@ -98,31 +88,31 @@ namespace QuesterAssistant.Panels
 
         private void powerListSource_Update()
         {
-            powerListSource.DataSource = CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
+            powerListSource.DataSource = pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
         }
 
         private void btnGetPowers_Click(object sender, EventArgs e)
         {
-            if (PManager.CanUpdate && CurrPresets.Any())
+            if (EntityManager.LocalPlayer.IsValid && pManager.CurrPresets.Any())
             {
-                CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = PManager.GetSlottedPowers();
+                pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = Powers.GetSlottedPowers();
                 powerListSource_Update();
             }
         }
 
         private void btnSetPowers_Click(object sender, EventArgs e)
         {
-            if (PManager.CanUpdate && CurrPresets.Any())
+            if (EntityManager.LocalPlayer.IsValid && pManager.CurrPresets.Any())
             {
-                PManager.ApplyPowers(CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
+                Powers.ApplyPowers(pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
             }
         }
 
         private void cmbPresetsList_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            if (PManager.CanUpdate)
+            if (EntityManager.LocalPlayer.IsValid)
             {
-                Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Tag));
+                Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Caption));
 
                 switch (e.Button.Caption)
                 {
@@ -130,16 +120,16 @@ namespace QuesterAssistant.Panels
                         string str = InputBox.MessageText("Enter a new profile name:");
                         if (str.Any())
                         {
-                            CurrPresets.AddOrReplace(x => x.Name == str, new Preset(str, PManager.GetSlottedPowers()));
+                            pManager.CurrPresets.AddOrReplace(x => x.Name == str, new Preset(str, Powers.GetSlottedPowers()));
                             cmbPresetsList_Update(cmbPresetsList.Properties.Items.Count);
                         }
                         break;
 
                     case "Delete":
-                        if (CurrPresets.Any() &&
+                        if (pManager.CurrPresets.Any() &&
                             (XtraMessageBox.Show(Form.ActiveForm, "Delete this preset?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
                         {
-                            CurrPresets.RemoveAt(cmbPresetsList.SelectedIndex);
+                            pManager.CurrPresets.RemoveAt(cmbPresetsList.SelectedIndex);
                             cmbPresetsList_Update();
                         }
                         break;
@@ -166,9 +156,9 @@ namespace QuesterAssistant.Panels
             cmbPresetsList.Properties.Items.BeginUpdate();
             try
             {
-                if (CurrPresets.Any())
+                if (pManager.CurrPresets.Any())
                 {
-                    foreach (var item in CurrPresets)
+                    foreach (var item in pManager.CurrPresets)
                     {
                         cmbPresetsList.Properties.Items.Add(item.Name);
                     }
@@ -194,7 +184,7 @@ namespace QuesterAssistant.Panels
         {
             // KeyCode - последняя нажатая клавиша
             // KeyData - все нажатые клавиши
-            if (PManager.CanUpdate)
+            if (EntityManager.LocalPlayer.IsValid)
             {
                 KeysConverter kc = new KeysConverter();
                 if (e.Shift || e.Control || e.Alt)
@@ -207,7 +197,7 @@ namespace QuesterAssistant.Panels
                     e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
                 {
                     base.ActiveControl = null;
-                    CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
+                    pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
                     tedHotKey_Update();
                 }
             }
@@ -215,7 +205,7 @@ namespace QuesterAssistant.Panels
 
         private void tedHotKey_Update()
         {
-            tedHotKey.Text = CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
+            tedHotKey.Text = pManager.CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
         }
 
         private KeyboardHook keyboardHook = new KeyboardHook();
@@ -242,12 +232,12 @@ namespace QuesterAssistant.Panels
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            Core.DebugWriteLine("Hooked " + CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
-            var _pres = CurrPresets?.Find(x => x.Keys == e.KeyData);
+            Core.DebugWriteLine("Hooked " + pManager.CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
+            var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
             if (_pres != null)
             {
                 Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
-                PManager.ApplyPowers(_pres?.PowersList);
+                Powers.ApplyPowers(_pres?.PowersList);
             }
         }
 
@@ -257,7 +247,7 @@ namespace QuesterAssistant.Panels
         {
             if (mainTabControl.SelectedTabPage.Equals(pManagerTab))
             {
-                PManager.SaveSettings(pManager);
+                pManager.SaveSettings();
             }
         }
 
@@ -265,7 +255,7 @@ namespace QuesterAssistant.Panels
         {
             if (mainTabControl.SelectedTabPage.Equals(pManagerTab))
             {
-                pManager = PManager.LoadSettings();
+                pManager.LoadSettings();
                 cmbPresetsList_Update();
             }
         }

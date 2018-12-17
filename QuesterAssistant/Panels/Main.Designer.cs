@@ -76,6 +76,7 @@
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
             this.defaultLookAndFeel1 = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();
@@ -134,11 +135,11 @@
             // 
             this.gridColumn1.Caption = "Slot";
             this.gridColumn1.FieldName = "TraySlot";
-            this.gridColumn1.MaxWidth = 100;
+            this.gridColumn1.MaxWidth = 83;
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 0;
-            this.gridColumn1.Width = 100;
+            this.gridColumn1.Width = 83;
             // 
             // gridColumn2
             // 
@@ -151,7 +152,7 @@
             // gridControlPowers
             // 
             this.gridControlPowers.DataSource = this.powerListSource;
-            this.gridControlPowers.Location = new System.Drawing.Point(3, 76);
+            this.gridControlPowers.Location = new System.Drawing.Point(3, 56);
             this.gridControlPowers.MainView = this.gridViewPowers;
             this.gridControlPowers.Name = "gridControlPowers";
             this.gridControlPowers.Size = new System.Drawing.Size(342, 191);
@@ -165,7 +166,7 @@
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
             this.mainTabControl.SelectedTabPage = this.pManagerTab;
-            this.mainTabControl.Size = new System.Drawing.Size(370, 369);
+            this.mainTabControl.Size = new System.Drawing.Size(370, 372);
             this.mainTabControl.TabIndex = 8;
             this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.pManagerTab,
@@ -173,34 +174,35 @@
             // 
             // pManagerTab
             // 
+            this.pManagerTab.Controls.Add(this.chkHotKeys);
             this.pManagerTab.Controls.Add(this.gCtrlPowersPresets);
             this.pManagerTab.Controls.Add(this.groupControlCharInfo);
             this.pManagerTab.Name = "pManagerTab";
-            this.pManagerTab.Size = new System.Drawing.Size(368, 344);
+            this.pManagerTab.Size = new System.Drawing.Size(368, 347);
             this.pManagerTab.Text = "Powers Manager";
             // 
             // gCtrlPowersPresets
             // 
             this.gCtrlPowersPresets.AutoSize = true;
-            this.gCtrlPowersPresets.Controls.Add(this.chkHotKeys);
+            this.gCtrlPowersPresets.Controls.Add(this.labelControl1);
             this.gCtrlPowersPresets.Controls.Add(this.tedHotKey);
             this.gCtrlPowersPresets.Controls.Add(this.cmbPresetsList);
             this.gCtrlPowersPresets.Controls.Add(this.btnGetPowers);
             this.gCtrlPowersPresets.Controls.Add(this.btnSetPowers);
             this.gCtrlPowersPresets.Controls.Add(this.gridControlPowers);
             this.gCtrlPowersPresets.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.gCtrlPowersPresets.Location = new System.Drawing.Point(10, 63);
+            this.gCtrlPowersPresets.Location = new System.Drawing.Point(10, 87);
             this.gCtrlPowersPresets.Name = "gCtrlPowersPresets";
-            this.gCtrlPowersPresets.Size = new System.Drawing.Size(348, 270);
+            this.gCtrlPowersPresets.Size = new System.Drawing.Size(348, 250);
             this.gCtrlPowersPresets.TabIndex = 1;
             this.gCtrlPowersPresets.Text = "Powers Preset";
             // 
             // chkHotKeys
             // 
-            this.chkHotKeys.Location = new System.Drawing.Point(9, 29);
+            this.chkHotKeys.Location = new System.Drawing.Point(10, 10);
             this.chkHotKeys.Name = "chkHotKeys";
-            this.chkHotKeys.Properties.Caption = "Hot keys:";
-            this.chkHotKeys.Size = new System.Drawing.Size(71, 19);
+            this.chkHotKeys.Properties.Caption = "Enable hotkeys management";
+            this.chkHotKeys.Size = new System.Drawing.Size(161, 19);
             this.chkHotKeys.TabIndex = 9;
             this.chkHotKeys.CheckedChanged += new System.EventHandler(this.chkHotKeys_CheckedChanged);
             // 
@@ -260,7 +262,7 @@
             this.groupControlCharInfo.Controls.Add(this.labelCharacterName);
             this.groupControlCharInfo.Controls.Add(this.labelCharacterClass);
             this.groupControlCharInfo.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.groupControlCharInfo.Location = new System.Drawing.Point(10, 3);
+            this.groupControlCharInfo.Location = new System.Drawing.Point(10, 35);
             this.groupControlCharInfo.Name = "groupControlCharInfo";
             this.groupControlCharInfo.Size = new System.Drawing.Size(348, 46);
             this.groupControlCharInfo.TabIndex = 1;
@@ -359,7 +361,7 @@
             this.sidePanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.sidePanel1.Location = new System.Drawing.Point(0, 0);
             this.sidePanel1.Name = "sidePanel1";
-            this.sidePanel1.Size = new System.Drawing.Size(370, 369);
+            this.sidePanel1.Size = new System.Drawing.Size(370, 372);
             this.sidePanel1.TabIndex = 9;
             this.sidePanel1.Text = "sidePanel1";
             // 
@@ -381,6 +383,15 @@
             // 
             this.defaultLookAndFeel1.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(9, 29);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Padding = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.labelControl1.Size = new System.Drawing.Size(62, 19);
+            this.labelControl1.TabIndex = 8;
+            this.labelControl1.Text = "This hotkey:";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -397,6 +408,7 @@
             this.pManagerTab.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();
             this.gCtrlPowersPresets.ResumeLayout(false);
+            this.gCtrlPowersPresets.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tedHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).EndInit();
@@ -439,5 +451,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraEditors.CheckEdit chkHotKeys;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }

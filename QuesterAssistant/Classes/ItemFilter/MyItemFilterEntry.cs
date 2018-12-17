@@ -21,7 +21,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using MyNW.Patchables.Enums;
 
-namespace QuesterAssistant.MyItemFilter
+namespace QuesterAssistant.Classes.ItemFilter
 {
     class MyItemFilterEntry
     {
