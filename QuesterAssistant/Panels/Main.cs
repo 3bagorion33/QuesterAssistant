@@ -8,6 +8,7 @@ using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Classes.PowersManager;
+using QuesterAssistant.Enums;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -44,12 +45,10 @@ namespace QuesterAssistant.Panels
         #region Power Manager Tab
 
         PowersManagerData pManager = new PowersManagerData(true);
-        private CharClassCategory prevCharClass;
+        private ParagonCategory prevCharParagon;
 
         private void InitializePManager()
         {
-            this.CharClassChanging += this.FormUpdate;
-
             pManager.LoadSettings();
 #if DEBUG
             Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager_deb.xml"), pManager);
@@ -60,30 +59,26 @@ namespace QuesterAssistant.Panels
             chkHotKeys.Checked = pManager.HotKeysEnabled;
         }
 
-        private event EventHandler CharClassChanging;
-
         private void CharCheck(object sender, EventArgs e)
         {
-            if (EntityManager.LocalPlayer.Character.Class.Category != prevCharClass)
-            {
-                CharClassChanging?.Invoke(this, EventArgs.Empty);
-                prevCharClass = EntityManager.LocalPlayer.Character.Class.Category;
-            }
-            powerListSource_Update();
-        }
-
-        private void FormUpdate(object sender, EventArgs e)
-        {
-            Core.DebugWriteLine("FormUpdate Event");
             this.labelCharacterName.Text = "Paragon:  " +
-                EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName;
+                Paragon.DisplayName;
 
             this.labelCharacterClass.Text = "Class:  " +
                 EntityManager.LocalPlayer.Character.Class.DisplayName;
 
-            cmbPresetsList_Update();
+            if (Paragon.Category != prevCharParagon)
+            {
+                cmbPresetsList_Update();
+                prevCharParagon = Paragon.Category;
+            }
+            powerListSource_Update();
             //Core.DebugWriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
             //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
+        }
+
+        private void FormUpdate(object sender, EventArgs e)
+        {
         }
 
         private void powerListSource_Update()
@@ -93,7 +88,7 @@ namespace QuesterAssistant.Panels
 
         private void btnGetPowers_Click(object sender, EventArgs e)
         {
-            if (EntityManager.LocalPlayer.IsValid && pManager.CurrPresets.Any())
+            if (Paragon.IsValid && pManager.CurrPresets.Any())
             {
                 pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = Powers.GetSlottedPowers();
                 powerListSource_Update();
@@ -102,7 +97,7 @@ namespace QuesterAssistant.Panels
 
         private void btnSetPowers_Click(object sender, EventArgs e)
         {
-            if (EntityManager.LocalPlayer.IsValid && pManager.CurrPresets.Any())
+            if (Paragon.IsValid && pManager.CurrPresets.Any())
             {
                 Powers.ApplyPowers(pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
             }
@@ -110,7 +105,7 @@ namespace QuesterAssistant.Panels
 
         private void cmbPresetsList_ButtonClick(object sender, ButtonPressedEventArgs e)
         {
-            if (EntityManager.LocalPlayer.IsValid)
+            if (Paragon.IsValid)
             {
                 Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Caption));
 
@@ -184,7 +179,7 @@ namespace QuesterAssistant.Panels
         {
             // KeyCode - последняя нажатая клавиша
             // KeyData - все нажатые клавиши
-            if (EntityManager.LocalPlayer.IsValid)
+            if (Paragon.IsValid && pManager.CurrPresets.Any())
             {
                 KeysConverter kc = new KeysConverter();
                 if (e.Shift || e.Control || e.Alt)

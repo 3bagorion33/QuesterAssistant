@@ -145,11 +145,13 @@
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
+    <Compile Include="Classes\Paragon.cs" />
     <Compile Include="Classes\PowersManager\PowersManagerData.cs" />
     <None Include="Classes\SerializableDictionary.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterEntry.cs" />
     <Compile Include="Classes\Powers.cs" />
+    <Compile Include="Enums\ParagonCategory.cs" />
     <Compile Include="Panels\ChangeListOrder.cs">
       <SubType>Form</SubType>
     </Compile>

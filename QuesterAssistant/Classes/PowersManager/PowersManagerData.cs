@@ -5,6 +5,7 @@ using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
+using QuesterAssistant.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,14 +28,23 @@ namespace QuesterAssistant.Classes.PowersManager
         {
             CharClassesList = new List<CharClass>
             {
-                { new CharClass(CharClassCategory.ControlWizard) },
-                { new CharClass(CharClassCategory.DevotedCleric) },
-                { new CharClass(CharClassCategory.GreatWeaponFigher) },
-                { new CharClass(CharClassCategory.GuardianFighter) },
-                { new CharClass(CharClassCategory.HunterRanger) },
-                { new CharClass(CharClassCategory.OathboundPaladin) },
-                { new CharClass(CharClassCategory.SourgeWarlock) },
-                { new CharClass(CharClassCategory.TricksterRogue) }
+                { new CharClass(ParagonCategory.CW_Masterofflame) },
+                { new CharClass(ParagonCategory.CW_Spellstormmage) },
+                { new CharClass(ParagonCategory.DC_Anointedchampion) },
+                { new CharClass(ParagonCategory.DC_Divineoracle) },
+                { new CharClass(ParagonCategory.GF_Ironvanguard) },
+                { new CharClass(ParagonCategory.GF_Swordmaster) },
+                { new CharClass(ParagonCategory.GW_Ironvanguard) },
+                { new CharClass(ParagonCategory.GW_Swordmaster) },
+                { new CharClass(ParagonCategory.HR_Pathfinder) },
+                { new CharClass(ParagonCategory.HR_Stormwarden) },
+                { new CharClass(ParagonCategory.OP_Oathofdevotion) },
+                { new CharClass(ParagonCategory.OP_Oathofprotection) },
+                { new CharClass(ParagonCategory.SW_Hellbringer) },
+                { new CharClass(ParagonCategory.SW_Soulbinder) },
+                { new CharClass(ParagonCategory.TR_Masterinfiltrator) },
+                { new CharClass(ParagonCategory.TR_Whisperknife) }
+
             };
             HotKeysEnabled = false;
         }
@@ -45,7 +55,7 @@ namespace QuesterAssistant.Classes.PowersManager
             {
                 if (EntityManager.LocalPlayer.IsValid)
                 {
-                    return this?.CharClassesList?.Find(x => x.CharClassCategory == EntityManager.LocalPlayer.Character.Class.Category).PresetsList ?? new List<Preset>();
+                    return this?.CharClassesList?.Find(x => x.ParagonCategory == Paragon.Category)?.PresetsList ?? new List<Preset>();
                 }
                 return new List<Preset>();
             }
@@ -99,13 +109,13 @@ namespace QuesterAssistant.Classes.PowersManager
     [Serializable]
     public class CharClass
     {
-        public CharClassCategory CharClassCategory { get; set; }
+        public ParagonCategory ParagonCategory { get; set; }
         public List<Preset> PresetsList { get; set; }
 
         public CharClass() { }
-        public CharClass(CharClassCategory charClass)
+        public CharClass(ParagonCategory charClass)
         {
-            CharClassCategory = charClass;
+            ParagonCategory = charClass;
             PresetsList = new List<Preset>();
         }
     }
