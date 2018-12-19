@@ -2,6 +2,7 @@ using Astral;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
 using MyNW.Classes;
+using QuesterAssistant.Classes;
 using System.Threading;
 
 namespace QuesterAssistant
@@ -28,7 +29,7 @@ namespace QuesterAssistant
             if (VIP.CanSummonProfessionVendor)
             {
                 bool flag = API.CurrentSettings.DiscardIfCantSale;
-                Core.DebugWriteLine("DiscardIfCantSale: " + flag.ToString());
+                Debug.WriteLine("DiscardIfCantSale: " + flag.ToString());
                 API.CurrentSettings.DiscardIfCantSale = true;
                 VIP.SummonProfessionVendor();
                 Thread.Sleep(0x7d0);
@@ -37,7 +38,7 @@ namespace QuesterAssistant
                 Interact.SellItems();
                 Thread.Sleep(0x7d0);
                 API.CurrentSettings.DiscardIfCantSale = flag;
-                Core.DebugWriteLine("DiscardIfCantSale: " + API.CurrentSettings.DiscardIfCantSale.ToString());
+                Debug.WriteLine("DiscardIfCantSale: " + API.CurrentSettings.DiscardIfCantSale.ToString());
                 Astral.Logic.NW.Inventory.FreeOverFlowBags();
                 return ActionResult.Completed;
             }

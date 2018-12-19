@@ -8,6 +8,7 @@ using Astral.Quester.Classes;
 using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,7 +69,7 @@ namespace QuesterAssistant
                     uint num = item.Count;
                     if (item.ItemDef.RewardPackInfo.IsValid && item.ItemDef.InternalName.Contains("Vip"))
                     {
-                        Core.DebugWriteLine("Count: " + item.Count.ToString());
+                        Debug.WriteLine("Count: " + item.Count.ToString());
                         for (uint i = 0; i < num; i++)
                         {
                             Logger.WriteLine("Open '" + item.ItemDef.DisplayName + "'");
@@ -85,35 +86,35 @@ namespace QuesterAssistant
             if (Game.IsRewardpackviewerFrameVisible())
             {
                 Thread.Sleep(800);
-                Core.DebugWriteLine("IsRewardpackviewerFrameVisible");
+                Debug.WriteLine("IsRewardpackviewerFrameVisible");
                 Game.CloseRewardpackviewerFrame();
             }
         }
 
         public override ActionResult Run()
         {
-            Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
+            Debug.WriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
             while (this.ClaimAccountReward && VIP.AccountRewardAvailable)
             {
-                Core.DebugWriteLine("ClaimAccountReward");
+                Debug.WriteLine("ClaimAccountReward");
                 VIP.ClaimAccountReward();
                 Thread.Sleep(1000);
                 this.IsAccountRewardClaimed = true;
             }
-            Core.DebugWriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
-            Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
+            Debug.WriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
+            Debug.WriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             while (this.ClaimCharacterReward && VIP.CharacterRewardAvailable)
             {
-                Core.DebugWriteLine("ClaimCharacterReward");
+                Debug.WriteLine("ClaimCharacterReward");
                 VIP.ClaimCharacterReward();
                 Thread.Sleep(500);
                 this.IsCharacterRewardClaimed = true;
             }
-            Core.DebugWriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
+            Debug.WriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             if (this.IsCharacterRewardClaimed || this.IsAccountRewardClaimed)
             {
                 Thread.Sleep(100);
-                Core.DebugWriteLine("Try open rewards");
+                Debug.WriteLine("Try open rewards");
                 OpenRewardBoxes();
             }
             return ActionResult.Completed;
