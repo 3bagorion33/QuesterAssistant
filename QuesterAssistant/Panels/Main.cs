@@ -38,7 +38,7 @@ namespace QuesterAssistant.Panels
 
         private void Dispose(object s, EventArgs e)
         {
-            Core.DebugWriteLine("Dispose event");
+            Debug.WriteLine("Dispose event");
             this.Dispose(true);
         }
 
@@ -73,7 +73,7 @@ namespace QuesterAssistant.Panels
                 prevCharParagon = Paragon.Category;
             }
             powerListSource_Update();
-            //Core.DebugWriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
+            //Debug.WriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
             //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
         }
 
@@ -107,7 +107,7 @@ namespace QuesterAssistant.Panels
         {
             if (Paragon.IsValid)
             {
-                Core.DebugWriteLine(string.Format("Pressed button: {0}", e.Button.Caption));
+                Debug.WriteLine(string.Format("Pressed button: {0}", e.Button.Caption));
 
                 switch (e.Button.Caption)
                 {
@@ -140,7 +140,7 @@ namespace QuesterAssistant.Panels
 
         private void cmbPresetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Core.DebugWriteLine(string.Format("SelectedIndexChanged => {0}", cmbPresetsList.SelectedIndex));
+            Debug.WriteLine(string.Format("SelectedIndexChanged => {0}", cmbPresetsList.SelectedIndex));
             powerListSource_Update();
             tedHotKey_Update();
         }
@@ -215,19 +215,19 @@ namespace QuesterAssistant.Panels
         {
             if (chkHotKeys.Checked)
             {
-                Core.DebugWriteLine("Hook is starting");
+                Debug.WriteLine("Hook is starting");
                 keyboardHook.Start();
             }
             else
             {
-                Core.DebugWriteLine("Hook is stopping");
+                Debug.WriteLine("Hook is stopping");
                 keyboardHook.Stop();
             }
         }
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            Core.DebugWriteLine("Hooked " + pManager.CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
+            Debug.WriteLine("Hooked " + pManager.CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
             var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
             if (_pres != null)
             {

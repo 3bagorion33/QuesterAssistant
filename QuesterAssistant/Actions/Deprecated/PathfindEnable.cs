@@ -3,6 +3,7 @@ using Astral.Controllers;
 using Astral.Logic.Classes.Map;
 using DevExpress.XtraEditors;
 using MyNW.Classes;
+using QuesterAssistant.Classes;
 using System;
 
 namespace QuesterAssistant.Actions.Deprecated
@@ -18,7 +19,7 @@ namespace QuesterAssistant.Actions.Deprecated
         {
             get
             {
-                Logger.WriteLine(Core.DeprecatedWriteLine(this.ActionLabel));
+                Logger.WriteLine(Debug.DeprecatedWriteLine(this.ActionLabel));
                 //Roles.ToggleRole(false);
                 return false;
             }
@@ -31,7 +32,7 @@ namespace QuesterAssistant.Actions.Deprecated
         {
             get
             {
-                return new ActionValidity(Core.DeprecatedMessage(this.ActionLabel, "PathFinding: Enable"));
+                return new ActionValidity(Debug.DeprecatedMessage(this.ActionLabel, "PathFinding: Enable"));
             }
         }
 
@@ -41,7 +42,7 @@ namespace QuesterAssistant.Actions.Deprecated
         // Methods
         public override void GatherInfos()
         {
-            XtraMessageBox.Show(Core.DeprecatedMessage(this.ActionLabel, "PathFinding: Disable"));
+            XtraMessageBox.Show(Debug.DeprecatedMessage(this.ActionLabel, "PathFinding: Disable"));
         }
 
         public override void InternalReset() { }

@@ -20,6 +20,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using MyNW.Patchables.Enums;
+using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
@@ -52,7 +53,7 @@ namespace QuesterAssistant.Classes.ItemFilter
         {
             string searchText = this.Text;
 
-            Core.DebugWriteLine("SearchText: " + searchText);
+            Debug.WriteLine("SearchText: " + searchText);
             if (searchText == "*")
             {
                 return true;
@@ -71,8 +72,8 @@ namespace QuesterAssistant.Classes.ItemFilter
             if (searchText.EndsWith("*"))
             {
                 string str3 = searchText.Remove(searchText.Length - 1);
-                Core.DebugWriteLine("Search pattern: " + str3);
-                Core.DebugWriteLine("Pattern match: " + text.StartsWith(str3).ToString());
+                Debug.WriteLine("Search pattern: " + str3);
+                Debug.WriteLine("Pattern match: " + text.StartsWith(str3).ToString());
                 return text.StartsWith(str3);
             }
             return searchText == text;
@@ -91,7 +92,7 @@ namespace QuesterAssistant.Classes.ItemFilter
             switch (this.StringType)
             {
                 case ItemFilterStringType.Simple:
-                    Core.DebugWriteLine("Filter Simple");
+                    Debug.WriteLine("Filter Simple");
                     return Enumerable.Any<string>(this.ItemType(item), new Func<string, bool>(this.ParseString));
 
                 case ItemFilterStringType.Regex:
@@ -109,8 +110,8 @@ namespace QuesterAssistant.Classes.ItemFilter
                     return new List<string>(new string[] { item.ItemDef.DisplayName });
 
                 case ItemFilterType.ItemID:
-                    Core.DebugWriteLine("Type: ItemID -> " + item.ItemDef.InternalName);
-                    Core.DebugWriteLine(new List<string>(new string[] { item.ItemDef.InternalName }).ToString());
+                    Debug.WriteLine("Type: ItemID -> " + item.ItemDef.InternalName);
+                    Debug.WriteLine(new List<string>(new string[] { item.ItemDef.InternalName }).ToString());
                     return new List<string>(new string[] { item.ItemDef.InternalName });
 
                 case ItemFilterType.ItemCatergory:

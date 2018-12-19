@@ -18,6 +18,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
+using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
@@ -59,7 +60,7 @@ namespace QuesterAssistant.Classes.ItemFilter
                         switch (current.Mode)
                         {
                             case ItemFilterMode.Include:
-                                Core.DebugWriteLine("Item Include!");
+                                Debug.WriteLine("Item Include!");
                                 flag = true;
                                 break;
                             case ItemFilterMode.Exclude:
