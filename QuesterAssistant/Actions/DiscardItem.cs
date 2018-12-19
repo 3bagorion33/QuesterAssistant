@@ -34,7 +34,17 @@ namespace QuesterAssistant
         public override bool UseHotSpots => false;
         protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();
-        protected override ActionValidity InternalValidity => new ActionValidity();
+        protected override ActionValidity InternalValidity
+        {
+            get
+            {
+                if (this.ItemIdFilter.Entries.Count == 0)
+                {
+                    return new ActionValidity("No filter option set.");
+                }
+                return new ActionValidity();
+            }
+        }
 
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemIdFilter { get; set; } = new ItemFilterCore();

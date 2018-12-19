@@ -40,23 +40,6 @@ namespace QuesterAssistant
         }
 
         public override void OnUnload() { }
-
-        internal static void DebugWriteLine(string text)
-        {
-#if DEBUG
-            Logger.WriteLine(text);
-#endif
-        }
-
-        internal static string DeprecatedMessage (string actionLabel, string actionInstead)
-        {
-            return string.Format("{0} is an obsolete action, use {1} instead.", actionLabel, actionInstead);
-        }
-
-        internal static string DeprecatedWriteLine (string actionLabel)
-        {
-            return string.Format("{0} is an obsolete action, profile need update, stop bot", actionLabel);
-        }
     }
 }
 
