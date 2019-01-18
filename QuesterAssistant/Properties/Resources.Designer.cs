@@ -62,8 +62,9 @@ namespace QuesterAssistant.Properties {
         
         /// <summary>
         ///   Ищет локализованную строку, похожую на This plugin adds some threads and actions into Quester role.
+        ///
         ///Threads:
-        ///- Identify items every 2 sec if any and scrolls
+        ///- Identify items every 2 sec if any and scrolls are present
         ///
         ///Actions:
         ///- ConsoleCommand - execute any ingame console command
@@ -73,11 +74,21 @@ namespace QuesterAssistant.Properties {
         ///- Notify - show popup notification window
         ///- PathFinding - enable or disable navigation core
         ///- RefineAD - refine astral diamonds if possible
-        ///- VIPRewards - claim account a [остаток строки не уместился]&quot;;.
+        ///- VIPRewards - c [остаток строки не уместился]&quot;;.
         /// </summary>
         internal static string Description {
             get {
                 return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Donate {
+            get {
+                object obj = ResourceManager.GetObject("Donate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }

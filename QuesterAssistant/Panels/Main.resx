@@ -120,26 +120,10 @@
   <metadata name="powerListSource.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="textBoxDesc.Text" xml:space="preserve">
-    <value>This plugin adds some threads and actions into Quester role.
-Threads:
-- Identify items every 2 sec if any and scrolls
-
-Actions:
-- ConsoleCommand - execute any ingame console command
-- DiscardItem - delete items using filter
-- InventoryLog - write contents of bags to file using pattern
-- MoonMask - travel to MoonMask if possible
-- Notify - show popup notification window
-- PathFinding - enable or disable navigation core
-- RefineAD - refine astral diamonds if possible
-- VIPRewards - claim account and char rewards and open boxes
-- VIPSell - sale items to VIP vendor if possible using global sale filter (forced flag "Discard if can't sell")</value>
-  </data>
   <metadata name="timerCharCheck.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>158, 17</value>
   </metadata>
-  <metadata name="defaultLookAndFeel1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <metadata name="defaultLookAndFeel.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>296, 17</value>
   </metadata>
 </root>

@@ -71,7 +71,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\LazyLauncher\Astral_RU_1\Plugins\</OutputPath>
+    <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <FileAlignment>4096</FileAlignment>
@@ -82,7 +82,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Astral_updated">
-      <HintPath>..\..\..\LazyLauncher\Astral_RU_1\Astral_updated.exe</HintPath>
+      <HintPath>..\..\..\LazyLauncher\Astral_RU_2\Astral_updated.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
@@ -229,7 +229,15 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Donate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Donate.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Donate1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

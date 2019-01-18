@@ -254,5 +254,15 @@ namespace QuesterAssistant.Panels
                 cmbPresetsList_Update();
             }
         }
+
+        private void hlkQAForumThread_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("http://neverwinter-bot.com/forums/viewtopic.php?f=155&t=9712");
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://www.paypal.me/aorion33/10");
+        }
     }
 }
