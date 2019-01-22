@@ -49,7 +49,7 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\..\..\LazyLauncher\Astral_RU_1\Plugins\</OutputPath>
+    <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -233,10 +233,10 @@
     <None Include="Resources\Donate.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Donate.bmp" />
+    <None Include="Resources\Up.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Donate1.png" />
+    <None Include="Resources\Down.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -51,12 +51,12 @@ namespace QuesterAssistant.Panels
         {
             pManager.LoadSettings();
 #if DEBUG
-            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager_deb.xml"), pManager);
+            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager_deb.xml"), pManager);
 #endif
             keyboardHook.KeysMask.AddRange(keysMask);
             keyboardHook.KeyDown += keyboardHook_KeyDown;
 
-            chkHotKeys.Checked = pManager.HotKeysEnabled;
+            chkHotKeys_Update();
         }
 
         private void CharCheck(object sender, EventArgs e)
@@ -112,10 +112,10 @@ namespace QuesterAssistant.Panels
                 switch (e.Button.Caption)
                 {
                     case "Add":
-                        string str = InputBox.MessageText("Enter a new profile name:");
-                        if (str.Any())
+                        string _add = InputBox.MessageText("Enter a new preset name:");
+                        if (_add.Any())
                         {
-                            pManager.CurrPresets.AddOrReplace(x => x.Name == str, new Preset(str, Powers.GetSlottedPowers()));
+                            pManager.CurrPresets.AddOrReplace(x => x.Name == _add, new Preset(_add, Powers.GetSlottedPowers()));
                             cmbPresetsList_Update(cmbPresetsList.Properties.Items.Count);
                         }
                         break;
@@ -130,6 +130,28 @@ namespace QuesterAssistant.Panels
                         break;
 
                     case "Sort":
+                        if (pManager.CurrPresets.Any())
+                        {
+                            var selected = cmbPresetsList.SelectedItem;
+                            Astral.Professions.Forms.ChangeItemsOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
+                            //ChangeListOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
+                            cmbPresetsList_Update();
+                            cmbPresetsList.SelectedItem = selected;
+                        }
+                        break;
+
+                    case "Rename":
+                        if (pManager.CurrPresets.Any())
+                        {
+                            string _ren = InputBox.MessageText("Enter a new name for this preset:");
+                            if (_ren.Any())
+                            {
+                                var _preset = cmbPresetsList.SelectedItem as Preset;
+                                _preset.Name = _ren;
+                                var _selIdx = cmbPresetsList.SelectedIndex;
+                                cmbPresetsList_Update(_selIdx);
+                            }
+                        }
                         break;
 
                     default:
@@ -153,10 +175,7 @@ namespace QuesterAssistant.Panels
             {
                 if (pManager.CurrPresets.Any())
                 {
-                    foreach (var item in pManager.CurrPresets)
-                    {
-                        cmbPresetsList.Properties.Items.Add(item.Name);
-                    }
+                    cmbPresetsList.Properties.Items.AddRange(pManager.CurrPresets);
                     if (selIdx == -1) selIdx = 0;
                 }
             }
@@ -205,6 +224,11 @@ namespace QuesterAssistant.Panels
 
         private KeyboardHook keyboardHook = new KeyboardHook();
 
+        private void chkHotKeys_Update()
+        {
+            chkHotKeys.Checked = pManager.HotKeysEnabled;
+        }
+
         private void chkHotKeys_CheckedChanged(object sender, EventArgs e)
         {
             keyboardHook_Toggle();
@@ -252,6 +276,7 @@ namespace QuesterAssistant.Panels
             {
                 pManager.LoadSettings();
                 cmbPresetsList_Update();
+                chkHotKeys_Update();
             }
         }
 

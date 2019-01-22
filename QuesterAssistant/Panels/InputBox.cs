@@ -19,7 +19,7 @@ namespace QuesterAssistant.Panels
         
         internal static string MessageText(string message)
         {
-            InputBox inputBox = new InputBox { StartPosition = FormStartPosition.CenterParent };
+            InputBox inputBox = new InputBox();
             inputBox.labelMessage.Text = message;
             inputBox.ShowDialog();
             return inputBox.message;

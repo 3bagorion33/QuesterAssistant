@@ -63,7 +63,7 @@ namespace QuesterAssistant.Classes.PowersManager
 
         protected internal void LoadSettings()
         {
-            var path = Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml");
+            var path = Path.Combine(Core.SettingsPath, "PowersManager.xml");
 
             if (File.Exists(path))
             {
@@ -94,9 +94,11 @@ namespace QuesterAssistant.Classes.PowersManager
 
         protected internal void SaveSettings()
         {
+            if (!Directory.Exists(Core.SettingsPath))
+                Directory.CreateDirectory(Core.SettingsPath);
             try
             {
-                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Astral.Controllers.Directories.SettingsPath, "PowersManager.xml"), this);
+                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager.xml"), this);
                 Logger.WriteLine("Powers Manager settings has been saved...");
             }
             catch (Exception ex)
@@ -161,6 +163,10 @@ namespace QuesterAssistant.Classes.PowersManager
         {
             Name = name;
             PowersList = powers;
+        }
+        public override string ToString()
+        {
+            return Name;
         }
     }
 

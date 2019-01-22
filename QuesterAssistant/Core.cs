@@ -5,6 +5,7 @@ using Astral.Logic.NW;
 using QuesterAssistant.Properties;
 using System;
 using System.Drawing;
+using System.IO;
 using System.Timers;
 
 namespace QuesterAssistant
@@ -19,6 +20,7 @@ namespace QuesterAssistant
         public override Image Icon => null;
         public override string Name => "QuesterAssistant";
         public override BasePanel Settings => new Panels.Main();
+        internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
 
         // Methods
         private void Identification(object sender, EventArgs e)
