@@ -93,6 +93,7 @@ namespace QuesterAssistant
 
         public override ActionResult Run()
         {
+            Astral.Logic.NW.Inventory.FreeOverFlowBags();
             Debug.WriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
             while (this.ClaimAccountReward && VIP.AccountRewardAvailable)
             {
