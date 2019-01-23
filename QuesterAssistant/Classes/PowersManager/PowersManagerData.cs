@@ -24,7 +24,8 @@ namespace QuesterAssistant.Classes.PowersManager
         public List<CharClass> CharClassesList { get; set; }
 
         public PowersManagerData() { }
-        public PowersManagerData(bool b)
+
+        protected internal void Init()
         {
             CharClassesList = new List<CharClass>
             {
@@ -61,8 +62,9 @@ namespace QuesterAssistant.Classes.PowersManager
             }
         }
 
-        protected internal void LoadSettings()
+        protected internal bool LoadSettings()
         {
+            var flag = false;
             var path = Path.Combine(Core.SettingsPath, "PowersManager.xml");
 
             if (File.Exists(path))
@@ -80,6 +82,7 @@ namespace QuesterAssistant.Classes.PowersManager
                         Logger.WriteLine("Powers Manager settings has been loaded...");
                         this.CharClassesList = pManager.CharClassesList;
                         this.HotKeysEnabled = pManager.HotKeysEnabled;
+                        flag = true;
                     }
                 }
                 catch (Exception ex)
@@ -87,9 +90,10 @@ namespace QuesterAssistant.Classes.PowersManager
                     XtraMessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
                     Logger.WriteLine("Powers Manager settings is wrong, using default...");
                 }
-                return;
+                return flag;
             }
             Logger.WriteLine("Powers Manager settings not found, using default...");
+            return flag;
         }
 
         protected internal void SaveSettings()

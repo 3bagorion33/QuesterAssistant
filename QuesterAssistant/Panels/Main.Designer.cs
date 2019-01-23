@@ -339,7 +339,7 @@
             // 
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox1.Image = global::QuesterAssistant.Properties.Resources.Donate;
-            this.pictureBox1.Location = new System.Drawing.Point(181, 28);
+            this.pictureBox1.Location = new System.Drawing.Point(100, 72);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
             this.pictureBox1.Size = new System.Drawing.Size(156, 74);
@@ -350,12 +350,12 @@
             // 
             // labelControl4
             // 
-            this.labelControl4.Location = new System.Drawing.Point(9, 28);
+            this.labelControl4.Location = new System.Drawing.Point(62, 28);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Padding = new System.Windows.Forms.Padding(3);
-            this.labelControl4.Size = new System.Drawing.Size(85, 58);
+            this.labelControl4.Size = new System.Drawing.Size(231, 19);
             this.labelControl4.TabIndex = 8;
-            this.labelControl4.Text = "Do you like it?\r\n\r\nYou can gift me\r\na cup of beer =)";
+            this.labelControl4.Text = "Do you like it? You can gift me a cup of beer =)";
             // 
             // groupControl2
             // 

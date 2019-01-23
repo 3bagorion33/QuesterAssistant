@@ -78,7 +78,7 @@
             // btnUp
             // 
             this.btnUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnUp.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.Up;
+            this.btnUp.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.go_up;
             this.btnUp.Location = new System.Drawing.Point(249, 31);
             this.btnUp.Name = "btnUp";
             this.btnUp.Size = new System.Drawing.Size(23, 23);
@@ -88,7 +88,7 @@
             // btnDown
             // 
             this.btnDown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnDown.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.Down;
+            this.btnDown.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.go_down;
             this.btnDown.Location = new System.Drawing.Point(249, 198);
             this.btnDown.Name = "btnDown";
             this.btnDown.Size = new System.Drawing.Size(23, 23);

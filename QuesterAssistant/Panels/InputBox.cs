@@ -17,10 +17,11 @@ namespace QuesterAssistant.Panels
             InitializeComponent();
         }
         
-        internal static string MessageText(string message)
+        internal static string MessageText(string message, string text = "")
         {
             InputBox inputBox = new InputBox();
             inputBox.labelMessage.Text = message;
+            inputBox.textValue.Text = text;
             inputBox.ShowDialog();
             return inputBox.message;
         }

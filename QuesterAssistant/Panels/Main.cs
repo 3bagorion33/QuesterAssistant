@@ -44,12 +44,13 @@ namespace QuesterAssistant.Panels
 
         #region Power Manager Tab
 
-        PowersManagerData pManager = new PowersManagerData(true);
+        private PowersManagerData pManager = new PowersManagerData();
         private ParagonCategory prevCharParagon;
 
         private void InitializePManager()
         {
-            pManager.LoadSettings();
+            if(!pManager.LoadSettings())
+                pManager.Init();
 #if DEBUG
             Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager_deb.xml"), pManager);
 #endif
@@ -143,10 +144,10 @@ namespace QuesterAssistant.Panels
                     case "Rename":
                         if (pManager.CurrPresets.Any())
                         {
-                            string _ren = InputBox.MessageText("Enter a new name for this preset:");
+                            var _preset = cmbPresetsList.SelectedItem as Preset;
+                            string _ren = InputBox.MessageText("Enter a new name for this preset:", _preset.Name);
                             if (_ren.Any())
                             {
-                                var _preset = cmbPresetsList.SelectedItem as Preset;
                                 _preset.Name = _ren;
                                 var _selIdx = cmbPresetsList.SelectedIndex;
                                 cmbPresetsList_Update(_selIdx);
@@ -211,6 +212,11 @@ namespace QuesterAssistant.Panels
                     e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
                 {
                     base.ActiveControl = null;
+                    if (pManager.CurrPresets.Exists(x => x.Keys == e.KeyData))
+                    {
+                        XtraMessageBox.Show("This hot keys is already in use.");
+                        return;
+                    }
                     pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
                     tedHotKey_Update();
                 }

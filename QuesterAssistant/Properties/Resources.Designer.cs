@@ -95,9 +95,9 @@ namespace QuesterAssistant.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Down {
+        internal static System.Drawing.Bitmap go_down {
             get {
-                object obj = ResourceManager.GetObject("Down", resourceCulture);
+                object obj = ResourceManager.GetObject("go_down", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -105,9 +105,9 @@ namespace QuesterAssistant.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Up {
+        internal static System.Drawing.Bitmap go_up {
             get {
-                object obj = ResourceManager.GetObject("Up", resourceCulture);
+                object obj = ResourceManager.GetObject("go_up", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
