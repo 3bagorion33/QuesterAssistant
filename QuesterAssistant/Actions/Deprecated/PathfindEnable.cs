@@ -20,7 +20,10 @@ namespace QuesterAssistant.Actions.Deprecated
             get
             {
                 Logger.WriteLine(Debug.DeprecatedWriteLine(this.ActionLabel));
-                //Roles.ToggleRole(false);
+                if (API.RoleIsRunning)
+                {
+                    API.ToogleRole();
+                }
                 return false;
             }
         }

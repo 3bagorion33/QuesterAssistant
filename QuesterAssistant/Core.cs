@@ -2,6 +2,7 @@ using Astral;
 using Astral.Addons;
 using Astral.Forms;
 using Astral.Logic.NW;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Properties;
 using System;
 using System.Drawing;
@@ -12,9 +13,6 @@ namespace QuesterAssistant
 {
     public class Core : Plugin
     {
-        // Fields
-        private Timer AutoIdent;
-
         // Properties
         public override string Author => "Orion33";
         public override Image Icon => null;
@@ -22,23 +20,18 @@ namespace QuesterAssistant
         public override BasePanel Settings => new Panels.Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
 
-        // Methods
-        private void Identification(object sender, EventArgs e)
-        {
-            if (API.CurrentSettings.RefineArtifact)
-            {
-                Interact.IdentifyItems();
-            }
-        }
-
         public override void OnBotStart() { }
         public override void OnBotStop() { }
 
         public override void OnLoad()
         {
-            this.AutoIdent = new Timer(2000);
-            this.AutoIdent.Elapsed += new ElapsedEventHandler(this.Identification);
-            this.AutoIdent.Enabled = true;
+            Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
+        }
+
+        private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)
+        {
+            Astral.Quester.API.Engine.AddState(new States.Identify());
+            Astral.Quester.API.Engine.States.Sort();
         }
 
         public override void OnUnload() { }

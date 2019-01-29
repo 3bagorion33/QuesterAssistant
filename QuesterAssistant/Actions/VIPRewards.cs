@@ -83,9 +83,9 @@ namespace QuesterAssistant
             {
                 enumerator.Dispose();
             }
+            Thread.Sleep(500);
             if (Game.IsRewardpackviewerFrameVisible())
             {
-                Thread.Sleep(800);
                 Debug.WriteLine("IsRewardpackviewerFrameVisible");
                 Game.CloseRewardpackviewerFrame();
             }

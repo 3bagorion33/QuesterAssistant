@@ -144,6 +144,7 @@
     <Compile Include="Classes\Debug.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />
+    <Compile Include="States\Identify.cs" />
     <EmbeddedResource Include="Temp\ns2.Class2.resx" />
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
@@ -232,6 +233,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Conditions\" />
     <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
