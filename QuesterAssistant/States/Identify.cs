@@ -25,7 +25,7 @@ namespace QuesterAssistant.States
         public override void Run()
         {
             Debug.WriteLine(DisplayName + ": tick with Priority=" + Priority + ", CheckInterval=" + CheckInterval);
-            if (true)//API.CurrentSettings.Identify)
+            if (true)
             {
                 var player = EntityManager.LocalPlayer;
                 if (player.IsValid)

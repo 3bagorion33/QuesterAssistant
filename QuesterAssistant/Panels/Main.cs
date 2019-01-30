@@ -34,6 +34,7 @@ namespace QuesterAssistant.Panels
             components = new Container();
             components.Add(timerCharCheck);
             OnPanelLeave += this.Dispose;
+            lblVersion.Text = "v " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
         }
 
         private void Dispose(object s, EventArgs e)

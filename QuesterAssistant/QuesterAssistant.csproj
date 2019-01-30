@@ -132,6 +132,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\ChangeSettingValue.cs" />
     <Compile Include="Actions\Deprecated\PathfindDisable.cs" />
     <Compile Include="Actions\Deprecated\PathfindEnable.cs" />
     <Compile Include="Actions\DiscardItem.cs" />
@@ -186,7 +187,7 @@
     <Compile Include="Core.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Actions\PathFinding.cs">
+    <Compile Include="Actions\Deprecated\PathFinding.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Actions\RefineAD.cs">

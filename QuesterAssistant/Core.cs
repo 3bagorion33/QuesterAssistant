@@ -16,7 +16,7 @@ namespace QuesterAssistant
         // Properties
         public override string Author => "Orion33";
         public override Image Icon => null;
-        public override string Name => "QuesterAssistant";
+        public override string Name => "Quester Assistant";
         public override BasePanel Settings => new Panels.Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
 

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -58,7 +57,7 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource(this.components);
+            this.powerListSource = new System.Windows.Forms.BindingSource();
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
             this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
@@ -80,14 +79,14 @@
             this.hlkQAForumThread = new DevExpress.XtraEditors.HyperlinkLabelControl();
             this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.labelVersion = new DevExpress.XtraEditors.LabelControl();
+            this.lblVersion = new DevExpress.XtraEditors.LabelControl();
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.timerCharCheck = new System.Windows.Forms.Timer(this.components);
+            this.timerCharCheck = new System.Windows.Forms.Timer();
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();
@@ -400,7 +399,7 @@
             // 
             // groupControl1
             // 
-            this.groupControl1.Controls.Add(this.labelVersion);
+            this.groupControl1.Controls.Add(this.lblVersion);
             this.groupControl1.Controls.Add(this.labelAuthor);
             this.groupControl1.Location = new System.Drawing.Point(6, 6);
             this.groupControl1.Name = "groupControl1";
@@ -409,14 +408,14 @@
             this.groupControl1.TabIndex = 9;
             this.groupControl1.Text = "Version";
             // 
-            // labelVersion
+            // lblVersion
             // 
-            this.labelVersion.Location = new System.Drawing.Point(9, 19);
-            this.labelVersion.Name = "labelVersion";
-            this.labelVersion.Padding = new System.Windows.Forms.Padding(3);
-            this.labelVersion.Size = new System.Drawing.Size(31, 19);
-            this.labelVersion.TabIndex = 5;
-            this.labelVersion.Text = "v 1.1";
+            this.lblVersion.Location = new System.Drawing.Point(9, 19);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Padding = new System.Windows.Forms.Padding(3);
+            this.lblVersion.Size = new System.Drawing.Size(31, 19);
+            this.lblVersion.TabIndex = 5;
+            this.lblVersion.Text = "v 1.1";
             // 
             // labelAuthor
             // 
@@ -534,7 +533,7 @@
         private DevExpress.XtraEditors.LabelControl labelCharacterClass;
         private DevExpress.XtraTab.XtraTabPage aboutTab;
         private DevExpress.XtraEditors.LabelControl labelAuthor;
-        private DevExpress.XtraEditors.LabelControl labelVersion;
+        private DevExpress.XtraEditors.LabelControl lblVersion;
         private DevExpress.XtraGrid.GridControl gridControlPowers;
         private DevExpress.XtraEditors.SimpleButton btnGetPowers;
         private DevExpress.XtraEditors.SimpleButton btnSetPowers;
