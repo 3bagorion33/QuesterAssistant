@@ -63,10 +63,10 @@ namespace QuesterAssistant.Panels
 
         private void CharCheck(object sender, EventArgs e)
         {
-            this.labelCharacterName.Text = "Paragon:  " +
+            this.labelCharacterName.Text = "Paragon: " +
                 Paragon.DisplayName;
 
-            this.labelCharacterClass.Text = "Class:  " +
+            this.labelCharacterClass.Text = "Class: " +
                 EntityManager.LocalPlayer.Character.Class.DisplayName;
 
             if (Paragon.Category != prevCharParagon)

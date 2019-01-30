@@ -57,7 +57,7 @@ namespace QuesterAssistant.Conditions
         public override void Reset()
         {
             Debug.WriteLine(DisplayName + ": Reset()");
-            var _msg = buffMessages.FindLast(x => x.Channel == Channel && Regex.IsMatch(x.Text, MessageRegex));
+            var _msg = buffMessages.FindLast(x => (Channel != ChatLogEntryType.Unknown) ? x.Channel == Channel : true && Regex.IsMatch(x.Text, MessageRegex));
             if (_msg is null)
             {
                 buffMessages.Clear();

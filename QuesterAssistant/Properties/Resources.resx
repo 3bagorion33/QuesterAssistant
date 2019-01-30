@@ -117,23 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Description" xml:space="preserve">
-    <value>This plugin adds some threads and actions into Quester role.
-
-Threads:
-- Identify items every 2 sec if any and scrolls are present
-
-Actions:
-- ConsoleCommand - execute any ingame console command
-- DiscardItem - delete items using filter
-- InventoryLog - write contents of bags to file using pattern
-- MoonMask - travel to MoonMask if possible
-- Notify - show popup notification window
-- PathFinding - enable or disable navigation core
-- RefineAD - refine astral diamonds if possible
-- VIPRewards - claim account and char rewards and open boxes
-- VIPSell - sale items to VIP vendor if possible using global sale filter (forced flag "Discard if can't sell")</value>
-  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Donate" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -182,7 +165,7 @@ Actions:
         XTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxS
         fNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+
         tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/
-        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALEQAACxEBf2RfkQAAO9JJREFUeF7tfQdUFEnX
+        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALEAAACxABrSO9dQAAO9JJREFUeF7tfQdUFEnX
         dpNRzIoBMQdUjKCIJBUlmHMOa1izopgQMyKIihHMGcxiDphXBUQFAQWUpCIqOUmQNMPz3+qZhgFHXd/d
         9/t332Od85zuvn3rVnXX0/fe6u7p4QD8ECJA6Wl8rs4O/6ShVudizzXe/iK6jWtgYputQenttgen/cL/
         JNLZGDfe/jKajTkbe8aBomIoyeNIecgVyuJWXHaPwSffeNZ3fZlSz8EfnbcHwnLPMwx2v4/BbvcwYs+D
@@ -444,7 +427,7 @@ Actions:
   <data name="go_down" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACw4AAAsOAUC+4UEAAAEUSURBVDhPldNBSsNAGAXggdyii97DhhazbKVpQWwESQMG
+        YQUAAAAJcEhZcwAACw0AAAsNAe0HwCwAAAEUSURBVDhPldNBSsNAGAXggdyii97DhhazbKVpQWwESQMG
         Sk9Q910UuukhioKuqm5cBBF3XkLc2SuIWvS9OH9NJpPQLj5C/vzvBYZE+Y2Q2nAJyY6uoAuK4SP4oZ47
         3JKZjez03ShgwTWHuNnKLpuMvRULHnTbvmF6yhXIInzBFC60pSVM/wWZIa2Bz1TcmTiDw1HTEqa/AmNI
         aQHDUAu8sWcJU6FgA2/wImGoo+AAs1d4h8qCb2hnw/rqYM7dmd4rLaDP41Z8bgkvMjspnN1zoUAfFkvi
@@ -455,7 +438,7 @@ Actions:
   <data name="go_up" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAACw4AAAsOAUC+4UEAAAErSURBVDhPlZJBSsNAGIWnxFN00XOIFWlXaoQqCMmqpjRS
+        YQUAAAAJcEhZcwAACw0AAAsNAe0HwCwAAAErSURBVDhPlZJBSsNAGIWnxFN00XOIFWlXaoQqCMmqpjRS
         unWh9ACKG08hCrqzddGFIqXL3qHQlXgEKZnoe3EmjpMJrYuPZP6892UYRrS22hXQAc/g9bB+8qbhuoTR
         UT2K8BQUtMEXwTBHz1zwO37A94CCoR6uWzYEjxRMVpRT/e7IjQVM05Iyi9cgBJ+OMvkVGEPC8o1MpDg9
         GHjHO3GMzNKR+xFYw7wc+xceqIIaJF3Ml0aOjLMzsIZXdpnPaPdsA998II2sU/AO5mGzv2mVZ2ABVgp4

@@ -61,28 +61,6 @@ namespace QuesterAssistant.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на This plugin adds some threads and actions into Quester role.
-        ///
-        ///Threads:
-        ///- Identify items every 2 sec if any and scrolls are present
-        ///
-        ///Actions:
-        ///- ConsoleCommand - execute any ingame console command
-        ///- DiscardItem - delete items using filter
-        ///- InventoryLog - write contents of bags to file using pattern
-        ///- MoonMask - travel to MoonMask if possible
-        ///- Notify - show popup notification window
-        ///- PathFinding - enable or disable navigation core
-        ///- RefineAD - refine astral diamonds if possible
-        ///- VIPRewards - c [остаток строки не уместился]&quot;;.
-        /// </summary>
-        internal static string Description {
-            get {
-                return ResourceManager.GetString("Description", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap Donate {
