@@ -13,6 +13,7 @@ namespace QuesterAssistant.Conditions
     [Serializable]
     public class ReceivedChatMessage : Condition
     {
+        private string DisplayName => GetType().Name;
         private Message lastMatchedMessage = new Message();
         private bool isMatched = false;
         private static List<Message> buffMessages = new List<Message>();
@@ -21,7 +22,6 @@ namespace QuesterAssistant.Conditions
             Enabled = true,
             Interval = 1000,
         };
-        private string DisplayName => GetType().Name;
         public ChatLogEntryType Channel { get; set; }
         public string MessageRegex { get; set; }
         public override bool IsValid

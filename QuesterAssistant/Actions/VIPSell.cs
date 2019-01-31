@@ -5,7 +5,7 @@ using MyNW.Classes;
 using QuesterAssistant.Classes;
 using System.Threading;
 
-namespace QuesterAssistant
+namespace QuesterAssistant.Actions
 {
     public class VIPSell : Astral.Quester.Classes.Action
     {

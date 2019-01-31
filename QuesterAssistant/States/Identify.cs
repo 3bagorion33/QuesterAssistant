@@ -37,8 +37,8 @@ namespace QuesterAssistant.States
                     {
                         items.ForEach(x =>
                         {
-                            var scroll = scrolls.FindLast(s => s.Item.ItemDef.Level >= x.Item.AlgoItemProps.MinLevel);
-                            if (scroll is null)
+                            var scroll = scrolls.FindLast(s => s.Item.ItemDef.Level >= x.Item.AlgoItemProps.MinLevel) ?? new InventorySlot(IntPtr.Zero);
+                            if (!scroll.IsValid)
                                 return;
                             Debug.WriteLine(scroll.Item.DisplayName + " => " + x.Item.AlgoItemProps.MinLevel + " => " + scroll.Item.ItemDef.Level);
                             Logger.WriteLine("Identifying '" + x.Item.ItemDef.DisplayName + "' ...");

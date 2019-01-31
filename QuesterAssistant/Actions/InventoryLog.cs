@@ -8,7 +8,7 @@ using Astral.Quester.Classes;
 using MyNW.Classes;
 using System.IO;
 
-namespace QuesterAssistant
+namespace QuesterAssistant.Actions
 {
     [Serializable]
     public class InventoryLog : Astral.Quester.Classes.Action

@@ -18,7 +18,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 
-namespace QuesterAssistant
+namespace QuesterAssistant.Actions  
 {
     [Serializable]
     public class ConsoleCommand : Astral.Quester.Classes.Action

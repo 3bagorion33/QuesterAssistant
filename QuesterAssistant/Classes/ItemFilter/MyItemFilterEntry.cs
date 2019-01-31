@@ -1,38 +1,18 @@
-﻿using Astral;
-using Astral.Classes;
-using Astral.Classes.ItemFilter;
-using Astral.Professions.Functions;
-using Astral.Controllers;
-using Astral.Logic.Classes.Map;
-using Astral.Logic.NW;
-using Astral.Quester.Classes;
-using Astral.Quester.UIEditors;
+﻿using Astral.Classes.ItemFilter;
 using MyNW.Classes;
-using MyNW.Internals;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading;
-using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
     class MyItemFilterEntry
     {
-        // Properties
         internal ItemFilterMode Mode { get; set; }
         internal ItemFilterStringType StringType { get; set; }
         internal string Text { get; set; }
         internal ItemFilterType Type { get; set; }
 
-        // Constructor
         internal MyItemFilterEntry(ItemFilterEntry filterEntry)
         {
             this.Mode = filterEntry.Mode;
@@ -41,112 +21,67 @@ namespace QuesterAssistant.Classes.ItemFilter
             this.Type = filterEntry.Type;
         }
 
-        // Translator
         public static explicit operator MyItemFilterEntry(ItemFilterEntry filterEntry)
         {
             return new MyItemFilterEntry(filterEntry);
         }
 
-        // method_5
-        // method_7
         bool ParseString (string text)
         {
-            string searchText = this.Text;
-
-            Debug.WriteLine("SearchText: " + searchText);
-            if (searchText == "*")
-            {
+            if (Text == "*")
                 return true;
-            }
-            if (searchText.StartsWith("*") && searchText.EndsWith("*"))
-            {
-                string str = searchText.Remove(0, 1);
-                str = str.Remove(str.Length - 1);
-                return text.Contains(str);
-            }
-            if (searchText.StartsWith("*"))
-            {
-                string str2 = searchText.Remove(0, 1);
-                return text.EndsWith(str2);
-            }
-            if (searchText.EndsWith("*"))
-            {
-                string str3 = searchText.Remove(searchText.Length - 1);
-                Debug.WriteLine("Search pattern: " + str3);
-                Debug.WriteLine("Pattern match: " + text.StartsWith(str3).ToString());
-                return text.StartsWith(str3);
-            }
-            return searchText == text;
+
+            if (Text.StartsWith("*") && Text.EndsWith("*"))
+                return text.Contains(Text.Remove(Text.Length - 1).Remove(0, 1));
+
+            if (Text.StartsWith("*"))
+                return text.EndsWith(Text.Remove(0, 1));
+
+            if (Text.EndsWith("*"))
+                return text.StartsWith(Text.Remove(Text.Length - 1));
+
+            return Text == text;
         }
 
-        // method_4
-        // method_6
-        bool RegexIsMatch (string text)
-        {
-            return Regex.IsMatch(text, this.Text);
-        }
-
-        // method_1
         internal bool StrType(Item item)
         {
             switch (this.StringType)
             {
                 case ItemFilterStringType.Simple:
-                    Debug.WriteLine("Filter Simple");
-                    return Enumerable.Any<string>(this.ItemType(item), new Func<string, bool>(this.ParseString));
+                    return ItemType(item).Any(x => ParseString(x));
 
                 case ItemFilterStringType.Regex:
-                    return Enumerable.Any<string>(this.ItemType(item), new Func<string, bool>(this.RegexIsMatch));
+                    return ItemType(item).Any(x => Regex.IsMatch(x, this.Text));
             }
             return false;
         }
 
-        // method_0
         List<string> ItemType (Item item)
         {
+            var _tmp = new List<string>();
             switch (this.Type)
             {
                 case ItemFilterType.ItemName:
-                    return new List<string>(new string[] { item.ItemDef.DisplayName });
+                    _tmp.Add(item.DisplayName);
+                    break;
 
                 case ItemFilterType.ItemID:
-                    Debug.WriteLine("Type: ItemID -> " + item.ItemDef.InternalName);
-                    Debug.WriteLine(new List<string>(new string[] { item.ItemDef.InternalName }).ToString());
-                    return new List<string>(new string[] { item.ItemDef.InternalName });
+                    _tmp.Add(item.ItemDef.InternalName);
+                    break;
 
                 case ItemFilterType.ItemCatergory:
-                    return new List<string>(Enumerable.Select
-                        (item.ItemDef.Categories, ItemFlag.Category ?? 
-                        (ItemFlag.Category = new Func<ItemCategory, string>(ItemFlag.Get.GetItemCategory))));
+                    _tmp.AddRange(item.ItemDef.Categories.Select(x => x.ToString()));
+                    break;
 
                 case ItemFilterType.ItemType:
-                    return new List<string>(new string[] { item.ItemDef.Type.ToString() });
+                    _tmp.Add(item.ItemDef.Type.ToString());
+                    break;
 
                 case ItemFilterType.ItemFlag:
-                    return new List<string>(Enumerable.Select
-                        (item.ActiveFlags, ItemFlag.Flags ?? 
-                        (ItemFlag.Flags = new Func<ItemFlags, string>(ItemFlag.Get.GetItemFlags))));
+                    _tmp.AddRange(item.ActiveFlags.Select(x => x.ToString()));
+                    break;
             }
-            return new List<string>();
-        }
-
-        private sealed class ItemFlag
-        {
-            public static ItemFlag Get { get; } = new ItemFlag();
-            public static Func<ItemCategory, string> Category { get; set; }
-            public static Func<ItemFlags, string> Flags { get; set; }
-
-            // method_0
-            internal string GetItemCategory (ItemCategory itemCategory)
-            {
-                return itemCategory.ToString();
-            }
-
-            // method_1
-            internal string GetItemFlags (ItemFlags itemFlags)
-            {
-                return itemFlags.ToString();
-            }
+            return _tmp;
         }
     }
 }

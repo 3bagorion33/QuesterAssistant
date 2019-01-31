@@ -5,7 +5,7 @@ using MyNW.Classes;
 using MyNW.Internals;
 using System;
 
-namespace QuesterAssistant
+namespace QuesterAssistant.Actions
 {
     public class RefineAD : Astral.Quester.Classes.Action
     {

@@ -1,71 +1,38 @@
-﻿using Astral;
-using Astral.Classes;
-using Astral.Classes.ItemFilter;
-using Astral.Professions.Functions;
-using Astral.Controllers;
-using Astral.Logic.Classes.Map;
-using Astral.Logic.NW;
-using Astral.Quester.Classes;
-using Astral.Quester.UIEditors;
+﻿using Astral.Classes.ItemFilter;
 using MyNW.Classes;
-using MyNW.Internals;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading;
-using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
     class MyItemFilterCore
     {
-        // Properties
         List<MyItemFilterEntry> Entries { get; set; } = new List<MyItemFilterEntry>();
 
-        // Constructor
         internal MyItemFilterCore(ItemFilterCore filterCore)
         {
-            using (List<ItemFilterEntry>.Enumerator enumerator = filterCore.Entries.GetEnumerator())
-            {
-                while (enumerator.MoveNext())
-                {
-                    MyItemFilterEntry myItemFilterEntry = new MyItemFilterEntry(enumerator.Current);
-                    Entries.Add((MyItemFilterEntry)enumerator.Current);
-                }
-            }
+            filterCore.Entries.ForEach(x => Entries.Add((MyItemFilterEntry)x));
         }
 
-        // Translator
         public static explicit operator MyItemFilterCore(ItemFilterCore filterCore)
         {
             return new MyItemFilterCore(filterCore);
         }
 
-        // method_0
         internal bool IsMatch(Item item)
         {
             bool flag = false;
-            using (List<MyItemFilterEntry>.Enumerator enumerator = this.Entries.GetEnumerator())
+            foreach (var entry in Entries)
             {
-                while (enumerator.MoveNext())
+                if (entry.StrType(item))
                 {
-                    MyItemFilterEntry current = enumerator.Current;
-                    if (current.StrType(item))
+                    switch (entry.Mode)
                     {
-                        switch (current.Mode)
-                        {
-                            case ItemFilterMode.Include:
-                                Debug.WriteLine("Item Include!");
-                                flag = true;
-                                break;
-                            case ItemFilterMode.Exclude:
-                                return false;
-                        }
+                        case ItemFilterMode.Include:
+                            Debug.WriteLine("Item Include!");
+                            flag = true;
+                            break;
+                        case ItemFilterMode.Exclude:
+                            return false;
                     }
                 }
             }

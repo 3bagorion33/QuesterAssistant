@@ -54,7 +54,8 @@
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile />
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <DocumentationFile />
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
@@ -132,6 +133,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
     <Compile Include="Actions\Deprecated\PathfindDisable.cs" />
     <Compile Include="Actions\Deprecated\PathfindEnable.cs" />
@@ -148,7 +150,13 @@
     <Compile Include="Conditions\CountOfRuns.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
-    <EmbeddedResource Include="Temp\ns2.Class2.resx" />
+    <None Include="Temp\Auction.cs" />
+    <None Include="Temp\AuctionLot.cs" />
+    <None Include="Temp\AuctionLotList.cs" />
+    <None Include="Temp\AuctionLotState.cs" />
+    <None Include="Temp\AuctionSlot.cs" />
+    <None Include="Temp\AuctionSell.cs" />
+    <None Include="Temp\ns2.Class2.resx" />
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
