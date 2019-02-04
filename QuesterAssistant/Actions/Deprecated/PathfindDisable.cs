@@ -11,7 +11,6 @@ namespace QuesterAssistant.Actions.Deprecated
     [Serializable]
     public class PathfindDisable : Astral.Quester.Classes.Action
     {
-        // Properties
         public override string ActionLabel => "PathfindDisable";
         public override string Category => "Deprecated";
 
@@ -22,7 +21,7 @@ namespace QuesterAssistant.Actions.Deprecated
                 Logger.WriteLine(Debug.DeprecatedWriteLine(this.ActionLabel));
                 if (API.RoleIsRunning)
                 {
-                    API.ToogleRole();
+                    //API.ToogleRole();
                 }
                 return false;
             }
@@ -42,14 +41,12 @@ namespace QuesterAssistant.Actions.Deprecated
         public override bool NeedToRun => true;
         public override bool UseHotSpots => false;
 
-        // Methods
         public override void GatherInfos()
         {
             XtraMessageBox.Show(Debug.DeprecatedMessage(this.ActionLabel, "PathFinding: Disable"));
         }
 
         public override void InternalReset() { }
-
         public override void OnMapDraw(GraphicsNW graph) { }
 
         public override ActionResult Run()
