@@ -4,11 +4,9 @@ using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using DevExpress.Utils.Extensions;
-using Astral.Classes;
+using System.Windows.Forms;
 
 namespace QuesterAssistant.Conditions
 {
@@ -18,8 +16,11 @@ namespace QuesterAssistant.Conditions
         private Message lastMatchedMessage = new Message();
         private bool isMatched = false;
         private static List<Message> buffMessages = new List<Message>();
-        private Timeout resetTimer = new Timeout(2000);
-
+        private Timer resetTimer = new Timer()
+        {
+            Enabled = true,
+            Interval = 1000,
+        };
         private string DisplayName => GetType().Name;
         public ChatLogEntryType Channel { get; set; }
         public string MessageRegex { get; set; }
@@ -27,9 +28,14 @@ namespace QuesterAssistant.Conditions
         {
             get
             {
-                Debug.WriteLine(DisplayName + ": IsValid");
-                if (resetTimer.IsTimedOut)
-                    isMatched = false;
+                var _msg = buffMessages.FindLast(x => ((Channel != ChatLogEntryType.Unknown) ? x.Channel == Channel : true) && Regex.IsMatch(x.Text, MessageRegex));
+                if (_msg != null)
+                {
+                    Debug.WriteLine(DisplayName + " => [" + _msg.Channel + "] " + _msg.Text);
+                    lastMatchedMessage = _msg;
+                    isMatched = true;
+                }
+                Debug.WriteLine(DisplayName + ": IsValid => " + !isMatched);
                 return !isMatched;
             }
         }
@@ -39,6 +45,13 @@ namespace QuesterAssistant.Conditions
         public ReceivedChatMessage()
         {
             ChatManager.OnChatMessage += OnChatMessage;
+            resetTimer.Start();
+            resetTimer.Tick += ResetTimer_Tick;
+        }
+
+        private void ResetTimer_Tick(object sender, EventArgs e)
+        {
+            Reset();
         }
 
         private void OnChatMessage(ChatLogEntryType _channel, string _msg)
@@ -57,17 +70,8 @@ namespace QuesterAssistant.Conditions
         public override void Reset()
         {
             Debug.WriteLine(DisplayName + ": Reset()");
-            var _msg = buffMessages.FindLast(x => ((Channel != ChatLogEntryType.Unknown) ? x.Channel == Channel : true) && Regex.IsMatch(x.Text, MessageRegex));
-            if (_msg is null)
-            {
-                buffMessages.Clear();
-                return;
-            }
-            Debug.WriteLine(DisplayName + " => [" + _msg.Channel + "] " + _msg.Text);
-            lastMatchedMessage = _msg;
-            isMatched = true;
-            resetTimer.Reset();
             buffMessages.Clear();
+            isMatched = false;
         }
 
         private class Message

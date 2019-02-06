@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuesterAssistant.Classes
 {
@@ -10,7 +7,7 @@ namespace QuesterAssistant.Classes
         internal static void WriteLine(string text)
         {
 #if DEBUG
-            Astral.Logger.WriteLine(text);
+            Astral.Logger.WriteLine("[" + DateTime.Now.Second + "." + DateTime.Now.Millisecond + "] " + text);
 #endif
         }
 

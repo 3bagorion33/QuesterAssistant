@@ -13,7 +13,6 @@ namespace QuesterAssistant
 {
     public class Core : Plugin
     {
-        // Properties
         public override string Author => "Orion33";
         public override Image Icon => null;
         public override string Name => "Quester Assistant";
