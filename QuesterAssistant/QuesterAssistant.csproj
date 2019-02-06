@@ -148,7 +148,7 @@
     <Compile Include="Conditions\CountOfRuns.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
-    <EmbeddedResource Include="Temp\ns2.Class2.resx" />
+    <None Include="Temp\ns2.Class2.resx" />
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
