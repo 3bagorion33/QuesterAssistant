@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
-using System.Linq;
+using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Classes.Hooks
 {
@@ -11,7 +10,7 @@ namespace QuesterAssistant.Classes.Hooks
     /// <summary>
     /// Captures global keyboard events
     /// </summary>
-    public class KeyboardHook : GlobalHook
+    internal class KeyboardHook : GlobalHook
     {
         #region Properties
 
@@ -52,16 +51,16 @@ namespace QuesterAssistant.Classes.Hooks
                 KeyboardHookStruct keyboardHookStruct =
                     (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 // Is Control being held down?
-                bool control = ((GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
-                               ((GetKeyState(VK_RCONTROL) & 0x80) != 0);
+                bool control = ((Win32.User32.GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
+                               ((Win32.User32.GetKeyState(VK_RCONTROL) & 0x80) != 0);
                 // Is Shift being held down?
-                bool shift = ((GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
-                             ((GetKeyState(VK_RSHIFT) & 0x80) != 0);
+                bool shift = ((Win32.User32.GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
+                             ((Win32.User32.GetKeyState(VK_RSHIFT) & 0x80) != 0);
                 // Is Alt being held down?
-                bool alt = ((GetKeyState(VK_LALT) & 0x80) != 0) ||
-                           ((GetKeyState(VK_RALT) & 0x80) != 0);
+                bool alt = ((Win32.User32.GetKeyState(VK_LALT) & 0x80) != 0) ||
+                           ((Win32.User32.GetKeyState(VK_RALT) & 0x80) != 0);
                 // Is CapsLock on?
-                bool capslock = (GetKeyState(VK_CAPITAL) != 0);
+                bool capslock = (Win32.User32.GetKeyState(VK_CAPITAL) != 0);
                 // Create event using keycode and control/shift/alt values found above
                 KeyEventArgs e = new KeyEventArgs(
                     (Keys)(
@@ -98,8 +97,8 @@ namespace QuesterAssistant.Classes.Hooks
                 {
                     byte[] keyState = new byte[256];
                     byte[] inBuffer = new byte[2];
-                    GetKeyboardState(keyState);
-                    if (ToAscii(keyboardHookStruct.vkCode,
+                    Win32.User32.GetKeyboardState(keyState);
+                    if (Win32.User32.ToAscii(keyboardHookStruct.vkCode,
                               keyboardHookStruct.scanCode,
                               keyState,
                               inBuffer,
@@ -120,7 +119,7 @@ namespace QuesterAssistant.Classes.Hooks
             }
             else
             {
-                return CallNextHookEx(_handleToHook, nCode, wParam, lParam);
+                return Win32.User32.CallNextHookEx(_handleToHook, nCode, wParam, lParam);
             }
         }
 

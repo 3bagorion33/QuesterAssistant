@@ -1,21 +1,9 @@
 ﻿using Astral;
-using Astral.Classes;
-using Astral.Classes.ItemFilter;
-using Astral.Controllers;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
-using Astral.Quester.Classes;
-using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 
 namespace QuesterAssistant.Actions
@@ -24,10 +12,10 @@ namespace QuesterAssistant.Actions
     public class MoonMask : Astral.Quester.Classes.Action
     {
         // Properties
-        public override string ActionLabel => "MoonMask";
-        public override string Category => "QuesterAssistant";
+        public override string ActionLabel => GetType().Name;
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
-        public override string InternalDisplayName => "MoonMask";
+        public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
 
         protected override bool IntenalConditions

@@ -1,9 +1,8 @@
 ﻿using Astral;
-using Astral.Controllers;
 using Astral.Logic.Classes.Map;
 using DevExpress.XtraEditors;
 using MyNW.Classes;
-using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Common;
 using System;
 
 namespace QuesterAssistant.Actions.Deprecated
@@ -11,7 +10,7 @@ namespace QuesterAssistant.Actions.Deprecated
     [Serializable]
     public class PathfindEnable : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => "PathfindEnable";
+        public override string ActionLabel => GetType().Name;
         public override string Category => "Deprecated";
 
         protected override bool IntenalConditions

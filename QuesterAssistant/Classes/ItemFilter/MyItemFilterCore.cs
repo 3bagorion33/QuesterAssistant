@@ -28,7 +28,6 @@ namespace QuesterAssistant.Classes.ItemFilter
                     switch (entry.Mode)
                     {
                         case ItemFilterMode.Include:
-                            Debug.WriteLine("Item Include!");
                             flag = true;
                             break;
                         case ItemFilterMode.Exclude:

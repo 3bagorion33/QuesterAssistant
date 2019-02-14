@@ -1,17 +1,14 @@
 using Astral;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using DevExpress.XtraEditors;
 using MyNW.Classes;
-using QuesterAssistant.Classes;
-using System;
-using System.ComponentModel;
+using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Actions.Deprecated
 {
     public class PathFinding : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => "PathFinding: " + this.Value;
+        public override string ActionLabel => GetType().Name + this.Value;
         public override string Category => "Deprecated";
         protected override bool IntenalConditions
         {

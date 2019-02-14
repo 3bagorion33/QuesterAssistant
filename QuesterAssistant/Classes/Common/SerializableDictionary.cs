@@ -6,7 +6,7 @@ using System.Xml.Serialization;
 using MyNW.Classes;
 using MyNW.Patchables.Enums;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Common
 {
     /// <summary>
     /// Аналог стандартного Dictionary, с возможность xml-сериализации

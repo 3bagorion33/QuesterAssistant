@@ -9,17 +9,15 @@ namespace QuesterAssistant.Actions
 {
     public class RefineAD : Astral.Quester.Classes.Action
     {
-        // Properties
-        public override string ActionLabel => "RefineAD";
-        public override string Category => "QuesterAssistant";
+        public override string ActionLabel => GetType().Name;
+        public override string Category => Core.Category;
         protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();
-        public override string InternalDisplayName => "RefineAD";
+        public override string InternalDisplayName => string.Empty;
         protected override ActionValidity InternalValidity => new ActionValidity();
         public override bool NeedToRun => true;
         public override bool UseHotSpots => false;
 
-        // Methods
         public override void GatherInfos() {}
         public override void InternalReset() {}
         public override void OnMapDraw(GraphicsNW graph) {}

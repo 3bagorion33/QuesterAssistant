@@ -4,24 +4,16 @@ using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using MyNW.Internals;
-using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Classes.PowersManager;
 using QuesterAssistant.Enums;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Resources;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Timer = System.Windows.Forms.Timer;
 
 namespace QuesterAssistant.Panels
 {
@@ -39,7 +31,6 @@ namespace QuesterAssistant.Panels
 
         private void Dispose(object s, EventArgs e)
         {
-            Debug.WriteLine("Dispose event");
             this.Dispose(true);
         }
 
@@ -109,8 +100,6 @@ namespace QuesterAssistant.Panels
         {
             if (Paragon.IsValid)
             {
-                Debug.WriteLine(string.Format("Pressed button: {0}", e.Button.Caption));
-
                 switch (e.Button.Caption)
                 {
                     case "Add":
@@ -164,7 +153,6 @@ namespace QuesterAssistant.Panels
 
         private void cmbPresetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Debug.WriteLine(string.Format("SelectedIndexChanged => {0}", cmbPresetsList.SelectedIndex));
             powerListSource_Update();
             tedHotKey_Update();
         }
@@ -246,19 +234,16 @@ namespace QuesterAssistant.Panels
         {
             if (chkHotKeys.Checked)
             {
-                Debug.WriteLine("Hook is starting");
                 keyboardHook.Start();
             }
             else
             {
-                Debug.WriteLine("Hook is stopping");
                 keyboardHook.Stop();
             }
         }
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            Debug.WriteLine("Hooked " + pManager.CurrPresets?.Find(x => x.Keys == e.KeyData)?.Name);
             var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
             if (_pres != null)
             {

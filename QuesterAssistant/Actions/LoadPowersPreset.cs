@@ -17,7 +17,7 @@ namespace QuesterAssistant.Actions
     public class LoadPowersPreset : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => GetType().Name;
-        public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;

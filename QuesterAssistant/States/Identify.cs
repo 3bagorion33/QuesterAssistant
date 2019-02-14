@@ -1,15 +1,10 @@
 ﻿using Astral;
-using Astral.Controllers;
 using Astral.Logic.Classes.FSM;
-using Astral.Logic.NW;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace QuesterAssistant.States
@@ -24,7 +19,6 @@ namespace QuesterAssistant.States
 
         public override void Run()
         {
-            Debug.WriteLine(DisplayName + ": tick with Priority=" + Priority + ", CheckInterval=" + CheckInterval);
             if (true)
             {
                 var player = EntityManager.LocalPlayer;
@@ -40,8 +34,7 @@ namespace QuesterAssistant.States
                             var scroll = scrolls.FindLast(s => s.Item.ItemDef.Level >= x.Item.AlgoItemProps.MinLevel) ?? new InventorySlot(IntPtr.Zero);
                             if (!scroll.IsValid)
                                 return;
-                            Debug.WriteLine(scroll.Item.DisplayName + " => " + x.Item.AlgoItemProps.MinLevel + " => " + scroll.Item.ItemDef.Level);
-                            Logger.WriteLine("Identifying '" + x.Item.ItemDef.DisplayName + "' ...");
+                            Logger.WriteLine($"Identifying '{x.Item.ItemDef.DisplayName}' ...");
                             x.Identify(scroll.Item);
                             Thread.Sleep(200);
                         });

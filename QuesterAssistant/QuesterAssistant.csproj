@@ -135,6 +135,7 @@
   <ItemGroup>
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
+    <Compile Include="Actions\CloseAllFrames.cs" />
     <Compile Include="Actions\Deprecated\PathfindDisable.cs" />
     <Compile Include="Actions\Deprecated\PathfindEnable.cs" />
     <Compile Include="Actions\DiscardItem.cs" />
@@ -144,12 +145,17 @@
     <Compile Include="Actions\MoonMask.cs" />
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
-    <Compile Include="Classes\Debug.cs" />
+    <Compile Include="Classes\AuctionSearch.cs" />
+    <Compile Include="Classes\Common\BinFile.cs" />
+    <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="Classes\Common\Win32.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />
+    <Compile Include="Classes\MathTools.cs" />
     <Compile Include="Conditions\CountOfRuns.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
+    <None Include="Temp\AuctionBuy.cs" />
     <None Include="Temp\Auction.cs" />
     <None Include="Temp\AuctionLot.cs" />
     <None Include="Temp\AuctionLotList.cs" />
@@ -162,7 +168,7 @@
     <None Include="Classes\Hooks\MouseSimulator.cs" />
     <Compile Include="Classes\Paragon.cs" />
     <Compile Include="Classes\PowersManager\PowersManagerData.cs" />
-    <None Include="Classes\SerializableDictionary.cs" />
+    <None Include="Classes\Common\SerializableDictionary.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterEntry.cs" />
     <Compile Include="Classes\Powers.cs" />

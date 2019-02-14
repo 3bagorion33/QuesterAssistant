@@ -1,22 +1,11 @@
 ﻿using Astral;
-using Astral.Classes;
-using Astral.Classes.ItemFilter;
-using Astral.Controllers;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
-using Astral.Quester.Classes;
-using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
-using QuesterAssistant.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Design;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 
 namespace QuesterAssistant.Actions
@@ -24,8 +13,8 @@ namespace QuesterAssistant.Actions
     [Serializable]
     public class VIPRewards : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => "VIPRewards";
-        public override string Category => "QuesterAssistant";
+        public override string ActionLabel => GetType().Name;
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
@@ -69,7 +58,6 @@ namespace QuesterAssistant.Actions
                     uint num = item.Count;
                     if (item.ItemDef.RewardPackInfo.IsValid && item.ItemDef.InternalName.Contains("Vip"))
                     {
-                        Debug.WriteLine("Count: " + item.Count.ToString());
                         for (uint i = 0; i < num; i++)
                         {
                             Logger.WriteLine("Open '" + item.ItemDef.DisplayName + "'");
@@ -86,7 +74,6 @@ namespace QuesterAssistant.Actions
             Thread.Sleep(500);
             if (Game.IsRewardpackviewerFrameVisible())
             {
-                Debug.WriteLine("IsRewardpackviewerFrameVisible");
                 Game.CloseRewardpackviewerFrame();
             }
         }
@@ -94,28 +81,21 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             Astral.Logic.NW.Inventory.FreeOverFlowBags();
-            Debug.WriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
             while (this.ClaimAccountReward && VIP.AccountRewardAvailable)
             {
-                Debug.WriteLine("ClaimAccountReward");
                 VIP.ClaimAccountReward();
                 Thread.Sleep(1000);
                 this.IsAccountRewardClaimed = true;
             }
-            Debug.WriteLine("AccountRewardAvailable: " + VIP.AccountRewardAvailable.ToString());
-            Debug.WriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             while (this.ClaimCharacterReward && VIP.CharacterRewardAvailable)
             {
-                Debug.WriteLine("ClaimCharacterReward");
                 VIP.ClaimCharacterReward();
                 Thread.Sleep(500);
                 this.IsCharacterRewardClaimed = true;
             }
-            Debug.WriteLine("CharacterRewardAvailable: " + VIP.CharacterRewardAvailable.ToString());
             if (this.IsCharacterRewardClaimed || this.IsAccountRewardClaimed)
             {
                 Thread.Sleep(100);
-                Debug.WriteLine("Try open rewards");
                 OpenRewardBoxes();
             }
             return ActionResult.Completed;

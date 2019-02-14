@@ -13,8 +13,8 @@ namespace QuesterAssistant.Actions
     [Serializable]
     public class InventoryLog : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => "InventoryLog";
-        public override string Category => "QuesterAssistant";
+        public override string ActionLabel => GetType().Name;
+        public override string Category => Core.Category;
         public override string InternalDisplayName => string.Empty;
         public override bool NeedToRun => true;
         public override bool UseHotSpots => false;

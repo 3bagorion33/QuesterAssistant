@@ -21,7 +21,7 @@ namespace QuesterAssistant.Actions
     public class AuctionSellItems : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => GetType().Name;
-        public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
+        public override string Category => Core.Category;
         public override string InternalDisplayName => ActionLabel;
         public override bool UseHotSpots => false;
         public override bool NeedToRun => true;
@@ -30,18 +30,11 @@ namespace QuesterAssistant.Actions
         public override void OnMapDraw(GraphicsNW graph) { }
 
         private List<InventorySlot> itemsToSell;
-        private Dictionary<string, SearchResult> cachedSearch = new Dictionary<string, SearchResult>();
 
         protected override bool IntenalConditions
         {
             get
             {
-                Debug.WriteLine(ActionLabel + ": IntenalConditions");
-                if (Auction.GetRemainingPostings() <= 0)
-                {
-                    Logger.WriteLine("No available slot to sell...");
-                    return false;
-                }
                 var bags = EntityManager.LocalPlayer.BagsItems;
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
@@ -59,17 +52,7 @@ namespace QuesterAssistant.Actions
             }
         }
 
-        public override void InternalReset()
-        {
-            Debug.WriteLine(ActionLabel + ": InternalReset()");
-            cachedSearch.Clear();
-        }
-
-        private sealed class SearchResult
-        {
-            public List<AuctionLot> Lots;
-            public int OwnLotsCount;
-        }
+        public override void InternalReset() { }
 
         protected override ActionValidity InternalValidity
         {
@@ -78,7 +61,7 @@ namespace QuesterAssistant.Actions
                 if (ItemsFilter.Entries.Count == 0)
                     return new ActionValidity("List of items is empty!");
 
-                if (PriceType == SellingPriceType.Fixed && PriceValue == 0)
+                if (PriceValue == 0)
                     return new ActionValidity("PriceValue should not be zero");
 
                 if ((PriceType > SellingPriceType.Fixed) && ((PricePercent < 1) || (PricePercent > 199)))
@@ -93,9 +76,34 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
+            void InteractWaiting()
+            {
+                Thread.Sleep(2000);
+            }
+
             if (!Interact.Auctions())
                 return ActionResult.Fail;
 
+            Thread.Sleep(2000);
+
+            if (ActiveLots == ActiveLotType.Resell)
+            {
+                bool IsSellLotMatch(AuctionLot l)
+                {
+                    return ((MyItemFilterCore)ItemsFilter).IsMatch(l.Items.First().Item) && (l.Items.First().Item.Count == StackSize);
+                }
+                while (Auction.SearchWaiting)
+                    Thread.Sleep(250);
+
+                Logger.WriteLine("Collect items for reselling...");
+
+                while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
+                {
+                    var count = Auction.GetRemainingPostings();
+                    Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
+                    InteractWaiting();
+                }
+            }
             if (IntenalConditions)
             {
                 foreach (var slot in itemsToSell)
@@ -103,26 +111,24 @@ namespace QuesterAssistant.Actions
                     var itemToSell = slot.Item;
                     var itemPrice = GetActualPrice(itemToSell);
                     var iterationCount = GetIterationCount(itemToSell);
-                    Debug.WriteLine(ActionLabel + ": Total Iteration = " + iterationCount);
                     for (int i = 0; i < iterationCount; i++)
                     {
-                        Debug.WriteLine(ActionLabel + ": Iteration = " + i);
                         if (Auction.GetRemainingPostings() <= 0 || !itemToSell.IsValid)
                         {
                             goto Exit;
                         }
                         var itemCount = (StackSize > 0 && StackSize < itemToSell.Count) ? StackSize : itemToSell.Count;
 
-                        Debug.WriteLine(ActionLabel + ": itemToSell.Count = " + itemToSell.Count);
-
                         var multiply = (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
-                        var buyoutPrice = Round((int)(Math.Max(itemPrice * multiply, PriceMinimum) * itemCount));
-                        var startingBid = Round((int)((double)PriceStartingBid / 100 * itemPrice));
+                        var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * multiply, PriceMinimum) * itemCount),
+                            RoundDigits, RoundFilledBy);
+                        var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * itemPrice),
+                            RoundDigits, RoundFilledBy);
 
                         Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD");
+                        var count = Auction.GetRemainingPostings();
                         Auction.CreateLot(itemToSell, itemCount, buyoutPrice, startingBid, Duration);
-                        cachedSearch[itemToSell.DisplayName].OwnLotsCount++;
-                        Thread.Sleep(2500);
+                        InteractWaiting();
                     }
                 }
             }
@@ -136,23 +142,13 @@ namespace QuesterAssistant.Actions
         {
             // Если размер стака не определен, продаем слот как есть. Размер стака в инвентаре и на ауке совпадают.
             if (StackSize == 0)
-            {
-                Debug.WriteLine(ActionLabel + ": return 1");
                 return 1;
-            }
-            int ownLotsCount = AuctionSearch(item).OwnLotsCount;
-            Debug.WriteLine(ActionLabel + ": ownLotsCount => " + ownLotsCount);
+            int ownLotsCount = AuctionSearch.Get(item).OwnLotsCount;
             var sellStacks = (int)SellStacks - ownLotsCount;
-            Debug.WriteLine(ActionLabel + ": sellStacks => " + sellStacks);
             var stacksCount = item.Count / StackSize;
-            Debug.WriteLine(ActionLabel + ": stacksCount => " + stacksCount);
             // Если ноль, то продаем все, разбивая по стакам. +1 нужно, чтобы продать неполный стак. Если итемы кончатся, вывалимся по IsValid
             if (SellStacks == 0)
-            {
-                Debug.WriteLine(ActionLabel + ": return stacksCount + 1");
                 return (int)stacksCount + 1;
-            }
-            Debug.WriteLine(ActionLabel + ": return sellStacks");
             // Если сюда дошли, то выбираем минимум. Второе значение <=0, если уже продается заданное число стаков.
             return Math.Min(sellStacks, (int)stacksCount);
         }
@@ -160,17 +156,15 @@ namespace QuesterAssistant.Actions
         private uint GetActualPrice(Item item)
         {
             uint result = 0;
-            Debug.WriteLine(ActionLabel + ": " + PriceType);
             if (PriceType == SellingPriceType.Fixed)
-            {
                 result = PriceValue;
-            }
+
             if (PriceType > SellingPriceType.Fixed)
             {
-                List<AuctionLot> availableLots = AuctionSearch(item).Lots;
+                var availableLots = AuctionSearch.Get(item).Lots;
                 if (availableLots.Any())
                 {
-                    List<AuctionLot> validLots = new List<AuctionLot>();
+                    var validLots = new List<AuctionSearch.Result.Lot>();
                     if (PriceDetectionRange == PriceDetectionType.Full)
                     {
                         validLots = availableLots;
@@ -180,20 +174,18 @@ namespace QuesterAssistant.Actions
                         uint range = 0;
                         while (!validLots.Any())
                         {
-                            validLots = availableLots.FindAll(l => l.Items.First().Item.Count >= (StackSize - range) && l.Items.First().Item.Count <= (StackSize + range));
+                            validLots = availableLots.FindAll(l => l.Count >= (StackSize - range) && l.Count <= (StackSize + range));
                             range++;
-                            Debug.WriteLine($"{ActionLabel} : availableLots => {validLots.Count}");
                         }
                     }
 
-                    Debug.WriteLine(ActionLabel + ": availableLots is not empty");
                     uint itemPrice = 0;
                     if (PriceType == SellingPriceType.Minimal)
-                        itemPrice = PricePerItem(validLots.First());
+                        itemPrice = validLots.First().PricePerItem;
                     if (PriceType == SellingPriceType.Average)
-                        itemPrice = (uint)validLots.Average(x => PricePerItem(x));
+                        itemPrice = (uint)validLots.Average(x => x.PricePerItem);
                     if (PriceType == SellingPriceType.Median)
-                        itemPrice = PricePerItem(validLots.ElementAt(validLots.Count / 2));
+                        itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
                     result = (PriceMinimum > itemPrice) ? PriceMinimum : itemPrice;
                 }
                 else
@@ -205,82 +197,16 @@ namespace QuesterAssistant.Actions
             return result;
         }
 
-        private SearchResult AuctionSearch(Item item)
-        {
-            if (cachedSearch.ContainsKey(item.DisplayName))
-            {
-                Debug.WriteLine(ActionLabel + ": using cachedSearch");
-                return cachedSearch[item.DisplayName];
-            }
-            Debug.WriteLine(ActionLabel + ": try Auction search");
-            Auction.LotsSearch(item.DisplayName);
-            Thread.Sleep(2500);
-            while (Auction.SearchWaiting)
-                Thread.Sleep(250);
-            var availableLots = Auction.AuctionLotList.Lots
-                .FindAll(l => l.Price > 0 && l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName)
-                .OrderBy(l => PricePerItem(l)).ToList();
-            if (!cachedSearch.ContainsKey(item.DisplayName))
-                cachedSearch.Add(item.DisplayName, new SearchResult()
-                {
-                    Lots = availableLots.FindAll(l => l.Owner != EntityManager.LocalPlayer.InternalName),
-                    OwnLotsCount = availableLots.FindAll(l => l.Owner == EntityManager.LocalPlayer.InternalName).Count
-                });
-            return cachedSearch[item.DisplayName];
-        }
-
-        private uint PricePerItem(AuctionLot lot)
-        {
-            var price = lot.Price;
-            var count = lot.Items.First().Item.Count;
-            Debug.WriteLine(ActionLabel + ": Price = " + price + " / " + count);
-            return (price > count) ? price / count : 1;
-        }
-
-        private int Round(int number)
-        {
-            // Если не задано, не округляем
-            if (number < 10 || RoundDigits == 0)
-            {
-                return number;
-            }
-            // Определяем число разрядов
-            int digitsCount = 1;
-            double tmp = number;
-            while (tmp > 10)
-            {
-                tmp/= 10;
-                digitsCount++;
-            }
-            // Собственно округление
-            int result = (int)Math.Floor(tmp * Math.Pow(10, RoundDigits - 1));
-
-            if (RoundFilledBy == RoundType.Zero)
-            {
-                return (int)(result * Math.Pow(10, digitsCount - RoundDigits));
-            }
-            if (RoundFilledBy == RoundType.Nine)
-            {
-                return (int)(result * Math.Pow(10, digitsCount - RoundDigits)) - 1;
-            }
-            if (RoundFilledBy == RoundType.Last)
-            {
-                var mod = result % 10;
-                for (int i = 0; i < (digitsCount - RoundDigits); i++)
-                {
-                    result = result * 10 + mod;
-                }
-                return result;
-            }
-            return result;
-        }
 
         [Description("Item to sell filter"), Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
 
         public Auction.AuctionDuration Duration { get; set; } = Auction.AuctionDuration.Long;
 
-        [Description("Fixed : using PriceValue\nMinimal, Average, Median : detecting current price on Auction")]
+        [Description("Keep : active lots count is determined by SellStacks | Add : sell a new lots | Resell : cancel active lots before")]
+        public ActiveLotType ActiveLots { get; set; }
+
+        [Description("Fixed : using PriceValue | Minimal, Average, Median : detecting current price on Auction")]
         public SellingPriceType PriceType { get; set; }
 
         [Description("Fixed price, used as default if not found in Auction")]
@@ -308,14 +234,7 @@ namespace QuesterAssistant.Actions
         public uint RoundDigits { get; set; }
 
         [Description("Zero : price = 123000 | Nine : price = 122999 | Last : price = 122222")]
-        public RoundType RoundFilledBy { get; set; }
-
-        public enum RoundType
-        {
-            Zero,
-            Nine,
-            Last
-        }
+        public MathTools.RoundType RoundFilledBy { get; set; }
 
         public enum SellingPriceType
         {
@@ -324,11 +243,16 @@ namespace QuesterAssistant.Actions
             Average = 2,
             Median = 3
         }
-
         public enum PriceDetectionType
         {
             Full,
             NearStackSize
+        }
+        public enum ActiveLotType
+        {
+            Keep = 0,
+            Add = 1,
+            Resell = 2
         }
     }
 }

@@ -1,18 +1,11 @@
 ﻿using Astral;
-using Astral.Logic.NW;
-using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
-using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Enums;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes.PowersManager
@@ -98,8 +91,6 @@ namespace QuesterAssistant.Classes.PowersManager
 
         protected internal void SaveSettings()
         {
-            if (!Directory.Exists(Core.SettingsPath))
-                Directory.CreateDirectory(Core.SettingsPath);
             try
             {
                 Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager.xml"), this);

@@ -1,12 +1,12 @@
 ﻿using Astral.Quester.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using DevExpress.Utils.Extensions;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace QuesterAssistant.Conditions
 {
@@ -20,10 +20,8 @@ namespace QuesterAssistant.Conditions
         private Timer resetTimer = new Timer()
         {
             Enabled = true,
-            Interval = 1000,
         };
-        public ChatLogEntryType Channel { get; set; }
-        public string MessageRegex { get; set; }
+
         public override bool IsValid
         {
             get
@@ -31,20 +29,19 @@ namespace QuesterAssistant.Conditions
                 var _msg = buffMessages.FindLast(x => ((Channel != ChatLogEntryType.Unknown) ? x.Channel == Channel : true) && Regex.IsMatch(x.Text, MessageRegex));
                 if (_msg != null)
                 {
-                    Debug.WriteLine(DisplayName + " => [" + _msg.Channel + "] " + _msg.Text);
                     lastMatchedMessage = _msg;
                     isMatched = true;
                 }
-                Debug.WriteLine(DisplayName + ": IsValid => " + !isMatched);
-                return !isMatched;
+                return CheckAbsence ? !isMatched : isMatched;
             }
         }
 
-        public override string TestInfos => string.Format("Last matched message : [{0}] {1}", lastMatchedMessage?.Channel, lastMatchedMessage?.Text);
+        public override string TestInfos => $"Last matched message : [{lastMatchedMessage?.Channel}] {lastMatchedMessage?.Text}";
 
         public ReceivedChatMessage()
         {
             ChatManager.OnChatMessage += OnChatMessage;
+            resetTimer.Interval = ResultLifeTime;
             resetTimer.Start();
             resetTimer.Tick += ResetTimer_Tick;
         }
@@ -69,7 +66,6 @@ namespace QuesterAssistant.Conditions
 
         public override void Reset()
         {
-            Debug.WriteLine(DisplayName + ": Reset()");
             buffMessages.Clear();
             isMatched = false;
         }
@@ -79,5 +75,17 @@ namespace QuesterAssistant.Conditions
             protected internal ChatLogEntryType Channel { get; set; }
             protected internal string Text { get; set; }
         }
+
+        [Description("Specify channel for monitoring, all if Unknown")]
+        public ChatLogEntryType Channel { get; set; }
+
+        [Description("Enter the regex pattern for searching")]
+        public string MessageRegex { get; set; }
+
+        [Description("Check absence instead presence")]
+        public bool CheckAbsence { get; set; } = true;
+
+        [Description("Lifetime for result, ms")]
+        public int ResultLifeTime { get; set; } = 1000;
     }
 }
