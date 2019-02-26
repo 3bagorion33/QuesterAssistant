@@ -155,6 +155,7 @@
     <Compile Include="Conditions\CountOfRuns.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
+    <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
     <None Include="Temp\AuctionBuy.cs" />
     <None Include="Temp\Auction.cs" />
     <None Include="Temp\AuctionLot.cs" />
@@ -248,9 +249,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

@@ -197,8 +197,8 @@ namespace QuesterAssistant.Actions
             return result;
         }
 
-
-        [Description("Item to sell filter"), Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Description("Item to sell filter")]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
 
         public Auction.AuctionDuration Duration { get; set; } = Auction.AuctionDuration.Long;

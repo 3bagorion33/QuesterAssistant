@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -57,7 +58,7 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource();
+            this.powerListSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
             this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
@@ -83,10 +84,10 @@
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.timerCharCheck = new System.Windows.Forms.Timer();
+            this.timerCharCheck = new System.Windows.Forms.Timer(this.components);
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();

@@ -20,7 +20,7 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             MyNW.Internals.Game.ToggleCursorMode(false);
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(1000);
             return ActionResult.Completed;
         }
     }

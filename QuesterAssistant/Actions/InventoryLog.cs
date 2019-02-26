@@ -7,6 +7,18 @@ using Astral.Logic.Classes.Map;
 using Astral.Quester.Classes;
 using MyNW.Classes;
 using System.IO;
+using System.ComponentModel;
+using QuesterAssistant.UIEditors;
+using System.Drawing.Design;
+using MyNW.Patchables.Enums;
+using System.Xml.Serialization;
+using DevExpress.Utils.Extensions;
+using QuesterAssistant.Classes.Common;
+using MyNW.Internals;
+using QuesterAssistant.Classes;
+using Astral.Classes.ItemFilter;
+using Astral.Quester.UIEditors;
+using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant.Actions
 {
@@ -21,35 +33,66 @@ namespace QuesterAssistant.Actions
         protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();
         protected override ActionValidity InternalValidity => new ActionValidity();
+        public override void GatherInfos() { }
+        public override void InternalReset() { }
+        public override void OnMapDraw(GraphicsNW graph) { }
 
         public string LogPath { get; set; }
-        public string Mask { get; set; }
         public string LogName { get; set; }
-        public bool LogBags { get; set; }
-        public bool LogBank { get; set; }
-        public bool LogCraftingTools { get; set; }
-        public bool LogCraftingRes { get; set; }
 
-        public override void GatherInfos() {}
-        public override void InternalReset() {}
-        public override void OnMapDraw(GraphicsNW graph) {}
+        [Description("Default is %displayName%;%internalName%;%isBound%;%itemCount%;%itemPrice%")]
+        public string Mask { get; set; }
+
+        [Browsable(false)]
+        public List<InvBagIDs> Bags = new List<InvBagIDs>();
+
+        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Description("Items to log. All if empty")]
+        public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
+
+        [XmlIgnore]
+        [Editor(typeof(CheckedListBoxEditor<InvBagIDs>), typeof(UITypeEditor))]
+        [Description("Choose bags in which to do | Ctrl+S to select all, Ctrl+D to deselect, Ctrl+I to inverse")]
+        public Dictionary<InvBagIDs, bool> SpecificBags
+        {
+            get
+            {
+                var value = new Dictionary<InvBagIDs, bool>();
+                foreach (var s in Enum.GetNames(typeof(InvBagIDs)))
+                {
+                    if (s != "None")
+                    {
+                        var item = (InvBagIDs)Enum.Parse(typeof(InvBagIDs), s);
+                        value.Add(item, Bags.Contains(item));
+                    }
+                }
+                return value;
+            }
+            set
+            {
+                Bags.Clear();
+                foreach (var item in value)
+                {
+                    if (item.Value)
+                    {
+                        Bags.Add(item.Key);
+                    }
+                }
+            }
+        }
 
         public InventoryLog()
         {
-            this.LogName = "InventoryLog";
-            this.LogPath = Astral.Controllers.Directories.AstralStartupPath;
-            this.LogBags = true;
-            this.LogBank = false;
-            this.LogCraftingTools = false;
-            this.LogCraftingRes = false;
-            this.Mask = "%displayName%;%internalName%;%isBound%;%itemCount%";
+            LogName = "InventoryLog";
+            LogPath = Astral.Controllers.Directories.AstralStartupPath;
+            Mask = "%displayName%;%internalName%;%isBound%;%itemCount%;%itemPrice%";
         }
 
         public override ActionResult Run()
         {
 
-            var curAccount = MyNW.Internals.EntityManager.LocalPlayer.AccountLoginUsername;
-            var curChar = MyNW.Internals.EntityManager.LocalPlayer.Name;
+            var curAccount = EntityManager.LocalPlayer.AccountLoginUsername;
+            var curChar = EntityManager.LocalPlayer.Name;
             int AccStart = -1, AccEnd = -1;
             int CharStart = -1, CharEnd = -1;
             var fullFilePath = Path.Combine(LogPath, LogName + ".txt");
@@ -162,79 +205,45 @@ namespace QuesterAssistant.Actions
                     sw.WriteLine(t);
                 }
                 sw.Close();
-
             }
             System.Threading.Thread.Sleep(500);
             return ActionResult.Completed;
         }
 
-        private void EditFile()
-        {
-
-        }
-
         private List<string> GetCharItems()
         {
             List<string> tempItems = new List<string>();
-            if (MyNW.Internals.EntityManager.LocalPlayer.IsValid)
+            if (EntityManager.LocalPlayer.IsValid)
             {
-                if (this.LogBags)
-                {
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Inventory, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag1, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag2, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag3, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag4, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag5, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag6, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag7, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag8, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.PlayerBag9, tempItems);
-                }
-                if (this.LogBank)
-                {
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank1, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank2, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank3, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank4, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank5, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank6, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank7, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank8, tempItems);
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.Bank9, tempItems);
-                }
-                if (this.LogCraftingTools)
-                {
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.CraftingInventory, tempItems);
-                }
-                if (this.LogCraftingRes)
-                {
-                    AddItems(MyNW.Patchables.Enums.InvBagIDs.CraftingResources, tempItems);
-                }
+                Bags.ForEach(b => AddItems(b, tempItems));
             }
             return tempItems;
         }
-        private void AddItems(MyNW.Patchables.Enums.InvBagIDs bagID, List<string> data)
+        private void AddItems(InvBagIDs bagID, List<string> data)
         {
-            if (MyNW.Internals.EntityManager.LocalPlayer.GetInventoryBagById(bagID).IsValid)
+            if (EntityManager.LocalPlayer.GetInventoryBagById(bagID).IsValid)
             {
+                var items = EntityManager.LocalPlayer.GetInventoryBagById(bagID).GetItems;
+                if (ItemsFilter.Entries.Count > 0)
+                    items = items.FindAll(x => ((MyItemFilterCore)ItemsFilter).IsMatch(x.Item));
 
-                var items = MyNW.Internals.EntityManager.LocalPlayer.GetInventoryBagById(bagID).GetItems;
                 if (items.Count > 0)
                 {
                     data.Add($"[{bagID}]");
-                    foreach (var currentSlot in items)
+                    foreach (var s in items)
                     {
-                        var itemCount = currentSlot.Item.Count;
-                        var internalName = currentSlot.Item.ItemDef.InternalName;
-                        var displayName = currentSlot.Item.ItemDef.DisplayName;
-                        var isBound = currentSlot.Item.IsBound;
+                        var item = s.Item;
                         string line = Mask;
-                        line = line.Replace("%itemCount%", itemCount.ToString());
-                        line = line.Replace("%internalName%", internalName.ToString());
-                        line = line.Replace("%displayName%", displayName.ToString());
-                        line = line.Replace("%isBound%", isBound.ToString());
+                        line = line.Replace("%itemCount%", item.Count.ToString());
+                        line = line.Replace("%internalName%", item.ItemDef.InternalName.ToString());
+                        line = line.Replace("%displayName%", item.DisplayName.ToString());
+                        line = line.Replace("%isBound%", item.IsBound.ToString());
+                        if (line.Contains("%itemPrice%"))
+                        {
+                            var lots = AuctionSearch.Get(item).Lots;
+                            var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
+                            line = line.Replace("%itemPrice%", price);
+                        }
                         data.Add(line);
                     }
                 }

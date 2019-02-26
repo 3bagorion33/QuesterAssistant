@@ -49,7 +49,7 @@ namespace QuesterAssistant.Classes
                 .OrderBy(l => PricePerItem(l)).ToList();
 
             cachedSearch.AddOrReplace(l => l.DisplayName == item.DisplayName,
-                new Result(availableLots.FindAll(l => l.Owner != EntityManager.LocalPlayer.InternalName)));
+                new Result(item.DisplayName, availableLots.FindAll(l => l.Owner != EntityManager.LocalPlayer.InternalName)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(l => l.DisplayName == item.DisplayName);
@@ -71,9 +71,9 @@ namespace QuesterAssistant.Classes
                 public uint PricePerItem => (Price > Count) ? (Price / Count) : 1;
             }
 
-            internal Result(List<AuctionLot> auctionLots)
+            internal Result(string displayName, List<AuctionLot> auctionLots)
             {
-                DisplayName = auctionLots.First().Items.First().Item.DisplayName;
+                DisplayName = displayName;
                 Lots = new List<Lot>();
                 foreach (var lot in auctionLots)
                 {

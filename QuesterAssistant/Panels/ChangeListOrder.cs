@@ -10,7 +10,7 @@ using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
-    internal partial class ChangeListOrder<T> : DevExpress.XtraEditors.XtraForm where T : class
+    internal partial class ChangeListOrder<T> : XtraForm where T : class
     {
         private List<T> usedList;
         private T SelectedItem
