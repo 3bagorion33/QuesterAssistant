@@ -36,6 +36,8 @@ namespace QuesterAssistant.Classes.Common
             [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
             public static extern short GetKeyState(int vKey);
             public delegate int HookProc(int nCode, int wParam, IntPtr lParam);
+            [DllImport("user32")]
+            public static extern IntPtr GetForegroundWindow();
         }
         public class Kernel32
         {

@@ -10,7 +10,7 @@ namespace QuesterAssistant
 {
     public class Core : Plugin
     {
-        public override string Author => "Orion33";
+        public override string Author => "Orion33 & MichaelProg";
         public override Image Icon => null;
         public override string Name => "Quester Assistant";
         public override BasePanel Settings => new Panels.Main();

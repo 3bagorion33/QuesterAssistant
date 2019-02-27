@@ -3,8 +3,10 @@ using Astral.Forms;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using MyNW;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Classes.PowersManager;
 using QuesterAssistant.Enums;
@@ -26,7 +28,7 @@ namespace QuesterAssistant.Panels
             components = new Container();
             components.Add(timerCharCheck);
             OnPanelLeave += this.Dispose;
-            lblVersion.Text = "v " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
+            lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
         }
 
         private void Dispose(object s, EventArgs e)
@@ -244,11 +246,14 @@ namespace QuesterAssistant.Panels
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
-            if (_pres != null)
+            if (Memory.ProcessId == (uint)Win32.User32.GetForegroundWindow())
             {
-                Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
-                Powers.ApplyPowers(_pres?.PowersList);
+                var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
+                if (_pres != null)
+                {
+                    Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
+                    Powers.ApplyPowers(_pres?.PowersList);
+                }
             }
         }
 

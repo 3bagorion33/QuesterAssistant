@@ -46,7 +46,7 @@ namespace QuesterAssistant.Actions
         [Browsable(false)]
         public List<InvBagIDs> Bags = new List<InvBagIDs>();
 
-        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ItemFilterEditor), typeof(UITypeEditor))]
         [Description("Items to log. All if empty")]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
 
