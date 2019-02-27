@@ -156,6 +156,16 @@
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
     <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
+    <Compile Include="UIEditors\Forms\ItemFilterForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\ItemFilterForm.Designer.cs">
+      <DependentUpon>ItemFilterForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\ItemFilterEditor.cs" />
+    <EmbeddedResource Include="UIEditors\Forms\ItemFilterForm.resx">
+      <DependentUpon>ItemFilterForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Temp\AuctionBuy.cs" />
     <None Include="Temp\Auction.cs" />
     <None Include="Temp\AuctionLot.cs" />
