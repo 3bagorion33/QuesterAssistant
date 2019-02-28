@@ -50,7 +50,7 @@ namespace QuesterAssistant.Conditions
 
         public override string ToString()
         {
-            return string.Format("Check if PlayerHealth {0} to {1}", Sign, Value);
+            return $"Check if {GetType().Name} {Sign} to {Value}";
         }
 
          public override string TestInfos
@@ -66,7 +66,7 @@ namespace QuesterAssistant.Conditions
 
                 float HealthPercent = (character.AttribsBasic.MaxHealth > 0) ? 100 * character.AttribsBasic.Health / character.AttribsBasic.MaxHealth : 0;
 
-                return string.Format("PlayerHealth is {0} %", HealthPercent);
+                return string.Format("{0} is {0:0.##} %", GetType().Name, HealthPercent);
             }
         }
     }

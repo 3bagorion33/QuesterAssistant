@@ -15,17 +15,11 @@ namespace QuesterAssistant.Actions
 {
     public class UseConsumable : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel
-        {
-            get
-            {
-                return String.Format("UseConsumable [{0}]", ConsumableID);
-            }
-        }
+        public override string ActionLabel => $"{GetType().Name} [{ConsumableID}]";
 
         public override bool NeedToRun => true;
 
-        public override string InternalDisplayName => "UseConsumable";
+        public override string InternalDisplayName => GetType().Name;
 
         public override bool UseHotSpots => false;
 
@@ -37,13 +31,15 @@ namespace QuesterAssistant.Actions
         {
             get
             {
-                if (ConsumableID == string.Empty)
+                if (string.IsNullOrEmpty(ConsumableID))
                 {
                     return new Action.ActionValidity("ConsumableID property not set.");
                 }
                 return new Action.ActionValidity();
             }
         }
+
+        public override string Category => Core.Category;
 
         public override void GatherInfos()
         {

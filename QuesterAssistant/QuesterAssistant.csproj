@@ -82,6 +82,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Astral">
+      <HintPath>D:\Games\Astral_RU_1\Astral.exe</HintPath>
+    </Reference>
     <Reference Include="Astral_updated">
       <HintPath>..\..\..\LazyLauncher\Astral_RU_2\Astral_updated.exe</HintPath>
       <Private>False</Private>
@@ -112,7 +115,7 @@
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MyNW">
-      <HintPath>..\..\..\LazyLauncher\Astral_RU_1\MyNW.dll</HintPath>
+      <HintPath>D:\Games\Astral_RU_1\MyNW.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
