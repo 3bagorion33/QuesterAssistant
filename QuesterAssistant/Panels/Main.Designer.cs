@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -57,13 +58,15 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource();
+            this.powerListSource = new System.Windows.Forms.BindingSource(this.components);
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
+            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
+            this.tedGlobHotKey = new DevExpress.XtraEditors.TextEdit();
             this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
             this.gCtrlPowersPresets = new DevExpress.XtraEditors.GroupControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.tedHotKey = new DevExpress.XtraEditors.TextEdit();
+            this.tedCurrHotKey = new DevExpress.XtraEditors.TextEdit();
             this.cmbPresetsList = new DevExpress.XtraEditors.ComboBoxEdit();
             this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.btnSetPowers = new DevExpress.XtraEditors.SimpleButton();
@@ -83,20 +86,21 @@
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.timerCharCheck = new System.Windows.Forms.Timer();
+            this.timerCharCheck = new System.Windows.Forms.Timer(this.components);
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.pManagerTab.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
             this.gCtrlPowersPresets.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedHotKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tedCurrHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCharInfo)).BeginInit();
             this.gctrlCharInfo.SuspendLayout();
@@ -191,12 +195,36 @@
             // 
             // pManagerTab
             // 
+            this.pManagerTab.Controls.Add(this.labelControl5);
+            this.pManagerTab.Controls.Add(this.tedGlobHotKey);
             this.pManagerTab.Controls.Add(this.chkHotKeys);
             this.pManagerTab.Controls.Add(this.gCtrlPowersPresets);
             this.pManagerTab.Controls.Add(this.gctrlCharInfo);
             this.pManagerTab.Name = "pManagerTab";
             this.pManagerTab.Size = new System.Drawing.Size(368, 347);
             this.pManagerTab.Text = "Powers Manager";
+            // 
+            // labelControl5
+            // 
+            this.labelControl5.Location = new System.Drawing.Point(159, 10);
+            this.labelControl5.Name = "labelControl5";
+            this.labelControl5.Padding = new System.Windows.Forms.Padding(3, 3, 0, 3);
+            this.labelControl5.Size = new System.Drawing.Size(113, 19);
+            this.labelControl5.TabIndex = 8;
+            this.labelControl5.Text = "Load by name hot key:";
+            // 
+            // tedGlobHotKey
+            // 
+            this.tedGlobHotKey.EditValue = "";
+            this.tedGlobHotKey.Location = new System.Drawing.Point(278, 10);
+            this.tedGlobHotKey.Name = "tedGlobHotKey";
+            this.tedGlobHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
+            this.tedGlobHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
+            this.tedGlobHotKey.Properties.ReadOnly = true;
+            this.tedGlobHotKey.Size = new System.Drawing.Size(80, 20);
+            this.tedGlobHotKey.TabIndex = 7;
+            this.tedGlobHotKey.ToolTip = "Click here to bind hotkey";
+            this.tedGlobHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tedGlobHotKey_KeyDown);
             // 
             // chkHotKeys
             // 
@@ -211,7 +239,7 @@
             // 
             this.gCtrlPowersPresets.AutoSize = true;
             this.gCtrlPowersPresets.Controls.Add(this.labelControl1);
-            this.gCtrlPowersPresets.Controls.Add(this.tedHotKey);
+            this.gCtrlPowersPresets.Controls.Add(this.tedCurrHotKey);
             this.gCtrlPowersPresets.Controls.Add(this.cmbPresetsList);
             this.gCtrlPowersPresets.Controls.Add(this.btnGetPowers);
             this.gCtrlPowersPresets.Controls.Add(this.btnSetPowers);
@@ -232,18 +260,18 @@
             this.labelControl1.TabIndex = 8;
             this.labelControl1.Text = "This hot key:";
             // 
-            // tedHotKey
+            // tedCurrHotKey
             // 
-            this.tedHotKey.EditValue = "";
-            this.tedHotKey.Location = new System.Drawing.Point(86, 29);
-            this.tedHotKey.Name = "tedHotKey";
-            this.tedHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
-            this.tedHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
-            this.tedHotKey.Properties.ReadOnly = true;
-            this.tedHotKey.Size = new System.Drawing.Size(95, 20);
-            this.tedHotKey.TabIndex = 7;
-            this.tedHotKey.ToolTip = "Click here to bind hotkey";
-            this.tedHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tedHotKey_KeyDown);
+            this.tedCurrHotKey.EditValue = "";
+            this.tedCurrHotKey.Location = new System.Drawing.Point(86, 29);
+            this.tedCurrHotKey.Name = "tedCurrHotKey";
+            this.tedCurrHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
+            this.tedCurrHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
+            this.tedCurrHotKey.Properties.ReadOnly = true;
+            this.tedCurrHotKey.Size = new System.Drawing.Size(95, 20);
+            this.tedCurrHotKey.TabIndex = 7;
+            this.tedCurrHotKey.ToolTip = "Click here to bind hotkey";
+            this.tedCurrHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tedCurrHotKey_KeyDown);
             // 
             // cmbPresetsList
             // 
@@ -497,11 +525,12 @@
             this.mainTabControl.ResumeLayout(false);
             this.pManagerTab.ResumeLayout(false);
             this.pManagerTab.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();
             this.gCtrlPowersPresets.ResumeLayout(false);
             this.gCtrlPowersPresets.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedHotKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tedCurrHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCharInfo)).EndInit();
             this.gctrlCharInfo.ResumeLayout(false);
@@ -545,7 +574,7 @@
         private DevExpress.XtraEditors.SidePanel sidePanel1;
         private DevExpress.XtraEditors.SidePanel sidePanel2;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
-        private DevExpress.XtraEditors.TextEdit tedHotKey;
+        private DevExpress.XtraEditors.TextEdit tedCurrHotKey;
         private System.Windows.Forms.BindingSource powerListSource;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
@@ -559,5 +588,7 @@
         private DevExpress.XtraEditors.GroupControl groupControl3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.LabelControl labelControl5;
+        private DevExpress.XtraEditors.TextEdit tedGlobHotKey;
     }
 }

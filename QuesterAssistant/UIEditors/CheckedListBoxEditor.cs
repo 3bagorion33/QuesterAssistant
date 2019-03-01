@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
@@ -14,11 +15,24 @@ namespace QuesterAssistant.UIEditors
         private object value;
         private IWindowsFormsEditorService es;
         public override bool IsDropDownResizable => true;
+        private ToolTip toolTip;
+        private int toolTipIndex;
 
         internal CheckedListBoxEditor()
         {
             cbx.Leave += bx_Leave;
             cbx.KeyDown += cbx_KeyDown;
+            cbx.MouseHover += cbx_ShowTooltip;
+            toolTip = new ToolTip() { ToolTipTitle = "Ctrl+S to select all, Ctrl+D to deselect, Ctrl+I to inverse" };
+        }
+
+        private void cbx_ShowTooltip(object sender, EventArgs e)
+        {
+            toolTipIndex = cbx.IndexFromPoint(cbx.PointToClient(Control.MousePosition));
+            if (toolTipIndex > -1)
+            {
+                toolTip.SetToolTip(cbx, cbx.Items[toolTipIndex].ToString());
+            }
         }
 
         private void cbx_KeyDown(object sender, KeyEventArgs e)

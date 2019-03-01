@@ -41,6 +41,10 @@ namespace QuesterAssistant
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
+            // Эта херня нужна для избежания ошибок загрузки ресурсов и работы BinaryFormatter
+            if (args.Name.Contains($"{Category}.resources"))
+                return typeof(Main).Assembly;
+
             return typeof(Core).Assembly;
         }
 

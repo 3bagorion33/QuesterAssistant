@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 using System.IO;
 using System.ComponentModel;
@@ -12,12 +9,9 @@ using QuesterAssistant.UIEditors;
 using System.Drawing.Design;
 using MyNW.Patchables.Enums;
 using System.Xml.Serialization;
-using DevExpress.Utils.Extensions;
-using QuesterAssistant.Classes.Common;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using Astral.Classes.ItemFilter;
-using Astral.Quester.UIEditors;
 using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant.Actions
@@ -52,7 +46,7 @@ namespace QuesterAssistant.Actions
 
         [XmlIgnore]
         [Editor(typeof(CheckedListBoxEditor<InvBagIDs>), typeof(UITypeEditor))]
-        [Description("Choose bags in which to do | Ctrl+S to select all, Ctrl+D to deselect, Ctrl+I to inverse")]
+        [Description("Choose bags in which to do")]
         public Dictionary<InvBagIDs, bool> SpecificBags
         {
             get

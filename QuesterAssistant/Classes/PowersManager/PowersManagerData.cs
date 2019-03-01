@@ -15,6 +15,20 @@ namespace QuesterAssistant.Classes.PowersManager
     {
         public bool HotKeysEnabled { get; set; }
         public List<CharClass> CharClassesList { get; set; }
+        public string HotKeys
+        {
+            get
+            {
+                var kc = new KeysConverter();
+                return kc.ConvertToString(Keys);
+            }
+            set
+            {
+                var kc = new KeysConverter();
+                Keys = (Keys)kc.ConvertFromString(value);
+            }
+        }
+        internal Keys Keys;
 
         public PowersManagerData() { }
 
@@ -73,8 +87,9 @@ namespace QuesterAssistant.Classes.PowersManager
                     else
                     {
                         Logger.WriteLine("Powers Manager settings has been loaded...");
-                        this.CharClassesList = pManager.CharClassesList;
-                        this.HotKeysEnabled = pManager.HotKeysEnabled;
+                        CharClassesList = pManager.CharClassesList;
+                        HotKeysEnabled = pManager.HotKeysEnabled;
+                        HotKeys = pManager.HotKeys;
                         flag = true;
                     }
                 }

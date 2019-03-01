@@ -58,6 +58,7 @@
             this.textValue.Name = "textValue";
             this.textValue.Size = new System.Drawing.Size(213, 20);
             this.textValue.TabIndex = 1;
+            this.textValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textValue_KeyDown);
             // 
             // InputBox
             // 
@@ -76,6 +77,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "InputBox";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.InputBox_FormClosed);
+            this.Load += new System.EventHandler(this.InputBox_Load);
             ((System.ComponentModel.ISupportInitialize)(this.textValue.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

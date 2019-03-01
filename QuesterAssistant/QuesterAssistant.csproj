@@ -148,6 +148,7 @@
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="Classes\Common\Extensions.cs" />
     <Compile Include="Classes\Common\Win32.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />

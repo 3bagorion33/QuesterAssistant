@@ -34,7 +34,7 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                Logger.WriteLine($"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime}");
+                Logger.WriteLine($"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}");
                 return cachedValue;
             }
 
