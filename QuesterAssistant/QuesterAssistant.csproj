@@ -82,27 +82,39 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Astral">
+      <HintPath>D:\Games\Astral_RU_1\Astral.exe</HintPath>
+    </Reference>
+    <Reference Include="Astral-cleaned">
+      <HintPath>D:\Games\Astral_RU_1\Astral-cleaned.exe</HintPath>
+    </Reference>
     <Reference Include="Astral_updated">
       <HintPath>..\..\..\LazyLauncher\Astral_RU_2\Astral_updated.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.Data.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.Printing.v18.1.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.Utils.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.XtraEditors.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.XtraGrid.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>D:\Games\DevExpress\DevExpress.XtraLayout.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
@@ -112,7 +124,7 @@
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MyNW">
-      <HintPath>..\..\..\LazyLauncher\Astral_RU_1\MyNW.dll</HintPath>
+      <HintPath>D:\Games\Astral_RU_1\MyNW.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -149,10 +161,13 @@
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
     <Compile Include="Classes\Common\Win32.cs" />
+    <Compile Include="Classes\MichaelProgsTools.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />
     <Compile Include="Classes\MathTools.cs" />
     <Compile Include="Conditions\CountOfRuns.cs" />
+    <Compile Include="Conditions\TeamMemberCountInCustomRegion.cs" />
+    <Compile Include="Conditions\TeamMemberCount.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
     <Compile Include="States\Identify.cs" />
     <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
