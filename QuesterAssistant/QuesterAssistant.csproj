@@ -72,7 +72,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
+    <OutputPath>.\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <FileAlignment>4096</FileAlignment>
@@ -83,40 +83,59 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Astral">
-      <HintPath>D:\Games\Astral_RU_1\Astral.exe</HintPath>
-    </Reference>
-    <Reference Include="Astral_updated">
-      <HintPath>..\..\..\LazyLauncher\Astral_RU_2\Astral_updated.exe</HintPath>
-      <Private>False</Private>
+      <HintPath>Temp\Astral.exe</HintPath>
     </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.Data.v18.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Map.v18.1.Core">
+      <HintPath>Temp\DevExpress.Map.v18.1.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Mvvm.v18.1">
+      <HintPath>Temp\DevExpress.Mvvm.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.Printing.v18.1.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.Utils.v18.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v18.1">
+      <HintPath>Temp\DevExpress.XtraBars.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.XtraEditors.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.XtraGrid.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+      <HintPath>Temp\DevExpress.XtraLayout.v18.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v18.1">
+      <HintPath>Temp\DevExpress.XtraNavBar.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v18.1">
+      <HintPath>Temp\DevExpress.XtraVerticalGrid.v18.1.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.XtraWizard.v18.1">
+      <HintPath>Temp\DevExpress.XtraWizard.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MyNW">
-      <HintPath>D:\Games\Astral_RU_1\MyNW.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>Temp\MyNW.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -264,7 +283,10 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Temp\Astral.exe" />
+    <Content Include="Temp\MyNW.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />
