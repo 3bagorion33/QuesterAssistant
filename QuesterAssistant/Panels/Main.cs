@@ -270,7 +270,7 @@ namespace QuesterAssistant.Panels
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            //if (System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == Win32.User32.GetForegroundWindow())
+            if (System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == Win32.User32.GetForegroundWindow())
             {
                 Preset _pres;
                 if (e.KeyData == pManager.Keys)
