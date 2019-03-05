@@ -1,0 +1,59 @@
+[table][/table][td][/td][[b][u]Functionality[/u][/b]]
+[list]
+[*][b]Powers Manager[/b] provides the ability to manage a set of powers puting in slots. It supports for hot keys. IMPORTANT! To activate the hot keys, you need after starting the Astral to go to the Quester Assistant menu once. I did not find another way out, wrote about this to Jarod, but he ignored my appeal http://www.neverwinter-bot.com/forums/viewtopic.php?f=116&t=9827
+[/list]
+[[b][u]Quester States[/u][/b]]
+[list]
+[*][b]Identify [/b]items every 5 sec if any and scrolls are present
+[/list]
+[[b][u]Quester Actions[/u][/b]]
+[list]
+[*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price; see below for details
+[*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
+[*][b]ConsoleCommand[/b] - execute any ingame console command
+[*][b]DiscardItem[/b] - delete items using filter and grade quality
+[*][b]InventoryLog[/b] - write to file all inventory availabled in the API using pattern, can to save auction price
+[*][b]LoadPowersPreset[/b] - loads a preset of powers for the current paragon by number or name (regular expressions), if available in the database
+[*][b]MoonMask[/b] - travel to MoonMask if possible
+[*][b]Notify[/b] - show popup notification window
+[*][b]RefineAD[/b] - refine astral diamonds if possible
+[*][b]UseConsumable[/b] - use equiped consumable by ID (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]VIPRewards[/b] - claim account and char rewards and open boxes
+[*][b]VIPSell[/b] - sale items to VIP vendor if possible using global sale filter (forced flag "Discard if can't sell")
+[/list]
+[[b][u]Quester Conditions[/u][/b]]
+[list]
+[*][b]CountOfRuns[/b] - an iteration count of the action, works only with Loop and is not always correct, but there is no other solution until Jarod makes support at the engine level http://www.neverwinter-bot.com/forums/viewtopic.php?f=99&t=9983
+[*][b]PlayerHealth[/b] - check characters HP level in % (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]ReceivedChatMessage[/b] - monitor messages in the chat until a message is received in the specified channel using the specified pattern (regular expressions), when you select the channel Unknown messages are checked for each channel
+[/list]
+[hr]
+[[b][u]Функционал[/u][/b]]
+[list]
+[*][b]Powers Manager [/b]предоставляет возможность управления набором выставленных в слоты скиллов. Имеется поддержка горячих клавиш. ВАЖНО! Для активации горячих клавиш после старта Астрала необходимо один раз зайти в меню Quester Assistant. Я не нашел иного выхода, писал об этом Джароду, но он проигнорировал мое обращение http://www.neverwinter-bot.com/forums/viewtopic.php?f=116&t=9827
+[/list]
+[[b][u]Quester Потоки[/u][/b]]
+[list]
+[*][b]Распознает [/b]предметы каждые 5 секунд, если они есть, и свитки присутствуют
+[/list]
+[[b][u]Quester Действия[/u][/b]]
+[list]
+[*][b]AuctionSellItems[/b] - продает предметы, используя гибкий алгоритм поиска лучшей цены, подробнее см. ниже
+[*][b]ChangeSettingsValue[/b] - меняет установки текущего профиля настроек, сохраняются после смены роли
+[*][b]ConsoleCommand[/b] - выполняет любую внутри игровую команду
+[*][b]DiscardItem[/b] - удаляет содержимое сумок с использованием фильтра и флага качества
+[*][b]InventoryLog[/b] - записывает в файл содержимое всего инвентаря, доступного в API, используя шаблон, доступно сохранение цен с аукциона
+[*][b]LoadPowersPreset[/b] - загружает комбинацию скиллов для текущего парагона по номеру или имени (регулярные выражения), если есть в базе
+[*][b]MoonMask[/b] - телепортирует в Лунную Маску по возможности
+[*][b]Notify[/b] - показывает всплывающее окно
+[*][b]RefineAD[/b] - обрабатывает астральные алмазы, если возможно
+[*][b]UseConsumable[/b] - использует активный расходник по идентификатору (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]VIPRewards[/b] - забирает VIP-награды для персонажа и аккаунта, открывает их
+[*][b]VIPSell[/b] - продает товары VIP-торговцу, если это возможно, используя глобальный фильтр продажи (принудительный флаг "Discard if can't sell")
+[/list]
+[[b][u]Quester Условия[/u][/b]]
+[list]
+[*][b]CountOfRuns[/b] - счетчик итераций действия, работает только с Loop и не всегда корректно, но другого решения нет, пока Джарод не сделает поддержку на уровне движка http://www.neverwinter-bot.com/forums/viewtopic.php?f=99&t=9983
+[*][b]PlayerHealth[/b] - проверка уровня ХП персонажа в % (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]ReceivedChatMessage[/b] - монитор сообщений в чате, пока не будет получено сообщение в указанном канале по указанному шаблону (регулярные выражения), при выборе канала Unknown сообщения проверяются для каждого канала
+[/list]

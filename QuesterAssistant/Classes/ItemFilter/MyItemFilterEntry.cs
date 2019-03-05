@@ -6,60 +6,25 @@ using System.Text.RegularExpressions;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
-    class MyItemFilterEntry
+    internal static class MyItemFilterEntry
     {
-        internal ItemFilterMode Mode { get; set; }
-        internal ItemFilterStringType StringType { get; set; }
-        internal string Text { get; set; }
-        internal ItemFilterType Type { get; set; }
-
-        internal MyItemFilterEntry(ItemFilterEntry filterEntry)
+        public static bool StrType(this ItemFilterEntry itemFilterEntry, Item item)
         {
-            this.Mode = filterEntry.Mode;
-            this.StringType = filterEntry.StringType;
-            this.Text = filterEntry.Text;
-            this.Type = filterEntry.Type;
-        }
-
-        public static explicit operator MyItemFilterEntry(ItemFilterEntry filterEntry)
-        {
-            return new MyItemFilterEntry(filterEntry);
-        }
-
-        bool ParseString (string text)
-        {
-            if (Text == "*")
-                return true;
-
-            if (Text.StartsWith("*") && Text.EndsWith("*"))
-                return text.Contains(Text.Remove(Text.Length - 1).Remove(0, 1));
-
-            if (Text.StartsWith("*"))
-                return text.EndsWith(Text.Remove(0, 1));
-
-            if (Text.EndsWith("*"))
-                return text.StartsWith(Text.Remove(Text.Length - 1));
-
-            return Text == text;
-        }
-
-        internal bool StrType(Item item)
-        {
-            switch (this.StringType)
+            switch (itemFilterEntry.StringType)
             {
                 case ItemFilterStringType.Simple:
-                    return ItemType(item).Any(x => ParseString(x));
+                    return itemFilterEntry.ItemType(item).Any(x => itemFilterEntry.ParseString(x));
 
                 case ItemFilterStringType.Regex:
-                    return ItemType(item).Any(x => Regex.IsMatch(x, this.Text));
+                    return itemFilterEntry.ItemType(item).Any(x => Regex.IsMatch(x, itemFilterEntry.Text));
             }
             return false;
         }
 
-        List<string> ItemType (Item item)
+        public static List<string> ItemType(this ItemFilterEntry itemFilterEntry, Item item)
         {
             var _tmp = new List<string>();
-            switch (this.Type)
+            switch (itemFilterEntry.Type)
             {
                 case ItemFilterType.ItemName:
                     _tmp.Add(item.DisplayName);
@@ -82,6 +47,24 @@ namespace QuesterAssistant.Classes.ItemFilter
                     break;
             }
             return _tmp;
+        }
+
+        public static bool ParseString(this ItemFilterEntry itemFilterEntry, string text)
+        {
+            var t = itemFilterEntry.Text;
+            if (t == "*")
+                return true;
+
+            if (t.StartsWith("*") && t.EndsWith("*"))
+                return text.Contains(t.Remove(t.Length - 1).Remove(0, 1));
+
+            if (t.StartsWith("*"))
+                return text.EndsWith(t.Remove(0, 1));
+
+            if (t.EndsWith("*"))
+                return text.StartsWith(t.Remove(t.Length - 1));
+
+            return t == text;
         }
     }
 }

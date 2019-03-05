@@ -8,7 +8,6 @@ using System.ComponentModel;
 using QuesterAssistant.UIEditors;
 using System.Drawing.Design;
 using MyNW.Patchables.Enums;
-using System.Xml.Serialization;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using Astral.Classes.ItemFilter;
@@ -189,7 +188,7 @@ namespace QuesterAssistant.Actions
             {
                 var items = EntityManager.LocalPlayer.GetInventoryBagById(bagID).GetItems;
                 if (ItemsFilter.Entries.Count > 0)
-                    items = items.FindAll(x => ((MyItemFilterCore)ItemsFilter).IsMatch(x.Item));
+                    items = items.FindAll(x => ItemsFilter.IsMatch(x.Item));
 
                 if (items.Count > 0)
                 {

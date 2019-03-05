@@ -1,0 +1,61 @@
+Version history:
+[spoiler]
+[[b][u]v 1.1.1[/u][/b]]
+[[b][u]Functionality[/u][/b]]
+
+Added:
+[list]
+[*][b]Powers Manager[/b] popup window for loading presets
+[/list]
+[[b][u]Quester Actions[/u][/b]]
+
+Added:
+[list]
+[*][b]AuctionSellItems[/b]
+[*][b]UseConsumable[/b]
+[/list]
+Updated:
+[list]
+[*][b]DiscardItem[/b]
+[*][b]InventoryLog[/b]
+[/list]
+[[b][u]Quester Conditions[/u][/b]]
+
+Added:
+[list]
+[*][b]PlayerHealth [/b]
+[/list]
+[hr]
+[[b][u]v 1.1[/u][/b]]
+[[b][u]Functionality[/u][/b]]
+
+Added:
+[list]
+[*][b]Powers Manager[/b] engine
+[/list]
+[[b][u]Quester States[/u][/b]]
+
+Bugfix:
+[list]
+[*][b]Identify[/b] changed to State with own algorithm without conflict with minor scrolls.
+[/list]
+[[b][u]Quester Actions[/u][/b]]
+
+Added:
+[list]
+[*][b]ChangeSettingsValue[/b]
+[*][b]LoadPowersPreset[/b]
+[/list]
+[[b][u]Quester Conditions[/u][/b]]
+
+Added:
+[list]
+[*][b]ReceivedChatMessage[/b]
+[*][b]CountOfRuns[/b]
+[/list]
+[hr]
+[b][u]v 1.0[/u][/b]
+[list]
+[*]Start this project
+[/list]
+[/spoiler]

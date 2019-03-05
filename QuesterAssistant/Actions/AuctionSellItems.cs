@@ -43,7 +43,7 @@ namespace QuesterAssistant.Actions
                     (s => !s.Item.IsBound &&
                           !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
                           !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
-                          ((MyItemFilterCore)ItemsFilter).IsMatch(s.Item));
+                          ItemsFilter.IsMatch(s.Item));
                 if (itemsToSell.Any())
                 {
                     return true;
@@ -92,7 +92,7 @@ namespace QuesterAssistant.Actions
                 bool IsSellLotMatch(AuctionLot l)
                 {
                     var item = l.Items.First().Item;
-                    return ((MyItemFilterCore)ItemsFilter).IsMatch(item) &&
+                    return ItemsFilter.IsMatch(item) &&
                         (item.Count == StackSize) &&
                         ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply));
                 }
