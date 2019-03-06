@@ -30,7 +30,7 @@ namespace QuesterAssistant.Classes
             else
                 cachedSearch = new List<Result>();
 
-            var cachedValue = cachedSearch.Find(l => (l.DisplayName == item.DisplayName) && (l.DateTime.Subtract(DateTime.Now).Hours > -1));
+            var cachedValue = cachedSearch.Find(l => (l.DisplayName == item.DisplayName) && (l.DateTime.Subtract(DateTime.Now).TotalHours > -1));
 
             if (cachedValue != null)
             {
