@@ -1,4 +1,4 @@
-[table][/table][td][/td][[b][u]Functionality[/u][/b]]
+[[b][u]Functionality[/u][/b]]
 [list]
 [*][b]Powers Manager[/b] provides the ability to manage a set of powers puting in slots. It supports for hot keys. IMPORTANT! To activate the hot keys, you need after starting the Astral to go to the Quester Assistant menu once. I did not find another way out, wrote about this to Jarod, but he ignored my appeal http://www.neverwinter-bot.com/forums/viewtopic.php?f=116&t=9827
 [/list]
@@ -10,6 +10,7 @@
 [list]
 [*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price; see below for details
 [*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
+[*][b]CloseAllFrames[/b] - toggles off ingame cursor mode
 [*][b]ConsoleCommand[/b] - execute any ingame console command
 [*][b]DiscardItem[/b] - delete items using filter and grade quality
 [*][b]InventoryLog[/b] - write to file all inventory availabled in the API using pattern, can to save auction price
@@ -40,6 +41,7 @@
 [list]
 [*][b]AuctionSellItems[/b] - продает предметы, используя гибкий алгоритм поиска лучшей цены, подробнее см. ниже
 [*][b]ChangeSettingsValue[/b] - меняет установки текущего профиля настроек, сохраняются после смены роли
+[*][b]CloseAllFrames[/b] - отключает режим внутри игрового курсора
 [*][b]ConsoleCommand[/b] - выполняет любую внутри игровую команду
 [*][b]DiscardItem[/b] - удаляет содержимое сумок с использованием фильтра и флага качества
 [*][b]InventoryLog[/b] - записывает в файл содержимое всего инвентаря, доступного в API, используя шаблон, доступно сохранение цен с аукциона
