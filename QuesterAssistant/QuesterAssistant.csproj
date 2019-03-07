@@ -169,14 +169,6 @@
     <EmbeddedResource Include="UIEditors\Forms\ItemFilterForm.resx">
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Temp\AuctionBuy.cs" />
-    <None Include="Temp\Auction.cs" />
-    <None Include="Temp\AuctionLot.cs" />
-    <None Include="Temp\AuctionLotList.cs" />
-    <None Include="Temp\AuctionLotState.cs" />
-    <None Include="Temp\AuctionSlot.cs" />
-    <None Include="Temp\AuctionSell.cs" />
-    <None Include="Temp\ns2.Class2.resx" />
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
@@ -225,28 +217,6 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Temp\InputBox.cs">
-      <SubType>Form</SubType>
-    </None>
-    <None Include="Temp\Main_1.cs">
-      <SubType>UserControl</SubType>
-    </None>
-    <None Include="Temp\ChangeProfileValue.cs" />
-    <None Include="Temp\Interact.cs" />
-    <None Include="Temp\Inventory.cs" />
-    <None Include="Temp\InventoryBag.cs" />
-    <None Include="Temp\InventorySlot.cs" />
-    <None Include="Temp\Item.cs" />
-    <None Include="Temp\ItemFilterCore.cs" />
-    <None Include="Temp\JoinQueue.cs" />
-    <None Include="Temp\MailSendEntity.cs" />
-    <None Include="Temp\OpenRewardBoxes.cs" />
-    <None Include="Temp\PathfindEnable.cs" />
-    <None Include="Temp\Refine.cs" />
-    <None Include="Temp\Sale.cs" />
-    <None Include="Temp\SpecialAction.cs" />
-    <None Include="Temp\UIEditors.cs" />
-    <None Include="Temp\UseItem.cs" />
     <EmbeddedResource Include="Panels\ChangeListOrder.resx">
       <DependentUpon>ChangeListOrder.cs</DependentUpon>
     </EmbeddedResource>
@@ -262,7 +232,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Temp\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent />

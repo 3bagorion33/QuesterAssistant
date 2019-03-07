@@ -69,8 +69,6 @@ namespace QuesterAssistant.Panels
                 prevCharParagon = Paragon.Category;
             }
             powerListSource_Update();
-            //Debug.WriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
-            //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
         }
 
         private void FormUpdate(object sender, EventArgs e)
@@ -128,7 +126,6 @@ namespace QuesterAssistant.Panels
                         {
                             var selected = cmbPresetsList.SelectedItem;
                             Astral.Professions.Forms.ChangeItemsOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
-                            //ChangeListOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
                             cmbPresetsList_Update();
                             cmbPresetsList.SelectedItem = selected;
                         }

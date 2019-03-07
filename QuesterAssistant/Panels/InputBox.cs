@@ -28,7 +28,7 @@ namespace QuesterAssistant.Panels
             inputBox.StartPosition = startPosition;
             inputBox.TopMost = true;
             Thread.Sleep(300);
-            inputBox.Show();
+            inputBox.ShowDialog();
             return inputBox.message;
         }
 
