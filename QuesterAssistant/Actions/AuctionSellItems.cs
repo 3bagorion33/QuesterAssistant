@@ -205,7 +205,7 @@ namespace QuesterAssistant.Actions
 
         public Auction.AuctionDuration Duration { get; set; } = Auction.AuctionDuration.Long;
 
-        [Description("Keep : active lots count is determined by SellStacks | Add : sell a new lots | Resell : cancel active lots before")]
+        [Description("Keep : active lots count is determined by SellStacks | Resell : cancel active lots before")]
         public ActiveLotType ActiveLots { get; set; }
 
         [Description("Fixed : using PriceValue | Minimal, Average, Median : detecting current price on Auction")]
@@ -217,7 +217,7 @@ namespace QuesterAssistant.Actions
         [Description("Try to decrease range for more correct detection")]
         public PriceDetectionType PriceDetectionRange { get; set; }
 
-        [Description("Minimum price for one item, used with Minimal, Average, Median if actual price less than this.")]
+        [Description("Minimum price for one item, used with Minimal, Average, Median if actual price less than this")]
         public uint PriceMinimum { get; set; }
 
         [Description("Used with Minimal, Average, Median price type")]
