@@ -2,9 +2,6 @@
 using MyNW.Classes;
 using MyNW.Internals;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuesterAssistant.Conditions
 {
@@ -13,7 +10,7 @@ namespace QuesterAssistant.Conditions
     {
         public float Value { get; set; }
 
-        public Condition.Relation Sign { get; set; }
+        public Relation Sign { get; set; }
 
         public override bool IsValid
         {
@@ -53,7 +50,7 @@ namespace QuesterAssistant.Conditions
             return $"Check if {GetType().Name} {Sign} to {Value}";
         }
 
-         public override string TestInfos
+        public override string TestInfos
         {
             get
             {
@@ -66,7 +63,7 @@ namespace QuesterAssistant.Conditions
 
                 float HealthPercent = (character.AttribsBasic.MaxHealth > 0) ? 100 * character.AttribsBasic.Health / character.AttribsBasic.MaxHealth : 0;
 
-                return string.Format("{0} is {0:0.##} %", GetType().Name, HealthPercent);
+                return string.Format("{0} is {1:0.##} %", GetType().Name, HealthPercent);
             }
         }
     }

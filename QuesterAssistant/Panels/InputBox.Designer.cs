@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.buttonOK = new DevExpress.XtraEditors.SimpleButton();
             this.labelMessage = new DevExpress.XtraEditors.LabelControl();
             this.textValue = new DevExpress.XtraEditors.TextEdit();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.textValue.Properties)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,6 +61,10 @@
             this.textValue.Size = new System.Drawing.Size(213, 20);
             this.textValue.TabIndex = 1;
             this.textValue.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textValue_KeyDown);
+            // 
+            // defaultLookAndFeel
+            // 
+            this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
             // InputBox
             // 
@@ -90,5 +96,6 @@
         private DevExpress.XtraEditors.SimpleButton buttonOK;
         private DevExpress.XtraEditors.LabelControl labelMessage;
         private DevExpress.XtraEditors.TextEdit textValue;
+        private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
     }
 }

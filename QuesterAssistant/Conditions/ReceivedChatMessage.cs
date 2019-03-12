@@ -14,9 +14,11 @@ namespace QuesterAssistant.Conditions
     public class ReceivedChatMessage : Condition
     {
         private string DisplayName => GetType().Name;
+        [NonSerialized]
         private Message lastMatchedMessage = new Message();
         private bool isMatched = false;
         private static List<Message> buffMessages = new List<Message>();
+        [NonSerialized]
         private Timer resetTimer = new Timer()
         {
             Enabled = true,

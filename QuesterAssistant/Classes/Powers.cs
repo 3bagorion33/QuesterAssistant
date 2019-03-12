@@ -1,6 +1,6 @@
 ﻿using MyNW.Internals;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes.PowersManager;
+using QuesterAssistant.PowersManager;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;

@@ -20,14 +20,18 @@ namespace QuesterAssistant.Panels
             }
         }
         
-        internal static string MessageText(string message, string text = "", FormStartPosition startPosition = FormStartPosition.CenterParent)
+        internal static string MessageText(string message, string text = "", bool center = false)
         {
             InputBox inputBox = new InputBox();
             inputBox.labelMessage.Text = message;
             inputBox.textValue.Text = text;
-            inputBox.StartPosition = startPosition;
-            inputBox.TopMost = true;
-            Thread.Sleep(300);
+            inputBox.StartPosition = FormStartPosition.CenterParent;
+            if (center)
+            {
+                inputBox.StartPosition = FormStartPosition.CenterScreen;
+                inputBox.TopMost = true;
+                Thread.Sleep(300);
+            }
             inputBox.ShowDialog();
             return inputBox.message;
         }
@@ -51,10 +55,10 @@ namespace QuesterAssistant.Panels
 
         private void InputBox_Load(object sender, EventArgs e)
         {
-            if (Handle != Win32.User32.GetForegroundWindow())
+            if (Handle != NativeMethods.GetForegroundWindow())
             {
-                Win32.User32.SetForegroundWindow(System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle);
-                Win32.User32.SetForegroundWindow(Handle);
+                NativeMethods.SetForegroundWindow(System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle);
+                NativeMethods.SetForegroundWindow(Handle);
             }
         }
     }

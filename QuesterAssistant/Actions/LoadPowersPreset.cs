@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Astral;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.PowersManager;
+using QuesterAssistant.PowersManager;
 
 namespace QuesterAssistant.Actions
 {
@@ -50,12 +47,7 @@ namespace QuesterAssistant.Actions
                     return false;
                 }
 
-                pManager = new PowersManagerData();
-                if (!pManager.LoadSettings())
-                {
-                    Logger.WriteLine(ActionLabel + ": Unable to read preset file!");
-                    return false;
-                }
+                pManager = Core.PowersManager.Data;
 
                 if (!pManager.CurrPresets.Any())
                 {

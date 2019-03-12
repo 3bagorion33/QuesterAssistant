@@ -81,7 +81,7 @@ namespace QuesterAssistant.Actions
                 {
                     oldText.Add(sr.ReadLine());
                 }
-                sr.Close();
+                //sr.Close();
             }
             AccEnd = oldText.Count;
             // find account start line
@@ -167,7 +167,7 @@ namespace QuesterAssistant.Actions
                 {
                     sw.WriteLine(t);
                 }
-                sw.Close();
+                //sw.Close();
             }
             System.Threading.Thread.Sleep(500);
             return ActionResult.Completed;

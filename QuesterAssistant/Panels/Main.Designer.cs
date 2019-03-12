@@ -28,50 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject17 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
-            this.gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
-            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource();
+            this.components = new System.ComponentModel.Container();
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
+            this.generalTab = new DevExpress.XtraTab.XtraTabPage();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
-            this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
-            this.tedGlobHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
-            this.gCtrlPowersPresets = new DevExpress.XtraEditors.GroupControl();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.tedCurrHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.cmbPresetsList = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
-            this.btnSetPowers = new DevExpress.XtraEditors.SimpleButton();
-            this.gctrlCharInfo = new DevExpress.XtraEditors.GroupControl();
-            this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
-            this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
+            this.mQuesterTab = new DevExpress.XtraTab.XtraTabPage();
             this.aboutTab = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -85,24 +46,11 @@
             this.labelAuthor = new DevExpress.XtraEditors.LabelControl();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.timerCharCheck = new System.Windows.Forms.Timer();
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).BeginInit();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
-            this.pManagerTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
-            this.gCtrlPowersPresets.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedCurrHotKey.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gctrlCharInfo)).BeginInit();
-            this.gctrlCharInfo.SuspendLayout();
             this.aboutTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).BeginInit();
             this.groupControl3.SuspendLayout();
@@ -115,231 +63,37 @@
             this.sidePanel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // gridViewPowers
-            // 
-            this.gridViewPowers.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
-            this.gridColumn1,
-            this.gridColumn2});
-            this.gridViewPowers.GridControl = this.gridControlPowers;
-            this.gridViewPowers.HorzScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Never;
-            this.gridViewPowers.Name = "gridViewPowers";
-            this.gridViewPowers.OptionsBehavior.AutoUpdateTotalSummary = false;
-            this.gridViewPowers.OptionsBehavior.Editable = false;
-            this.gridViewPowers.OptionsBehavior.KeepGroupExpandedOnSorting = false;
-            this.gridViewPowers.OptionsCustomization.AllowColumnMoving = false;
-            this.gridViewPowers.OptionsCustomization.AllowColumnResizing = false;
-            this.gridViewPowers.OptionsCustomization.AllowFilter = false;
-            this.gridViewPowers.OptionsCustomization.AllowGroup = false;
-            this.gridViewPowers.OptionsCustomization.AllowSort = false;
-            this.gridViewPowers.OptionsDetail.AllowZoomDetail = false;
-            this.gridViewPowers.OptionsDetail.EnableMasterViewMode = false;
-            this.gridViewPowers.OptionsDetail.ShowDetailTabs = false;
-            this.gridViewPowers.OptionsDetail.SmartDetailExpand = false;
-            this.gridViewPowers.OptionsFilter.AllowColumnMRUFilterList = false;
-            this.gridViewPowers.OptionsFilter.AllowMRUFilterList = false;
-            this.gridViewPowers.OptionsMenu.EnableColumnMenu = false;
-            this.gridViewPowers.OptionsMenu.EnableFooterMenu = false;
-            this.gridViewPowers.OptionsMenu.EnableGroupPanelMenu = false;
-            this.gridViewPowers.OptionsPrint.UsePrintStyles = false;
-            this.gridViewPowers.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.gridViewPowers.OptionsSelection.EnableAppearanceFocusedRow = false;
-            this.gridViewPowers.OptionsSelection.UseIndicatorForSelection = false;
-            this.gridViewPowers.OptionsView.ShowColumnHeaders = false;
-            this.gridViewPowers.OptionsView.ShowDetailButtons = false;
-            this.gridViewPowers.OptionsView.ShowGroupPanel = false;
-            this.gridViewPowers.OptionsView.ShowIndicator = false;
-            this.gridViewPowers.ScrollStyle = DevExpress.XtraGrid.Views.Grid.ScrollStyleFlags.None;
-            this.gridViewPowers.VertScrollVisibility = DevExpress.XtraGrid.Views.Base.ScrollVisibility.Never;
-            // 
-            // gridColumn1
-            // 
-            this.gridColumn1.Caption = "Slot";
-            this.gridColumn1.FieldName = "TraySlot";
-            this.gridColumn1.MaxWidth = 83;
-            this.gridColumn1.Name = "gridColumn1";
-            this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 0;
-            this.gridColumn1.Width = 83;
-            // 
-            // gridColumn2
-            // 
-            this.gridColumn2.Caption = "Power";
-            this.gridColumn2.FieldName = "InternalName";
-            this.gridColumn2.Name = "gridColumn2";
-            this.gridColumn2.Visible = true;
-            this.gridColumn2.VisibleIndex = 1;
-            // 
-            // gridControlPowers
-            // 
-            this.gridControlPowers.DataSource = this.powerListSource;
-            this.gridControlPowers.Location = new System.Drawing.Point(3, 56);
-            this.gridControlPowers.MainView = this.gridViewPowers;
-            this.gridControlPowers.Name = "gridControlPowers";
-            this.gridControlPowers.Size = new System.Drawing.Size(342, 191);
-            this.gridControlPowers.TabIndex = 0;
-            this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
-            this.gridViewPowers});
-            // 
             // mainTabControl
             // 
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedTabPage = this.pManagerTab;
+            this.mainTabControl.SelectedTabPage = this.generalTab;
             this.mainTabControl.Size = new System.Drawing.Size(370, 372);
             this.mainTabControl.TabIndex = 8;
             this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+            this.generalTab,
             this.pManagerTab,
+            this.mQuesterTab,
             this.aboutTab});
+            // 
+            // generalTab
+            // 
+            this.generalTab.Name = "generalTab";
+            this.generalTab.Size = new System.Drawing.Size(368, 347);
+            this.generalTab.Text = "General";
             // 
             // pManagerTab
             // 
-            this.pManagerTab.Controls.Add(this.labelControl5);
-            this.pManagerTab.Controls.Add(this.tedGlobHotKey);
-            this.pManagerTab.Controls.Add(this.chkHotKeys);
-            this.pManagerTab.Controls.Add(this.gCtrlPowersPresets);
-            this.pManagerTab.Controls.Add(this.gctrlCharInfo);
             this.pManagerTab.Name = "pManagerTab";
             this.pManagerTab.Size = new System.Drawing.Size(368, 347);
             this.pManagerTab.Text = "Powers Manager";
             // 
-            // labelControl5
+            // mQuesterTab
             // 
-            this.labelControl5.Location = new System.Drawing.Point(159, 10);
-            this.labelControl5.Name = "labelControl5";
-            this.labelControl5.Padding = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.labelControl5.Size = new System.Drawing.Size(113, 19);
-            this.labelControl5.TabIndex = 8;
-            this.labelControl5.Text = "Load by name hot key:";
-            this.labelControl5.ToolTip = "PopUp window over game client";
-            // 
-            // tedGlobHotKey
-            // 
-            this.tedGlobHotKey.EditValue = "";
-            this.tedGlobHotKey.Location = new System.Drawing.Point(278, 10);
-            this.tedGlobHotKey.Name = "tedGlobHotKey";
-            this.tedGlobHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
-            this.tedGlobHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
-            this.tedGlobHotKey.Properties.ReadOnly = true;
-            this.tedGlobHotKey.Size = new System.Drawing.Size(80, 20);
-            this.tedGlobHotKey.TabIndex = 7;
-            this.tedGlobHotKey.ToolTip = "Click here to bind hotkey";
-            this.tedGlobHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tedGlobHotKey_KeyDown);
-            // 
-            // chkHotKeys
-            // 
-            this.chkHotKeys.Location = new System.Drawing.Point(10, 10);
-            this.chkHotKeys.Name = "chkHotKeys";
-            this.chkHotKeys.Properties.Caption = "Enable hot key switching";
-            this.chkHotKeys.Size = new System.Drawing.Size(161, 19);
-            this.chkHotKeys.TabIndex = 9;
-            this.chkHotKeys.CheckedChanged += new System.EventHandler(this.chkHotKeys_CheckedChanged);
-            // 
-            // gCtrlPowersPresets
-            // 
-            this.gCtrlPowersPresets.AutoSize = true;
-            this.gCtrlPowersPresets.Controls.Add(this.labelControl1);
-            this.gCtrlPowersPresets.Controls.Add(this.tedCurrHotKey);
-            this.gCtrlPowersPresets.Controls.Add(this.cmbPresetsList);
-            this.gCtrlPowersPresets.Controls.Add(this.btnGetPowers);
-            this.gCtrlPowersPresets.Controls.Add(this.btnSetPowers);
-            this.gCtrlPowersPresets.Controls.Add(this.gridControlPowers);
-            this.gCtrlPowersPresets.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.gCtrlPowersPresets.Location = new System.Drawing.Point(10, 87);
-            this.gCtrlPowersPresets.Name = "gCtrlPowersPresets";
-            this.gCtrlPowersPresets.Size = new System.Drawing.Size(348, 250);
-            this.gCtrlPowersPresets.TabIndex = 1;
-            this.gCtrlPowersPresets.Text = "Powers Preset";
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Location = new System.Drawing.Point(9, 29);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Padding = new System.Windows.Forms.Padding(3, 3, 0, 3);
-            this.labelControl1.Size = new System.Drawing.Size(65, 19);
-            this.labelControl1.TabIndex = 8;
-            this.labelControl1.Text = "This hot key:";
-            // 
-            // tedCurrHotKey
-            // 
-            this.tedCurrHotKey.EditValue = "";
-            this.tedCurrHotKey.Location = new System.Drawing.Point(86, 29);
-            this.tedCurrHotKey.Name = "tedCurrHotKey";
-            this.tedCurrHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
-            this.tedCurrHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
-            this.tedCurrHotKey.Properties.ReadOnly = true;
-            this.tedCurrHotKey.Size = new System.Drawing.Size(95, 20);
-            this.tedCurrHotKey.TabIndex = 7;
-            this.tedCurrHotKey.ToolTip = "Click here to bind hotkey";
-            this.tedCurrHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tedCurrHotKey_KeyDown);
-            // 
-            // cmbPresetsList
-            // 
-            this.cmbPresetsList.Location = new System.Drawing.Point(86, 1);
-            this.cmbPresetsList.Name = "cmbPresetsList";
-            this.cmbPresetsList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "Select", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "Add", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo, "Rename", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Rename current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Sort", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Change presets list order", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Delete", -1, true, true, false, editorButtonImageOptions5, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "Delete current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
-            this.cmbPresetsList.Properties.NullText = "Create a new preset";
-            this.cmbPresetsList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cmbPresetsList.Properties.PropertiesChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
-            this.cmbPresetsList.Size = new System.Drawing.Size(259, 20);
-            this.cmbPresetsList.TabIndex = 4;
-            this.cmbPresetsList.SelectedIndexChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
-            this.cmbPresetsList.ButtonClick += new DevExpress.XtraEditors.Controls.ButtonPressedEventHandler(this.cmbPresetsList_ButtonClick);
-            // 
-            // btnGetPowers
-            // 
-            this.btnGetPowers.Location = new System.Drawing.Point(187, 27);
-            this.btnGetPowers.Name = "btnGetPowers";
-            this.btnGetPowers.Size = new System.Drawing.Size(75, 23);
-            this.btnGetPowers.TabIndex = 1;
-            this.btnGetPowers.Text = "Get Powers";
-            this.btnGetPowers.ToolTip = "Get powers list from the game";
-            this.btnGetPowers.Click += new System.EventHandler(this.btnGetPowers_Click);
-            // 
-            // btnSetPowers
-            // 
-            this.btnSetPowers.Location = new System.Drawing.Point(268, 27);
-            this.btnSetPowers.Name = "btnSetPowers";
-            this.btnSetPowers.Size = new System.Drawing.Size(75, 23);
-            this.btnSetPowers.TabIndex = 1;
-            this.btnSetPowers.Text = "Set Powers";
-            this.btnSetPowers.ToolTip = "Send powers list to the game";
-            this.btnSetPowers.Click += new System.EventHandler(this.btnSetPowers_Click);
-            // 
-            // gctrlCharInfo
-            // 
-            this.gctrlCharInfo.AutoSize = true;
-            this.gctrlCharInfo.Controls.Add(this.labelCharacterName);
-            this.gctrlCharInfo.Controls.Add(this.labelCharacterClass);
-            this.gctrlCharInfo.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.gctrlCharInfo.Location = new System.Drawing.Point(10, 35);
-            this.gctrlCharInfo.Name = "gctrlCharInfo";
-            this.gctrlCharInfo.Size = new System.Drawing.Size(348, 46);
-            this.gctrlCharInfo.TabIndex = 1;
-            this.gctrlCharInfo.Text = "Current Character Info";
-            // 
-            // labelCharacterName
-            // 
-            this.labelCharacterName.Location = new System.Drawing.Point(170, 20);
-            this.labelCharacterName.Name = "labelCharacterName";
-            this.labelCharacterName.Padding = new System.Windows.Forms.Padding(3);
-            this.labelCharacterName.Size = new System.Drawing.Size(53, 19);
-            this.labelCharacterName.TabIndex = 0;
-            this.labelCharacterName.Text = "Paragon: ";
-            // 
-            // labelCharacterClass
-            // 
-            this.labelCharacterClass.Location = new System.Drawing.Point(9, 20);
-            this.labelCharacterClass.Name = "labelCharacterClass";
-            this.labelCharacterClass.Padding = new System.Windows.Forms.Padding(3);
-            this.labelCharacterClass.Size = new System.Drawing.Size(38, 19);
-            this.labelCharacterClass.TabIndex = 0;
-            this.labelCharacterClass.Text = "Class: ";
+            this.mQuesterTab.Name = "mQuesterTab";
+            this.mQuesterTab.Size = new System.Drawing.Size(368, 347);
+            this.mQuesterTab.Text = "Mini Quester";
             // 
             // aboutTab
             // 
@@ -474,12 +228,6 @@
             this.btnLoad.ToolTip = "Load settings";
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // timerCharCheck
-            // 
-            this.timerCharCheck.Enabled = true;
-            this.timerCharCheck.Interval = 1000;
-            this.timerCharCheck.Tick += new System.EventHandler(this.CharCheck);
-            // 
             // sidePanel1
             // 
             this.sidePanel1.AllowResize = false;
@@ -518,23 +266,8 @@
             this.Controls.Add(this.sidePanel2);
             this.Controls.Add(this.sidePanel1);
             this.Name = "Main";
-            ((System.ComponentModel.ISupportInitialize)(this.gridViewPowers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControlPowers)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.powerListSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).EndInit();
             this.mainTabControl.ResumeLayout(false);
-            this.pManagerTab.ResumeLayout(false);
-            this.pManagerTab.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();
-            this.gCtrlPowersPresets.ResumeLayout(false);
-            this.gCtrlPowersPresets.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tedCurrHotKey.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cmbPresetsList.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.gctrlCharInfo)).EndInit();
-            this.gctrlCharInfo.ResumeLayout(false);
-            this.gctrlCharInfo.PerformLayout();
             this.aboutTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl3)).EndInit();
             this.groupControl3.ResumeLayout(false);
@@ -556,30 +289,14 @@
 
         private DevExpress.XtraTab.XtraTabControl mainTabControl;
         private DevExpress.XtraTab.XtraTabPage pManagerTab;
-        private DevExpress.XtraEditors.GroupControl gCtrlPowersPresets;
-        private DevExpress.XtraEditors.GroupControl gctrlCharInfo;
-        private DevExpress.XtraEditors.LabelControl labelCharacterName;
-        private DevExpress.XtraEditors.LabelControl labelCharacterClass;
         private DevExpress.XtraTab.XtraTabPage aboutTab;
         private DevExpress.XtraEditors.LabelControl labelAuthor;
         private DevExpress.XtraEditors.LabelControl lblVersion;
-        private DevExpress.XtraGrid.GridControl gridControlPowers;
-        private DevExpress.XtraEditors.SimpleButton btnGetPowers;
-        private DevExpress.XtraEditors.SimpleButton btnSetPowers;
-        private DevExpress.XtraGrid.Views.Grid.GridView gridViewPowers;
-        private DevExpress.XtraEditors.ComboBoxEdit cmbPresetsList;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnLoad;
-        private System.Windows.Forms.Timer timerCharCheck;
         private DevExpress.XtraEditors.SidePanel sidePanel1;
         private DevExpress.XtraEditors.SidePanel sidePanel2;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
-        private DevExpress.XtraEditors.TextEdit tedCurrHotKey;
-        private System.Windows.Forms.BindingSource powerListSource;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
-        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
-        private DevExpress.XtraEditors.CheckEdit chkHotKeys;
-        private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.HyperlinkLabelControl hlkQAForumThread;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl labelControl3;
@@ -588,7 +305,7 @@
         private DevExpress.XtraEditors.GroupControl groupControl3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraEditors.LabelControl labelControl5;
-        private DevExpress.XtraEditors.TextEdit tedGlobHotKey;
+        private DevExpress.XtraTab.XtraTabPage generalTab;
+        private DevExpress.XtraTab.XtraTabPage mQuesterTab;
     }
 }

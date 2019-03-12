@@ -49,7 +49,7 @@ namespace QuesterAssistant.Classes
                 .OrderBy(l => PricePerItem(l)).ToList();
 
             cachedSearch.AddOrReplace(l => l.DisplayName == item.DisplayName,
-                new Result(item.DisplayName, availableLots.FindAll(l => l.Owner != EntityManager.LocalPlayer.InternalName)));
+                new Result(item.DisplayName, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(l => l.DisplayName == item.DisplayName);

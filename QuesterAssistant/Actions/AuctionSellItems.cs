@@ -44,7 +44,7 @@ namespace QuesterAssistant.Actions
                           !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
                           !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
                           ItemsFilter.IsMatch(s.Item));
-                if (itemsToSell.Any())
+                if (itemsToSell.Any() || Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
                     return true;
                 }
@@ -75,6 +75,16 @@ namespace QuesterAssistant.Actions
             }
         }
 
+        private bool IsSellLotMatch(AuctionLot l)
+        {
+            var item = l.Items.First().Item;
+            return ItemsFilter.IsMatch(item) &&
+                (
+                    (l.TimeLeft < ((uint)Duration / 5)) ||
+                    (item.Count == StackSize) && ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply))
+                );
+        }
+
         public override ActionResult Run()
         {
             void InteractWaiting()
@@ -89,13 +99,6 @@ namespace QuesterAssistant.Actions
 
             if (ActiveLots == ActiveLotType.Resell)
             {
-                bool IsSellLotMatch(AuctionLot l)
-                {
-                    var item = l.Items.First().Item;
-                    return ItemsFilter.IsMatch(item) &&
-                        (item.Count == StackSize) &&
-                        ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply));
-                }
                 while (Auction.SearchWaiting)
                     Thread.Sleep(250);
 

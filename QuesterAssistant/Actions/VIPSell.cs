@@ -46,13 +46,22 @@ namespace QuesterAssistant.Actions
             {
                 var npc = new NPCInfos();
 
-                if (VIP.CanSummonSealTrader)
-                    npc.CostumeName = "VIPSummonSealTrader";
                 if (VIP.CanSummonProfessionVendor)
+                {
                     npc.CostumeName = "VIPProfessionVendor";
+                    goto Return;
+                }
+                if (VIP.CanSummonSealTrader)
+                {
+                    npc.CostumeName = "VIPSummonSealTrader";
+                    goto Return;
+                }
                 if (SpecialVendor.VendorArtifactUsable())
+                {
                     npc.CostumeName = "ArtifactVendor";
-
+                    goto Return;
+                }
+                Return:
                 return npc;
             }
 
