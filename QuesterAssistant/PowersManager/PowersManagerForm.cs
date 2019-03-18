@@ -27,6 +27,10 @@ namespace QuesterAssistant.PowersManager
             chkHotKeys_Update();
             tedGlobHotKey_Update();
 
+            //pManager.OnChanged += tedGlobHotKey_Update;
+            //pManager.OnChanged += chkHotKeys_Update;
+            //pManager.OnChanged += cmbPresetsList_Update;
+
             Panels.Main.OnLoadSettings += LoadSettings;
             Panels.Main.OnSaveSettings += SaveSettings;
         }
@@ -179,7 +183,7 @@ namespace QuesterAssistant.PowersManager
             if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
                 e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
             {
-                base.ActiveControl = null;
+                ActiveControl = null;
                 pManager.Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
                 tedGlobHotKey_Update();
             }

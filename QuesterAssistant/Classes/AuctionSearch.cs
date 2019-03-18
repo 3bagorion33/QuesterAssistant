@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using Astral;
 using DevExpress.Utils.Extensions;
 using MyNW.Classes;
 using MyNW.Classes.Auction;
@@ -16,6 +15,7 @@ namespace QuesterAssistant.Classes
     {
         private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
         private static List<Result> cachedSearch;
+        public static string LoggerMessage { get; private set; }
 
         internal static Result Get(Item item)
         {
@@ -34,11 +34,11 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                Logger.WriteLine($"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}");
+                LoggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}";
                 return cachedValue;
             }
 
-            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...");
+            LoggerMessage = $"Try to search actual price for '{item.DisplayName}'...";
             Auction.LotsSearch(item.DisplayName);
             Thread.Sleep(2500);
             while (Auction.SearchWaiting)

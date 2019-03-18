@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace QuesterAssistant.Classes.Common
 {
@@ -12,6 +13,22 @@ namespace QuesterAssistant.Classes.Common
                 return false;
             }
             return text.IndexOf(value, stringComparison) >= 0;
+        }
+
+        public static int GetHashCodeExt<T>(this List<T> list)
+        {
+            if (list == null) return 0;
+            int hash = 0;
+            for (int i = 0; i < list?.Count; i++)
+            {
+                hash ^= i * list[i].GetHashCode();
+            }
+            return hash;
+        }
+
+        public static int GetSafeHashCode<T>(this T value) where T : class
+        {
+            return value == null ? 0 : value.GetHashCode();
         }
     }
 }

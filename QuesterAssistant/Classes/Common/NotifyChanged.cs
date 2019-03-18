@@ -5,8 +5,6 @@ namespace QuesterAssistant.Classes.Common
 {
     public abstract class NotifyChanged
     {
-        private const int seedPrimeNumber = 691;
-        private const int fieldPrimeNumber = 397;
         private int prevHashCode;
         private static Timer checkChanged;
         public event Action OnChanged;
@@ -34,30 +32,30 @@ namespace QuesterAssistant.Classes.Common
 
         protected int GetHashCodeFromFields<T1>(T1 obj1)
         {
-            int hashCode = seedPrimeNumber;
+            int hashCode = 0;
             if (obj1 != null)
-                hashCode *= fieldPrimeNumber + obj1.GetHashCode();
+                hashCode = obj1.GetHashCode();
             return hashCode;
         }
         protected int GetHashCodeFromFields<T1, T2>(T1 obj1, T2 obj2)
         {
             int hashCode = GetHashCodeFromFields(obj1);
             if (obj2 != null)
-                hashCode *= fieldPrimeNumber + obj2.GetHashCode();
+                hashCode ^= obj2.GetHashCode();
             return hashCode;
         }
         protected int GetHashCodeFromFields<T1, T2, T3>(T1 obj1, T2 obj2, T3 obj3)
         {
             int hashCode = GetHashCodeFromFields(obj1, obj2);
             if (obj3 != null)
-                hashCode *= fieldPrimeNumber + obj3.GetHashCode();
+                hashCode ^= obj3.GetHashCode();
             return hashCode;
         }
         protected int GetHashCodeFromFields<T1, T2, T3, T4>(T1 obj1, T2 obj2, T3 obj3, T4 obj4)
         {
             int hashCode = GetHashCodeFromFields(obj1, obj2, obj3);
             if (obj4 != null)
-                hashCode *= fieldPrimeNumber + obj4.GetHashCode();
+                hashCode ^= obj4.GetHashCode();
             return hashCode;
         }
 

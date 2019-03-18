@@ -1,6 +1,7 @@
 ﻿using Astral;
 using DevExpress.XtraEditors;
 using MyNW;
+using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Enums;
@@ -26,11 +27,9 @@ namespace QuesterAssistant.PowersManager
         {
             if (Data.HotKeysEnabled)
             {
-                Logger.WriteLine("Powers Manager hotkeys enabled...");
                 Core.KeyboardHook.KeyDown += KeyboardHook;
                 return;
             }
-            Logger.WriteLine("Powers Manager hotkeys disabled...");
             Core.KeyboardHook.KeyDown -= KeyboardHook;
         }
 
@@ -106,22 +105,24 @@ namespace QuesterAssistant.PowersManager
         }
         private void KeyboardHook(object sender, KeyEventArgs e)
         {
-            if (System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == NativeMethods.GetForegroundWindow())
+            var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
+                System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == NativeMethods.GetForegroundWindow();
+            if (flag)
             {
-                Preset _pres;
+                Preset pres;
                 if (e.KeyData == Data.Keys)
                 {
-                    string _name = InputBox.MessageText("Type partial name of preset and press Enter:", center: true);
-                    _pres = Data.CurrPresets?.Find(x => x.Name.CaseContains(_name));
+                    string name = InputBox.MessageText("Type partial name of preset and press Enter:", center: true);
+                    pres = Data.CurrPresets?.Find(x => x.Name.CaseContains(name));
                 }
                 else
                 {
-                    _pres = Data.CurrPresets?.Find(x => x.Keys == e.KeyData);
+                    pres = Data.CurrPresets?.Find(x => x.Keys == e.KeyData);
                 }
-                if (_pres != null)
+                if (pres != null)
                 {
-                    Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
-                    Powers.ApplyPowers(_pres?.PowersList);
+                    Logger.WriteLine($"Applying preset with name '{pres.Name}'...");
+                    Powers.ApplyPowers(pres?.PowersList);
                 }
             }
         }

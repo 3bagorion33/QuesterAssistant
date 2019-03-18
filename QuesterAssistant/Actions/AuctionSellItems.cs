@@ -28,6 +28,7 @@ namespace QuesterAssistant.Actions
         protected override Vector3 InternalDestination => new Vector3();
         public override void GatherInfos() { }
         public override void OnMapDraw(GraphicsNW graph) { }
+        public override void InternalReset() { }
 
         private List<InventorySlot> itemsToSell;
         private double Multiply => (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
@@ -52,8 +53,6 @@ namespace QuesterAssistant.Actions
                 return false;
             }
         }
-
-        public override void InternalReset() { }
 
         protected override ActionValidity InternalValidity
         {
@@ -81,8 +80,54 @@ namespace QuesterAssistant.Actions
             return ItemsFilter.IsMatch(item) &&
                 (
                     (l.TimeLeft < ((uint)Duration / 5)) ||
-                    (item.Count == StackSize) && ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply))
+                    ((item.Count == StackSize) && ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply)))
                 );
+        }
+
+        private uint GetActualPrice(Item item)
+        {
+            uint result = 0;
+            if (PriceType == SellingPriceType.Fixed)
+                result = PriceValue;
+
+            if (PriceType > SellingPriceType.Fixed)
+            {
+                var availableLots = AuctionSearch.Get(item).Lots;
+                if (availableLots.Any())
+                {
+                    var validLots = new List<AuctionSearch.Result.Lot>();
+                    if (PriceDetectionRange == PriceDetectionType.Full)
+                    {
+                        validLots = availableLots;
+                    }
+                    if (PriceDetectionRange == PriceDetectionType.NearStackSize)
+                    {
+                        int range = 0;
+                        while (!validLots.Any())
+                        {
+                            var stacksize = (int)((StackSize == 0) ? item.Count : StackSize);
+                            var minrange = stacksize - range;
+                            var maxrange = stacksize + range;
+                            validLots = availableLots.FindAll(l => (int)l.Count >= minrange && (int)l.Count <= maxrange);
+                            range++;
+                        }
+                    }
+
+                    uint itemPrice = 0;
+                    if (PriceType == SellingPriceType.Minimal)
+                        itemPrice = validLots.First().PricePerItem;
+                    if (PriceType == SellingPriceType.Average)
+                        itemPrice = (uint)validLots.Average(x => x.PricePerItem);
+                    if (PriceType == SellingPriceType.Median)
+                        itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
+                    result = (PriceMinimum > itemPrice) ? PriceMinimum : itemPrice;
+                }
+                else
+                {
+                    result = PriceValue;
+                }
+            }
+            return result;
         }
 
         public override ActionResult Run()
@@ -95,10 +140,9 @@ namespace QuesterAssistant.Actions
             if (!Interact.Auctions())
                 return ActionResult.Fail;
 
-            Thread.Sleep(2000);
-
             if (ActiveLots == ActiveLotType.Resell)
             {
+                Thread.Sleep(2000);
                 while (Auction.SearchWaiting)
                     Thread.Sleep(250);
 
@@ -110,12 +154,31 @@ namespace QuesterAssistant.Actions
                     InteractWaiting();
                 }
             }
+            Thread.Sleep(2000);
+
             if (IntenalConditions)
             {
+                int GetIterationCount(Item item)
+                {
+                    // Если размер стака не определен, продаем слот как есть. Размер стака в инвентаре и на ауке совпадают.
+                    if (StackSize == 0)
+                        return 1;
+                    int ownLotsCount = AuctionSearch.Get(item).OwnLotsCount;
+                    var sellStacks = (int)SellStacks - ownLotsCount;
+                    var stacksCount = item.Count / StackSize;
+                    // Если ноль, то продаем все, разбивая по стакам. +1 нужно, чтобы продать неполный стак. Если итемы кончатся, вывалимся по IsValid
+                    if (SellStacks == 0)
+                        return (int)stacksCount + 1;
+                    // Если сюда дошли, то выбираем минимум. Второе значение <=0, если уже продается заданное число стаков.
+                    return Math.Min(sellStacks, (int)stacksCount);
+                }
+
                 foreach (var slot in itemsToSell)
                 {
                     var itemToSell = slot.Item;
                     var itemPrice = GetActualPrice(itemToSell);
+                    Logger.WriteLine(AuctionSearch.LoggerMessage);
+                    Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD");
                     var iterationCount = GetIterationCount(itemToSell);
                     for (int i = 0; i < iterationCount; i++)
                     {
@@ -137,69 +200,11 @@ namespace QuesterAssistant.Actions
                     }
                 }
             }
+
             Exit:
             if (Auction.IsAuctionFrameVisible())
                 Auction.CloseAuctionFrame();
             return ActionResult.Completed;
-        }
-
-        private int GetIterationCount(Item item)
-        {
-            // Если размер стака не определен, продаем слот как есть. Размер стака в инвентаре и на ауке совпадают.
-            if (StackSize == 0)
-                return 1;
-            int ownLotsCount = AuctionSearch.Get(item).OwnLotsCount;
-            var sellStacks = (int)SellStacks - ownLotsCount;
-            var stacksCount = item.Count / StackSize;
-            // Если ноль, то продаем все, разбивая по стакам. +1 нужно, чтобы продать неполный стак. Если итемы кончатся, вывалимся по IsValid
-            if (SellStacks == 0)
-                return (int)stacksCount + 1;
-            // Если сюда дошли, то выбираем минимум. Второе значение <=0, если уже продается заданное число стаков.
-            return Math.Min(sellStacks, (int)stacksCount);
-        }
-
-        private uint GetActualPrice(Item item)
-        {
-            uint result = 0;
-            if (PriceType == SellingPriceType.Fixed)
-                result = PriceValue;
-
-            if (PriceType > SellingPriceType.Fixed)
-            {
-                var availableLots = AuctionSearch.Get(item).Lots;
-                if (availableLots.Any())
-                {
-                    var validLots = new List<AuctionSearch.Result.Lot>();
-                    if (PriceDetectionRange == PriceDetectionType.Full)
-                    {
-                        validLots = availableLots;
-                    }
-                    if (PriceDetectionRange == PriceDetectionType.NearStackSize)
-                    {
-                        uint range = 0;
-                        while (!validLots.Any())
-                        {
-                            validLots = availableLots.FindAll(l => l.Count >= (StackSize - range) && l.Count <= (StackSize + range));
-                            range++;
-                        }
-                    }
-
-                    uint itemPrice = 0;
-                    if (PriceType == SellingPriceType.Minimal)
-                        itemPrice = validLots.First().PricePerItem;
-                    if (PriceType == SellingPriceType.Average)
-                        itemPrice = (uint)validLots.Average(x => x.PricePerItem);
-                    if (PriceType == SellingPriceType.Median)
-                        itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
-                    result = (PriceMinimum > itemPrice) ? PriceMinimum : itemPrice;
-                }
-                else
-                {
-                    result = PriceValue;
-                }
-            }
-            Logger.WriteLine($"Best price for '{item.DisplayName}' is {result}AD");
-            return result;
         }
 
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]

@@ -30,7 +30,6 @@ namespace QuesterAssistant.PowersManager
         internal Keys Keys;
 
         public PowersManagerData() { }
-
         protected internal List<Preset> CurrPresets
         {
             get
@@ -42,9 +41,10 @@ namespace QuesterAssistant.PowersManager
                 return new List<Preset>();
             }
         }
-
-        public override int GetHashCode() =>
-            GetHashCodeFromFields(HotKeysEnabled);
+        public override int GetHashCode()
+        {
+            return HotKeysEnabled.GetHashCode() ^ CharClassesList.GetHashCodeExt() ^ Keys.GetHashCode();
+        }
     }
 
     [Serializable]
@@ -58,6 +58,10 @@ namespace QuesterAssistant.PowersManager
         {
             ParagonCategory = charClass;
             PresetsList = new List<Preset>();
+        }
+        public override int GetHashCode()
+        {
+            return PresetsList.GetHashCodeExt() ^ ParagonCategory.GetHashCode();
         }
     }
 
@@ -80,6 +84,7 @@ namespace QuesterAssistant.PowersManager
         }
         internal Keys Keys;
         public List<Power> PowersList { get; set; }
+
         public Preset() { }
         public Preset(string name)
         {
@@ -107,6 +112,10 @@ namespace QuesterAssistant.PowersManager
         {
             return Name;
         }
+        public override int GetHashCode()
+        {
+            return PowersList.GetHashCodeExt() ^ Keys.GetHashCode() ^ Name.GetHashCode();
+        }
     }
 
     [Serializable]
@@ -121,12 +130,15 @@ namespace QuesterAssistant.PowersManager
             TraySlot = traySlot;
             InternalName = iName;
         }
-
         internal Power ToDispName()
         {
             var pwr = Powers.GetPowerByInternalName(InternalName);
             if (!pwr.IsValid) return new Power(TraySlot, "Unknown spell");
             return new Power(TraySlot, (pwr.IsInTray ? "[Slotted] " : "") + pwr.PowerDef.DisplayName);
+        }
+        public override int GetHashCode()
+        {
+            return TraySlot.GetHashCode() ^ InternalName.GetHashCode();
         }
     }
 }
