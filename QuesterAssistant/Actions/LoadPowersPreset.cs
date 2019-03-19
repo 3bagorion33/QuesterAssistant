@@ -7,6 +7,7 @@ using Astral.Logic.Classes.Map;
 using MyNW.Classes;
 using QuesterAssistant.Classes;
 using QuesterAssistant.PowersManager;
+using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.Actions
 {
@@ -47,7 +48,7 @@ namespace QuesterAssistant.Actions
                     return false;
                 }
 
-                pManager = Core.PowersManager.Data;
+                pManager = Core.PowersManagerCore.Data;
 
                 if (!pManager.CurrPresets.Any())
                 {

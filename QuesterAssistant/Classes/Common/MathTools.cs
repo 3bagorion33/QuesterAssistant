@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Common
 {
     public static class MathTools
     {

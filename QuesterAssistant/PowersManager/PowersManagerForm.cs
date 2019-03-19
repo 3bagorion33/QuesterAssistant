@@ -10,36 +10,34 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using QuesterAssistant.Panels;
+using QuesterAssistant.Classes.Common.Extensions;
+using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.PowersManager
 {
     public partial class PowersManagerForm : BasePanel
     {
-        private PowersManagerData pManager = Core.PowersManager.Data;
+        private PowersManagerData Data => Core.PowersManagerCore.Data;
         private ParagonCategory prevCharParagon;
 
         public PowersManagerForm() : base("Powers Manager")
         {
             InitializeComponent();
 #if DEBUG
-            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager_deb.xml"), pManager);
+            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager_deb.xml"), Data);
 #endif
             chkHotKeys_Update();
             tedGlobHotKey_Update();
 
-            //pManager.OnChanged += tedGlobHotKey_Update;
-            //pManager.OnChanged += chkHotKeys_Update;
-            //pManager.OnChanged += cmbPresetsList_Update;
-
-            Panels.Main.OnLoadSettings += LoadSettings;
-            Panels.Main.OnSaveSettings += SaveSettings;
+            Panels.Main.LoadSettings += LoadSettings;
+            Panels.Main.SaveSettings += SaveSettings;
         }
 
         private void SaveSettings(string tabName)
         {
             if (tabName == "pManagerTab")
             {
-                Core.PowersManager.SaveSettings();
+                Core.PowersManagerCore.SaveSettings();
             }
         }
 
@@ -47,9 +45,10 @@ namespace QuesterAssistant.PowersManager
         {
             if (tabName == "pManagerTab")
             {
-                Core.PowersManager.LoadSettings();
+                Core.PowersManagerCore.LoadSettings();
                 cmbPresetsList_Update();
                 chkHotKeys_Update();
+                tedGlobHotKey_Update();
             }
         }
 
@@ -68,18 +67,18 @@ namespace QuesterAssistant.PowersManager
 
         private void btnGetPowers_Click(object sender, EventArgs e)
         {
-            if (Paragon.IsValid && pManager.CurrPresets.Any())
+            if (Paragon.IsValid && Data.CurrPresets.Any())
             {
-                pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = Powers.GetSlottedPowers();
+                Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).PowersList = Powers.GetSlottedPowers();
                 powerListSource_Update();
             }
         }
 
         private void btnSetPowers_Click(object sender, EventArgs e)
         {
-            if (Paragon.IsValid && pManager.CurrPresets.Any())
+            if (Paragon.IsValid && Data.CurrPresets.Any())
             {
-                Powers.ApplyPowers(pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
+                Powers.ApplyPowers(Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList);
             }
         }
 
@@ -93,32 +92,32 @@ namespace QuesterAssistant.PowersManager
                         string _add = InputBox.MessageText("Enter a new preset name:");
                         if (_add.Any())
                         {
-                            pManager.CurrPresets.AddOrReplace(x => x.Name == _add, new Preset(_add, Powers.GetSlottedPowers()));
+                            Data.CurrPresets.AddOrReplace(x => x.Name == _add, new Preset(_add, Powers.GetSlottedPowers()));
                             cmbPresetsList_Update(cmbPresetsList.Properties.Items.Count);
                         }
                         break;
 
                     case "Delete":
-                        if (pManager.CurrPresets.Any() &&
+                        if (Data.CurrPresets.Any() &&
                             (XtraMessageBox.Show(Form.ActiveForm, "Delete this preset?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
                         {
-                            pManager.CurrPresets.RemoveAt(cmbPresetsList.SelectedIndex);
+                            Data.CurrPresets.RemoveAt(cmbPresetsList.SelectedIndex);
                             cmbPresetsList_Update();
                         }
                         break;
 
                     case "Sort":
-                        if (pManager.CurrPresets.Any())
+                        if (Data.CurrPresets.Any())
                         {
                             var selected = cmbPresetsList.SelectedItem;
-                            Astral.Professions.Forms.ChangeItemsOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
+                            Astral.Professions.Forms.ChangeItemsOrder<Preset>.Show(Data.CurrPresets, "Change presets order :");
                             cmbPresetsList_Update();
                             cmbPresetsList.SelectedItem = selected;
                         }
                         break;
 
                     case "Rename":
-                        if (pManager.CurrPresets.Any())
+                        if (Data.CurrPresets.Any())
                         {
                             var _preset = cmbPresetsList.SelectedItem as Preset;
                             string _ren = InputBox.MessageText("Enter a new name for this preset:", _preset.Name);
@@ -145,27 +144,18 @@ namespace QuesterAssistant.PowersManager
 
         private void tedCurrHotKey_KeyDown(object sender, KeyEventArgs e)
         {
-            // KeyCode - последняя нажатая клавиша
-            // KeyData - все нажатые клавиши
-            if (Paragon.IsValid && pManager.CurrPresets.Any())
+            if (Paragon.IsValid && Data.CurrPresets.Any())
             {
-                KeysConverter kc = new KeysConverter();
-                if (e.Shift || e.Control || e.Alt)
+                tedCurrHotKey.Text = e.KeyData.ConvertToString();
+                if (e.KeyCode.IsNotModifier())
                 {
-                    string str = kc.ConvertToString(e.Modifiers);
-                    tedCurrHotKey.Text = str.Remove(str.Length - 4);
-                }
-
-                if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
-                    e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
-                {
-                    base.ActiveControl = null;
-                    if (pManager.CurrPresets.Exists(x => x.Keys == e.KeyData))
+                    ActiveControl = null;
+                    if (Data.CurrPresets.Exists(x => x.HotKey.Keys == e.KeyData && x.Name != (cmbPresetsList.SelectedItem as Preset).Name))
                     {
-                        XtraMessageBox.Show("This hot keys is already in use.");
+                        XtraMessageBox.Show("This hotkey is already in use.");
                         return;
                     }
-                    pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
+                    Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).HotKey.String = e.KeyData.IgnoreBack().ConvertToString();
                     tedCurrHotKey_Update();
                 }
             }
@@ -173,18 +163,12 @@ namespace QuesterAssistant.PowersManager
 
         private void tedGlobHotKey_KeyDown(object sender, KeyEventArgs e)
         {
-            KeysConverter kc = new KeysConverter();
-            if (e.Shift || e.Control || e.Alt)
-            {
-                string str = kc.ConvertToString(e.Modifiers);
-                tedGlobHotKey.Text = str.Remove(str.Length - 4);
-            }
+            tedGlobHotKey.Text = e.KeyData.ConvertToString();
 
-            if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
-                e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
+            if (e.KeyCode.IsNotModifier())
             {
                 ActiveControl = null;
-                pManager.Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
+                Data.HotKey.String = e.KeyData.IgnoreBack().ConvertToString();
                 tedGlobHotKey_Update();
             }
         }
@@ -195,9 +179,9 @@ namespace QuesterAssistant.PowersManager
             cmbPresetsList.Properties.Items.BeginUpdate();
             try
             {
-                if (pManager.CurrPresets.Any())
+                if (Data.CurrPresets.Any())
                 {
-                    cmbPresetsList.Properties.Items.AddRange(pManager.CurrPresets);
+                    cmbPresetsList.Properties.Items.AddRange(Data.CurrPresets);
                     if (selIdx == -1) selIdx = 0;
                 }
             }
@@ -210,27 +194,27 @@ namespace QuesterAssistant.PowersManager
 
         private void powerListSource_Update()
         {
-            powerListSource.DataSource = pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
+            powerListSource.DataSource = Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
         }
 
         private void tedGlobHotKey_Update()
         {
-            tedGlobHotKey.Text = pManager?.HotKeys ?? null;
+            tedGlobHotKey.Text = Data?.HotKey.String ?? null;
         }
 
         private void tedCurrHotKey_Update()
         {
-            tedCurrHotKey.Text = pManager.CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
+            tedCurrHotKey.Text = Data.CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKey.String ?? null;
         }
 
         private void chkHotKeys_Update()
         {
-            chkHotKeys.Checked = pManager.HotKeysEnabled;
+            chkHotKeys.Checked = Data.HotKey.Enabled;
         }
 
         private void chkHotKeys_CheckedChanged(object sender, EventArgs e)
         {
-            pManager.HotKeysEnabled = chkHotKeys.Checked;
+            Data.HotKey.Enabled = chkHotKeys.Checked;
         }
     }
 }

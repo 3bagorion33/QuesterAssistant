@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Astral;
 using DevExpress.Utils.Extensions;
 using MyNW.Classes;
 using MyNW.Classes.Auction;
@@ -38,7 +39,7 @@ namespace QuesterAssistant.Classes
                 return cachedValue;
             }
 
-            LoggerMessage = $"Try to search actual price for '{item.DisplayName}'...";
+            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...");
             Auction.LotsSearch(item.DisplayName);
             Thread.Sleep(2500);
             while (Auction.SearchWaiting)

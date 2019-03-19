@@ -28,9 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
-            this.generalTab = new DevExpress.XtraTab.XtraTabPage();
+            this.settingsTab = new DevExpress.XtraTab.XtraTabPage();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
             this.mQuesterTab = new DevExpress.XtraTab.XtraTabPage();
             this.aboutTab = new DevExpress.XtraTab.XtraTabPage();
@@ -48,7 +47,7 @@
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -68,20 +67,20 @@
             this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainTabControl.Location = new System.Drawing.Point(0, 0);
             this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedTabPage = this.generalTab;
+            this.mainTabControl.SelectedTabPage = this.settingsTab;
             this.mainTabControl.Size = new System.Drawing.Size(370, 372);
             this.mainTabControl.TabIndex = 8;
             this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.generalTab,
+            this.settingsTab,
             this.pManagerTab,
             this.mQuesterTab,
             this.aboutTab});
             // 
-            // generalTab
+            // settingsTab
             // 
-            this.generalTab.Name = "generalTab";
-            this.generalTab.Size = new System.Drawing.Size(368, 347);
-            this.generalTab.Text = "General";
+            this.settingsTab.Name = "settingsTab";
+            this.settingsTab.Size = new System.Drawing.Size(368, 347);
+            this.settingsTab.Text = "Settings";
             // 
             // pManagerTab
             // 
@@ -305,7 +304,7 @@
         private DevExpress.XtraEditors.GroupControl groupControl3;
         private System.Windows.Forms.PictureBox pictureBox1;
         private DevExpress.XtraEditors.LabelControl labelControl4;
-        private DevExpress.XtraTab.XtraTabPage generalTab;
+        private DevExpress.XtraTab.XtraTabPage settingsTab;
         private DevExpress.XtraTab.XtraTabPage mQuesterTab;
     }
 }

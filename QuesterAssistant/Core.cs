@@ -3,7 +3,6 @@ using Astral.Addons;
 using DevExpress.XtraEditors;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Panels;
-using QuesterAssistant.PowersManager;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -31,7 +30,8 @@ namespace QuesterAssistant
             Keys.Apps, Keys.Back
         };
 
-        internal static PowersManagerCore PowersManager { get; private set; } = new PowersManagerCore();
+        internal static PowersManager.PowersManagerCore PowersManagerCore { get; private set; } = new PowersManager.PowersManagerCore();
+        internal static Settings.SettingsCore SettingsCore { get; private set; } = new Settings.SettingsCore();
 
         public override void OnBotStart() { }
         public override void OnBotStop() { }
@@ -54,7 +54,7 @@ namespace QuesterAssistant
             Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
-            Task.Factory.StartNew(() => HooksLoader.SetHook());
+            Task.Factory.StartNew(HooksLoader.SetHook);
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)

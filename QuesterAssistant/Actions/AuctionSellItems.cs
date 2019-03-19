@@ -14,6 +14,7 @@ using MyNW.Classes.Auction;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant.Actions
@@ -135,26 +136,27 @@ namespace QuesterAssistant.Actions
             void InteractWaiting()
             {
                 Thread.Sleep(2000);
+                Auction.RequestAuctionsForPlayer();
+                while (Auction.SearchWaiting)
+                    Thread.Sleep(250);
             }
 
             if (!Interact.Auctions())
                 return ActionResult.Fail;
+            //GameCommands.Execute("GenSendMessage Auction_Myconsignments_Tabbutton Clicked");
+            //Auction.RequestAuctionsForPlayer();
 
             if (ActiveLots == ActiveLotType.Resell)
             {
-                Thread.Sleep(2000);
-                while (Auction.SearchWaiting)
-                    Thread.Sleep(250);
-
+                InteractWaiting();
                 Logger.WriteLine("Collect items for reselling...");
-
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
                     Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
                     InteractWaiting();
                 }
             }
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
 
             if (IntenalConditions)
             {
@@ -243,7 +245,7 @@ namespace QuesterAssistant.Actions
         [Description("Round by number of digits, not work if zero")]
         public uint RoundDigits { get; set; }
 
-        [Description("Zero : price = 123000 | Nine : price = 122999 | Last : price = 122222")]
+        [Description("Zero : price = 123000 | Nine : price = 122999 | Last : price = 123333")]
         public MathTools.RoundType RoundFilledBy { get; set; }
 
         public enum SellingPriceType
