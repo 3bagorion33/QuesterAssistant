@@ -5,9 +5,8 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant.Settings
 {
-    internal class SettingsCore : ACore<SettingsData>
+    internal class SettingsCore : ACore<SettingsData, SettingsForm>
     {
-        public override SettingsData Data { get; set; } = new SettingsData();
         protected override bool IsValid => true;
         protected override bool HookEnableFlag => Data.RoleToggleHotKey.Enabled;
 

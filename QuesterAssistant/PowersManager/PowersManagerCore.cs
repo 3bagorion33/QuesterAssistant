@@ -4,18 +4,15 @@ using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Common.Extensions;
-using QuesterAssistant.Enums;
 using QuesterAssistant.Panels;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.PowersManager
 {
-    internal class PowersManagerCore : ACore<PowersManagerData>
+    internal class PowersManagerCore : ACore<PowersManagerData, PowersManagerForm>
     {
-        public override PowersManagerData Data { get; set; } = new PowersManagerData();
         protected override bool IsValid => Data.CharClassesList.Count > 0;
         protected override bool HookEnableFlag => Data.HotKey.Enabled;
 

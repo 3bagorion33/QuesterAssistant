@@ -1,14 +1,13 @@
 ﻿using Astral.Forms;
 using System;
 using System.ComponentModel;
-using System.Windows.Forms;
 
 namespace QuesterAssistant.Panels
 {
     public partial class Main : BasePanel
     {
-        internal static event Action<string> LoadSettings;
-        internal static event Action<string> SaveSettings;
+        internal static event EventHandler LoadSettings;
+        internal static event EventHandler SaveSettings;
 
         public Main() : base("Quester Assistant")
         {
@@ -17,23 +16,10 @@ namespace QuesterAssistant.Panels
             OnPanelLeave += Dispose;
             lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
 
-            // Init Settings
-            var settingsForm = new Settings.SettingsForm();
-            settingsForm.Dock = DockStyle.Fill;
-            settingsTab.Controls.Add(settingsForm);
-
-            // Init Powers Manager
-            var powersManagerForm = new PowersManager.PowersManagerForm();
-            powersManagerForm.Dock = DockStyle.Fill;
-            pManagerTab.Controls.Add(powersManagerForm);
-
-            // Init Mini Quester
-            /*
-            Astral.Quester.Forms.Main miniQuesterForm = new Astral.Quester.Forms.Main();
-            miniQuesterForm.MinimanistMode();
-            miniQuesterForm.Dock = DockStyle.Fill;
-            mQuesterTab.Controls.Add(miniQuesterForm);
-            */
+            // Init Tabs
+            settingsTab.Controls.Add(Core.SettingsCore.Panel);
+            pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
+            pushTab.Controls.Add(Core.PushNotifyCore.Panel);
         }
 
         private void Dispose(object s, EventArgs e)
@@ -43,12 +29,12 @@ namespace QuesterAssistant.Panels
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveSettings(mainTabControl.SelectedTabPage.Name);
+            SaveSettings(mainTabControl.SelectedTabPage, null);
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            LoadSettings(mainTabControl.SelectedTabPage.Name);
+            LoadSettings(mainTabControl.SelectedTabPage, null);
         }
 
         private void hlkQAForumThread_Click(object sender, EventArgs e)

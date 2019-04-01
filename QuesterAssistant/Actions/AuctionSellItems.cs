@@ -71,6 +71,9 @@ namespace QuesterAssistant.Actions
                 if (PriceStartingBid > 99)
                     return new ActionValidity("StartingBid must be in 0-99 range");
 
+                if (TimeOutMax <= TimeOutMin)
+                    return new ActionValidity("TimeOutMax must be greater than TimeOutMin");
+
                 return new ActionValidity();
             }
         }
@@ -135,17 +138,14 @@ namespace QuesterAssistant.Actions
         {
             void InteractWaiting()
             {
-                Thread.Sleep(2000);
-                Auction.RequestAuctionsForPlayer();
-                while (Auction.SearchWaiting)
-                    Thread.Sleep(250);
+                Thread.Sleep(new Random().Next((int)TimeOutMin, (int)TimeOutMax));
             }
 
             if (!Interact.Auctions())
                 return ActionResult.Fail;
-            //GameCommands.Execute("GenSendMessage Auction_Myconsignments_Tabbutton Clicked");
-            //Auction.RequestAuctionsForPlayer();
-
+            Auction.RequestAuctionsForPlayer();
+            GameCommands.Execute("GenSendMessage Auction_Myconsignments_Tabbutton Clicked");
+            
             if (ActiveLots == ActiveLotType.Resell)
             {
                 InteractWaiting();
@@ -156,7 +156,6 @@ namespace QuesterAssistant.Actions
                     InteractWaiting();
                 }
             }
-            //Thread.Sleep(2000);
 
             if (IntenalConditions)
             {
@@ -247,6 +246,11 @@ namespace QuesterAssistant.Actions
 
         [Description("Zero : price = 123000 | Nine : price = 122999 | Last : price = 123333")]
         public MathTools.RoundType RoundFilledBy { get; set; }
+
+        [Description("Timeout range between lots operations, min value in ms")]
+        public uint TimeOutMin { get; set; } = 2000;
+        [Description("Timeout range between lots operations, max value in ms")]
+        public uint TimeOutMax { get; set; } = 3000;
 
         public enum SellingPriceType
         {

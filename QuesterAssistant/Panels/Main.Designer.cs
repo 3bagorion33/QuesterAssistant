@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.settingsTab = new DevExpress.XtraTab.XtraTabPage();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
-            this.mQuesterTab = new DevExpress.XtraTab.XtraTabPage();
+            this.pushTab = new DevExpress.XtraTab.XtraTabPage();
             this.aboutTab = new DevExpress.XtraTab.XtraTabPage();
             this.groupControl3 = new DevExpress.XtraEditors.GroupControl();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -47,7 +48,7 @@
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -73,7 +74,7 @@
             this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.settingsTab,
             this.pManagerTab,
-            this.mQuesterTab,
+            this.pushTab,
             this.aboutTab});
             // 
             // settingsTab
@@ -88,11 +89,11 @@
             this.pManagerTab.Size = new System.Drawing.Size(368, 347);
             this.pManagerTab.Text = "Powers Manager";
             // 
-            // mQuesterTab
+            // pushTab
             // 
-            this.mQuesterTab.Name = "mQuesterTab";
-            this.mQuesterTab.Size = new System.Drawing.Size(368, 347);
-            this.mQuesterTab.Text = "Mini Quester";
+            this.pushTab.Name = "pushTab";
+            this.pushTab.Size = new System.Drawing.Size(368, 347);
+            this.pushTab.Text = "Push Notify";
             // 
             // aboutTab
             // 
@@ -305,6 +306,6 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraTab.XtraTabPage settingsTab;
-        private DevExpress.XtraTab.XtraTabPage mQuesterTab;
+        private DevExpress.XtraTab.XtraTabPage pushTab;
     }
 }

@@ -126,7 +126,7 @@ namespace QuesterAssistant.UIEditors
     [Serializable]
     public class CheckedListBoxSelector<TEnum>
     {
-        public List<TEnum> Items = new List<TEnum>();
+        public List<TEnum> Items { get; set; } = new List<TEnum>();
         [XmlIgnore]
         public Dictionary<TEnum, bool> Dictionary
         {

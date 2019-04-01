@@ -31,6 +31,8 @@ namespace ClassPatcher
                         enumerator.Current.Name == "BuyOptionsEditor" ||
                         enumerator.Current.Name == "DialogKeyEditor" ||
                         enumerator.Current.Name == "DialogEditor" ||
+                        enumerator.Current.Name == "Core" ||
+                        enumerator.Current.Name == "ProcessInfos" ||
 
                         action == "/show")
                     {

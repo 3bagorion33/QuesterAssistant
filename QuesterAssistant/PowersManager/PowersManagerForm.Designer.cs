@@ -110,7 +110,7 @@
             // 
             // chkHotKeys
             // 
-            this.chkHotKeys.Location = new System.Drawing.Point(11, 9);
+            this.chkHotKeys.Location = new System.Drawing.Point(10, 9);
             this.chkHotKeys.Name = "chkHotKeys";
             this.chkHotKeys.Properties.Caption = "Enable hotkeys";
             this.chkHotKeys.Size = new System.Drawing.Size(106, 19);

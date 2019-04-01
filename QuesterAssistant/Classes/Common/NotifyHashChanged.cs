@@ -1,9 +1,12 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Timers;
 
 namespace QuesterAssistant.Classes.Common
 {
+    [DataContract]
     public abstract class NotifyHashChanged : INotifyPropertyChanged
     {
         private int prevHashCode;
@@ -34,17 +37,13 @@ namespace QuesterAssistant.Classes.Common
             }
         }
 
-        protected void OnPropertyChanged(string name)
+        protected void OnPropertyChanged([CallerMemberName] string name = "")
         {
             if (string.IsNullOrEmpty(name))
             {
                 throw new ArgumentNullException("name");
             }
-
-            if (PropertyChanged != null)
-            {
-                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(name));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public abstract override int GetHashCode();

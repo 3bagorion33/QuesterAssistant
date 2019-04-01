@@ -1,16 +1,12 @@
 ﻿using MyNW.Internals;
 using QuesterAssistant.Enums;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace QuesterAssistant.Classes
 {
-    class Paragon
+    internal class Paragon
     {
-        internal static ParagonCategory Category
+        public static ParagonCategory Category
         {
             get
             {
@@ -70,10 +66,10 @@ namespace QuesterAssistant.Classes
             }
         }
 
-        internal static string DisplayName =>
+        public static string DisplayName =>
             EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName ?? string.Empty;
 
-        internal static bool IsValid =>
+        public static bool IsValid =>
             Category != ParagonCategory.Unknown;
     }
 }

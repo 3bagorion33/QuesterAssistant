@@ -1,12 +1,10 @@
-﻿using Astral.Forms;
-using DevExpress.Utils.Extensions;
+﻿using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Enums;
 using System;
-using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using QuesterAssistant.Panels;
@@ -15,41 +13,26 @@ using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.PowersManager
 {
-    public partial class PowersManagerForm : BasePanel
+    internal partial class PowersManagerForm : CoreForm
     {
-        private PowersManagerData Data => Core.PowersManagerCore.Data;
+        private PowersManagerCore Core => core as PowersManagerCore;
+        private PowersManagerData Data => Core.Data;
         private ParagonCategory prevCharParagon;
 
-        public PowersManagerForm() : base("Powers Manager")
+        public PowersManagerForm() : base(QuesterAssistant.Core.PowersManagerCore)
         {
             InitializeComponent();
-#if DEBUG
-            Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, "PowersManager_deb.xml"), Data);
-#endif
+
             chkHotKeys_Update();
             tedGlobHotKey_Update();
-
-            Panels.Main.LoadSettings += LoadSettings;
-            Panels.Main.SaveSettings += SaveSettings;
         }
 
-        private void SaveSettings(string tabName)
+        private new void LoadSettings(object sender, EventArgs e)
         {
-            if (tabName == "pManagerTab")
-            {
-                Core.PowersManagerCore.SaveSettings();
-            }
-        }
-
-        private void LoadSettings(string tabName)
-        {
-            if (tabName == "pManagerTab")
-            {
-                Core.PowersManagerCore.LoadSettings();
-                cmbPresetsList_Update();
-                chkHotKeys_Update();
-                tedGlobHotKey_Update();
-            }
+            base.LoadSettings(sender, e);
+            cmbPresetsList_Update();
+            chkHotKeys_Update();
+            tedGlobHotKey_Update();
         }
 
         private void CharCheck(object sender, EventArgs e)

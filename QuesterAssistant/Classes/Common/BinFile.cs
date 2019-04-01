@@ -1,5 +1,5 @@
 ﻿using Astral;
-using DevExpress.XtraEditors;
+using QuesterAssistant.Panels;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -19,7 +19,7 @@ namespace QuesterAssistant.Classes.Common
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.ToString());
+                ErrorBox.Show(ex.ToString());
                 Logger.WriteLine(ex.ToString());
             }
             finally

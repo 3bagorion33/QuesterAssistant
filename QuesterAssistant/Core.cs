@@ -32,6 +32,7 @@ namespace QuesterAssistant
 
         internal static PowersManager.PowersManagerCore PowersManagerCore { get; private set; } = new PowersManager.PowersManagerCore();
         internal static Settings.SettingsCore SettingsCore { get; private set; } = new Settings.SettingsCore();
+        internal static PushNotify.PushNotifyCore PushNotifyCore { get; private set; } = new PushNotify.PushNotifyCore();
 
         public override void OnBotStart() { }
         public override void OnBotStop() { }
@@ -46,7 +47,7 @@ namespace QuesterAssistant
                 }
                 catch (Exception ex)
                 {
-                    XtraMessageBox.Show(ex.ToString());
+                    ErrorBox.Show(ex.ToString());
                     Logger.WriteLine(ex.ToString());
                 }
             }

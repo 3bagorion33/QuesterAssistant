@@ -1,22 +1,23 @@
 ﻿using Astral;
-using DevExpress.XtraEditors;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Panels;
 using System;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 
 namespace QuesterAssistant.Classes
 {
-    internal abstract class ACore<T> where T : NotifyHashChanged , IParse<T>
+    internal abstract class ACore<TData, TForm> : ICore
+        where TData : NotifyHashChanged, IParse<TData>, new()
+        where TForm : CoreForm, new()
     {
-        public abstract T Data { get; set; }
+        public TData Data { get; set; } = new TData();
+        public TForm Panel => new TForm();
+        public string Name => Data.GetType().Name.Replace("Data", "");
+
         protected abstract bool IsValid { get; }
         protected abstract bool HookEnableFlag { get; }
         protected abstract void KeyboardHook(object sender, KeyEventArgs e);
-
-        protected string DataName => Data.GetType().Name;
 
         public ACore()
         {
@@ -37,35 +38,35 @@ namespace QuesterAssistant.Classes
         public bool LoadSettings()
         {
             var flag = false;
-            var path = Path.Combine(Core.SettingsPath, $"{DataName}.xml");
+            var path = Path.Combine(Core.SettingsPath, $"{Name}.xml");
 
             if (File.Exists(path))
             {
                 try
                 {
                     if (!IsValid) Data.Init();
-                    T data = Astral.Functions.XmlSerializer.Deserialize<T>(path);
+                    TData data = Astral.Functions.XmlSerializer.Deserialize<TData>(path);
                     Data.Parse(data);
 
                     if (IsValid)
                     {
-                        Logger.WriteLine($"{DataName} has been loaded...");
+                        Logger.WriteLine($"{Name}.xml has been loaded...");
                         flag = true;
                     }
                     else
                     {
-                        Logger.WriteLine($"{DataName} is wrong, using default...");
+                        Logger.WriteLine($"{Name}.xml is wrong, using default...");
                     }
                 }
                 catch (Exception ex)
                 {
                     string msg = ex.ToString();
-                    XtraMessageBox.Show("Error: Could not read file from disk. Original error:\n" + msg);
-                    Logger.WriteLine($"{DataName} is wrong, using default...");
+                    ErrorBox.Show("Error: Could not read file from disk. Original error:\n" + msg);
+                    Logger.WriteLine($"{Name}.xml is wrong, using default...");
                 }
                 return flag;
             }
-            Logger.WriteLine($"{DataName}.xml not found, using default...");
+            Logger.WriteLine($"{Name}.xml not found, using default...");
             return flag;
         }
 
@@ -73,12 +74,12 @@ namespace QuesterAssistant.Classes
         {
             try
             {
-                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, $"{DataName}.xml"), Data);
-                Logger.WriteLine($"{DataName} has been saved...");
+                Astral.Functions.XmlSerializer.Serialize(Path.Combine(Core.SettingsPath, $"{Name}.xml"), Data);
+                Logger.WriteLine($"{Name}.xml has been saved...");
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show("Error: Could not save file. Original error: " + ex.Message);
+                ErrorBox.Show("Error: Could not save file. Original error: " + ex.Message);
             }
         }
     }
