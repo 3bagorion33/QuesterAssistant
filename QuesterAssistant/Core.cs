@@ -1,10 +1,11 @@
 using Astral;
 using Astral.Addons;
-using DevExpress.XtraEditors;
+using MyNW;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
@@ -14,12 +15,14 @@ namespace QuesterAssistant
 {
     public class Core : Plugin
     {
-        public override string Author => "Orion33 & MichaelProg";
+        public override string Author => "DartKotik & MichaelProg";
         public override Image Icon => null;
         public override string Name => "Quester Assistant";
         public override Astral.Forms.BasePanel Settings => new Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
         internal static string Category => typeof(Core).Namespace;
+        private static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
+        internal static IntPtr GameHandle => GameProcess.MainWindowHandle;
 
         internal static KeyboardHook KeyboardHook { get; private set; } = new KeyboardHook();
         private static List<Keys> keysMask = new List<Keys> {

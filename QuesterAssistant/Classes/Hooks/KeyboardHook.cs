@@ -51,16 +51,16 @@ namespace QuesterAssistant.Classes.Hooks
                 KeyboardHookStruct keyboardHookStruct =
                     (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 // Is Control being held down?
-                bool control = ((NativeMethods.GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
-                               ((NativeMethods.GetKeyState(VK_RCONTROL) & 0x80) != 0);
+                bool control = ((WinAPI.GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
+                               ((WinAPI.GetKeyState(VK_RCONTROL) & 0x80) != 0);
                 // Is Shift being held down?
-                bool shift = ((NativeMethods.GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
-                             ((NativeMethods.GetKeyState(VK_RSHIFT) & 0x80) != 0);
+                bool shift = ((WinAPI.GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
+                             ((WinAPI.GetKeyState(VK_RSHIFT) & 0x80) != 0);
                 // Is Alt being held down?
-                bool alt = ((NativeMethods.GetKeyState(VK_LALT) & 0x80) != 0) ||
-                           ((NativeMethods.GetKeyState(VK_RALT) & 0x80) != 0);
+                bool alt = ((WinAPI.GetKeyState(VK_LALT) & 0x80) != 0) ||
+                           ((WinAPI.GetKeyState(VK_RALT) & 0x80) != 0);
                 // Is CapsLock on?
-                bool capslock = (NativeMethods.GetKeyState(VK_CAPITAL) != 0);
+                bool capslock = (WinAPI.GetKeyState(VK_CAPITAL) != 0);
                 // Create event using keycode and control/shift/alt values found above
                 KeyEventArgs e = new KeyEventArgs(
                     (Keys)(
@@ -97,8 +97,8 @@ namespace QuesterAssistant.Classes.Hooks
                 {
                     byte[] keyState = new byte[256];
                     byte[] inBuffer = new byte[2];
-                    NativeMethods.GetKeyboardState(keyState);
-                    if (NativeMethods.ToAscii(keyboardHookStruct.vkCode,
+                    WinAPI.GetKeyboardState(keyState);
+                    if (WinAPI.ToAscii(keyboardHookStruct.vkCode,
                               keyboardHookStruct.scanCode,
                               keyState,
                               inBuffer,
@@ -119,7 +119,7 @@ namespace QuesterAssistant.Classes.Hooks
             }
             else
             {
-                return NativeMethods.CallNextHookEx(_handleToHook, nCode, wParam, lParam);
+                return WinAPI.CallNextHookEx(_handleToHook, nCode, wParam, lParam);
             }
         }
 

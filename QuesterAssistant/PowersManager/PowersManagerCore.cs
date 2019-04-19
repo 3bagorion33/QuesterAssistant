@@ -1,5 +1,4 @@
 ﻿using Astral;
-using MyNW;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
@@ -37,7 +36,7 @@ namespace QuesterAssistant.PowersManager
                 }
             }
             var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
-                System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == NativeMethods.GetForegroundWindow();
+                Core.GameHandle == WinAPI.GetForegroundWindow();
             if (flag)
             {
                 Task.Factory.StartNew(FindAndApply);

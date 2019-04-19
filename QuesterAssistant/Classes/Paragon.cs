@@ -67,7 +67,7 @@ namespace QuesterAssistant.Classes
         }
 
         public static string DisplayName =>
-            EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName ?? string.Empty;
+            EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.DisplayName ?? string.Empty;
 
         public static bool IsValid =>
             Category != ParagonCategory.Unknown;

@@ -1,14 +1,9 @@
 ﻿using MyNW.Patchables.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuesterAssistant.Enums
 {
     public enum ParagonCategory : uint
     {
-        // EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name
         Unknown              = 0,
         CW_Masterofflame     = (CharClassCategory.ControlWizard     * 10) + 1, // Paragon_Masterofflame
         CW_Spellstormmage    = (CharClassCategory.ControlWizard     * 10) + 2, // Paragon_Spellstormmage

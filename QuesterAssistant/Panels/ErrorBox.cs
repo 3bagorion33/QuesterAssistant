@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace QuesterAssistant.Panels
 {
-    internal class ErrorBox
+    public class ErrorBox
     {
         public static void Show(string text)
         {

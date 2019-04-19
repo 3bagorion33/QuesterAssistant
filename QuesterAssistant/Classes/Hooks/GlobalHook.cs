@@ -90,7 +90,7 @@ namespace QuesterAssistant.Classes.Hooks
         protected int _hookType;
         protected IntPtr _handleToHook;
         protected bool _isStarted;
-        protected NativeMethods.HookProc _hookCallback;
+        protected WinAPI.HookProc _hookCallback;
 
         #endregion
 
@@ -124,11 +124,11 @@ namespace QuesterAssistant.Classes.Hooks
             {
                 // Make sure we keep a reference to this delegate!
                 // If not, GC randomly collects it, and a NullReference exception is thrown
-                _hookCallback = new NativeMethods.HookProc(HookCallbackProcedure);
-                _handleToHook = NativeMethods.SetWindowsHookEx(
+                _hookCallback = new WinAPI.HookProc(HookCallbackProcedure);
+                _handleToHook = WinAPI.SetWindowsHookEx(
                     _hookType,
                     _hookCallback,
-                    NativeMethods.LoadLibrary("User32"),
+                    WinAPI.LoadLibrary("User32"),
                     0);
                 // Were we able to sucessfully start hook?
                 if (_handleToHook != IntPtr.Zero)
@@ -142,7 +142,7 @@ namespace QuesterAssistant.Classes.Hooks
         {
             if (_isStarted)
             {
-                NativeMethods.UnhookWindowsHookEx(_handleToHook);
+                WinAPI.UnhookWindowsHookEx(_handleToHook);
                 _isStarted = false;
             }
         }

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.settingsTab = new DevExpress.XtraTab.XtraTabPage();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
@@ -48,7 +47,7 @@
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -201,12 +200,12 @@
             // 
             // labelAuthor
             // 
-            this.labelAuthor.Location = new System.Drawing.Point(218, 19);
+            this.labelAuthor.Location = new System.Drawing.Point(212, 19);
             this.labelAuthor.Name = "labelAuthor";
             this.labelAuthor.Padding = new System.Windows.Forms.Padding(3);
-            this.labelAuthor.Size = new System.Drawing.Size(129, 19);
+            this.labelAuthor.Size = new System.Drawing.Size(135, 19);
             this.labelAuthor.TabIndex = 6;
-            this.labelAuthor.Text = "by Orion33 && MichaelProg";
+            this.labelAuthor.Text = "by DartKotik && MichaelProg";
             // 
             // btnSave
             // 

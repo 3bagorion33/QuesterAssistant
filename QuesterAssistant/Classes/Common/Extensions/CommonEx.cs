@@ -1,6 +1,6 @@
 ﻿namespace QuesterAssistant.Classes.Common.Extensions
 {
-    internal static class CommonEx
+    public static class CommonEx
     {
         public static int GetSafeHashCode<T>(this T value) where T : class
         {

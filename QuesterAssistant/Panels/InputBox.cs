@@ -55,10 +55,10 @@ namespace QuesterAssistant.Panels
 
         private void InputBox_Load(object sender, EventArgs e)
         {
-            if (Handle != NativeMethods.GetForegroundWindow())
+            if (Handle != WinAPI.GetForegroundWindow())
             {
-                NativeMethods.SetForegroundWindow(System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle);
-                NativeMethods.SetForegroundWindow(Handle);
+                WinAPI.SetForegroundWindow(Core.GameHandle);
+                WinAPI.SetForegroundWindow(Handle);
             }
         }
     }
