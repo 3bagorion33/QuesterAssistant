@@ -3,8 +3,10 @@ using Astral.Forms;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
+using MyNW;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Classes.PowersManager;
 using QuesterAssistant.Enums;
@@ -26,7 +28,7 @@ namespace QuesterAssistant.Panels
             components = new Container();
             components.Add(timerCharCheck);
             OnPanelLeave += this.Dispose;
-            lblVersion.Text = "v " + System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion;
+            lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
         }
 
         private void Dispose(object s, EventArgs e)
@@ -50,6 +52,7 @@ namespace QuesterAssistant.Panels
             keyboardHook.KeyDown += keyboardHook_KeyDown;
 
             chkHotKeys_Update();
+            tedGlobHotKey_Update();
         }
 
         private void CharCheck(object sender, EventArgs e)
@@ -66,8 +69,6 @@ namespace QuesterAssistant.Panels
                 prevCharParagon = Paragon.Category;
             }
             powerListSource_Update();
-            //Debug.WriteLine(EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.Name + " => \n" +
-            //    EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.PowerTree.DisplayName);
         }
 
         private void FormUpdate(object sender, EventArgs e)
@@ -125,7 +126,6 @@ namespace QuesterAssistant.Panels
                         {
                             var selected = cmbPresetsList.SelectedItem;
                             Astral.Professions.Forms.ChangeItemsOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
-                            //ChangeListOrder<Preset>.Show(pManager.CurrPresets, "Change presets order :");
                             cmbPresetsList_Update();
                             cmbPresetsList.SelectedItem = selected;
                         }
@@ -154,7 +154,7 @@ namespace QuesterAssistant.Panels
         private void cmbPresetsList_SelectedIndexChanged(object sender, EventArgs e)
         {
             powerListSource_Update();
-            tedHotKey_Update();
+            tedCurrHotKey_Update();
         }
 
         private void cmbPresetsList_Update(int selIdx = -1)
@@ -184,7 +184,7 @@ namespace QuesterAssistant.Panels
             Keys.Apps, Keys.Back
         };
 
-        private void tedHotKey_KeyDown(object sender, KeyEventArgs e)
+        private void tedCurrHotKey_KeyDown(object sender, KeyEventArgs e)
         {
             // KeyCode - последняя нажатая клавиша
             // KeyData - все нажатые клавиши
@@ -194,7 +194,7 @@ namespace QuesterAssistant.Panels
                 if (e.Shift || e.Control || e.Alt)
                 {
                     string str = kc.ConvertToString(e.Modifiers);
-                    tedHotKey.Text = str.Remove(str.Length - 4);
+                    tedCurrHotKey.Text = str.Remove(str.Length - 4);
                 }
 
                 if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
@@ -207,14 +207,37 @@ namespace QuesterAssistant.Panels
                         return;
                     }
                     pManager.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex).Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
-                    tedHotKey_Update();
+                    tedCurrHotKey_Update();
                 }
             }
         }
 
-        private void tedHotKey_Update()
+        private void tedGlobHotKey_KeyDown(object sender, KeyEventArgs e)
         {
-            tedHotKey.Text = pManager.CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
+            KeysConverter kc = new KeysConverter();
+            if (e.Shift || e.Control || e.Alt)
+            {
+                string str = kc.ConvertToString(e.Modifiers);
+                tedGlobHotKey.Text = str.Remove(str.Length - 4);
+            }
+
+            if (e.KeyCode != Keys.LWin && e.KeyCode != Keys.RWin && e.KeyCode != Keys.ShiftKey &&
+                e.KeyCode != Keys.ControlKey && e.KeyCode != Keys.Menu && e.KeyCode != Keys.Apps)
+            {
+                base.ActiveControl = null;
+                pManager.Keys = (e.KeyCode != Keys.Back) ? e.KeyData : Keys.None;
+                tedGlobHotKey_Update();
+            }
+        }
+
+        private void tedGlobHotKey_Update()
+        {
+            tedGlobHotKey.Text = pManager?.HotKeys ?? null;
+        }
+
+        private void tedCurrHotKey_Update()
+        {
+            tedCurrHotKey.Text = pManager.CurrPresets?.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.HotKeys ?? null;
         }
 
         private KeyboardHook keyboardHook = new KeyboardHook();
@@ -244,11 +267,23 @@ namespace QuesterAssistant.Panels
 
         private void keyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            var _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
-            if (_pres != null)
+            if (System.Diagnostics.Process.GetProcessById((int)Memory.ProcessId).MainWindowHandle == Win32.User32.GetForegroundWindow())
             {
-                Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
-                Powers.ApplyPowers(_pres?.PowersList);
+                Preset _pres;
+                if (e.KeyData == pManager.Keys)
+                {
+                    string _name = InputBox.MessageText("Type partial name of preset and press Enter:", startPosition: FormStartPosition.CenterScreen);
+                    _pres = pManager.CurrPresets?.Find(x => x.Name.CaseContains(_name));
+                }
+                else
+                {
+                    _pres = pManager.CurrPresets?.Find(x => x.Keys == e.KeyData);
+                }
+                if (_pres != null)
+                {
+                    Logger.WriteLine("Applying preset with name '" + _pres.Name + "'...");
+                    Powers.ApplyPowers(_pres?.PowersList);
+                }
             }
         }
 

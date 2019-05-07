@@ -72,7 +72,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>.\</OutputPath>
+    <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <FileAlignment>4096</FileAlignment>
@@ -84,51 +84,28 @@
   <ItemGroup>
     <Reference Include="Astral">
       <HintPath>Temp\Astral.exe</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.Data.v18.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Map.v18.1.Core">
-      <HintPath>Temp\DevExpress.Map.v18.1.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.Mvvm.v18.1">
-      <HintPath>Temp\DevExpress.Mvvm.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.Printing.v18.1.Core.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.Utils.v18.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraBars.v18.1">
-      <HintPath>Temp\DevExpress.XtraBars.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.XtraEditors.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.XtraGrid.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
-      <HintPath>Temp\DevExpress.XtraLayout.v18.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraNavBar.v18.1">
-      <HintPath>Temp\DevExpress.XtraNavBar.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
       <Private>False</Private>
-    </Reference>
-    <Reference Include="DevExpress.XtraVerticalGrid.v18.1">
-      <HintPath>Temp\DevExpress.XtraVerticalGrid.v18.1.dll</HintPath>
-    </Reference>
-    <Reference Include="DevExpress.XtraWizard.v18.1">
-      <HintPath>Temp\DevExpress.XtraWizard.v18.1.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
@@ -136,6 +113,7 @@
     </Reference>
     <Reference Include="MyNW">
       <HintPath>Temp\MyNW.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System">
       <Name>System</Name>
@@ -171,6 +149,7 @@
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="Classes\Common\Extensions.cs" />
     <Compile Include="Classes\Common\Win32.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />
@@ -190,14 +169,6 @@
     <EmbeddedResource Include="UIEditors\Forms\ItemFilterForm.resx">
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Temp\AuctionBuy.cs" />
-    <None Include="Temp\Auction.cs" />
-    <None Include="Temp\AuctionLot.cs" />
-    <None Include="Temp\AuctionLotList.cs" />
-    <None Include="Temp\AuctionLotState.cs" />
-    <None Include="Temp\AuctionSlot.cs" />
-    <None Include="Temp\AuctionSell.cs" />
-    <None Include="Temp\ns2.Class2.resx" />
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
@@ -246,28 +217,6 @@
     <Compile Include="Actions\VIPSell.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="Temp\InputBox.cs">
-      <SubType>Form</SubType>
-    </None>
-    <None Include="Temp\Main_1.cs">
-      <SubType>UserControl</SubType>
-    </None>
-    <None Include="Temp\ChangeProfileValue.cs" />
-    <None Include="Temp\Interact.cs" />
-    <None Include="Temp\Inventory.cs" />
-    <None Include="Temp\InventoryBag.cs" />
-    <None Include="Temp\InventorySlot.cs" />
-    <None Include="Temp\Item.cs" />
-    <None Include="Temp\ItemFilterCore.cs" />
-    <None Include="Temp\JoinQueue.cs" />
-    <None Include="Temp\MailSendEntity.cs" />
-    <None Include="Temp\OpenRewardBoxes.cs" />
-    <None Include="Temp\PathfindEnable.cs" />
-    <None Include="Temp\Refine.cs" />
-    <None Include="Temp\Sale.cs" />
-    <None Include="Temp\SpecialAction.cs" />
-    <None Include="Temp\UIEditors.cs" />
-    <None Include="Temp\UseItem.cs" />
     <EmbeddedResource Include="Panels\ChangeListOrder.resx">
       <DependentUpon>ChangeListOrder.cs</DependentUpon>
     </EmbeddedResource>
@@ -284,8 +233,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Temp\Astral.exe" />
-    <Content Include="Temp\MyNW.dll" />
+    <Folder Include="Temp\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

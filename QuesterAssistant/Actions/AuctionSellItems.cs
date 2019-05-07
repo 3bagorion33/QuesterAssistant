@@ -30,6 +30,7 @@ namespace QuesterAssistant.Actions
         public override void OnMapDraw(GraphicsNW graph) { }
 
         private List<InventorySlot> itemsToSell;
+        private double Multiply => (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
 
         protected override bool IntenalConditions
         {
@@ -90,7 +91,10 @@ namespace QuesterAssistant.Actions
             {
                 bool IsSellLotMatch(AuctionLot l)
                 {
-                    return ((MyItemFilterCore)ItemsFilter).IsMatch(l.Items.First().Item) && (l.Items.First().Item.Count == StackSize);
+                    var item = l.Items.First().Item;
+                    return ((MyItemFilterCore)ItemsFilter).IsMatch(item) &&
+                        (item.Count == StackSize) &&
+                        ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply));
                 }
                 while (Auction.SearchWaiting)
                     Thread.Sleep(250);
@@ -99,7 +103,6 @@ namespace QuesterAssistant.Actions
 
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
-                    var count = Auction.GetRemainingPostings();
                     Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
                     InteractWaiting();
                 }
@@ -119,8 +122,7 @@ namespace QuesterAssistant.Actions
                         }
                         var itemCount = (StackSize > 0 && StackSize < itemToSell.Count) ? StackSize : itemToSell.Count;
 
-                        var multiply = (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
-                        var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * multiply, PriceMinimum) * itemCount),
+                        var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * Multiply, PriceMinimum) * itemCount),
                             RoundDigits, RoundFilledBy);
                         var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * itemPrice),
                             RoundDigits, RoundFilledBy);
@@ -203,7 +205,7 @@ namespace QuesterAssistant.Actions
 
         public Auction.AuctionDuration Duration { get; set; } = Auction.AuctionDuration.Long;
 
-        [Description("Keep : active lots count is determined by SellStacks | Add : sell a new lots | Resell : cancel active lots before")]
+        [Description("Keep : active lots count is determined by SellStacks | Resell : cancel active lots before")]
         public ActiveLotType ActiveLots { get; set; }
 
         [Description("Fixed : using PriceValue | Minimal, Average, Median : detecting current price on Auction")]
@@ -215,7 +217,7 @@ namespace QuesterAssistant.Actions
         [Description("Try to decrease range for more correct detection")]
         public PriceDetectionType PriceDetectionRange { get; set; }
 
-        [Description("Minimum price for one item, used with Minimal, Average, Median if actual price less than this.")]
+        [Description("Minimum price for one item, used with Minimal, Average, Median if actual price less than this")]
         public uint PriceMinimum { get; set; }
 
         [Description("Used with Minimal, Average, Median price type")]
@@ -251,8 +253,7 @@ namespace QuesterAssistant.Actions
         public enum ActiveLotType
         {
             Keep = 0,
-            Add = 1,
-            Resell = 2
+            Resell = 1
         }
     }
 }

@@ -10,7 +10,7 @@ namespace QuesterAssistant
 {
     public class Core : Plugin
     {
-        public override string Author => "Orion33";
+        public override string Author => "Orion33 & MichaelProg";
         public override Image Icon => null;
         public override string Name => "Quester Assistant";
         public override BasePanel Settings => new Panels.Main();
@@ -41,6 +41,10 @@ namespace QuesterAssistant
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
+            // Эта херня нужна для избежания ошибок загрузки ресурсов и работы BinaryFormatter
+            if (args.Name.Contains($"{Category}.resources"))
+                return typeof(Main).Assembly;
+
             return typeof(Core).Assembly;
         }
 
