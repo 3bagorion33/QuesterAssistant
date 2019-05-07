@@ -72,8 +72,8 @@ namespace QuesterAssistant
 
         private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)
         {
-            Logger.WriteLine("Loading states");
-            Astral.Quester.API.Engine.AddState(new States.Identify());
+            //Logger.WriteLine("Loading states");
+            //Astral.Quester.API.Engine.AddState(new States.Identify());
         }
 
         public override void OnUnload()

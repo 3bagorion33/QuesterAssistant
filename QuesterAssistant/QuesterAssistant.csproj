@@ -75,7 +75,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <BaseAddress>285212672</BaseAddress>
     <FileAlignment>4096</FileAlignment>
@@ -89,6 +89,10 @@
   <ItemGroup>
     <Reference Include="Astral">
       <HintPath>Temp\Astral.exe</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Astral-cleaned">
+      <HintPath>D:\Games\Astral_RU_1\Astral-cleaned.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
@@ -156,6 +160,10 @@
     </Reference>
     <Reference Include="MyNW">
       <HintPath>Temp\MyNW.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MyNW-cleaned">
+      <HintPath>D:\Games\Astral_RU_1\MyNW-cleaned.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
