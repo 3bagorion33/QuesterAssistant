@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 
 namespace QuesterAssistant.UIEditors
 {
-    internal class CheckedListBoxEditor<T> : UITypeEditor
+    internal class CheckedListBoxEditor<T> : UITypeEditor , IDisposable
     {
         private bool isListLoaded = false;
         private CheckedListBox cbx = new CheckedListBox();
@@ -83,7 +83,6 @@ namespace QuesterAssistant.UIEditors
             if (es != null)
             {
                 LoadListBoxItems(value);
-                //cbx.Sorted = true;
                 es.DropDownControl(cbx);
             }
             return this.value;
@@ -117,12 +116,17 @@ namespace QuesterAssistant.UIEditors
             var listSelector = value as CheckedListBoxSelector<T>;
             listSelector.Dictionary = dict;
         }
+
+        public void Dispose()
+        {
+            cbx.Dispose();
+        }
     }
 
     [Serializable]
     public class CheckedListBoxSelector<TEnum>
     {
-        public List<TEnum> Items = new List<TEnum>();
+        public List<TEnum> Items { get; set; } = new List<TEnum>();
         [XmlIgnore]
         public Dictionary<TEnum, bool> Dictionary
         {
@@ -153,7 +157,7 @@ namespace QuesterAssistant.UIEditors
         }
         public override string ToString()
         {
-            return typeof(TEnum).Name;
+            return $"{Items.Count} of {Dictionary.Count} in {typeof(TEnum).Name}";
         }
     }
 }

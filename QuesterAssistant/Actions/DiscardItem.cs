@@ -44,7 +44,7 @@ namespace QuesterAssistant.Actions
             EntityManager.LocalPlayer.BagsItems.FindAll
                 (x => !x.Item.ItemDef.CantDiscard &&
                 SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality) &&
-                ((MyItemFilterCore)ItemIdFilter).IsMatch(x.Item)).ForEach(Interact.DiscardItem);
+                ItemIdFilter.IsMatch(x.Item)).ForEach(Interact.DiscardItem);
             return ActionResult.Completed;
         }
 

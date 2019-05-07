@@ -1,9 +1,9 @@
 ﻿using MyNW.Internals;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes.PowersManager;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.Classes
 {

@@ -27,6 +27,13 @@ namespace ClassPatcher
                         enumerator.Current.Name == "ItemIdEditor" ||
                         enumerator.Current.Name == "GetMailItems" ||
                         enumerator.Current.Name == "Roles" ||
+                        enumerator.Current.Name == "NPCVendorInfos" ||
+                        enumerator.Current.Name == "BuyOptionsEditor" ||
+                        enumerator.Current.Name == "DialogKeyEditor" ||
+                        enumerator.Current.Name == "DialogEditor" ||
+                        enumerator.Current.Name == "Core" ||
+                        enumerator.Current.Name == "ProcessInfos" ||
+
                         action == "/show")
                     {
                         Console.WriteLine(enumerator.Current.Name);

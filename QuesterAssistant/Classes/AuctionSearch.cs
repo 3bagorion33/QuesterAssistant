@@ -16,6 +16,7 @@ namespace QuesterAssistant.Classes
     {
         private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
         private static List<Result> cachedSearch;
+        public static string LoggerMessage { get; private set; }
 
         internal static Result Get(Item item)
         {
@@ -34,7 +35,7 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                Logger.WriteLine($"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}");
+                LoggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}";
                 return cachedValue;
             }
 
@@ -49,7 +50,7 @@ namespace QuesterAssistant.Classes
                 .OrderBy(l => PricePerItem(l)).ToList();
 
             cachedSearch.AddOrReplace(l => l.DisplayName == item.DisplayName,
-                new Result(item.DisplayName, availableLots.FindAll(l => l.Owner != EntityManager.LocalPlayer.InternalName)));
+                new Result(item.DisplayName, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(l => l.DisplayName == item.DisplayName);

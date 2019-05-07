@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Common
 {
     public static class MathTools
     {

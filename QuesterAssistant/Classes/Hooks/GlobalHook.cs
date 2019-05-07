@@ -8,7 +8,7 @@ namespace QuesterAssistant.Classes.Hooks
     /// <summary>
     /// Abstract base class for Mouse and Keyboard hooks
     /// </summary>
-    internal abstract class GlobalHook
+    internal abstract class GlobalHook : IDisposable
     {
 
         #region Windows API Code
@@ -49,7 +49,6 @@ namespace QuesterAssistant.Classes.Hooks
             public int dwExtraInfo;
         }
 
-
         protected const int WH_MOUSE_LL = 14;
         protected const int WH_KEYBOARD_LL = 13;
 
@@ -89,9 +88,9 @@ namespace QuesterAssistant.Classes.Hooks
         #region Private Variables
 
         protected int _hookType;
-        protected int _handleToHook;
+        protected IntPtr _handleToHook;
         protected bool _isStarted;
-        protected Win32.User32.HookProc _hookCallback;
+        protected WinAPI.HookProc _hookCallback;
 
         #endregion
 
@@ -125,14 +124,14 @@ namespace QuesterAssistant.Classes.Hooks
             {
                 // Make sure we keep a reference to this delegate!
                 // If not, GC randomly collects it, and a NullReference exception is thrown
-                _hookCallback = new Win32.User32.HookProc(HookCallbackProcedure);
-                _handleToHook = Win32.User32.SetWindowsHookEx(
+                _hookCallback = new WinAPI.HookProc(HookCallbackProcedure);
+                _handleToHook = WinAPI.SetWindowsHookEx(
                     _hookType,
                     _hookCallback,
-                    Win32.Kernel32.LoadLibrary("User32"),
+                    WinAPI.LoadLibrary("User32"),
                     0);
                 // Were we able to sucessfully start hook?
-                if (_handleToHook != 0)
+                if (_handleToHook != IntPtr.Zero)
                 {
                     _isStarted = true;
                 }
@@ -143,23 +142,31 @@ namespace QuesterAssistant.Classes.Hooks
         {
             if (_isStarted)
             {
-                Win32.User32.UnhookWindowsHookEx(_handleToHook);
+                WinAPI.UnhookWindowsHookEx(_handleToHook);
                 _isStarted = false;
             }
         }
 
-        protected virtual int HookCallbackProcedure(int nCode, Int32 wParam, IntPtr lParam)
+        protected virtual IntPtr HookCallbackProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             // This method must be overriden by each extending hook
-            return 0;
+            return IntPtr.Zero;
         }
 
         protected void Application_ApplicationExit(object sender, EventArgs e)
         {
-            if (_isStarted)
-            {
-                Stop();
-            }
+            Stop();
+        }
+
+        public void Dispose()
+        {
+            Stop();
+            GC.SuppressFinalize(this);
+        }
+
+        ~GlobalHook()
+        {
+            Stop();
         }
 
         #endregion

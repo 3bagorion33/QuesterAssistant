@@ -21,11 +21,12 @@
     <StartupObject />
     <FileUpgradeFlags>
     </FileUpgradeFlags>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>0.0</OldToolsVersion>
-    <TargetFrameworkProfile />
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -36,7 +37,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DocumentationFile />
     <DebugSymbols>true</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
+    <FileAlignment>512</FileAlignment>
     <NoStdLib>false</NoStdLib>
     <NoWarn />
     <Optimize>false</Optimize>
@@ -47,6 +48,7 @@
     <DebugType>full</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
@@ -58,7 +60,7 @@
     </DefineConstants>
     <DocumentationFile />
     <DebugSymbols>false</DebugSymbols>
-    <FileAlignment>4096</FileAlignment>
+    <FileAlignment>512</FileAlignment>
     <NoStdLib>false</NoStdLib>
     <NoWarn />
     <Optimize>true</Optimize>
@@ -69,6 +71,7 @@
     <DebugType>none</DebugType>
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x86</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -80,31 +83,71 @@
     <PlatformTarget>x86</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Astral">
       <HintPath>Temp\Astral.exe</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.Map.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.Mvvm.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v18.1.Core, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="DevExpress.Utils.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.XtraBars.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DevExpress.XtraEditors.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
     <Reference Include="DevExpress.XtraGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.XtraNavBar.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DevExpress.XtraPrinting.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+    <Reference Include="DevExpress.XtraWizard.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">
@@ -121,11 +164,14 @@
     </Reference>
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
       <HintPath>System.Drawing.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows.Forms">
       <Name>System.Windows.Forms</Name>
       <HintPath>System.Windows.Forms.dll</HintPath>
@@ -146,17 +192,81 @@
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <Compile Include="Panels\CoreForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
-    <Compile Include="Classes\Common\Extensions.cs" />
-    <Compile Include="Classes\Common\Win32.cs" />
+    <None Include="Classes\Common\Extensions\AttributeEx.cs" />
+    <Compile Include="Classes\Common\Extensions\CommonEx.cs" />
+    <Compile Include="Classes\Common\Extensions\ControlEx.cs" />
+    <Compile Include="Classes\Common\Extensions\KeysEx.cs" />
+    <Compile Include="Classes\Common\Extensions\ListEx.cs" />
+    <Compile Include="Classes\Common\Extensions\StringEx.cs" />
+    <Compile Include="Classes\Common\IParse.cs" />
+    <Compile Include="Classes\Common\NotifyHashChanged.cs" />
+    <Compile Include="Classes\Common\WinAPI.cs" />
+    <Compile Include="Classes\ACore.cs" />
     <Compile Include="Classes\Hooks\GlobalHook.cs" />
     <Compile Include="Classes\Hooks\KeyboardHook.cs" />
-    <Compile Include="Classes\MathTools.cs" />
+    <Compile Include="Classes\Common\MathTools.cs" />
+    <Compile Include="Classes\Hooks\HooksLoader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\Hooks\HooksLoader.Designer.cs">
+      <DependentUpon>HooksLoader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\HotKey.cs" />
+    <Compile Include="Classes\ICore.cs" />
+    <Compile Include="Classes\PushBulletClient\Constants.cs" />
+    <Compile Include="Classes\PushBulletClient\Extensions.cs" />
+    <Compile Include="Classes\PushBulletClient\Filters\PushResponseFilter.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Requests\PushNoteRequest.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Requests\PushRequestBase.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\BasicPushResponse.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\BasicPushResponseContainer.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\Device.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\GoogleUserInfo.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\PushResponse.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\PushResponseContainer.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\User.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\UserDevices.cs" />
+    <Compile Include="Classes\PushBulletClient\Models\Responses\UserPreferences.cs" />
+    <Compile Include="Classes\PushBulletClient\PushBulletClientLite.cs" />
+    <Compile Include="Panels\ErrorBox.cs" />
+    <Compile Include="Panels\Main.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\Main.designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PowersManager\PowersManagerCore.cs" />
+    <Compile Include="PowersManager\PowersManagerForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PowersManager\PowersManagerForm.Designer.cs">
+      <DependentUpon>PowersManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Conditions\CountOfRuns.cs" />
     <Compile Include="Conditions\PlayerHealth.cs" />
     <Compile Include="Conditions\ReceivedChatMessage.cs" />
+    <Compile Include="PushNotify\PushNotifyCore.cs" />
+    <Compile Include="PushNotify\PushNotifyData.cs" />
+    <Compile Include="PushNotify\PushNotifyForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PushNotify\PushNotifyForm.Designer.cs">
+      <DependentUpon>PushNotifyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings\SettingsCore.cs" />
+    <Compile Include="Settings\SettingsData.cs" />
+    <Compile Include="Settings\SettingsForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Settings\SettingsForm.Designer.cs">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="States\Identify.cs" />
     <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
     <Compile Include="UIEditors\Forms\ItemFilterForm.cs">
@@ -166,6 +276,24 @@
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UIEditors\ItemFilterEditor.cs" />
+    <EmbeddedResource Include="Panels\CoreForm.resx">
+      <DependentUpon>CoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Classes\Hooks\HooksLoader.resx">
+      <DependentUpon>HooksLoader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Panels\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PowersManager\PowersManagerForm.resx">
+      <DependentUpon>PowersManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PushNotify\PushNotifyForm.resx">
+      <DependentUpon>PushNotifyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Settings\SettingsForm.resx">
+      <DependentUpon>SettingsForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\ItemFilterForm.resx">
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,7 +301,7 @@
     <None Include="Classes\Hooks\MouseHook.cs" />
     <None Include="Classes\Hooks\MouseSimulator.cs" />
     <Compile Include="Classes\Paragon.cs" />
-    <Compile Include="Classes\PowersManager\PowersManagerData.cs" />
+    <Compile Include="PowersManager\PowersManagerData.cs" />
     <None Include="Classes\Common\SerializableDictionary.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterCore.cs" />
     <Compile Include="Classes\ItemFilter\MyItemFilterEntry.cs" />
@@ -190,12 +318,6 @@
     </Compile>
     <Compile Include="Panels\InputBox.Designer.cs">
       <DependentUpon>InputBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Panels\Main.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Panels\Main.Designer.cs">
-      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -222,9 +344,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\InputBox.resx">
       <DependentUpon>InputBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Panels\Main.resx">
-      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

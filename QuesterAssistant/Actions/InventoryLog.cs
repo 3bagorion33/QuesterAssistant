@@ -8,11 +8,11 @@ using System.ComponentModel;
 using QuesterAssistant.UIEditors;
 using System.Drawing.Design;
 using MyNW.Patchables.Enums;
-using System.Xml.Serialization;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using Astral.Classes.ItemFilter;
 using QuesterAssistant.Classes.ItemFilter;
+using Astral;
 
 namespace QuesterAssistant.Actions
 {
@@ -69,8 +69,8 @@ namespace QuesterAssistant.Actions
             }
             catch (Exception ex)
             {
-                Astral.Logger.WriteLine("failed to access the file");
-                Astral.Logger.WriteLine(ex.ToString());
+                Logger.WriteLine("Failed to access the file");
+                Logger.WriteLine(ex.ToString());
                 return ActionResult.Fail;
             }
 
@@ -82,7 +82,6 @@ namespace QuesterAssistant.Actions
                 {
                     oldText.Add(sr.ReadLine());
                 }
-                sr.Close();
             }
             AccEnd = oldText.Count;
             // find account start line
@@ -111,7 +110,6 @@ namespace QuesterAssistant.Actions
                     if (oldText[i].Contains("<") & i > CharStart)
                     {
                         CharEnd = i;
-                        //break;
                     }
                 }
             }
@@ -168,7 +166,6 @@ namespace QuesterAssistant.Actions
                 {
                     sw.WriteLine(t);
                 }
-                sw.Close();
             }
             System.Threading.Thread.Sleep(500);
             return ActionResult.Completed;
@@ -189,7 +186,7 @@ namespace QuesterAssistant.Actions
             {
                 var items = EntityManager.LocalPlayer.GetInventoryBagById(bagID).GetItems;
                 if (ItemsFilter.Entries.Count > 0)
-                    items = items.FindAll(x => ((MyItemFilterCore)ItemsFilter).IsMatch(x.Item));
+                    items = items.FindAll(x => ItemsFilter.IsMatch(x.Item));
 
                 if (items.Count > 0)
                 {
@@ -205,6 +202,7 @@ namespace QuesterAssistant.Actions
                         if (line.Contains("%itemPrice%"))
                         {
                             var lots = AuctionSearch.Get(item).Lots;
+                            Logger.WriteLine(AuctionSearch.LoggerMessage);
                             var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
                             line = line.Replace("%itemPrice%", price);
                         }
