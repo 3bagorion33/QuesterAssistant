@@ -1,6 +1,7 @@
 using Astral;
 using Astral.Addons;
 using MyNW;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Panels;
 using System;
@@ -23,6 +24,12 @@ namespace QuesterAssistant
         internal static string Category => typeof(Core).Namespace;
         private static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
         internal static IntPtr GameHandle => GameProcess.MainWindowHandle;
+
+        /// <summary>
+        /// ќбъект, отслеживающий изменение состо€ний бота
+        /// и уведомл€ющий в случае отсутстви€ таковых
+        /// </summary>
+        private NotifyStatusMonitor statusMonitor = new NotifyStatusMonitor();
 
         internal static KeyboardHook KeyboardHook { get; private set; } = new KeyboardHook();
         private static List<Keys> keysMask = new List<Keys> {
@@ -74,6 +81,8 @@ namespace QuesterAssistant
         {
             //Logger.WriteLine("Loading states");
             //Astral.Quester.API.Engine.AddState(new States.Identify());
+            statusMonitor.Enabled = true;
+            Logger.WriteLine("NotifyStatusMonitor Activated");
         }
 
         public override void OnUnload()
