@@ -14,20 +14,15 @@ using MyNW.Internals;
 namespace QuesterAssistant.Actions
 {
     [Serializable]
-    class ADReport : Astral.Quester.Classes.Action
+    public class ReportAD : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().ToString();
-
+        public override string ActionLabel => GetType().Name;
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
-
-        public override string InternalDisplayName => GetType().ToString();
-
+        public override string InternalDisplayName => GetType().Name;
         public override bool UseHotSpots => false;
-
-        protected override bool IntenalConditions => throw new NotImplementedException();
-
+        protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity
         {
             get
@@ -39,15 +34,12 @@ namespace QuesterAssistant.Actions
                 return new ActionValidity();
             }
         }
-
         public override void GatherInfos() { }
-
         public override void InternalReset() { }
-
         public override void OnMapDraw(GraphicsNW graph) { }
 
         [Description("Directory where file vile be saved\n" +
-            "Default is 'Astral\\ADReport'")]
+            "Default is 'Astral\\ReportAD'")]
         public string FilePath { get; set; }
 
         [Description("Default is '%account%'")]
@@ -61,10 +53,10 @@ namespace QuesterAssistant.Actions
             "%rAD%: the number of the rough Astral Diamond")]
         public string DataFormat { get; set; }
 
-        public ADReport()
+        public ReportAD()
         {
             FileName = "%account%";
-            FilePath = Astral.Controllers.Directories.AstralStartupPath + "\\ADReports";
+            FilePath = /*Astral.Controllers.Directories.AstralStartupPath + */".\\ADReports";
             DataFormat = "%dateTime%;%account%;%name%;%AD%;%rAD%";
         }
 
@@ -80,7 +72,7 @@ namespace QuesterAssistant.Actions
                 fileName = EntityManager.LocalPlayer.AccountLoginUsername;
             else fileName = FileName.Replace("%account%", EntityManager.LocalPlayer.AccountLoginUsername);
 
-            string fullFilePath = System.IO.Path.Combine(FilePath, FileName + ".txt");
+            string fullFilePath = System.IO.Path.Combine(filePath, fileName + ".txt");
 
             try
             {

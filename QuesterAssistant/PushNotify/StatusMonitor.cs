@@ -1,6 +1,4 @@
-﻿//#define DEBUG
-
-using Astral;
+﻿using Astral;
 using MyNW.Classes;
 using MyNW.Internals;
 using System;

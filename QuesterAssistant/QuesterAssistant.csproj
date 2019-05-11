@@ -29,7 +29,7 @@
     </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
@@ -87,6 +87,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Astral">
+      <HintPath>D:\Games\Astral_RU_1\Astral.exe</HintPath>
+    </Reference>
     <Reference Include="Astral-cleaned">
       <HintPath>D:\Games\Astral_RU_1\Astral-cleaned.exe</HintPath>
       <Private>False</Private>
@@ -154,6 +157,9 @@
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="MyNW">
+      <HintPath>D:\Games\Astral_RU_1\MyNW.dll</HintPath>
+    </Reference>
     <Reference Include="MyNW-cleaned">
       <HintPath>D:\Games\Astral_RU_1\MyNW-cleaned.dll</HintPath>
       <Private>False</Private>
@@ -179,7 +185,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actions\ADReport.cs" />
+    <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
     <Compile Include="Actions\CloseAllFrames.cs" />
@@ -193,7 +199,7 @@
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
-    <Compile Include="Classes\StatusMonitor.cs" />
+    <Compile Include="PushNotify\StatusMonitor.cs" />
     <Compile Include="Panels\CoreForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
