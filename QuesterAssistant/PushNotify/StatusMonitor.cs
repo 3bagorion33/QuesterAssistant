@@ -301,11 +301,13 @@ namespace QuesterAssistant.Classes
             {
                 task.Wait(CheckingTime);
                 AstralStatus newStatus = new AstralStatus();
-                if(lastStatus.Equals(newStatus))
+                if (lastStatus.Equals(newStatus))
                 {
+
                     Counters[newStatus.CharacterStatus] += 1;
                     if (Counters[newStatus.CharacterStatus] >= MaxCounters[newStatus.CharacterStatus])
                     {
+                        Logger.WriteLine($"NotifyStatusMonitor: Status '{newStatus.CharacterStatus}' detected {Counters[newStatus.CharacterStatus]} times. Trying Notify the user.");
                         //Послать push-сообщение
                         try
                         {
@@ -319,8 +321,13 @@ namespace QuesterAssistant.Classes
                         }
                         ResetConters();
                     }
+                    else Logger.WriteLine($"NotifyStatusMonitor: Status '{newStatus.CharacterStatus}' detected {Counters[newStatus.CharacterStatus]} times. Сontinue monitoring.");
                 }
-                else ResetConters();
+                else
+                {
+                    Logger.WriteLine("NotifyStatusMonitor: Status changed");
+                    ResetConters();
+                }
                 
                 lastStatus = newStatus;
             }
