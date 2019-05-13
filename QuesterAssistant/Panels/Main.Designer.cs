@@ -48,6 +48,7 @@
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
             this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.upgradeTab = new DevExpress.XtraTab.XtraTabPage();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -72,6 +73,7 @@
             this.mainTabControl.TabIndex = 8;
             this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
             this.settingsTab,
+            this.upgradeTab,
             this.pManagerTab,
             this.pushTab,
             this.aboutTab});
@@ -258,6 +260,12 @@
             // 
             this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
+            // upgradeTab
+            // 
+            this.upgradeTab.Name = "upgradeTab";
+            this.upgradeTab.Size = new System.Drawing.Size(0, 0);
+            this.upgradeTab.Text = "Upgrade Manager";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -306,5 +314,6 @@
         private DevExpress.XtraEditors.LabelControl labelControl4;
         private DevExpress.XtraTab.XtraTabPage settingsTab;
         private DevExpress.XtraTab.XtraTabPage pushTab;
+        private DevExpress.XtraTab.XtraTabPage upgradeTab;
     }
 }

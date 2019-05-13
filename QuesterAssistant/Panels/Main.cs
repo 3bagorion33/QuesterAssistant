@@ -18,6 +18,7 @@ namespace QuesterAssistant.Panels
 
             // Init Tabs
             settingsTab.Controls.Add(Core.SettingsCore.Panel);
+            upgradeTab.Controls.Add(Core.UpgradeManagerCore.Panel);
             pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
             pushTab.Controls.Add(Core.PushNotifyCore.Panel);
         }

@@ -36,6 +36,7 @@ namespace QuesterAssistant
         internal static PowersManager.PowersManagerCore PowersManagerCore { get; private set; } = new PowersManager.PowersManagerCore();
         internal static Settings.SettingsCore SettingsCore { get; private set; } = new Settings.SettingsCore();
         internal static PushNotify.PushNotifyCore PushNotifyCore { get; private set; } = new PushNotify.PushNotifyCore();
+        internal static UpgradeManager.UpgradeManagerCore UpgradeManagerCore { get; private set; } = new UpgradeManager.UpgradeManagerCore();
 
         public override void OnBotStart() { }
         public override void OnBotStop() { }
@@ -72,8 +73,9 @@ namespace QuesterAssistant
 
         private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)
         {
-            Logger.WriteLine("Loading states");
-            Astral.Quester.API.Engine.AddState(new States.Identify());
+            // Deprecated
+            //Logger.WriteLine("Loading states");
+            //Astral.Quester.API.Engine.AddState(new States.Identify());
         }
 
         public override void OnUnload()

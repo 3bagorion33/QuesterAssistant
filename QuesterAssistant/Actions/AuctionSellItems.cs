@@ -136,9 +136,16 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            void InteractWaiting()
+            var random = new Random();
+
+            void RandomWaiting()
             {
-                Thread.Sleep(new Random().Next((int)TimeOutMin, (int)TimeOutMax));
+                Thread.Sleep(random.Next((int)TimeOutMin, (int)TimeOutMax));
+            }
+
+            void Waiting()
+            {
+                Thread.Sleep(2000);
             }
 
             if (!Interact.Auctions())
@@ -148,12 +155,12 @@ namespace QuesterAssistant.Actions
             
             if (ActiveLots == ActiveLotType.Resell)
             {
-                InteractWaiting();
+                Waiting();
                 Logger.WriteLine("Collect items for reselling...");
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
                     Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
-                    InteractWaiting();
+                    Waiting();
                 }
             }
 
@@ -197,7 +204,7 @@ namespace QuesterAssistant.Actions
                         Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD");
                         var count = Auction.GetRemainingPostings();
                         Auction.CreateLot(itemToSell, itemCount, buyoutPrice, startingBid, Duration);
-                        InteractWaiting();
+                        RandomWaiting();
                     }
                 }
             }

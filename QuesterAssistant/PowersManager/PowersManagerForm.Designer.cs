@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -64,14 +63,14 @@
             this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.btnSetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource(this.components);
+            this.powerListSource = new System.Windows.Forms.BindingSource();
             this.gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gctrlCharInfo = new DevExpress.XtraEditors.GroupControl();
             this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
-            this.timerCharCheck = new System.Windows.Forms.Timer(this.components);
+            this.timerCharCheck = new System.Windows.Forms.Timer();
             ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
@@ -309,7 +308,9 @@
             this.Controls.Add(this.chkHotKeys);
             this.Controls.Add(this.gCtrlPowersPresets);
             this.Controls.Add(this.gctrlCharInfo);
+            this.MinimumSize = new System.Drawing.Size(370, 348);
             this.Name = "PowersManagerForm";
+            this.Size = new System.Drawing.Size(370, 348);
             ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();

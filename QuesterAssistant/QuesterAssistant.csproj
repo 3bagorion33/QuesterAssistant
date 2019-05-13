@@ -192,12 +192,24 @@
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <Compile Include="Classes\InventorySlotEx.cs" />
     <Compile Include="Panels\CoreForm.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="UpgradeManager\UpgradeManagerCore.cs" />
+    <Compile Include="UpgradeManager\UpgradeManagerData.cs" />
+    <Compile Include="UpgradeManager\UpgradeManagerForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UpgradeManager\UpgradeManagerForm.Designer.cs">
+      <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="UpgradeManager\UpgradeManagerForm.resx">
+      <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Classes\Common\Extensions\AttributeEx.cs" />
     <Compile Include="Classes\Common\Extensions\CommonEx.cs" />
     <Compile Include="Classes\Common\Extensions\ControlEx.cs" />
@@ -267,7 +279,7 @@
     <Compile Include="Settings\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="States\Identify.cs" />
+    <None Include="States\Identify.cs" />
     <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
     <Compile Include="UIEditors\Forms\ItemFilterForm.cs">
       <SubType>Form</SubType>

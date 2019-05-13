@@ -32,5 +32,19 @@ namespace QuesterAssistant.Panels
                 core.LoadSettings();
             }
         }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // CoreForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.MinimumSize = new System.Drawing.Size(370, 348);
+            this.Name = "CoreForm";
+            this.Size = new System.Drawing.Size(370, 348);
+            this.ResumeLayout(false);
+
+        }
     }
 }
