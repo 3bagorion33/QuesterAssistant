@@ -1,10 +1,25 @@
-﻿namespace QuesterAssistant.Classes.Common.Extensions
+﻿using System.Collections;
+
+namespace QuesterAssistant.Classes.Common.Extensions
 {
     public static class CommonEx
     {
-        public static int GetSafeHashCode<T>(this T value) where T : class
+        public static int GetSafeHashCode<T>(this T @this)
         {
-            return value == null ? 0 : value.GetHashCode();
+            if (@this == null) return 0;
+            if (@this.GetType().GetInterface(nameof(IEnumerable)) != null)
+            {
+                var @enum = @this as IEnumerable;
+                int hash = 0;
+                int i = 0;
+                foreach (var item in @enum)
+                {
+                    i++;
+                    hash ^= i * item.GetSafeHashCode();
+                }
+                return hash;
+            }
+            return @this.GetHashCode();
         }
     }
 }

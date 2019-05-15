@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using MyNW;
 using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Panels
@@ -10,6 +9,7 @@ namespace QuesterAssistant.Panels
     internal partial class InputBox : XtraForm
     {
         private static bool isLoaded = false;
+        protected bool center = false;
 
         public InputBox()
         {
@@ -25,6 +25,7 @@ namespace QuesterAssistant.Panels
             InputBox inputBox = new InputBox();
             inputBox.labelMessage.Text = message;
             inputBox.textValue.Text = text;
+            inputBox.center = center;
             inputBox.StartPosition = FormStartPosition.CenterParent;
             if (center)
             {
@@ -55,7 +56,7 @@ namespace QuesterAssistant.Panels
 
         private void InputBox_Load(object sender, EventArgs e)
         {
-            if (Handle != WinAPI.GetForegroundWindow())
+            if (center && Handle != WinAPI.GetForegroundWindow())
             {
                 WinAPI.SetForegroundWindow(Core.GameHandle);
                 WinAPI.SetForegroundWindow(Handle);

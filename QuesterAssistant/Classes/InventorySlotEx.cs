@@ -10,7 +10,16 @@ namespace MyNW.Classes
     {
         public static void Group(this InventorySlot slot)
         {
-            List<InventorySlot> slots = EntityManager.LocalPlayer.BagsItems.FindAll(s => s.Item.ItemDef.InternalName == slot.Item.ItemDef.InternalName);
+            bool Find(InventorySlot s)
+            {
+                return
+                    s.Item.ItemDef.InternalName == slot.Item.ItemDef.InternalName &&
+                    s.Item.ItemDef.StackLimit > 1 &&
+                    s.Item.ProgressionLogic.CurrentRankXP == 0;
+            }
+            List<InventorySlot> slots = EntityManager.LocalPlayer.BagsItems.FindAll(Find);
+            if (!slots.Any()) return;
+
             InventorySlot sFirst = slots.First(s => s.Item.Count < s.Item.ItemDef.StackLimit);
             InventorySlot sLast = slots.Last();
             if (sFirst == null || sFirst == sLast) return;

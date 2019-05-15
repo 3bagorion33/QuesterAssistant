@@ -49,7 +49,7 @@ namespace QuesterAssistant.PowersManager
         }
         public override int GetHashCode()
         {
-            return CharClassesList.GetHashCodeEx() ^ HotKey.GetHashCode();
+            return CharClassesList.GetSafeHashCode() ^ HotKey.GetHashCode();
         }
         public void Parse(PowersManagerData source)
         {
@@ -74,7 +74,7 @@ namespace QuesterAssistant.PowersManager
             }
             public override int GetHashCode()
             {
-                return PresetsList.GetHashCodeEx() ^ ParagonCategory.GetHashCode();
+                return PresetsList.GetSafeHashCode() ^ ParagonCategory.GetHashCode();
             }
             public void Parse(CharClass source)
             {
@@ -120,7 +120,7 @@ namespace QuesterAssistant.PowersManager
             }
             public override int GetHashCode()
             {
-                return PowersList.GetHashCodeEx() ^ HotKey.GetHashCode() ^ Name.GetHashCode();
+                return PowersList.GetSafeHashCode() ^ HotKey.GetHashCode() ^ Name.GetHashCode();
             }
             public void Parse(Preset source)
             {

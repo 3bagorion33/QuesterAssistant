@@ -214,7 +214,6 @@
     <Compile Include="Classes\Common\Extensions\CommonEx.cs" />
     <Compile Include="Classes\Common\Extensions\ControlEx.cs" />
     <Compile Include="Classes\Common\Extensions\KeysEx.cs" />
-    <Compile Include="Classes\Common\Extensions\ListEx.cs" />
     <Compile Include="Classes\Common\Extensions\StringEx.cs" />
     <Compile Include="Classes\Common\IParse.cs" />
     <Compile Include="Classes\Common\NotifyHashChanged.cs" />

@@ -14,6 +14,7 @@ namespace QuesterAssistant.Classes
         public TData Data { get; set; } = new TData();
         public TForm Panel => new TForm();
         public string Name => Data.GetType().Name.Replace("Data", "");
+        public event EventHandler SettingsLoaded;
 
         protected abstract bool IsValid { get; }
         protected abstract bool HookEnableFlag { get; }
@@ -51,6 +52,7 @@ namespace QuesterAssistant.Classes
                     if (IsValid)
                     {
                         Logger.WriteLine($"{Name}.xml has been loaded...");
+                        SettingsLoaded?.Invoke(this, new EventArgs());
                         flag = true;
                     }
                     else
