@@ -179,6 +179,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actions\BuyItemRemote.cs" />
+    <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
     <Compile Include="Actions\CloseAllFrames.cs" />
@@ -193,6 +195,7 @@
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <Compile Include="Classes\InventorySlotEx.cs" />
+    <Compile Include="PushNotify\StatusMonitor.cs" />
     <Compile Include="Panels\CoreForm.cs">
       <SubType>UserControl</SubType>
     </Compile>

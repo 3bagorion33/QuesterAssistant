@@ -24,6 +24,12 @@ namespace QuesterAssistant
         private static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
         internal static IntPtr GameHandle => GameProcess.MainWindowHandle;
 
+        /// <summary>
+        /// ќбъект, отслеживающий изменение состо€ний бота
+        /// и уведомл€ющий в случае отсутстви€ таковых
+        /// </summary>
+        //private NotifyStatusMonitor statusMonitor = new NotifyStatusMonitor();
+
         internal static KeyboardHook KeyboardHook { get; private set; } = new KeyboardHook();
         private static List<Keys> keysMask = new List<Keys> {
             Keys.LWin, Keys.RWin,
@@ -73,9 +79,10 @@ namespace QuesterAssistant
 
         private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)
         {
-            // Deprecated
             //Logger.WriteLine("Loading states");
             //Astral.Quester.API.Engine.AddState(new States.Identify());
+            //statusMonitor.Enabled = true;
+            //Logger.WriteLine("NotifyStatusMonitor Activated");
         }
 
         public override void OnUnload()

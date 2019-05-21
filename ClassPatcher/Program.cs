@@ -33,6 +33,7 @@ namespace ClassPatcher
                         enumerator.Current.Name == "DialogEditor" ||
                         enumerator.Current.Name == "Core" ||
                         enumerator.Current.Name == "ProcessInfos" ||
+                        enumerator.Current.Name == "RemoteContactEditor" ||
 
                         action == "/show")
                     {

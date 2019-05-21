@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
-            this.timerDelete = new System.Windows.Forms.Timer();
+            this.timerDelete = new System.Windows.Forms.Timer(this.components);
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
-            this.toolTipController1 = new DevExpress.Utils.ToolTipController();
+            this.bsrcInstancesList = new System.Windows.Forms.BindingSource(this.components);
+            this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProcess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolNewTitle = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -47,11 +48,11 @@
             this.gcolButton = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnClose = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.dbtnWindowsFirewall = new DevExpress.XtraEditors.DropDownButton();
-            this.menuFirewall = new DevExpress.XtraBars.PopupMenu();
+            this.menuFirewall = new DevExpress.XtraBars.PopupMenu(this.components);
             this.menuFirewallDenyApps = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDenyAddress = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDeleteRules = new DevExpress.XtraBars.BarButtonItem();
-            this.barFirewall = new DevExpress.XtraBars.BarManager();
+            this.barFirewall = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -289,7 +290,7 @@
             // chkHideTitle
             // 
             this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(13, 75);
+            this.chkHideTitle.Location = new System.Drawing.Point(11, 75);
             this.chkHideTitle.MenuManager = this.barFirewall;
             this.chkHideTitle.Name = "chkHideTitle";
             this.chkHideTitle.Properties.Caption = "Hide Astral title";
