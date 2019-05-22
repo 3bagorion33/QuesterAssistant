@@ -33,27 +33,7 @@ namespace QuesterAssistant.Actions
 
         private List<InventorySlot> itemsToSell;
         private double Multiply => (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
-
-        protected override bool IntenalConditions
-        {
-            get
-            {
-                var bags = EntityManager.LocalPlayer.BagsItems;
-                bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
-                bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
-                itemsToSell = bags.FindAll
-                    (s => !s.Item.IsBound &&
-                          !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
-                          !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
-                          ItemsFilter.IsMatch(s.Item));
-                if (itemsToSell.Any() || Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
-                {
-                    return true;
-                }
-                Logger.WriteLine("No items to sell.");
-                return false;
-            }
-        }
+        protected override bool IntenalConditions => true;
 
         protected override ActionValidity InternalValidity
         {
@@ -137,18 +117,16 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             var random = new Random();
-
             void RandomWaiting()
             {
                 Thread.Sleep(random.Next((int)TimeOutMin, (int)TimeOutMax));
             }
-
             void Waiting()
             {
                 Thread.Sleep(2000);
             }
 
-            if (!Interact.Auctions())
+            if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
                 return ActionResult.Fail;
             Auction.RequestAuctionsForPlayer();
             GameCommands.Execute("GenSendMessage Auction_Myconsignments_Tabbutton Clicked");
@@ -164,7 +142,23 @@ namespace QuesterAssistant.Actions
                 }
             }
 
-            if (IntenalConditions)
+            bool GetItemsToSell()
+            {
+                var bags = EntityManager.LocalPlayer.BagsItems;
+                bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
+                bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
+                itemsToSell = bags.FindAll
+                    (s => !s.Item.IsBound &&
+                          !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
+                          !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
+                          ItemsFilter.IsMatch(s.Item));
+                if (itemsToSell.Any() || Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
+                    return true;
+                Logger.WriteLine("No items to sell.");
+                return false;
+            }
+
+            if (GetItemsToSell())
             {
                 int GetIterationCount(Item item)
                 {
@@ -191,11 +185,9 @@ namespace QuesterAssistant.Actions
                     for (int i = 0; i < iterationCount; i++)
                     {
                         if (Auction.GetRemainingPostings() <= 0 || !itemToSell.IsValid)
-                        {
                             goto Exit;
-                        }
-                        var itemCount = (StackSize > 0 && StackSize < itemToSell.Count) ? StackSize : itemToSell.Count;
 
+                        var itemCount = (StackSize > 0 && StackSize < itemToSell.Count) ? StackSize : itemToSell.Count;
                         var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * Multiply, PriceMinimum) * itemCount),
                             RoundDigits, RoundFilledBy);
                         var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * itemPrice),

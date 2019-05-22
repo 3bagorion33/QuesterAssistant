@@ -22,14 +22,14 @@ namespace QuesterAssistant.PowersManager
         public PowersManagerForm() : base(QuesterAssistant.Core.PowersManagerCore)
         {
             InitializeComponent();
+            Core.SettingsLoaded += SettingsLoaded;
 
             chkHotKeys_Update();
             tedGlobHotKey_Update();
         }
 
-        private new void LoadSettings(object sender, EventArgs e)
+        private void SettingsLoaded()
         {
-            base.LoadSettings(sender, e);
             cmbPresetsList_Update();
             chkHotKeys_Update();
             tedGlobHotKey_Update();

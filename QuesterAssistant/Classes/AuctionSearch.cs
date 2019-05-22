@@ -31,7 +31,7 @@ namespace QuesterAssistant.Classes
             else
                 cachedSearch = new List<Result>();
 
-            var cachedValue = cachedSearch.Find(l => (l.DisplayName == item.DisplayName) && (l.DateTime.Subtract(DateTime.Now).TotalHours > -1));
+            var cachedValue = cachedSearch.Find(l => (l.InternalName == item.ItemDef.InternalName) && (l.DateTime.Subtract(DateTime.Now).TotalHours > -1));
 
             if (cachedValue != null)
             {
@@ -49,19 +49,20 @@ namespace QuesterAssistant.Classes
                 .FindAll(l => l.Price > 0 && l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName)
                 .OrderBy(l => PricePerItem(l)).ToList();
 
-            cachedSearch.AddOrReplace(l => l.DisplayName == item.DisplayName,
-                new Result(item.DisplayName, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+            cachedSearch.AddOrReplace(l => l.InternalName == item.ItemDef.InternalName,
+                new Result(item, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
-            return cachedSearch.Find(l => l.DisplayName == item.DisplayName);
+            return cachedSearch.Find(l => l.InternalName == item.ItemDef.InternalName);
         }
 
         [Serializable]
         internal sealed class Result
         {
             public string DisplayName;
+            public string InternalName;
             public List<Lot> Lots;
-            public int OwnLotsCount => Auction.AuctionSellList.Lots.FindAll(l => l.Items.First().Item.DisplayName == DisplayName).Count;
+            public int OwnLotsCount => Auction.AuctionSellList.Lots.FindAll(l => l.Items.First().Item.ItemDef.InternalName == InternalName).Count;
             public DateTime DateTime;
 
             [Serializable]
@@ -72,9 +73,10 @@ namespace QuesterAssistant.Classes
                 public uint PricePerItem => (Price > Count) ? (Price / Count) : 1;
             }
 
-            internal Result(string displayName, List<AuctionLot> auctionLots)
+            internal Result(Item item, List<AuctionLot> auctionLots)
             {
-                DisplayName = displayName;
+                DisplayName = item.ItemDef.DisplayName;
+                InternalName = item.ItemDef.InternalName;
                 Lots = new List<Lot>();
                 foreach (var lot in auctionLots)
                 {

@@ -120,6 +120,9 @@
   <metadata name="toolTipController.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="bmTasksList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>271, 19</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="gcolWard.AppearanceHeader.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -168,7 +171,7 @@
         XTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxS
         fNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+
         tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/
-        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALEQAACxEBf2RfkQAAAjVJREFUKFMdkMtPGnEU
+        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALDAAACwwBP0AiyAAAAjVJREFUKFMdkMtPGnEU
         hX88iqApFWtatB1fCChVQIaHwPCYYYCBGUCgBi2oaTQ2WG3UbtpV223/iC6bdNum6+9f69TFyUnOzbm5
         9xOpe/FrtS3YGnrIni8QH/uIjdxEXgtCfUF4INg8+C8n8kkA49vzv2Kl6UAKRrh8d8fN1T2dRpu9HRmH
         8CCEy3b3g1y23G4n26YfEe3MUdUsFLVI06jRNlQqpRyLwQCeWScur8Dtc+B94sbrd7DVfCjNEtuOozd0
@@ -228,7 +231,7 @@
         XTesb3QPLh88M+QwdP6m681Lt7xuXbu94vbgcOjwnZHokdE77DtTd1PuvriXeW/h/sYH6AdFD6UeVjxS
         fNTws+7PbaOWo6fHXMf6Hwc/vj/OGn/2S8Yv7ycKnpCfVEyqTDZPmU2dmnafvvF05dOJZ+nPFmYKf5X+
         tfa5zvMffnP8rX82YnbiBf/Fp99LXsq/PPRq2aueuYC5R69TXy/MF72Rf3P4LeNt37vwd5MLWe+x7ys/
-        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALEQAACxEBf2RfkQAAAjVJREFUKFMdkMtPGnEU
+        6H7o/ujz8cGn1E+f/gUDmPP8usTo0wAAAAlwSFlzAAALDAAACwwBP0AiyAAAAjVJREFUKFMdkMtPGnEU
         hX88iqApFWtatB1fCChVQIaHwPCYYYCBGUCgBi2oaTQ2WG3UbtpV223/iC6bdNum6+9f69TFyUnOzbm5
         9xOpe/FrtS3YGnrIni8QH/uIjdxEXgtCfUF4INg8+C8n8kkA49vzv2Kl6UAKRrh8d8fN1T2dRpu9HRmH
         8CCEy3b3g1y23G4n26YfEe3MUdUsFLVI06jRNlQqpRyLwQCeWScur8Dtc+B94sbrd7DVfCjNEtuOozd0
@@ -241,9 +244,6 @@
         ZBtVHys1QfRY/P4HT7Ds6NLL0rEAAAAASUVORK5CYII=
 </value>
   </data>
-  <metadata name="bmTasksList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>271, 19</value>
-  </metadata>
   <metadata name="pmTasksList.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>154, 19</value>
   </metadata>

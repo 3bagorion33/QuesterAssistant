@@ -1,16 +1,17 @@
-﻿using Astral;
-using Astral.Quester.Forms;
+﻿using Astral.Quester.Forms;
 using DevExpress.Utils.Extensions;
 using MyNW.Classes;
 using MyNW.Classes.ItemProgression;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 using System.Xml.Serialization;
 
 namespace QuesterAssistant.UpgradeManager
@@ -19,6 +20,7 @@ namespace QuesterAssistant.UpgradeManager
     public class UpgradeManagerData : NotifyHashChanged, IParse<UpgradeManagerData>
     {
         public BindingList<Profile> Profiles { get; set; } = new BindingList<Profile>();
+        //public List<Profile> Profiles { get; set; } = new List<Profile>();
 
         public override int GetHashCode()
         {
@@ -34,18 +36,31 @@ namespace QuesterAssistant.UpgradeManager
         }
 
         [Serializable]
-        public class Profile : NotifyHashChanged, IParse<Profile>
+        public class Profile
         {
             [XmlAttribute]
             public string Name { get; set; } = string.Empty;
+            public AlgorithmDirection Algorithm { get; set; } = AlgorithmDirection.UpToDown;
+            public int IterationsCount { get; set; } = 0;
             public List<Task> Tasks { get; set; } = new List<Task>();
 
             public void AddTask(GetAnItem.ListItem item)
             {
                 if (item == null) return;
-                Tasks.Add(new Task(item));
-                Tasks.Sort(Equals);
-                //OnPropertyChanged(nameof(Tasks));
+                Task task;
+                if ((task = Task.New(item)) == null)
+                {
+                    ErrorBox.Show($"'{item}' can't be upgraded!");
+                    return;
+                }
+                if (Tasks.Exists(t => t.Rank == task.Rank))
+                {
+                    if (DialogBox.Show($"Task with Rank{task.Rank} is already exist. Replace?", "Confirm") == DialogResult.Yes)
+                        Tasks.AddOrReplace(t => t.Rank == task.Rank, task);
+                }
+                else
+                    Tasks.Add(task);
+                Tasks.Sort(Sort);
             }
 
             public override int GetHashCode()
@@ -53,67 +68,109 @@ namespace QuesterAssistant.UpgradeManager
                 return Name.GetSafeHashCode() ^ Tasks.GetSafeHashCode();
             }
 
-            private int Equals(Task t1, Task t2)
+            private int Sort(Task t1, Task t2)
             {
-                if (t1.Rank > t2.Rank)
-                {
-                    return 1;
-                }
-                if (t1.Rank < t2.Rank)
-                {
-                    return -1;
-                }
+                if (t1.Rank > t2.Rank) return 1;
+                if (t1.Rank < t2.Rank) return -1;
                 return 0;
-            }
-
-            public void Init() { }
-
-            public void Parse(Profile source)
-            {
-                Name = source.Name;
             }
 
             public override string ToString()
             {
                 return Name;
             }
+
+            public enum AlgorithmDirection { UpToDown, DownToUp }
         }
 
         [Serializable]
-        public class Task : NotifyHashChanged, IParse<Task>
+        public class Task
         {
-            private List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
-            private const int TIME_WAIT = 333;
-
             public uint Rank { get; set; } = 0;
             public string ItemId { get; set; } = string.Empty;
             public string DisplayName { get; set; } = string.Empty;
-            public string Chance { get; set; } = string.Empty;
+            public uint Chance { get; set; } = 0;
             public bool UseWard { get; set; } = false;
+
             [XmlIgnore]
             public string FullName => $"{DisplayName} [{ItemId}]";
             [XmlIgnore]
+            public int CountUnfilled => BagsItems.FindAll(FindUnfilled).Sum(s => (int)s.Item.Count);
+            [XmlIgnore]
+            public int CountFilled => BagsItems.FindAll(s => FindFullFilled(s) || FindPartiallyFilled(s)).Sum(s => (int)s.Item.Count);
+            [XmlIgnore]
             public string Count => $"{CountUnfilled} | {CountFilled}";
-            private int CountUnfilled => BagsItems.FindAll(FindUnfilled).Sum(s => (int)s.Item.Count);
-            private int CountFilled => BagsItems.FindAll(s => FindFullFilled(s) || FindPartiallyFilled(s)).Sum(s => (int)s.Item.Count);
+
+            private const int TIME_WAIT = 500;
+            private InventorySlot slot;
+            private List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
+            private Result FindResult
+            {
+                get
+                {
+                    Result FindSlot()
+                    {
+                        if ((slot = BagsItems.Find(FindFullFilled)) != null)
+                            return Result.FullFilled;
+                        if ((slot = BagsItems.Find(FindPartiallyFilled)) != null)
+                            return Result.PartFilled;
+                        if ((slot = BagsItems.Find(FindUnfilled)) != null)
+                            return Result.Unfilled;
+                        return Result.Null;
+                    }
+
+                    Result result = FindSlot();
+                    if (result == Result.Unfilled && EntityManager.LocalPlayer.BagsFreeSlots == 0)
+                        return Result.HaventFreeBagsSlots;
+                    if (!HaveRequiredItems)
+                        return Result.HaventRequiredItems;
+
+                    return result;
+                }
+            }
+            private bool HaveRequiredItems
+            {
+                get
+                {
+                    if (slot == null) return false;
+                    if (UseWard && !BagsItems.Any(FindCatal)) return false;
+                    if (!slot.Item.ProgressionLogic.CurrentTier.CatalystItems.Any()) return true;
+                    foreach (var catalyst in slot.Item.ProgressionLogic.CurrentTier.CatalystItems)
+                    {
+                        var count = EntityManager.LocalPlayer.GetItemCountByInternalNameInBags(catalyst.ItemDef.InternalName);
+                        if (catalyst.ItemDef.InternalName == slot.Item.ItemDef.InternalName)
+                            count--;
+                        if (count < catalyst.NumRequired)
+                            return false;
+                    }
+                    return true;
+                }
+            }
 
             public Task() { }
 
-            public Task(GetAnItem.ListItem item)
+            public static Task New(GetAnItem.ListItem item)
             {
-                ItemId = item.ItemId;
-                DisplayName = item.DisplayName;
-                var i = BagsItems.Find(s => FindUnfilled(s) || FindPartiallyFilled(s) || FindFullFilled(s)).Item;
+                Task t = new Task(item);
+                var i = t.BagsItems.Find(s => t.FindAny(s))?.Item;
+                if (i == null || i.ProgressionLogic.CurrentRankTotalRequiredXP == 0) return null;
                 if (i.ProgressionLogic.CurrentTier.Index == 0)
                 {
-                    Chance = "100%";
-                    Rank = 1;
+                    t.Chance = 100;
+                    t.Rank = 1;
                 }
                 else
                 {
-                    Chance = $"{i.ProgressionLogic.CurrentTier.BaseRankUpChance}%";
-                    Rank = i.ProgressionLogic.CurrentTier.Index;
+                    t.Chance = i.ProgressionLogic.CurrentTier.BaseRankUpChance;
+                    t.Rank = i.ProgressionLogic.CurrentTier.Index;
                 }
+                return t;
+            }
+
+            private Task(GetAnItem.ListItem item)
+            {
+                ItemId = item.ItemId;
+                DisplayName = item.DisplayName;
             }
 
             bool FindUnfilled(InventorySlot s)
@@ -136,36 +193,21 @@ namespace QuesterAssistant.UpgradeManager
                     s.Item.ProgressionLogic.CurrentRankTotalRequiredXP == s.Item.ProgressionLogic.CurrentRankXP;
             }
 
-            public void UpgradeOnce()
+            bool FindAny(InventorySlot s)
             {
-                if (string.IsNullOrEmpty(ItemId)) return;
+                return s.Item.ItemDef.InternalName == ItemId;
+            }
 
-                InventorySlot slot;
+            bool FindCatal(InventorySlot s)
+            {
+                return s.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_");
+            }
 
-                FindResult FindSlot()
-                {
-                    if ((slot = BagsItems.Find(FindFullFilled)) != null)
-                    {
-                        if (!slot.Item.ProgressionLogic.CurrentTier.HaveRequiredCatalystItems)
-                        {
-                            return FindResult.HaventCatalystItems;
-                        }
-                        return FindResult.FullFilled;
-                    }
-                    if ((slot = BagsItems.Find(FindPartiallyFilled)) != null)
-                    {
-                        return FindResult.PartFilled;
-                    }
-                    if ((slot = BagsItems.Find(FindUnfilled)) != null)
-                    {
-                        if (EntityManager.LocalPlayer.BagsFreeSlots == 0)
-                        {
-                            return FindResult.HaventFreeBagsSlots;
-                        }
-                        return FindResult.Unfilled;
-                    }
-                    return FindResult.Null;
-                }
+            public Result Run()
+            {
+                Result result = Result.Null;
+
+                if (Chance == 0 || string.IsNullOrEmpty(ItemId)) return result;
 
                 bool Feed(InventorySlot s)
                 {
@@ -181,60 +223,42 @@ namespace QuesterAssistant.UpgradeManager
                     return false;
                 }
 
-                void Evolve(InventorySlot s)
+                bool Evolve(InventorySlot s)
                 {
                     InventorySlot catal = null;
                     if (UseWard)
                     {
-                        catal = BagsItems.First(sl => sl.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_")); // Fuse_Ward_Preservation_Invocation
+                        catal = BagsItems.First(sl => sl.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_"));
                     }
                     s.Evolve(catal);
                     Thread.Sleep(TIME_WAIT);
+                    if (s.Item.ProgressionLogic.CurrentRankXP > 0) return false;
                     s.Group();
+                    return true;
                 }
 
-                switch (FindSlot())
+                switch (result = FindResult)
                 {
-                    case FindResult.Unfilled:
-                    case FindResult.PartFilled:
-                        Feed(slot);
-                        UpgradeOnce();
-                        return;
-                    case FindResult.FullFilled:
-                        Evolve(slot);
-                        return;
-                    case FindResult.HaventCatalystItems:
-                        Logger.WriteLine("Havent items for upgrade!");
-                        return;
-                    case FindResult.HaventFreeBagsSlots:
-                        Logger.WriteLine("Havent free bags slots!");
-                        return;
+                    case Result.Unfilled:
+                    case Result.PartFilled:
+                        if (Feed(slot)) result = Run();
+                        else result = Result.HaventRefinimentCurrency;
+                        break;
+                    case Result.FullFilled:
+                        if (!Evolve(slot)) result = Run();
+                        else result = Result.Evolved;
+                        break;
                     default:
-                        Logger.WriteLine("Upgrade impossible!");
-                        return;
+                        break;
                 }
+                return result;
             }
 
             public override int GetHashCode()
             {
                 return
-                    Rank.GetHashCode() ^
-                    ItemId.GetSafeHashCode() ^
-                    DisplayName.GetSafeHashCode() ^
-                    Count.GetSafeHashCode() ^
-                    Chance.GetSafeHashCode() ^
-                    UseWard.GetSafeHashCode();
-            }
-
-            public void Init() { }
-
-            public void Parse(Task source)
-            {
-                Rank = source.Rank;
-                Chance = source.Chance;
-                ItemId = source.ItemId;
-                DisplayName = source.DisplayName;
-                UseWard = source.UseWard;
+                    FullName.GetSafeHashCode() ^
+                    Count.GetSafeHashCode();
             }
 
             public override string ToString()
@@ -242,7 +266,17 @@ namespace QuesterAssistant.UpgradeManager
                 return $"{DisplayName} [{ItemId}]";
             }
 
-            private enum FindResult { Null, Unfilled, PartFilled, FullFilled, HaventCatalystItems, HaventFreeBagsSlots }
+            public enum Result : int
+            {
+                Null = 0,
+                Unfilled = 1,
+                PartFilled = 2,
+                FullFilled = 3,
+                Evolved = 4,
+                HaventRequiredItems = -1,
+                HaventFreeBagsSlots = -2,
+                HaventRefinimentCurrency = -3
+            }
         }
     }
 }

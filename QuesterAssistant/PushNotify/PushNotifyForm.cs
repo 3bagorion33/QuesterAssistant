@@ -20,7 +20,7 @@ namespace QuesterAssistant.PushNotify
         {
             InitializeComponent();
 
-            Main.LoadSettings += Main_LoadSettings;
+            Core.SettingsLoaded += SettingsLoaded;
 
             bsrcClient.DataSource = Data.Client;
             bsrcUserDevices.DataSource = Data.Devices;
@@ -33,7 +33,7 @@ namespace QuesterAssistant.PushNotify
             cbxDevicesList.CheckAll();
         }
 
-        private void Main_LoadSettings(object sender, EventArgs e)
+        private void SettingsLoaded()
         {
             cbxDevicesList.Properties.RefreshDataSource();
             cbxDevicesList.RefreshEditValue();

@@ -195,6 +195,7 @@
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <Compile Include="Classes\InventorySlotEx.cs" />
+    <Compile Include="Panels\DialogBox.cs" />
     <Compile Include="PushNotify\StatusMonitor.cs" />
     <Compile Include="Panels\CoreForm.cs">
       <SubType>UserControl</SubType>

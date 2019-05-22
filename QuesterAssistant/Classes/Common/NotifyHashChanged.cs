@@ -2,12 +2,13 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace QuesterAssistant.Classes.Common
 {
     [DataContract]
-    public abstract class NotifyHashChanged : INotifyPropertyChanged
+    public abstract class NotifyHashChanged : INotifyPropertyChanged, IDisposable
     {
         private int prevHashCode;
         private static Timer checkChanged;
@@ -28,13 +29,17 @@ namespace QuesterAssistant.Classes.Common
 
         private void CheckChanged_Tick(object sender, EventArgs e)
         {
-            var hashCode = GetHashCode();
-            if (prevHashCode != hashCode)
+            void Tick()
             {
-                prevHashCode = hashCode;
-                HashChanged?.Invoke();
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(GetType().Name));
+                var hashCode = GetHashCode();
+                if (prevHashCode != hashCode)
+                {
+                    prevHashCode = hashCode;
+                    HashChanged?.Invoke();
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(GetType().Name));
+                }
             }
+            Task.Factory.StartNew(Tick);
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = "")
@@ -47,5 +52,10 @@ namespace QuesterAssistant.Classes.Common
         }
 
         public abstract override int GetHashCode();
+
+        public void Dispose()
+        {
+            checkChanged.Dispose();
+        }
     }
 }

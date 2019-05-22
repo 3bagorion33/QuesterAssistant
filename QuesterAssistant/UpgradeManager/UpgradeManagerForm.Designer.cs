@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpgradeManagerForm));
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -54,8 +55,23 @@
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
-            this.toolTipController = new DevExpress.Utils.ToolTipController();
+            this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
             this.gctrlProfile = new DevExpress.XtraEditors.GroupControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.cbxAlgorithm = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.bmTasksList = new DevExpress.XtraBars.BarManager(this.components);
+            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
+            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.miTaskRunCurrent = new DevExpress.XtraBars.BarButtonItem();
+            this.miTaskDelete = new DevExpress.XtraBars.BarButtonItem();
+            this.miTaskRunFrom = new DevExpress.XtraBars.BarButtonItem();
+            this.miTaskRunTo = new DevExpress.XtraBars.BarButtonItem();
+            this.numIterationCont = new DevExpress.XtraEditors.SpinEdit();
+            this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.btnTasksAction = new DevExpress.XtraEditors.SimpleButton();
             this.gctlTasks = new DevExpress.XtraGrid.GridControl();
             this.gridTasksList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolRank = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -64,21 +80,17 @@
             this.gcolCount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolChance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.bmTasksList = new DevExpress.XtraBars.BarManager();
-            this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
-            this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.miTaskAdd = new DevExpress.XtraBars.BarButtonItem();
-            this.miTaskDelete = new DevExpress.XtraBars.BarButtonItem();
             this.lkupProfilesList = new DevExpress.XtraEditors.LookUpEdit();
-            this.pmTasksList = new DevExpress.XtraBars.PopupMenu();
+            this.pmTasksList = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).BeginInit();
             this.SuspendLayout();
@@ -89,26 +101,168 @@
             // 
             // gctrlProfile
             // 
+            this.gctrlProfile.Controls.Add(this.labelControl2);
+            this.gctrlProfile.Controls.Add(this.labelControl1);
+            this.gctrlProfile.Controls.Add(this.cbxAlgorithm);
+            this.gctrlProfile.Controls.Add(this.numIterationCont);
+            this.gctrlProfile.Controls.Add(this.groupControl2);
+            this.gctrlProfile.Controls.Add(this.btnTasksAction);
             this.gctrlProfile.Controls.Add(this.gctlTasks);
             this.gctrlProfile.Controls.Add(this.lkupProfilesList);
-            this.gctrlProfile.Location = new System.Drawing.Point(13, 13);
+            this.gctrlProfile.Location = new System.Drawing.Point(11, 13);
             this.gctrlProfile.Name = "gctrlProfile";
-            this.gctrlProfile.Size = new System.Drawing.Size(344, 322);
+            this.gctrlProfile.Size = new System.Drawing.Size(348, 323);
             this.gctrlProfile.TabIndex = 1;
             this.gctrlProfile.Text = "Profile";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(175, 99);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(36, 13);
+            this.labelControl2.TabIndex = 12;
+            this.labelControl2.Text = "Count :";
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(7, 99);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(52, 13);
+            this.labelControl1.TabIndex = 11;
+            this.labelControl1.Text = "Algorithm :";
+            // 
+            // cbxAlgorithm
+            // 
+            this.cbxAlgorithm.Location = new System.Drawing.Point(65, 96);
+            this.cbxAlgorithm.MenuManager = this.bmTasksList;
+            this.cbxAlgorithm.Name = "cbxAlgorithm";
+            this.cbxAlgorithm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbxAlgorithm.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxAlgorithm.Size = new System.Drawing.Size(96, 20);
+            this.cbxAlgorithm.TabIndex = 10;
+            // 
+            // bmTasksList
+            // 
+            this.bmTasksList.DockControls.Add(this.barDockControlTop);
+            this.bmTasksList.DockControls.Add(this.barDockControlBottom);
+            this.bmTasksList.DockControls.Add(this.barDockControlLeft);
+            this.bmTasksList.DockControls.Add(this.barDockControlRight);
+            this.bmTasksList.Form = this;
+            this.bmTasksList.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
+            this.miTaskRunCurrent,
+            this.miTaskDelete,
+            this.miTaskRunFrom,
+            this.miTaskRunTo});
+            this.bmTasksList.MaxItemId = 4;
+            // 
+            // barDockControlTop
+            // 
+            this.barDockControlTop.CausesValidation = false;
+            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.barDockControlTop.Location = new System.Drawing.Point(5, 5);
+            this.barDockControlTop.Manager = this.bmTasksList;
+            this.barDockControlTop.Size = new System.Drawing.Size(360, 0);
+            // 
+            // barDockControlBottom
+            // 
+            this.barDockControlBottom.CausesValidation = false;
+            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.barDockControlBottom.Location = new System.Drawing.Point(5, 343);
+            this.barDockControlBottom.Manager = this.bmTasksList;
+            this.barDockControlBottom.Size = new System.Drawing.Size(360, 0);
+            // 
+            // barDockControlLeft
+            // 
+            this.barDockControlLeft.CausesValidation = false;
+            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.barDockControlLeft.Location = new System.Drawing.Point(5, 5);
+            this.barDockControlLeft.Manager = this.bmTasksList;
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 338);
+            // 
+            // barDockControlRight
+            // 
+            this.barDockControlRight.CausesValidation = false;
+            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
+            this.barDockControlRight.Location = new System.Drawing.Point(365, 5);
+            this.barDockControlRight.Manager = this.bmTasksList;
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 338);
+            // 
+            // miTaskRunCurrent
+            // 
+            this.miTaskRunCurrent.Caption = "Run current task";
+            this.miTaskRunCurrent.Id = 0;
+            this.miTaskRunCurrent.Name = "miTaskRunCurrent";
+            this.miTaskRunCurrent.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskRunCurrent_ItemClick);
+            // 
+            // miTaskDelete
+            // 
+            this.miTaskDelete.Caption = "Delete current task";
+            this.miTaskDelete.Id = 1;
+            this.miTaskDelete.Name = "miTaskDelete";
+            this.miTaskDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskDelete_ItemClick);
+            // 
+            // miTaskRunFrom
+            // 
+            this.miTaskRunFrom.Caption = "Run from this task";
+            this.miTaskRunFrom.Id = 2;
+            this.miTaskRunFrom.Name = "miTaskRunFrom";
+            this.miTaskRunFrom.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskRunFrom_ItemClick);
+            // 
+            // miTaskRunTo
+            // 
+            this.miTaskRunTo.Caption = "Run to this task";
+            this.miTaskRunTo.Id = 3;
+            this.miTaskRunTo.Name = "miTaskRunTo";
+            this.miTaskRunTo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskRunTo_ItemClick);
+            // 
+            // numIterationCont
+            // 
+            this.numIterationCont.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.numIterationCont.Location = new System.Drawing.Point(217, 96);
+            this.numIterationCont.MenuManager = this.bmTasksList;
+            this.numIterationCont.Name = "numIterationCont";
+            this.numIterationCont.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.numIterationCont.Properties.IsFloatValue = false;
+            this.numIterationCont.Properties.Mask.EditMask = "N00";
+            this.numIterationCont.Size = new System.Drawing.Size(45, 20);
+            this.numIterationCont.TabIndex = 7;
+            // 
+            // groupControl2
+            // 
+            this.groupControl2.Location = new System.Drawing.Point(224, 71);
+            this.groupControl2.Name = "groupControl2";
+            this.groupControl2.Size = new System.Drawing.Size(8, 8);
+            this.groupControl2.TabIndex = 9;
+            this.groupControl2.Text = "groupControl2";
+            // 
+            // btnTasksAction
+            // 
+            this.btnTasksAction.Location = new System.Drawing.Point(268, 94);
+            this.btnTasksAction.Name = "btnTasksAction";
+            this.btnTasksAction.Size = new System.Drawing.Size(75, 23);
+            this.btnTasksAction.TabIndex = 6;
+            this.btnTasksAction.Text = "Run";
+            this.btnTasksAction.MouseClick += new System.Windows.Forms.MouseEventHandler(this.btnTasksAction_MouseClick);
             // 
             // gctlTasks
             // 
             this.gctlTasks.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlTasks.EmbeddedNavigator.ToolTipController = this.toolTipController;
             this.gctlTasks.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gctlTasks.Location = new System.Drawing.Point(5, 125);
+            this.gctlTasks.Location = new System.Drawing.Point(3, 125);
             this.gctlTasks.MainView = this.gridTasksList;
+            this.gctlTasks.Margin = new System.Windows.Forms.Padding(1);
             this.gctlTasks.MenuManager = this.bmTasksList;
             this.gctlTasks.Name = "gctlTasks";
             this.gctlTasks.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riButtonEdit});
-            this.gctlTasks.Size = new System.Drawing.Size(334, 192);
+            this.gctlTasks.Size = new System.Drawing.Size(342, 195);
             this.gctlTasks.TabIndex = 2;
             this.gctlTasks.ToolTipController = this.toolTipController;
             this.gctlTasks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -150,8 +304,8 @@
             this.gridTasksList.OptionsView.ShowIndicator = false;
             this.gridTasksList.SortInfo.AddRange(new DevExpress.XtraGrid.Columns.GridColumnSortInfo[] {
             new DevExpress.XtraGrid.Columns.GridColumnSortInfo(this.gcolRank, DevExpress.Data.ColumnSortOrder.Ascending)});
-            this.gridTasksList.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gridTasksList_RowClick);
             this.gridTasksList.PopupMenuShowing += new DevExpress.XtraGrid.Views.Grid.PopupMenuShowingEventHandler(this.gridTasksList_PopupMenuShowing);
+            this.gridTasksList.DoubleClick += new System.EventHandler(this.gridTasksList_DoubleClick);
             // 
             // gcolRank
             // 
@@ -166,13 +320,13 @@
             // 
             // gcolDisplayName
             // 
-            this.gcolDisplayName.Caption = "Name";
+            this.gcolDisplayName.Caption = "Item";
             this.gcolDisplayName.ColumnEdit = this.riButtonEdit;
             this.gcolDisplayName.FieldName = "FullName";
             this.gcolDisplayName.Name = "gcolDisplayName";
             this.gcolDisplayName.Visible = true;
             this.gcolDisplayName.VisibleIndex = 0;
-            this.gcolDisplayName.Width = 233;
+            this.gcolDisplayName.Width = 231;
             // 
             // riButtonEdit
             // 
@@ -197,13 +351,15 @@
             // gcolChance
             // 
             this.gcolChance.Caption = "Chance";
+            this.gcolChance.DisplayFormat.FormatString = "{0}%";
+            this.gcolChance.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gcolChance.FieldName = "Chance";
             this.gcolChance.MinWidth = 40;
             this.gcolChance.Name = "gcolChance";
             this.gcolChance.OptionsColumn.AllowEdit = false;
             this.gcolChance.Visible = true;
             this.gcolChance.VisibleIndex = 2;
-            this.gcolChance.Width = 42;
+            this.gcolChance.Width = 41;
             // 
             // gcolWard
             // 
@@ -222,65 +378,7 @@
             this.gcolWard.Name = "gcolWard";
             this.gcolWard.Visible = true;
             this.gcolWard.VisibleIndex = 3;
-            this.gcolWard.Width = 19;
-            // 
-            // bmTasksList
-            // 
-            this.bmTasksList.DockControls.Add(this.barDockControlTop);
-            this.bmTasksList.DockControls.Add(this.barDockControlBottom);
-            this.bmTasksList.DockControls.Add(this.barDockControlLeft);
-            this.bmTasksList.DockControls.Add(this.barDockControlRight);
-            this.bmTasksList.Form = this;
-            this.bmTasksList.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.miTaskAdd,
-            this.miTaskDelete});
-            this.bmTasksList.MaxItemId = 2;
-            // 
-            // barDockControlTop
-            // 
-            this.barDockControlTop.CausesValidation = false;
-            this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barDockControlTop.Location = new System.Drawing.Point(3, 3);
-            this.barDockControlTop.Manager = this.bmTasksList;
-            this.barDockControlTop.Size = new System.Drawing.Size(364, 0);
-            // 
-            // barDockControlBottom
-            // 
-            this.barDockControlBottom.CausesValidation = false;
-            this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(3, 345);
-            this.barDockControlBottom.Manager = this.bmTasksList;
-            this.barDockControlBottom.Size = new System.Drawing.Size(364, 0);
-            // 
-            // barDockControlLeft
-            // 
-            this.barDockControlLeft.CausesValidation = false;
-            this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(3, 3);
-            this.barDockControlLeft.Manager = this.bmTasksList;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 342);
-            // 
-            // barDockControlRight
-            // 
-            this.barDockControlRight.CausesValidation = false;
-            this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(367, 3);
-            this.barDockControlRight.Manager = this.bmTasksList;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 342);
-            // 
-            // miTaskAdd
-            // 
-            this.miTaskAdd.Caption = "Add new task";
-            this.miTaskAdd.Id = 0;
-            this.miTaskAdd.Name = "miTaskAdd";
-            this.miTaskAdd.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskAdd_ItemClick);
-            // 
-            // miTaskDelete
-            // 
-            this.miTaskDelete.Caption = "Delete current task";
-            this.miTaskDelete.Id = 1;
-            this.miTaskDelete.Name = "miTaskDelete";
-            this.miTaskDelete.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskDelete_ItemClick);
+            this.gcolWard.Width = 20;
             // 
             // lkupProfilesList
             // 
@@ -301,14 +399,16 @@
             this.lkupProfilesList.Properties.ShowHeader = false;
             this.lkupProfilesList.Properties.ShowLines = false;
             this.lkupProfilesList.Properties.ShowNullValuePromptWhenFocused = true;
-            this.lkupProfilesList.Size = new System.Drawing.Size(285, 20);
+            this.lkupProfilesList.Size = new System.Drawing.Size(291, 20);
             this.lkupProfilesList.TabIndex = 5;
             this.lkupProfilesList.TabStop = false;
             // 
             // pmTasksList
             // 
             this.pmTasksList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.miTaskAdd),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTaskRunCurrent),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTaskRunFrom),
+            new DevExpress.XtraBars.LinkPersistInfo(this.miTaskRunTo),
             new DevExpress.XtraBars.LinkPersistInfo(this.miTaskDelete)});
             this.pmTasksList.Manager = this.bmTasksList;
             this.pmTasksList.Name = "pmTasksList";
@@ -324,15 +424,19 @@
             this.Controls.Add(this.barDockControlTop);
             this.MinimumSize = new System.Drawing.Size(370, 348);
             this.Name = "UpgradeManagerForm";
-            this.Padding = new System.Windows.Forms.Padding(3);
+            this.Padding = new System.Windows.Forms.Padding(5);
             this.Size = new System.Drawing.Size(370, 348);
             this.Load += new System.EventHandler(this.UpgradeManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).EndInit();
             this.gctrlProfile.ResumeLayout(false);
+            this.gctrlProfile.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).EndInit();
             this.ResumeLayout(false);
@@ -354,11 +458,19 @@
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.PopupMenu pmTasksList;
-        private DevExpress.XtraBars.BarButtonItem miTaskAdd;
+        private DevExpress.XtraBars.BarButtonItem miTaskRunCurrent;
         private DevExpress.XtraEditors.LookUpEdit lkupProfilesList;
         private DevExpress.XtraGrid.Columns.GridColumn gcolChance;
         private DevExpress.XtraGrid.Columns.GridColumn gcolWard;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit riButtonEdit;
         private DevExpress.XtraBars.BarButtonItem miTaskDelete;
+        private DevExpress.XtraEditors.SimpleButton btnTasksAction;
+        private DevExpress.XtraEditors.SpinEdit numIterationCont;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraEditors.ComboBoxEdit cbxAlgorithm;
+        private DevExpress.XtraEditors.GroupControl groupControl2;
+        private DevExpress.XtraBars.BarButtonItem miTaskRunFrom;
+        private DevExpress.XtraBars.BarButtonItem miTaskRunTo;
     }
 }

@@ -19,27 +19,42 @@ namespace QuesterAssistant.UpgradeManager
         private UpgradeManagerData Data => Core.Data;
         private Profile CurrentProfile => lkupProfilesList.EditValue as Profile;
 
+        private const string Abort = "Abort";
+        private const string Start = "Start";
+
         public UpgradeManagerForm() : base(QuesterAssistant.Core.UpgradeManagerCore)
         {
             InitializeComponent();
+
             lkupProfilesList.ButtonClick += lkupProfilesList_ButtonClick;
             lkupProfilesList.ListChanged += lkupProfilesList_ListChanged;
-            lkupProfilesList.EditValueChanging += lkupProfilesList_EditValueChanging;
             lkupProfilesList.EditValueChanged += lkupProfilesList_EditValueChanged;
+
+            Data.HashChanged += gridTasksList.RefreshData;
+
+            Core.TasksStarted += Core_TasksStarted;
+            Core.TasksStopped += Core_TasksStopped;
         }
 
-        private void lkupProfilesList_EditValueChanging(object sender, ChangingEventArgs e)
+        private void Core_TasksStarted()
         {
-            if (CurrentProfile != null)
-            {
-                CurrentProfile.HashChanged -= gridTasksList.RefreshData;
-            }
+            btnTasksAction.InvokeSafe(() => { btnTasksAction.Text = "Abort"; });
+        }
+
+        private void Core_TasksStopped()
+        {
+            btnTasksAction.InvokeSafe(() => { btnTasksAction.Text = "Run"; });
         }
 
         private void lkupProfilesList_EditValueChanged(object sender, System.EventArgs e)
         {
-            gctlTasks.DataSource = CurrentProfile?.Tasks ?? null;
-            CurrentProfile.HashChanged += gridTasksList.RefreshData;
+            gctlTasks.DataSource = CurrentProfile?.Tasks;
+
+            numIterationCont.DataBindings.Clear();
+            numIterationCont.DataBindings.Add(nameof(SpinEdit.EditValue), CurrentProfile, nameof(Profile.IterationsCount), false, DataSourceUpdateMode.OnValidation);
+
+            cbxAlgorithm.DataBindings.Clear();
+            cbxAlgorithm.DataBindings.Add(nameof(ComboBoxEdit.EditValue), CurrentProfile, nameof(Profile.Algorithm), false, DataSourceUpdateMode.OnValidation);
         }
 
         private void lkupProfilesList_ListChanged(object sender, ListChangedEventArgs e)
@@ -82,6 +97,8 @@ namespace QuesterAssistant.UpgradeManager
         private void UpgradeManagerForm_Load(object sender, System.EventArgs e)
         {
             lkupProfilesList.Properties.DataSource = Data.Profiles;
+            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.UpToDown);
+            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.DownToUp);
         }
 
         private void lkupProfilesList_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -94,13 +111,13 @@ namespace QuesterAssistant.UpgradeManager
                     {
                         var profile = new Profile() { Name = addName };
                         Data.Profiles.AddOrReplace(x => x.Name == addName, profile);
-                        lkupProfilesList.EditValue = profile;
+                        lkupProfilesList.InvokeSafe(() => lkupProfilesList.EditValue = profile);
                     }
                     break;
 
                 case "Delete":
                     if (Data.Profiles.Any() &&
-                        (XtraMessageBox.Show(Form.ActiveForm, "Delete this profile?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                        (DialogBox.Show("Delete this profile?", "Confirm") == DialogResult.Yes))
                     {
                         Data.Profiles.Remove(CurrentProfile);
                         lkupProfilesList.ItemIndex = 0;
@@ -113,7 +130,7 @@ namespace QuesterAssistant.UpgradeManager
                         disableEvent = true;
                         var selectedVal = lkupProfilesList.EditValue;
                         ChangeListOrder<Profile>.Show(Data.Profiles, CurrentProfile, "Change profiles order :");
-                        lkupProfilesList.EditValue = selectedVal;
+                        lkupProfilesList.InvokeSafe(() => lkupProfilesList.EditValue = selectedVal);
                         disableEvent = false;
                     }
                     break;
@@ -123,9 +140,7 @@ namespace QuesterAssistant.UpgradeManager
                     {
                         string ren = InputBox.MessageText("Enter a new name for this profile:", CurrentProfile.Name);
                         if (ren.Any())
-                        {
                             CurrentProfile.Name = ren;
-                        }
                     }
                     break;
 
@@ -134,8 +149,22 @@ namespace QuesterAssistant.UpgradeManager
             }
         }
 
-        private void miTaskAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private void miTaskRunCurrent_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if (gridTasksList.FocusedRowHandle < 0) return;
+            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle);
+        }
+
+        private void miTaskRunFrom_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (gridTasksList.FocusedRowHandle < 0) return;
+            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle);
+        }
+
+        private void miTaskRunTo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (gridTasksList.FocusedRowHandle < 1) return;
+            Core.StartTasks(CurrentProfile, taskStopIdx: gridTasksList.FocusedRowHandle - 1);
         }
 
         private void miTaskDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -144,10 +173,25 @@ namespace QuesterAssistant.UpgradeManager
             gctlTasks.RefreshDataSource();
         }
 
-        private void gridTasksList_RowClick(object sender, RowClickEventArgs e)
+        private void gridTasksList_DoubleClick(object sender, System.EventArgs e)
         {
-            var grid = sender as GridView;
-            (grid.GetRow(grid.FocusedRowHandle) as Task).UpgradeOnce();
+            if (gridTasksList.FocusedRowHandle < 0) return;
+            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle, count: 1);
+        }
+
+        private void btnTasksAction_MouseClick(object sender, MouseEventArgs e)
+        {
+            switch (Core.TasksIsRunning)
+            {
+                case false:
+                    Core.StartTasks(CurrentProfile, taskStartIdx: 0);
+                    break;
+                case true:
+                    Core.StopTasks();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
