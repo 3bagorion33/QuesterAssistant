@@ -81,6 +81,9 @@
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkupProfilesList = new DevExpress.XtraEditors.LookUpEdit();
             this.pmTasksList = new DevExpress.XtraBars.PopupMenu();
+            this.chkHotKey = new DevExpress.XtraEditors.CheckEdit();
+            this.txtHotKey = new DevExpress.XtraEditors.TextEdit();
+            this.bsrcHotKey = new System.Windows.Forms.BindingSource();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).BeginInit();
@@ -92,6 +95,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHotKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHotKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).BeginInit();
             this.SuspendLayout();
             // 
             // toolTipController
@@ -108,9 +114,9 @@
             this.gctrlProfile.Controls.Add(this.btnTasksAction);
             this.gctrlProfile.Controls.Add(this.gctlTasks);
             this.gctrlProfile.Controls.Add(this.lkupProfilesList);
-            this.gctrlProfile.Location = new System.Drawing.Point(11, 11);
+            this.gctrlProfile.Location = new System.Drawing.Point(11, 35);
             this.gctrlProfile.Name = "gctrlProfile";
-            this.gctrlProfile.Size = new System.Drawing.Size(348, 325);
+            this.gctrlProfile.Size = new System.Drawing.Size(348, 301);
             this.gctrlProfile.TabIndex = 1;
             this.gctrlProfile.Text = "Profile";
             // 
@@ -261,7 +267,8 @@
             // 
             // gctlTasks
             // 
-            this.gctlTasks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gctlTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gctlTasks.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlTasks.EmbeddedNavigator.ToolTipController = this.toolTipController;
@@ -273,7 +280,7 @@
             this.gctlTasks.Name = "gctlTasks";
             this.gctlTasks.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riButtonEdit});
-            this.gctlTasks.Size = new System.Drawing.Size(342, 261);
+            this.gctlTasks.Size = new System.Drawing.Size(342, 237);
             this.gctlTasks.TabIndex = 2;
             this.gctlTasks.ToolTipController = this.toolTipController;
             this.gctlTasks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -345,6 +352,7 @@
             this.riButtonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton()});
             this.riButtonEdit.Name = "riButtonEdit";
+            this.riButtonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.riButtonEdit.Click += new System.EventHandler(this.riButtonEdit_Click);
             // 
             // gcolCount
@@ -402,6 +410,8 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo, "Rename", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Rename current profile", null, null, DevExpress.Utils.ToolTipAnchor.Default),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Sort", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Change profiles order", null, null, DevExpress.Utils.ToolTipAnchor.Default),
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Delete", -1, true, true, false, editorButtonImageOptions5, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "Delete current profile", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            this.lkupProfilesList.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
+            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "")});
             this.lkupProfilesList.Properties.NullText = "";
             this.lkupProfilesList.Properties.NullValuePrompt = "Create a new profile";
             this.lkupProfilesList.Properties.NullValuePromptShowForEmptyValue = true;
@@ -424,10 +434,32 @@
             this.pmTasksList.Manager = this.bmTasksList;
             this.pmTasksList.Name = "pmTasksList";
             // 
+            // chkHotKey
+            // 
+            this.chkHotKey.Location = new System.Drawing.Point(10, 9);
+            this.chkHotKey.MenuManager = this.bmTasksList;
+            this.chkHotKey.Name = "chkHotKey";
+            this.chkHotKey.Properties.Appearance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.chkHotKey.Properties.Appearance.Options.UseForeColor = true;
+            this.chkHotKey.Properties.Caption = "Enable Run/Abort Hotkey :";
+            this.chkHotKey.Size = new System.Drawing.Size(157, 19);
+            this.chkHotKey.TabIndex = 6;
+            // 
+            // txtHotKey
+            // 
+            this.txtHotKey.Location = new System.Drawing.Point(173, 9);
+            this.txtHotKey.MenuManager = this.bmTasksList;
+            this.txtHotKey.Name = "txtHotKey";
+            this.txtHotKey.Size = new System.Drawing.Size(103, 20);
+            this.txtHotKey.TabIndex = 7;
+            this.txtHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHotKey_KeyDown);
+            // 
             // UpgradeManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.txtHotKey);
+            this.Controls.Add(this.chkHotKey);
             this.Controls.Add(this.gctrlProfile);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
@@ -450,6 +482,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHotKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHotKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -483,5 +518,8 @@
         private DevExpress.XtraEditors.GroupControl groupControl2;
         private DevExpress.XtraBars.BarButtonItem miTaskRunFrom;
         private DevExpress.XtraBars.BarButtonItem miTaskRunTo;
+        private DevExpress.XtraEditors.TextEdit txtHotKey;
+        private DevExpress.XtraEditors.CheckEdit chkHotKey;
+        private System.Windows.Forms.BindingSource bsrcHotKey;
     }
 }

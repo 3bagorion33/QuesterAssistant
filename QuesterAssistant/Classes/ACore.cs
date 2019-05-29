@@ -12,28 +12,24 @@ namespace QuesterAssistant.Classes
         where TForm : CoreForm, new()
     {
         public TData Data { get; set; } = new TData();
-        public TForm Panel => new TForm();
+        public TForm Panel { get; } = new TForm();
         public string Name => Data.GetType().Name.Replace("Data", "");
         public event Action SettingsLoaded;
 
         protected abstract bool IsValid { get; }
         protected abstract bool HookEnableFlag { get; }
-        protected abstract void KeyboardHook(object sender, KeyEventArgs e);
+        protected abstract void KeyboardHook(KeyEventArgs e);
 
         public ACore()
         {
+            Panel.Init(this);
             if (!LoadSettings()) Data.Init();
-            Data.HashChanged += HookToggle;
+            Core.KeyboardHook.KeyDown += KeyboardHook_KeyDown; ;
         }
 
-        protected void HookToggle()
+        private void KeyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (HookEnableFlag)
-            {
-                Core.KeyboardHook.KeyDown += KeyboardHook;
-                return;
-            }
-            Core.KeyboardHook.KeyDown -= KeyboardHook;
+            if (HookEnableFlag) KeyboardHook(e);
         }
 
         public bool LoadSettings()

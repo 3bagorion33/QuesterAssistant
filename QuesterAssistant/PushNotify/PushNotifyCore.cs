@@ -9,7 +9,7 @@ namespace QuesterAssistant.PushNotify
 {
     internal class PushNotifyCore : ACore<PushNotifyData, PushNotifyForm>
     {
-        protected override void KeyboardHook(object sender, KeyEventArgs e) { }
+        protected override void KeyboardHook(KeyEventArgs e) { }
 
         protected override bool IsValid => !string.IsNullOrEmpty(Data.Client.AccessToken);
         protected override bool HookEnableFlag => false;

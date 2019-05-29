@@ -156,15 +156,15 @@
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(10, 10);
             this.barDockControlTop.Manager = this.bmDevicesActions;
-            this.barDockControlTop.Size = new System.Drawing.Size(350, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(130, 0);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(10, 406);
+            this.barDockControlBottom.Location = new System.Drawing.Point(10, 140);
             this.barDockControlBottom.Manager = this.bmDevicesActions;
-            this.barDockControlBottom.Size = new System.Drawing.Size(350, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(130, 0);
             // 
             // barDockControlLeft
             // 
@@ -172,15 +172,15 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(10, 10);
             this.barDockControlLeft.Manager = this.bmDevicesActions;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 396);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 130);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(360, 10);
+            this.barDockControlRight.Location = new System.Drawing.Point(140, 10);
             this.barDockControlRight.Manager = this.bmDevicesActions;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 396);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 130);
             // 
             // btnDevicesActions
             // 
@@ -210,6 +210,7 @@
             this.Controls.Add(this.barDockControlTop);
             this.Name = "PushNotifyForm";
             this.Padding = new System.Windows.Forms.Padding(10);
+            this.Load += new System.EventHandler(this.PushNotifyForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtToken.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcClient)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbxDevicesList.Properties)).EndInit();

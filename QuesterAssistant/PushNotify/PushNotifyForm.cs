@@ -16,21 +16,9 @@ namespace QuesterAssistant.PushNotify
         private PushNotifyCore Core => core as PushNotifyCore;
         private PushNotifyData Data => Core.Data;
 
-        public PushNotifyForm() : base(QuesterAssistant.Core.PushNotifyCore)
+        public PushNotifyForm()
         {
             InitializeComponent();
-
-            Core.SettingsLoaded += SettingsLoaded;
-
-            bsrcClient.DataSource = Data.Client;
-            bsrcUserDevices.DataSource = Data.Devices;
-
-            txtToken.BindAdd(bsrcClient, nameof(TextEdit.Text), nameof(PushBulletClientLite.AccessToken), DataSourceUpdateMode.OnValidation);
-
-            cbxDevicesList.Properties.DataSource = bsrcUserDevices;
-            cbxDevicesList.Properties.ValueMember = nameof(Device.Iden);
-            cbxDevicesList.Properties.DisplayMember = nameof(Device.Nickname);
-            cbxDevicesList.CheckAll();
         }
 
         private void SettingsLoaded()
@@ -82,6 +70,21 @@ namespace QuesterAssistant.PushNotify
                 }
                 catch (Exception ex) { ErrorBox.Show(ex.Message); }
             }
+        }
+
+        private void PushNotifyForm_Load(object sender, EventArgs e)
+        {
+            Core.SettingsLoaded += SettingsLoaded;
+
+            bsrcClient.DataSource = Data.Client;
+            bsrcUserDevices.DataSource = Data.Devices;
+
+            txtToken.BindAdd(bsrcClient, nameof(TextEdit.Text), nameof(PushBulletClientLite.AccessToken), DataSourceUpdateMode.OnValidation);
+
+            cbxDevicesList.Properties.DataSource = bsrcUserDevices;
+            cbxDevicesList.Properties.ValueMember = nameof(Device.Iden);
+            cbxDevicesList.Properties.DisplayMember = nameof(Device.Nickname);
+            cbxDevicesList.CheckAll();
         }
     }
 }

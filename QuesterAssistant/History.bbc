@@ -1,5 +1,35 @@
 Version history:
-[spoiler]
+[//spoiler]
+[[b][u]v 1.2[/u][/b]]
+[[b][u]Functionality[/u][/b]]
+
+Added:
+[list]
+[*][b]Settings[/b] alternative Start/Stop hotkeys
+[*][b]Upgrade Manager[/b]
+[*][b]Push Notify [color=red]beta![/color][/b]
+[/list]
+[[b][u]Quester States[/u][/b]]
+
+Removed:
+[list]
+[*][b]Indetify[/b] as deprecated
+[/list]
+[[b][u]Quester Actions[/u][/b]]
+
+Added:
+[list]
+[*][b]BuyItemRemote[/b]
+[*][b]ReportAD[/b]
+[*][b]RunUpgradeProfile[/b]
+[/list]
+Updated:
+[list]
+[*][b]AuctionSellItems[/b] - added resell option, variable timeout between placing lots
+[*][b]Notify[/b] - added options to write to file and to send via PushBullet protocol ([color=red]beta![/color])
+[*][b]VIPSell[/b] - added interaction with Seal and Artifact traders ([color=red]beta![/color])
+[/list]
+
 [[b][u]v 1.1.1[/u][/b]]
 [[b][u]Functionality[/u][/b]]
 

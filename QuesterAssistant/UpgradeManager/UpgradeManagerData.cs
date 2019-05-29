@@ -3,6 +3,7 @@ using DevExpress.Utils.Extensions;
 using MyNW.Classes;
 using MyNW.Classes.ItemProgression;
 using MyNW.Internals;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Common.Extensions;
 using QuesterAssistant.Panels;
@@ -19,18 +20,19 @@ namespace QuesterAssistant.UpgradeManager
     [Serializable]
     public class UpgradeManagerData : NotifyHashChanged, IParse<UpgradeManagerData>
     {
+        public HotKey ToggleHotKey { get; set; } = new HotKey();
         public BindingList<Profile> Profiles { get; set; } = new BindingList<Profile>();
-        //public List<Profile> Profiles { get; set; } = new List<Profile>();
 
         public override int GetHashCode()
         {
-            return Profiles.GetSafeHashCode();
+            return Profiles.GetSafeHashCode() ^ ToggleHotKey.GetSafeHashCode();
         }
 
         public void Init() { }
 
         public void Parse(UpgradeManagerData source)
         {
+            ToggleHotKey.Parse(source.ToggleHotKey);
             Profiles.Clear();
             source.Profiles.ForEach(p => Profiles.Add(p));
         }
@@ -61,6 +63,55 @@ namespace QuesterAssistant.UpgradeManager
                 else
                     Tasks.Add(task);
                 Tasks.Sort(Sort);
+            }
+
+            public Task.Result Run(int startIdx = -1, int stopIdx = -1, int runCount = 0)
+            {
+                Task.Result result = Task.Result.Null;
+                int count = runCount.CheckZero(IterationsCount.CheckZero(int.MaxValue));
+
+                if (stopIdx < 0)
+                    stopIdx = Tasks.Count - 1;
+
+                if (startIdx < 0)
+                    startIdx = 0;
+
+                void UpToDown(int start, int stop)
+                {
+                    for (int j = start; j <= stop; j++)
+                    {
+                        int i = 0;
+                        while ((i < count) && ((result = Tasks[j].Run()) > 0))
+                        {
+                            if (result == Task.Result.Evolved) i++;
+                        }
+                    }
+                }
+
+                if (Algorithm == AlgorithmDirection.UpToDown || startIdx == stopIdx)
+                {
+                    UpToDown(startIdx, stopIdx);
+                    return result;
+                }
+                if (Algorithm == AlgorithmDirection.DownToUp)
+                {
+                    int j = 0;
+                    do
+                    {
+                        for (int i = stopIdx; i >= startIdx; i--)
+                        {
+                            result = Tasks[i].Run();
+                            if (result == Task.Result.Evolved)
+                            {
+                                UpToDown(i + 1, stopIdx);
+                                j++;
+                                break;
+                            }
+                        }
+                    }
+                    while (j < count && result > 0);
+                }
+                return result;
             }
 
             public override int GetHashCode()

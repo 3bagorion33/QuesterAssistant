@@ -30,6 +30,7 @@
         {
             this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
             this.settingsTab = new DevExpress.XtraTab.XtraTabPage();
+            this.upgradeTab = new DevExpress.XtraTab.XtraTabPage();
             this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
             this.pushTab = new DevExpress.XtraTab.XtraTabPage();
             this.aboutTab = new DevExpress.XtraTab.XtraTabPage();
@@ -48,7 +49,6 @@
             this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
             this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
             this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            this.upgradeTab = new DevExpress.XtraTab.XtraTabPage();
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
             this.mainTabControl.SuspendLayout();
             this.aboutTab.SuspendLayout();
@@ -83,6 +83,12 @@
             this.settingsTab.Name = "settingsTab";
             this.settingsTab.Size = new System.Drawing.Size(368, 347);
             this.settingsTab.Text = "Settings";
+            // 
+            // upgradeTab
+            // 
+            this.upgradeTab.Name = "upgradeTab";
+            this.upgradeTab.Size = new System.Drawing.Size(368, 347);
+            this.upgradeTab.Text = "Upgrade Manager";
             // 
             // pManagerTab
             // 
@@ -260,12 +266,6 @@
             // 
             this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
-            // upgradeTab
-            // 
-            this.upgradeTab.Name = "upgradeTab";
-            this.upgradeTab.Size = new System.Drawing.Size(0, 0);
-            this.upgradeTab.Text = "Upgrade Manager";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -273,6 +273,7 @@
             this.Controls.Add(this.sidePanel2);
             this.Controls.Add(this.sidePanel1);
             this.Name = "Main";
+            this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).EndInit();
             this.mainTabControl.ResumeLayout(false);
             this.aboutTab.ResumeLayout(false);

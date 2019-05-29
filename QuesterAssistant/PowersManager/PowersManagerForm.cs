@@ -19,13 +19,9 @@ namespace QuesterAssistant.PowersManager
         private PowersManagerData Data => Core.Data;
         private ParagonCategory prevCharParagon;
 
-        public PowersManagerForm() : base(QuesterAssistant.Core.PowersManagerCore)
+        public PowersManagerForm()
         {
             InitializeComponent();
-            Core.SettingsLoaded += SettingsLoaded;
-
-            chkHotKeys_Update();
-            tedGlobHotKey_Update();
         }
 
         private void SettingsLoaded()
@@ -177,7 +173,9 @@ namespace QuesterAssistant.PowersManager
 
         private void powerListSource_Update()
         {
-            powerListSource.DataSource = Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList();
+            gridControlPowers.InvokeSafe(() =>
+            powerListSource.DataSource = Data.CurrPresets.ElementAtOrDefault(cmbPresetsList.SelectedIndex)?.PowersList.Select(x => x.ToDispName()).ToList()
+            );
         }
 
         private void tedGlobHotKey_Update()
@@ -198,6 +196,14 @@ namespace QuesterAssistant.PowersManager
         private void chkHotKeys_CheckedChanged(object sender, EventArgs e)
         {
             Data.HotKey.Enabled = chkHotKeys.Checked;
+        }
+
+        private void PowersManagerForm_Load(object sender, EventArgs e)
+        {
+            Core.SettingsLoaded += SettingsLoaded;
+
+            chkHotKeys_Update();
+            tedGlobHotKey_Update();
         }
     }
 }

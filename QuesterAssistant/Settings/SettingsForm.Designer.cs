@@ -79,7 +79,10 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gctrlCommonSettings);
+            this.MinimumSize = new System.Drawing.Size(370, 348);
             this.Name = "SettingsForm";
+            this.Size = new System.Drawing.Size(370, 348);
+            this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).EndInit();

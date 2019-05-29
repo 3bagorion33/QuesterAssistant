@@ -12,15 +12,6 @@ namespace QuesterAssistant.Panels
         public Main() : base("Quester Assistant")
         {
             InitializeComponent();
-            components = new Container();
-            OnPanelLeave += Dispose;
-            lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
-
-            // Init Tabs
-            settingsTab.Controls.Add(Core.SettingsCore.Panel);
-            upgradeTab.Controls.Add(Core.UpgradeManagerCore.Panel);
-            pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
-            pushTab.Controls.Add(Core.PushNotifyCore.Panel);
         }
 
         private void Dispose(object s, EventArgs e)
@@ -46,6 +37,19 @@ namespace QuesterAssistant.Panels
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("https://www.paypal.me/aorion33/10");
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            components = new Container();
+            //OnPanelLeave += Dispose;
+            lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
+
+            // Init Tabs
+            settingsTab.Controls.Add(Core.SettingsCore.Panel);
+            upgradeTab.Controls.Add(Core.UpgradeManagerCore.Panel);
+            pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
+            pushTab.Controls.Add(Core.PushNotifyCore.Panel);
         }
     }
 }

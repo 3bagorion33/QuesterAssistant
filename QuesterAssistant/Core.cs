@@ -1,6 +1,7 @@
 using Astral;
 using Astral.Addons;
 using MyNW;
+using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Panels;
 using System;
@@ -23,6 +24,9 @@ namespace QuesterAssistant
         internal static string Category => typeof(Core).Namespace;
         private static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
         internal static IntPtr GameHandle => GameProcess.MainWindowHandle;
+        internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
+        internal static bool IsGameForeground => GameHandle == WinAPI.GetForegroundWindow();
+        internal static bool IsAstralForeground => AstralHandle == WinAPI.GetForegroundWindow();
 
         /// <summary>
         /// Объект, отслеживающий изменение состояний бота
@@ -30,7 +34,7 @@ namespace QuesterAssistant
         /// </summary>
         //private NotifyStatusMonitor statusMonitor = new NotifyStatusMonitor();
 
-        internal static KeyboardHook KeyboardHook { get; private set; } = new KeyboardHook();
+        internal static KeyboardHook KeyboardHook { get; } = new KeyboardHook();
         private static List<Keys> keysMask = new List<Keys> {
             Keys.LWin, Keys.RWin,
             Keys.LShiftKey, Keys.RShiftKey,
@@ -39,10 +43,10 @@ namespace QuesterAssistant
             Keys.Apps, Keys.Back
         };
 
-        internal static PowersManager.PowersManagerCore PowersManagerCore { get; private set; } = new PowersManager.PowersManagerCore();
-        internal static Settings.SettingsCore SettingsCore { get; private set; } = new Settings.SettingsCore();
-        internal static PushNotify.PushNotifyCore PushNotifyCore { get; private set; } = new PushNotify.PushNotifyCore();
-        internal static UpgradeManager.UpgradeManagerCore UpgradeManagerCore { get; private set; } = new UpgradeManager.UpgradeManagerCore();
+        internal static PowersManager.PowersManagerCore PowersManagerCore { get; } = new PowersManager.PowersManagerCore();
+        internal static Settings.SettingsCore SettingsCore { get; } = new Settings.SettingsCore();
+        internal static PushNotify.PushNotifyCore PushNotifyCore { get; } = new PushNotify.PushNotifyCore();
+        internal static UpgradeManager.UpgradeManagerCore UpgradeManagerCore { get; } = new UpgradeManager.UpgradeManagerCore();
 
         public override void OnBotStart() { }
         public override void OnBotStop() { }

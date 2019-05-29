@@ -10,14 +10,9 @@ namespace QuesterAssistant.Settings
     {
         private SettingsCore Core => core as SettingsCore;
 
-        public SettingsForm() : base (QuesterAssistant.Core.SettingsCore)
+        public SettingsForm()
         {
             InitializeComponent();
-
-            bsrcHotKey.DataSource = Core.Data.RoleToggleHotKey;
-
-            chkRoleToggleEnabled.BindAdd(bsrcHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
-            txtRoleToggleString.BindAdd(bsrcHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
         }
 
         private void txtRoleToggleString_KeyDown(object sender, KeyEventArgs e)
@@ -30,6 +25,14 @@ namespace QuesterAssistant.Settings
             {
                 ActiveControl = null;
             }
+        }
+
+        private void SettingsForm_Load(object sender, System.EventArgs e)
+        {
+            bsrcHotKey.DataSource = Core.Data.RoleToggleHotKey;
+
+            chkRoleToggleEnabled.BindAdd(bsrcHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+            txtRoleToggleString.BindAdd(bsrcHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
         }
     }
 }

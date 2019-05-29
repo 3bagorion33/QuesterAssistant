@@ -55,6 +55,14 @@ namespace QuesterAssistant.Classes.Common
 
         public void Dispose()
         {
+            if (PropertyChanged != null)
+                foreach (var d in PropertyChanged.GetInvocationList())
+                    PropertyChanged -= d as PropertyChangedEventHandler;
+
+            if (HashChanged != null)
+                foreach (var d in HashChanged.GetInvocationList())
+                    HashChanged -= d as Action;
+
             checkChanged.Dispose();
         }
     }

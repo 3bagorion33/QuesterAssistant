@@ -8,14 +8,14 @@ namespace QuesterAssistant.Panels
     {
         protected ICore core;
 
-        public CoreForm() { }
-        public CoreForm(ICore core)
+        public void Init(ICore core)
         {
             this.core = core;
             Dock = DockStyle.Fill;
             Main.LoadSettings += LoadSettings;
             Main.SaveSettings += SaveSettings;
         }
+
         // protected из-за атавизма Power Manager
         protected void SaveSettings(object sender, EventArgs e)
         {

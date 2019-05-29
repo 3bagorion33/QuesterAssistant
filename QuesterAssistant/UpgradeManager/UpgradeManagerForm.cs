@@ -4,6 +4,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
+using QuesterAssistant.Classes.Common.Extensions;
 using QuesterAssistant.Panels;
 using System.ComponentModel;
 using System.Linq;
@@ -17,41 +18,52 @@ namespace QuesterAssistant.UpgradeManager
         private bool disableEvent = false;
         private UpgradeManagerCore Core => QuesterAssistant.Core.UpgradeManagerCore;
         private UpgradeManagerData Data => Core.Data;
-        private Profile CurrentProfile => lkupProfilesList.EditValue as Profile;
+        public Profile CurrentProfile => lkupProfilesList.EditValue as Profile;
 
-        public UpgradeManagerForm() : base(QuesterAssistant.Core.UpgradeManagerCore)
+        public UpgradeManagerForm()
         {
             InitializeComponent();
+        }
 
+        private void UpgradeManagerForm_Load(object sender, System.EventArgs e)
+        {
             lkupProfilesList.ButtonClick += lkupProfilesList_ButtonClick;
             lkupProfilesList.ListChanged += lkupProfilesList_ListChanged;
             lkupProfilesList.EditValueChanged += lkupProfilesList_EditValueChanged;
-
+            lkupProfilesList.Properties.DataSource = Data.Profiles;
+            
             Data.HashChanged += gridTasksList.RefreshData;
 
-            Core.TasksStarted += Core_TasksStarted;
-            Core.TasksStopped += Core_TasksStopped;
+            Core.TasksStarted += TasksStarted;
+            Core.TasksStopped += TasksStopped;
+
+            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.UpToDown);
+            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.DownToUp);
+
+            bsrcHotKey.DataSource = Data.ToggleHotKey;
+            chkHotKey.BindAdd(bsrcHotKey, nameof(CheckEdit.Checked), nameof(UpgradeManagerData.ToggleHotKey.Enabled));
+            txtHotKey.BindAdd(bsrcHotKey, nameof(TextEdit.Text), nameof(UpgradeManagerData.ToggleHotKey.String), DataSourceUpdateMode.OnValidation);
         }
 
-        private void Core_TasksStarted()
+        private void TasksStarted()
         {
             btnTasksAction.InvokeSafe(() => { btnTasksAction.Text = "Abort"; });
         }
 
-        private void Core_TasksStopped()
+        private void TasksStopped()
         {
             btnTasksAction.InvokeSafe(() => { btnTasksAction.Text = "Run"; });
         }
 
         private void lkupProfilesList_EditValueChanged(object sender, System.EventArgs e)
         {
-            gctlTasks.DataSource = CurrentProfile?.Tasks;
+            gctlTasks.InvokeSafe(() => gctlTasks.DataSource = CurrentProfile?.Tasks);
 
             numIterationCont.DataBindings.Clear();
-            numIterationCont.DataBindings.Add(nameof(SpinEdit.EditValue), CurrentProfile, nameof(Profile.IterationsCount), false, DataSourceUpdateMode.OnValidation);
+            numIterationCont.BindAdd(CurrentProfile, nameof(SpinEdit.EditValue), nameof(Profile.IterationsCount));
 
             cbxAlgorithm.DataBindings.Clear();
-            cbxAlgorithm.DataBindings.Add(nameof(ComboBoxEdit.EditValue), CurrentProfile, nameof(Profile.Algorithm), false, DataSourceUpdateMode.OnValidation);
+            cbxAlgorithm.BindAdd(CurrentProfile, nameof(ComboBoxEdit.EditValue), nameof(Profile.Algorithm));
         }
 
         private void lkupProfilesList_ListChanged(object sender, ListChangedEventArgs e)
@@ -89,13 +101,6 @@ namespace QuesterAssistant.UpgradeManager
             {
                 CurrentProfile.AddTask(GetAnItem.Show());
             }
-        }
-
-        private void UpgradeManagerForm_Load(object sender, System.EventArgs e)
-        {
-            lkupProfilesList.Properties.DataSource = Data.Profiles;
-            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.UpToDown);
-            cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.DownToUp);
         }
 
         private void lkupProfilesList_ButtonClick(object sender, ButtonPressedEventArgs e)
@@ -149,19 +154,19 @@ namespace QuesterAssistant.UpgradeManager
         private void miTaskRunCurrent_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (gridTasksList.FocusedRowHandle < 0) return;
-            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle);
+            Core.StartTasks(taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle);
         }
 
         private void miTaskRunFrom_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (gridTasksList.FocusedRowHandle < 0) return;
-            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle);
+            Core.StartTasks(taskStartIdx: gridTasksList.FocusedRowHandle);
         }
 
         private void miTaskRunTo_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (gridTasksList.FocusedRowHandle < 1) return;
-            Core.StartTasks(CurrentProfile, taskStopIdx: gridTasksList.FocusedRowHandle - 1);
+            Core.StartTasks(taskStopIdx: gridTasksList.FocusedRowHandle - 1);
         }
 
         private void miTaskDelete_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -173,21 +178,23 @@ namespace QuesterAssistant.UpgradeManager
         private void gridTasksList_DoubleClick(object sender, System.EventArgs e)
         {
             if (gridTasksList.FocusedRowHandle < 0) return;
-            Core.StartTasks(CurrentProfile, taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle, count: 1);
+            Core.StartTasks(taskStartIdx: gridTasksList.FocusedRowHandle, taskStopIdx: gridTasksList.FocusedRowHandle, count: 1);
         }
 
         private void btnTasksAction_MouseClick(object sender, MouseEventArgs e)
         {
-            switch (Core.TasksIsRunning)
+            Core.ToggleTasks();
+        }
+
+        private void txtHotKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            var txtEdit = sender as TextEdit;
+            var k = e.KeyData;
+            txtEdit.Text = k.IgnoreBack().ConvertToString();
+
+            if (k.IsNotModifier())
             {
-                case false:
-                    Core.StartTasks(CurrentProfile, taskStartIdx: 0);
-                    break;
-                case true:
-                    Core.StopTasks();
-                    break;
-                default:
-                    break;
+                ActiveControl = null;
             }
         }
     }

@@ -311,6 +311,7 @@
             this.MinimumSize = new System.Drawing.Size(370, 348);
             this.Name = "PowersManagerForm";
             this.Size = new System.Drawing.Size(370, 348);
+            this.Load += new System.EventHandler(this.PowersManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).EndInit();

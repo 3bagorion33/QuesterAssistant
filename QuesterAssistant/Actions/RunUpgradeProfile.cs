@@ -61,7 +61,8 @@ namespace QuesterAssistant.Actions
         {
             if (IntenalConditions)
             {
-                Task.WaitAll(Core.UpgradeManagerCore.StartTasks(CurrentProfle, taskStartIdx: 0));
+                //Task.WaitAll(Core.UpgradeManagerCore.StartTasks(CurrentProfle, taskStartIdx: 0));
+                CurrentProfle.Run(startIdx: 0);
                 return ActionResult.Completed;
             }
             return ActionResult.Fail;

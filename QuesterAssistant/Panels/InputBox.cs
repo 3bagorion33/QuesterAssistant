@@ -56,7 +56,7 @@ namespace QuesterAssistant.Panels
 
         private void InputBox_Load(object sender, EventArgs e)
         {
-            if (center && Handle != WinAPI.GetForegroundWindow())
+            if (center && (Handle != WinAPI.GetForegroundWindow()))
             {
                 WinAPI.SetForegroundWindow(Core.GameHandle);
                 WinAPI.SetForegroundWindow(Handle);

@@ -10,9 +10,9 @@ namespace QuesterAssistant.Settings
         protected override bool IsValid => true;
         protected override bool HookEnableFlag => Data.RoleToggleHotKey.Enabled;
 
-        protected override void KeyboardHook(object sender, KeyEventArgs e)
+        protected override void KeyboardHook(KeyEventArgs e)
         {
-            if (Data.RoleToggleHotKey.Enabled && (Data.RoleToggleHotKey.Keys == e.KeyData))
+            if (Data.RoleToggleHotKey.Keys == e.KeyData)
             {
                 Task.Factory.StartNew(API.ToogleRole); 
             }
