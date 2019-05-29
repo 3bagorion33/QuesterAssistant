@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpgradeManagerForm));
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -55,12 +54,12 @@
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
-            this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
+            this.toolTipController = new DevExpress.Utils.ToolTipController();
             this.gctrlProfile = new DevExpress.XtraEditors.GroupControl();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.cbxAlgorithm = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.bmTasksList = new DevExpress.XtraBars.BarManager(this.components);
+            this.bmTasksList = new DevExpress.XtraBars.BarManager();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -81,7 +80,7 @@
             this.gcolChance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkupProfilesList = new DevExpress.XtraEditors.LookUpEdit();
-            this.pmTasksList = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.pmTasksList = new DevExpress.XtraBars.PopupMenu();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).BeginInit();
@@ -109,15 +108,17 @@
             this.gctrlProfile.Controls.Add(this.btnTasksAction);
             this.gctrlProfile.Controls.Add(this.gctlTasks);
             this.gctrlProfile.Controls.Add(this.lkupProfilesList);
-            this.gctrlProfile.Location = new System.Drawing.Point(11, 13);
+            this.gctrlProfile.Location = new System.Drawing.Point(11, 11);
             this.gctrlProfile.Name = "gctrlProfile";
-            this.gctrlProfile.Size = new System.Drawing.Size(348, 323);
+            this.gctrlProfile.Size = new System.Drawing.Size(348, 325);
             this.gctrlProfile.TabIndex = 1;
             this.gctrlProfile.Text = "Profile";
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(175, 99);
+            this.labelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelControl2.Location = new System.Drawing.Point(175, 35);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(36, 13);
             this.labelControl2.TabIndex = 12;
@@ -125,7 +126,9 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(7, 99);
+            this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelControl1.Location = new System.Drawing.Point(7, 35);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(52, 13);
             this.labelControl1.TabIndex = 11;
@@ -133,7 +136,9 @@
             // 
             // cbxAlgorithm
             // 
-            this.cbxAlgorithm.Location = new System.Drawing.Point(65, 96);
+            this.cbxAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxAlgorithm.Location = new System.Drawing.Point(65, 32);
             this.cbxAlgorithm.MenuManager = this.bmTasksList;
             this.cbxAlgorithm.Name = "cbxAlgorithm";
             this.cbxAlgorithm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -218,12 +223,14 @@
             // 
             // numIterationCont
             // 
+            this.numIterationCont.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.numIterationCont.EditValue = new decimal(new int[] {
             0,
             0,
             0,
             0});
-            this.numIterationCont.Location = new System.Drawing.Point(217, 96);
+            this.numIterationCont.Location = new System.Drawing.Point(217, 32);
             this.numIterationCont.MenuManager = this.bmTasksList;
             this.numIterationCont.Name = "numIterationCont";
             this.numIterationCont.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -243,7 +250,9 @@
             // 
             // btnTasksAction
             // 
-            this.btnTasksAction.Location = new System.Drawing.Point(268, 94);
+            this.btnTasksAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTasksAction.Location = new System.Drawing.Point(268, 30);
             this.btnTasksAction.Name = "btnTasksAction";
             this.btnTasksAction.Size = new System.Drawing.Size(75, 23);
             this.btnTasksAction.TabIndex = 6;
@@ -252,17 +261,19 @@
             // 
             // gctlTasks
             // 
+            this.gctlTasks.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gctlTasks.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlTasks.EmbeddedNavigator.ToolTipController = this.toolTipController;
             this.gctlTasks.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gctlTasks.Location = new System.Drawing.Point(3, 125);
+            this.gctlTasks.Location = new System.Drawing.Point(3, 61);
             this.gctlTasks.MainView = this.gridTasksList;
             this.gctlTasks.Margin = new System.Windows.Forms.Padding(1);
             this.gctlTasks.MenuManager = this.bmTasksList;
             this.gctlTasks.Name = "gctlTasks";
             this.gctlTasks.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riButtonEdit});
-            this.gctlTasks.Size = new System.Drawing.Size(342, 195);
+            this.gctlTasks.Size = new System.Drawing.Size(342, 261);
             this.gctlTasks.TabIndex = 2;
             this.gctlTasks.ToolTipController = this.toolTipController;
             this.gctlTasks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {

@@ -192,6 +192,7 @@
     <Compile Include="Actions\LoadPowersPreset.cs" />
     <Compile Include="Actions\MoonMask.cs" />
     <Compile Include="Actions\Notify.cs" />
+    <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <Compile Include="Classes\InventorySlotEx.cs" />

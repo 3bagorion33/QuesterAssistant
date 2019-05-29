@@ -21,5 +21,10 @@ namespace QuesterAssistant.Classes.Common.Extensions
             }
             return @this.GetHashCode();
         }
+
+        public static int CheckZero(this int @int, int value)
+        {
+            return (@int == 0) ? value : @int;
+        }
     }
 }

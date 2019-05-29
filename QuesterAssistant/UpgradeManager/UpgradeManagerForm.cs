@@ -19,9 +19,6 @@ namespace QuesterAssistant.UpgradeManager
         private UpgradeManagerData Data => Core.Data;
         private Profile CurrentProfile => lkupProfilesList.EditValue as Profile;
 
-        private const string Abort = "Abort";
-        private const string Start = "Start";
-
         public UpgradeManagerForm() : base(QuesterAssistant.Core.UpgradeManagerCore)
         {
             InitializeComponent();

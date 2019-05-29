@@ -124,21 +124,24 @@ namespace QuesterAssistant.UIEditors
     }
 
     [Serializable]
-    public class CheckedListBoxSelector<TEnum>
+    public class CheckedListBoxSelector<T>
     {
-        public List<TEnum> Items { get; set; } = new List<TEnum>();
+        public List<T> Items { get; set; } = new List<T>();
         [XmlIgnore]
-        public Dictionary<TEnum, bool> Dictionary
+        public Dictionary<T, bool> Dictionary
         {
             get
             {
-                var value = new Dictionary<TEnum, bool>();
-                foreach (var s in Enum.GetNames(typeof(TEnum)))
+                var value = new Dictionary<T, bool>();
+                if (typeof(T).BaseType.Name == nameof(Enum))
                 {
-                    if (s != "None")
+                    foreach (var s in Enum.GetNames(typeof(T)))
                     {
-                        var item = (TEnum)Enum.Parse(typeof(TEnum), s);
-                        value.Add(item, Items.Contains(item));
+                        if (s != "None")
+                        {
+                            var item = (T)Enum.Parse(typeof(T), s);
+                            value.Add(item, Items.Contains(item));
+                        }
                     }
                 }
                 return value;
@@ -157,7 +160,7 @@ namespace QuesterAssistant.UIEditors
         }
         public override string ToString()
         {
-            return $"{Items.Count} of {Dictionary.Count} in {typeof(TEnum).Name}";
+            return $"{Items.Count} of {Dictionary.Count} in {typeof(T).Name}";
         }
     }
 }

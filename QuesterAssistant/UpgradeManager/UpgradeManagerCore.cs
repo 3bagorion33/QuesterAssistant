@@ -1,5 +1,6 @@
 ﻿using Astral;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Common.Extensions;
 using QuesterAssistant.Panels;
 using System;
 using System.Threading;
@@ -25,9 +26,9 @@ namespace QuesterAssistant.UpgradeManager
         private int runTaskStopIdx;
         private int runCount;
 
-        public void StartTasks(UpgradeManagerData.Profile profile, int taskStartIdx = -1, int taskStopIdx = -1, int count = 0)
+        public Task StartTasks(UpgradeManagerData.Profile profile, int taskStartIdx = -1, int taskStopIdx = -1, int count = 0)
         {
-            if ((thread == null || thread.IsCompleted) && ((taskStartIdx > -1) || (taskStopIdx > -1)))
+            if (profile != null && (thread == null || thread.IsCompleted) && ((taskStartIdx > -1) || (taskStopIdx > -1)))
             {
                 runProfile = profile;
                 runTaskStartIdx = taskStartIdx;
@@ -36,6 +37,7 @@ namespace QuesterAssistant.UpgradeManager
                 cancelTokenSource = new CancellationTokenSource();
                 thread = Task.Factory.StartNew(Upgrade, cancelTokenSource.Token);
             }
+            return thread;
         }
 
         public void StopTasks()
@@ -51,7 +53,7 @@ namespace QuesterAssistant.UpgradeManager
                 TasksStarted?.Invoke();
                 using (cancelTokenSource.Token.Register(Thread.CurrentThread.Abort))
                 {
-                    int count = (runCount == 0) ? runProfile.IterationsCount : runCount;
+                    int count = runCount.CheckZero(runProfile.IterationsCount.CheckZero(int.MaxValue));
 
                     if (runTaskStopIdx < 0)
                         runTaskStopIdx = runProfile.Tasks.Count - 1;
@@ -100,10 +102,12 @@ namespace QuesterAssistant.UpgradeManager
             {
                 Logger.WriteLine("Upgrade has been aborted!");
             }
+#if DEBUG
             catch (Exception e)
             {
                 ErrorBox.Show(e.ToString());
             }
+#endif
             finally
             {
                 TasksStopped?.Invoke();

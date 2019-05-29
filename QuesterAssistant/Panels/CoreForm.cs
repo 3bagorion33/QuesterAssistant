@@ -1,18 +1,18 @@
-﻿using Astral.Forms;
-using QuesterAssistant.Classes;
+﻿using QuesterAssistant.Classes;
 using System;
+using System.Windows.Forms;
 
 namespace QuesterAssistant.Panels
 {
-    internal class CoreForm : BasePanel
+    internal class CoreForm : UserControl
     {
         protected ICore core;
 
-        public CoreForm() : base(string.Empty) { }
-        public CoreForm(ICore core) : base(core.Name)
+        public CoreForm() { }
+        public CoreForm(ICore core)
         {
             this.core = core;
-            Dock = System.Windows.Forms.DockStyle.Fill;
+            Dock = DockStyle.Fill;
             Main.LoadSettings += LoadSettings;
             Main.SaveSettings += SaveSettings;
         }
@@ -35,16 +35,15 @@ namespace QuesterAssistant.Panels
 
         private void InitializeComponent()
         {
-            this.SuspendLayout();
+            SuspendLayout();
             // 
             // CoreForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.MinimumSize = new System.Drawing.Size(370, 348);
-            this.Name = "CoreForm";
-            this.Size = new System.Drawing.Size(370, 348);
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            MinimumSize = new System.Drawing.Size(370, 348);
+            Name = "CoreForm";
+            Size = new System.Drawing.Size(370, 348);
+            ResumeLayout(false);
         }
     }
 }
