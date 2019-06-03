@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace QuesterAssistant.Classes.Common.Extensions
 {
@@ -35,6 +36,11 @@ namespace QuesterAssistant.Classes.Common.Extensions
                 @string = @string.Remove(i, 1).Insert(i, "*");
             }
             return @string;
+        }
+
+        public static byte[] ToByteArray(this string hex)
+        {
+            return Enumerable.Range(0, hex.Length / 2).Select(x => Convert.ToByte(hex.Substring(x * 2, 2), 16)).ToArray();
         }
     }
 }

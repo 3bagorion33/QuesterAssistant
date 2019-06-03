@@ -28,19 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
-            this.timerDelete = new System.Windows.Forms.Timer(this.components);
+            this.timerDelete = new System.Windows.Forms.Timer();
             this.gridControl1 = new DevExpress.XtraGrid.GridControl();
-            this.bsrcInstancesList = new System.Windows.Forms.BindingSource(this.components);
-            this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
+            this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
+            this.toolTipController1 = new DevExpress.Utils.ToolTipController();
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProcess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolNewTitle = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,11 +47,11 @@
             this.gcolButton = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnClose = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.dbtnWindowsFirewall = new DevExpress.XtraEditors.DropDownButton();
-            this.menuFirewall = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.menuFirewall = new DevExpress.XtraBars.PopupMenu();
             this.menuFirewallDenyApps = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDenyAddress = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDeleteRules = new DevExpress.XtraBars.BarButtonItem();
-            this.barFirewall = new DevExpress.XtraBars.BarManager(this.components);
+            this.barFirewall = new DevExpress.XtraBars.BarManager();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -84,7 +83,7 @@
             // timerDelete
             // 
             this.timerDelete.Enabled = true;
-            this.timerDelete.Interval = 50;
+            this.timerDelete.Interval = 250;
             this.timerDelete.Tick += new System.EventHandler(this.timerDelete_Tick);
             // 
             // gridControl1
@@ -194,7 +193,7 @@
             // 
             this.btnClose.AutoHeight = false;
             this.btnClose.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.btnClose.Name = "btnClose";
             this.btnClose.Padding = new System.Windows.Forms.Padding(3);
             this.btnClose.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -66,9 +67,27 @@ namespace QuesterAssistant.Classes.Common
         {
             return NativeMethods.LoadLibrary(lpFileName);
         }
+        public static bool TaskKill(IntPtr hWnd)
+        {
+            var procId = NativeMethods.GetProcessId(hWnd);
+            if (procId == 0) return false;
+            Process.Start($"cmd /c taskkill /pid {procId} /t /f");
+            return true;
+        }
+        public static IntPtr CloseWindow(IntPtr hWnd)
+        {
+            return NativeMethods.SendMessage(hWnd, NativeMethods.WM_SYSCOMMAND, NativeMethods.SC_CLOSE, 0);
+        }
+        public static int GetProcessId(IntPtr hWnd)
+        {
+            return NativeMethods.GetProcessId(hWnd);
+        }
 
         private static class NativeMethods
         {
+            public const int WM_SYSCOMMAND = 0x0112;
+            public const int SC_CLOSE = 0xF060;
+
             [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
             public static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
             [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
@@ -98,6 +117,20 @@ namespace QuesterAssistant.Classes.Common
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
             [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern IntPtr LoadLibrary(string lpFileName);
+            [DllImport("user32", CharSet = CharSet.Unicode)]
+            public static extern IntPtr SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
+            [DllImport("user32")]
+            public static extern bool DestroyWindow(IntPtr hWnd);
+            [DllImport("kernel32", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool TerminateProcess(IntPtr processHandle, int exitCode);
+            [DllImport("kernel32")]
+            public static extern int GetProcessId(IntPtr hWnd);
+            [DllImport("kernel32.dll", SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool CloseHandle(IntPtr hWnd);
+            [DllImport("kernel32")]
+            public static extern IntPtr OpenProcess(int Access, bool InheritHandle, int ProcessId);
         }
     }
 }
