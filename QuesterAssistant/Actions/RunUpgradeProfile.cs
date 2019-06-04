@@ -5,14 +5,13 @@ using QuesterAssistant.UpgradeManager;
 using System;
 using System.ComponentModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuesterAssistant.Actions
 {
     [Serializable]
     public class RunUpgradeProfile : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().Name;
+        public override string ActionLabel => $"{GetType().Name} : {ProfileName}";
         public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
@@ -61,7 +60,6 @@ namespace QuesterAssistant.Actions
         {
             if (IntenalConditions)
             {
-                //Task.WaitAll(Core.UpgradeManagerCore.StartTasks(CurrentProfle, taskStartIdx: 0));
                 CurrentProfle.Run(startIdx: 0);
                 return ActionResult.Completed;
             }

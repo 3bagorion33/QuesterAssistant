@@ -12,6 +12,7 @@
 [list]
 [*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price, has flexible options
 [*][b]BuyItemRemote[/b]
+[*][b]GroupItems[/b]
 [*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
 [*][b]CloseAllFrames[/b] - toggles off ingame cursor mode
 [*][b]ConsoleCommand[/b] - execute any ingame console command

@@ -180,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
+    <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
