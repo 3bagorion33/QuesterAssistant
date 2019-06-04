@@ -9,6 +9,7 @@ using MyNW.Classes;
 using MyNW.Classes.Auction;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Common.Extensions;
 
 namespace QuesterAssistant.Classes
 {
@@ -35,11 +36,12 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                LoggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}";
+                LoggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}"
+                    .CarryOnLenght();
                 return cachedValue;
             }
 
-            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...");
+            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...".CarryOnLenght());
             Auction.LotsSearch(item.DisplayName);
             Thread.Sleep(2500);
             while (Auction.SearchWaiting)
@@ -62,7 +64,7 @@ namespace QuesterAssistant.Classes
             public string DisplayName;
             public string InternalName;
             public List<Lot> Lots;
-            public int OwnLotsCount => Auction.AuctionSellList.Lots.FindAll(l => l.Items.First().Item.ItemDef.InternalName == InternalName).Count;
+            public int OwnLotsCount => Auction.AuctionSellList.Lots.Count(l => l.Items.First().Item.ItemDef.InternalName == InternalName);
             public DateTime DateTime;
 
             [Serializable]

@@ -17,6 +17,9 @@ namespace MyNW.Classes
                     s.Item.ItemDef.StackLimit > 1 &&
                     s.Item.ProgressionLogic.CurrentRankXP == 0;
             }
+
+            if (!slot.Item.IsValid) return;
+
             List<InventorySlot> slots = EntityManager.LocalPlayer.BagsItems.FindAll(Find);
             if (!slots.Any()) return;
 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpgradeManagerForm));
             DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
@@ -54,12 +55,10 @@
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
             DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
-            this.toolTipController = new DevExpress.Utils.ToolTipController();
+            this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
             this.gctrlProfile = new DevExpress.XtraEditors.GroupControl();
-            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
-            this.cbxAlgorithm = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.bmTasksList = new DevExpress.XtraBars.BarManager();
+            this.cbxRunCondition = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.bmTasksList = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -68,8 +67,11 @@
             this.miTaskDelete = new DevExpress.XtraBars.BarButtonItem();
             this.miTaskRunFrom = new DevExpress.XtraBars.BarButtonItem();
             this.miTaskRunTo = new DevExpress.XtraBars.BarButtonItem();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.cbxAlgorithm = new DevExpress.XtraEditors.ComboBoxEdit();
             this.numIterationCont = new DevExpress.XtraEditors.SpinEdit();
-            this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.btnTasksAction = new DevExpress.XtraEditors.SimpleButton();
             this.gctlTasks = new DevExpress.XtraGrid.GridControl();
             this.gridTasksList = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -80,16 +82,16 @@
             this.gcolChance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
             this.lkupProfilesList = new DevExpress.XtraEditors.LookUpEdit();
-            this.pmTasksList = new DevExpress.XtraBars.PopupMenu();
+            this.pmTasksList = new DevExpress.XtraBars.PopupMenu(this.components);
             this.chkHotKey = new DevExpress.XtraEditors.CheckEdit();
             this.txtHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHotKey = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxRunCondition.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).BeginInit();
@@ -106,11 +108,12 @@
             // 
             // gctrlProfile
             // 
+            this.gctrlProfile.Controls.Add(this.cbxRunCondition);
+            this.gctrlProfile.Controls.Add(this.labelControl3);
             this.gctrlProfile.Controls.Add(this.labelControl2);
             this.gctrlProfile.Controls.Add(this.labelControl1);
             this.gctrlProfile.Controls.Add(this.cbxAlgorithm);
             this.gctrlProfile.Controls.Add(this.numIterationCont);
-            this.gctrlProfile.Controls.Add(this.groupControl2);
             this.gctrlProfile.Controls.Add(this.btnTasksAction);
             this.gctrlProfile.Controls.Add(this.gctlTasks);
             this.gctrlProfile.Controls.Add(this.lkupProfilesList);
@@ -120,38 +123,19 @@
             this.gctrlProfile.TabIndex = 1;
             this.gctrlProfile.Text = "Profile";
             // 
-            // labelControl2
+            // cbxRunCondition
             // 
-            this.labelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.cbxRunCondition.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl2.Location = new System.Drawing.Point(175, 35);
-            this.labelControl2.Name = "labelControl2";
-            this.labelControl2.Size = new System.Drawing.Size(36, 13);
-            this.labelControl2.TabIndex = 12;
-            this.labelControl2.Text = "Count :";
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl1.Location = new System.Drawing.Point(7, 35);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(52, 13);
-            this.labelControl1.TabIndex = 11;
-            this.labelControl1.Text = "Algorithm :";
-            // 
-            // cbxAlgorithm
-            // 
-            this.cbxAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbxAlgorithm.Location = new System.Drawing.Point(65, 32);
-            this.cbxAlgorithm.MenuManager = this.bmTasksList;
-            this.cbxAlgorithm.Name = "cbxAlgorithm";
-            this.cbxAlgorithm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.cbxRunCondition.EditValue = "";
+            this.cbxRunCondition.Location = new System.Drawing.Point(107, 46);
+            this.cbxRunCondition.MenuManager = this.bmTasksList;
+            this.cbxRunCondition.Name = "cbxRunCondition";
+            this.cbxRunCondition.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cbxAlgorithm.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbxAlgorithm.Size = new System.Drawing.Size(96, 20);
-            this.cbxAlgorithm.TabIndex = 10;
+            this.cbxRunCondition.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxRunCondition.Size = new System.Drawing.Size(104, 20);
+            this.cbxRunCondition.TabIndex = 14;
             // 
             // bmTasksList
             // 
@@ -227,6 +211,49 @@
             this.miTaskRunTo.Name = "miTaskRunTo";
             this.miTaskRunTo.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.miTaskRunTo_ItemClick);
             // 
+            // labelControl3
+            // 
+            this.labelControl3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelControl3.Location = new System.Drawing.Point(108, 27);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(72, 13);
+            this.labelControl3.TabIndex = 13;
+            this.labelControl3.Text = "Run condition :";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelControl2.Location = new System.Drawing.Point(218, 27);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(36, 13);
+            this.labelControl2.TabIndex = 12;
+            this.labelControl2.Text = "Count :";
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelControl1.Location = new System.Drawing.Point(7, 27);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(52, 13);
+            this.labelControl1.TabIndex = 11;
+            this.labelControl1.Text = "Algorithm :";
+            // 
+            // cbxAlgorithm
+            // 
+            this.cbxAlgorithm.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.cbxAlgorithm.Location = new System.Drawing.Point(5, 46);
+            this.cbxAlgorithm.MenuManager = this.bmTasksList;
+            this.cbxAlgorithm.Name = "cbxAlgorithm";
+            this.cbxAlgorithm.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbxAlgorithm.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxAlgorithm.Size = new System.Drawing.Size(96, 20);
+            this.cbxAlgorithm.TabIndex = 10;
+            // 
             // numIterationCont
             // 
             this.numIterationCont.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -236,7 +263,7 @@
             0,
             0,
             0});
-            this.numIterationCont.Location = new System.Drawing.Point(217, 32);
+            this.numIterationCont.Location = new System.Drawing.Point(217, 46);
             this.numIterationCont.MenuManager = this.bmTasksList;
             this.numIterationCont.Name = "numIterationCont";
             this.numIterationCont.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
@@ -246,19 +273,11 @@
             this.numIterationCont.Size = new System.Drawing.Size(45, 20);
             this.numIterationCont.TabIndex = 7;
             // 
-            // groupControl2
-            // 
-            this.groupControl2.Location = new System.Drawing.Point(224, 71);
-            this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(8, 8);
-            this.groupControl2.TabIndex = 9;
-            this.groupControl2.Text = "groupControl2";
-            // 
             // btnTasksAction
             // 
             this.btnTasksAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTasksAction.Location = new System.Drawing.Point(268, 30);
+            this.btnTasksAction.Location = new System.Drawing.Point(268, 44);
             this.btnTasksAction.Name = "btnTasksAction";
             this.btnTasksAction.Size = new System.Drawing.Size(75, 23);
             this.btnTasksAction.TabIndex = 6;
@@ -273,14 +292,14 @@
             this.gctlTasks.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlTasks.EmbeddedNavigator.ToolTipController = this.toolTipController;
             this.gctlTasks.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gctlTasks.Location = new System.Drawing.Point(3, 61);
+            this.gctlTasks.Location = new System.Drawing.Point(3, 71);
             this.gctlTasks.MainView = this.gridTasksList;
             this.gctlTasks.Margin = new System.Windows.Forms.Padding(1);
             this.gctlTasks.MenuManager = this.bmTasksList;
             this.gctlTasks.Name = "gctlTasks";
             this.gctlTasks.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.riButtonEdit});
-            this.gctlTasks.Size = new System.Drawing.Size(342, 237);
+            this.gctlTasks.Size = new System.Drawing.Size(342, 227);
             this.gctlTasks.TabIndex = 2;
             this.gctlTasks.ToolTipController = this.toolTipController;
             this.gctlTasks.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -473,10 +492,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).EndInit();
             this.gctrlProfile.ResumeLayout(false);
             this.gctrlProfile.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxRunCondition.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bmTasksList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxAlgorithm.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).EndInit();
@@ -515,11 +534,12 @@
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private DevExpress.XtraEditors.ComboBoxEdit cbxAlgorithm;
-        private DevExpress.XtraEditors.GroupControl groupControl2;
         private DevExpress.XtraBars.BarButtonItem miTaskRunFrom;
         private DevExpress.XtraBars.BarButtonItem miTaskRunTo;
         private DevExpress.XtraEditors.TextEdit txtHotKey;
         private DevExpress.XtraEditors.CheckEdit chkHotKey;
         private System.Windows.Forms.BindingSource bsrcHotKey;
+        private DevExpress.XtraEditors.ComboBoxEdit cbxRunCondition;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
     }
 }

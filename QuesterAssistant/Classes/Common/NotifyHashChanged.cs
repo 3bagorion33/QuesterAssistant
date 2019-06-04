@@ -11,19 +11,13 @@ namespace QuesterAssistant.Classes.Common
     public abstract class NotifyHashChanged : INotifyPropertyChanged, IDisposable
     {
         private int prevHashCode;
-        private static Timer checkChanged;
+        private static Timer checkChanged = new Timer() { Enabled = true, Interval = 200, AutoReset = true };
         public event Action HashChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public NotifyHashChanged()
         {
             prevHashCode = 0;
-            checkChanged = new Timer()
-            {
-                Enabled = true,
-                Interval = 200,
-                AutoReset = true
-            };
             checkChanged.Elapsed += CheckChanged_Tick;
         }
 
@@ -55,15 +49,23 @@ namespace QuesterAssistant.Classes.Common
 
         public void Dispose()
         {
-            if (PropertyChanged != null)
-                foreach (var d in PropertyChanged.GetInvocationList())
-                    PropertyChanged -= d as PropertyChangedEventHandler;
+            Dispose(true);
+        }
 
-            if (HashChanged != null)
-                foreach (var d in HashChanged.GetInvocationList())
-                    HashChanged -= d as Action;
+        private void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (PropertyChanged != null)
+                    foreach (var d in PropertyChanged.GetInvocationList())
+                        PropertyChanged -= d as PropertyChangedEventHandler;
 
-            checkChanged.Dispose();
+                if (HashChanged != null)
+                    foreach (var d in HashChanged.GetInvocationList())
+                        HashChanged -= d as Action;
+
+                checkChanged.Elapsed -= CheckChanged_Tick;
+            }
         }
     }
 }

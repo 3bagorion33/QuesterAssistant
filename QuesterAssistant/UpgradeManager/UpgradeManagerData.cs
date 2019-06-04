@@ -43,6 +43,7 @@ namespace QuesterAssistant.UpgradeManager
             [XmlAttribute]
             public string Name { get; set; } = string.Empty;
             public AlgorithmDirection Algorithm { get; set; } = AlgorithmDirection.UpToDown;
+            public ErrorBehavior RunCondition { get; set; } = ErrorBehavior.WhilePossible;
             public int IterationsCount { get; set; } = 0;
             public List<Task> Tasks { get; set; } = new List<Task>();
 
@@ -96,6 +97,7 @@ namespace QuesterAssistant.UpgradeManager
                 if (Algorithm == AlgorithmDirection.DownToUp)
                 {
                     int j = 0;
+                    bool runconditions;
                     do
                     {
                         for (int i = stopIdx; i >= startIdx; i--)
@@ -108,15 +110,24 @@ namespace QuesterAssistant.UpgradeManager
                                 break;
                             }
                         }
+                        runconditions = 
+                            (RunCondition == ErrorBehavior.StopOnError) ? 
+                            result > 0 : 
+                            (result > Task.Result.HaventRefinimentCurrency && Tasks.Exists(t => t.HaveRequiredItems));
                     }
-                    while (j < count && result > 0);
+                    while (j < count && runconditions);
                 }
                 return result;
             }
 
             public override int GetHashCode()
             {
-                return Name.GetSafeHashCode() ^ Tasks.GetSafeHashCode();
+                return 
+                    Name.GetSafeHashCode() ^
+                    Algorithm.GetSafeHashCode() ^
+                    RunCondition.GetSafeHashCode() ^
+                    IterationsCount.GetSafeHashCode() ^
+                    Tasks.GetSafeHashCode();
             }
 
             private int Sort(Task t1, Task t2)
@@ -132,6 +143,7 @@ namespace QuesterAssistant.UpgradeManager
             }
 
             public enum AlgorithmDirection { UpToDown, DownToUp }
+            public enum ErrorBehavior { WhilePossible, StopOnError }
         }
 
         [Serializable]
@@ -154,7 +166,7 @@ namespace QuesterAssistant.UpgradeManager
 
             private const int TIME_WAIT = 500;
             private InventorySlot slot;
-            private List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
+            private static List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
             private Result FindResult
             {
                 get
@@ -179,7 +191,7 @@ namespace QuesterAssistant.UpgradeManager
                     return result;
                 }
             }
-            private bool HaveRequiredItems
+            public bool HaveRequiredItems
             {
                 get
                 {
@@ -203,7 +215,7 @@ namespace QuesterAssistant.UpgradeManager
             public static Task New(GetAnItem.ListItem item)
             {
                 Task t = new Task(item);
-                var i = t.BagsItems.Find(s => t.FindAny(s))?.Item;
+                var i = BagsItems.Find(s => t.FindAny(s))?.Item;
                 if (i == null || i.ProgressionLogic.CurrentRankTotalRequiredXP == 0) return null;
                 if (i.ProgressionLogic.CurrentTier.Index == 0)
                 {
@@ -309,7 +321,7 @@ namespace QuesterAssistant.UpgradeManager
             {
                 return
                     FullName.GetSafeHashCode() ^
-                    Count.GetSafeHashCode();
+                    CountUnfilled;
             }
 
             public override string ToString()

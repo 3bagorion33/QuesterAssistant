@@ -40,6 +40,9 @@ namespace QuesterAssistant.UpgradeManager
             cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.UpToDown);
             cbxAlgorithm.Properties.Items.Add(Profile.AlgorithmDirection.DownToUp);
 
+            cbxRunCondition.Properties.Items.Add(Profile.ErrorBehavior.WhilePossible);
+            cbxRunCondition.Properties.Items.Add(Profile.ErrorBehavior.StopOnError);
+
             bsrcHotKey.DataSource = Data.ToggleHotKey;
             chkHotKey.BindAdd(bsrcHotKey, nameof(CheckEdit.Checked), nameof(UpgradeManagerData.ToggleHotKey.Enabled));
             txtHotKey.BindAdd(bsrcHotKey, nameof(TextEdit.Text), nameof(UpgradeManagerData.ToggleHotKey.String), DataSourceUpdateMode.OnValidation);
@@ -64,6 +67,9 @@ namespace QuesterAssistant.UpgradeManager
 
             cbxAlgorithm.DataBindings.Clear();
             cbxAlgorithm.BindAdd(CurrentProfile, nameof(ComboBoxEdit.EditValue), nameof(Profile.Algorithm));
+
+            cbxRunCondition.DataBindings.Clear();
+            cbxRunCondition.BindAdd(CurrentProfile, nameof(ComboBoxEdit.EditValue), nameof(Profile.RunCondition));
         }
 
         private void lkupProfilesList_ListChanged(object sender, ListChangedEventArgs e)

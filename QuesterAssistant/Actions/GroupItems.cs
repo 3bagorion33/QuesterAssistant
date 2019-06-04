@@ -3,6 +3,7 @@ using Astral.Logic.Classes.Map;
 using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
+using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes.ItemFilter;
 using System;
 using System.ComponentModel;
@@ -39,7 +40,11 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            EntityManager.LocalPlayer.BagsItems.FindAll(s => ItemIdFilter.IsMatch(s.Item))
+            var bags = EntityManager.LocalPlayer.BagsItems;
+            bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
+            bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
+
+            bags.FindAll(s => ItemIdFilter.IsMatch(s.Item))
                 .GroupBy(s => s.Item.ItemDef.InternalName, (g, s) => s.First())
                 .ToList()
                 .ForEach(s => s.Group());
