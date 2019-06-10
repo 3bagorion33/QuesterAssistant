@@ -4,7 +4,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System.ComponentModel;
 using System.Linq;

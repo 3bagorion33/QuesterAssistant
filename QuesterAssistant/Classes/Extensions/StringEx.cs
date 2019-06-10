@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QuesterAssistant.Classes.Common.Extensions
+namespace QuesterAssistant.Classes.Extensions
 {
     public static class StringEx
     {

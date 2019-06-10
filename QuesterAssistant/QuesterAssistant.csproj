@@ -196,7 +196,15 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
-    <Compile Include="Classes\InventorySlotEx.cs" />
+    <Compile Include="Classes\Common\ListConverter\IListConverter.cs" />
+    <Compile Include="Classes\Common\ListConverter\ListConverter.cs" />
+    <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
+    <Compile Include="Panels\About.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Panels\About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panels\DialogBox.cs" />
     <Compile Include="PushNotify\StatusMonitor.cs" />
     <Compile Include="Panels\CoreForm.cs">
@@ -213,14 +221,16 @@
     <Compile Include="UpgradeManager\UpgradeManagerForm.Designer.cs">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Panels\About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UpgradeManager\UpgradeManagerForm.resx">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="Classes\Common\Extensions\AttributeEx.cs" />
-    <Compile Include="Classes\Common\Extensions\CommonEx.cs" />
-    <Compile Include="Classes\Common\Extensions\ControlEx.cs" />
-    <Compile Include="Classes\Common\Extensions\KeysEx.cs" />
-    <Compile Include="Classes\Common\Extensions\StringEx.cs" />
+    <Compile Include="Classes\Extensions\CommonEx.cs" />
+    <Compile Include="Classes\Extensions\ControlEx.cs" />
+    <Compile Include="Classes\Extensions\KeysEx.cs" />
+    <Compile Include="Classes\Extensions\StringEx.cs" />
     <Compile Include="Classes\Common\IParse.cs" />
     <Compile Include="Classes\Common\NotifyHashChanged.cs" />
     <Compile Include="Classes\Common\WinAPI.cs" />

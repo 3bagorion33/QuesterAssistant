@@ -1,10 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Forms;
 using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;

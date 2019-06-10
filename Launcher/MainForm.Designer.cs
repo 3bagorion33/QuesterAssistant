@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
@@ -73,9 +73,11 @@
             // btnStart
             // 
             this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.btnStart.Location = new System.Drawing.Point(12, 327);
+            this.btnStart.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.btnStart.Appearance.Options.UseFont = true;
+            this.btnStart.Location = new System.Drawing.Point(12, 304);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(360, 23);
+            this.btnStart.Size = new System.Drawing.Size(360, 46);
             this.btnStart.TabIndex = 0;
             this.btnStart.Text = "Start new instance";
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
@@ -88,16 +90,18 @@
             // 
             // gridControl1
             // 
+            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControl1.DataSource = this.bsrcInstancesList;
             this.gridControl1.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gridControl1.EmbeddedNavigator.ToolTipController = this.toolTipController1;
             this.gridControl1.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gridControl1.Location = new System.Drawing.Point(12, 129);
+            this.gridControl1.Location = new System.Drawing.Point(12, 66);
             this.gridControl1.MainView = this.gridInstances;
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.btnClose});
-            this.gridControl1.Size = new System.Drawing.Size(360, 192);
+            this.gridControl1.Size = new System.Drawing.Size(360, 232);
             this.gridControl1.TabIndex = 1;
             this.gridControl1.ToolTipController = this.toolTipController1;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -193,7 +197,7 @@
             // 
             this.btnClose.AutoHeight = false;
             this.btnClose.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.btnClose.Name = "btnClose";
             this.btnClose.Padding = new System.Windows.Forms.Padding(3);
             this.btnClose.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -201,9 +205,11 @@
             // 
             // dbtnWindowsFirewall
             // 
+            this.dbtnWindowsFirewall.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dbtnWindowsFirewall.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Show;
             this.dbtnWindowsFirewall.DropDownControl = this.menuFirewall;
-            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(12, 100);
+            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(12, 37);
             this.dbtnWindowsFirewall.MenuManager = this.barFirewall;
             this.dbtnWindowsFirewall.Name = "dbtnWindowsFirewall";
             this.dbtnWindowsFirewall.Size = new System.Drawing.Size(135, 23);
@@ -288,8 +294,10 @@
             // 
             // chkHideTitle
             // 
+            this.chkHideTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(11, 75);
+            this.chkHideTitle.Location = new System.Drawing.Point(11, 12);
             this.chkHideTitle.MenuManager = this.barFirewall;
             this.chkHideTitle.Name = "chkHideTitle";
             this.chkHideTitle.Properties.Caption = "Hide Astral title";

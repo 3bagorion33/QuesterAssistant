@@ -1,7 +1,6 @@
 ﻿using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using System;
-using System.ComponentModel;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 

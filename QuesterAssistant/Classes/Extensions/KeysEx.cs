@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace QuesterAssistant.Classes.Common.Extensions
+namespace QuesterAssistant.Classes.Extensions
 {
     internal static class KeysEx
     {

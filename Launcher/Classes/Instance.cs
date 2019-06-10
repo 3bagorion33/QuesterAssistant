@@ -1,6 +1,6 @@
 ﻿using DevExpress.Utils.Extensions;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;

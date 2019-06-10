@@ -5,7 +5,7 @@ using MyNW.Classes.ItemProgression;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;

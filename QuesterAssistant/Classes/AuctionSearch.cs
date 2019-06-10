@@ -9,7 +9,7 @@ using MyNW.Classes;
 using MyNW.Classes.Auction;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Classes
 {
@@ -17,15 +17,15 @@ namespace QuesterAssistant.Classes
     {
         private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
         private static List<Result> cachedSearch;
-        public static string LoggerMessage { get; private set; }
+        private static string loggerMessage;
 
-        internal static Result Get(Item item)
+        public static Result Get(Item item)
         {
             uint PricePerItem(AuctionLot lot)
             {
                 var price = lot.Price;
                 var count = lot.Items.First().Item.Count;
-                return (price > count) ? price / count : 1;
+                return price > count ? price / count : 1;
             }
             if (File.Exists(CachedSearchFile))
                 cachedSearch = BinFile.Load<List<Result>>(CachedSearchFile);
@@ -36,7 +36,7 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                LoggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}"
+                loggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}"
                     .CarryOnLenght();
                 return cachedValue;
             }
@@ -58,13 +58,17 @@ namespace QuesterAssistant.Classes
             return cachedSearch.Find(l => l.InternalName == item.ItemDef.InternalName);
         }
 
+        public static void WriteLogMessage()
+        {
+            if (loggerMessage != null) Logger.WriteLine(loggerMessage);
+        }
+
         [Serializable]
         internal sealed class Result
         {
             public string DisplayName;
             public string InternalName;
             public List<Lot> Lots;
-            public int OwnLotsCount => Auction.AuctionSellList.Lots.Count(l => l.Items.First().Item.ItemDef.InternalName == InternalName);
             public DateTime DateTime;
 
             [Serializable]
@@ -72,7 +76,7 @@ namespace QuesterAssistant.Classes
             {
                 public uint Price;
                 public uint Count;
-                public uint PricePerItem => (Price > Count) ? (Price / Count) : 1;
+                public uint PricePerItem => Price > Count ? Price / Count : 1;
             }
 
             internal Result(Item item, List<AuctionLot> auctionLots)

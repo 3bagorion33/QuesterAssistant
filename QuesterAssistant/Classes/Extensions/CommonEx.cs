@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace QuesterAssistant.Classes.Common.Extensions
+namespace QuesterAssistant.Classes.Extensions
 {
     public static class CommonEx
     {

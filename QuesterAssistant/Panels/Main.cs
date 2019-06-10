@@ -29,27 +29,17 @@ namespace QuesterAssistant.Panels
             LoadSettings(mainTabControl.SelectedTabPage, null);
         }
 
-        private void hlkQAForumThread_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("http://neverwinter-bot.com/forums/viewtopic.php?f=155&t=9712");
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            System.Diagnostics.Process.Start("https://www.paypal.me/aorion33/10");
-        }
-
         private void Main_Load(object sender, EventArgs e)
         {
             components = new Container();
             //OnPanelLeave += Dispose;
-            lblVersion.Text = $"v {System.Diagnostics.FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).ProductVersion}";
 
             // Init Tabs
             settingsTab.Controls.Add(Core.SettingsCore.Panel);
             upgradeTab.Controls.Add(Core.UpgradeManagerCore.Panel);
             pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
             pushTab.Controls.Add(Core.PushNotifyCore.Panel);
+            aboutTab.Controls.Add(new About());
         }
     }
 }

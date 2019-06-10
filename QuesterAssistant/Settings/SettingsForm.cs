@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System.Windows.Forms;
 

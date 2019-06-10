@@ -15,7 +15,7 @@ using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant.Actions
@@ -33,7 +33,7 @@ namespace QuesterAssistant.Actions
         public override void InternalReset() { }
 
         private IDictionary<string, IEnumerable<InventorySlot>> slotsGroupList;
-        private double Multiply => (PriceType == SellingPriceType.Fixed) ? 1 : (double)PricePercent / 100;
+        private double Multiply => PriceType == SellingPriceType.Fixed ? 1 : (double)PricePercent / 100;
         protected override bool IntenalConditions => true;
 
         protected override ActionValidity InternalValidity
@@ -49,7 +49,7 @@ namespace QuesterAssistant.Actions
                 if (PriceValue == 0)
                     return new ActionValidity("PriceValue should not be zero");
 
-                if ((PriceType > SellingPriceType.Fixed) && ((PricePercent < 1) || (PricePercent > 199)))
+                if (PriceType > SellingPriceType.Fixed && (PricePercent < 1 || PricePercent > 199))
                     return new ActionValidity("PricePercent should be a percent (1-199 range)");
 
                 if (PriceValue < PriceMinimum)
@@ -67,9 +67,9 @@ namespace QuesterAssistant.Actions
             var item = l.Items.First().Item;
             return ItemsFilter.IsMatch(item) &&
                 (
-                    (ActiveLots == ActiveLotType.Resell) ?
-                    (l.TimeLeft < ((uint)Duration / 5)) || ((item.Count == StackSize) && ((l.Price / item.Count * 0.99) > (GetActualPrice(item) * Multiply))) :
-                    true
+                    ActiveLots == ActiveLotType.Force ||
+                    l.TimeLeft < (uint) Duration / 5 ||
+                    item.Count == StackSize && l.Price / item.Count * 0.99 > GetActualPrice(item) * Multiply
                 );
         }
 
@@ -133,13 +133,15 @@ namespace QuesterAssistant.Actions
             {
                 Thread.Sleep(2000);
             }
-
-            if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
-                return ActionResult.Fail;
-            Auction.RequestAuctionsForPlayer();
-            //GameCommands.Execute("GenSendMessage Auction_Myconsignments_Tabbutton Clicked");
+            bool OpenFrame()
+            {
+                if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
+                    return false;
+                Auction.RequestAuctionsForPlayer();
+                return true;
+            }
             
-            if (ActiveLots != ActiveLotType.Keep)
+            if (ActiveLots != ActiveLotType.Keep && OpenFrame())
             {
                 Waiting();
                 Logger.WriteLine("Try to collect items for reselling...");
@@ -177,7 +179,7 @@ namespace QuesterAssistant.Actions
 
             uint GetItemsCount(Item item)
             {
-                int ownLotsCount = AuctionSearch.Get(item).OwnLotsCount;
+                int ownLotsCount = Auction.AuctionSellList.Lots.Count(l => l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName);
                 var stacksToSell = (int)SellStacks - ownLotsCount;
 
                 // Если размер стака не определен, а количество слотов не определено или имеется, продаем как есть.
@@ -190,7 +192,7 @@ namespace QuesterAssistant.Actions
                 return 0;
             }
 
-            if (GetItemsToSell())
+            if (GetItemsToSell() && OpenFrame())
             {
                 foreach (KeyValuePair<string, IEnumerable<InventorySlot>> slotsList in slotsGroupList)
                 {
@@ -200,11 +202,11 @@ namespace QuesterAssistant.Actions
                         if (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key)
                         {
                             var itemPrice = GetActualPrice(itemToSell);
-                            Logger.WriteLine(AuctionSearch.LoggerMessage);
+                            AuctionSearch.WriteLogMessage();
                             Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD".CarryOnLenght());
                             uint itemCount;
 
-                            while ((itemCount = GetItemsCount(itemToSell)) > 0 && slot.Filled && itemToSell.IsValid)
+                            while (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key && (itemCount = GetItemsCount(itemToSell)) > 0)
                             {
                                 if (Auction.GetRemainingPostings() <= 0)
                                     goto Exit;

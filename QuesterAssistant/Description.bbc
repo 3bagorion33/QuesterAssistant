@@ -1,9 +1,9 @@
 [[b][u]Functionality[/u][/b]]
 [list]
-[*][b]Settings[/b]
-[*][b]Upgrade Manager[/b]
+[*][b]Settings[/b] manages some functions of this plugin.
+[*][b]Upgrade Manager[/b] provides engine to refine and evolve stones.
 [*][b]Powers Manager[/b] provides the ability to manage a set of powers puting in slots. It supports for hot keys.
-[*][b]Push Notify [color=red]beta![/color][/b]
+[*][b]Push Notify [color=red]beta![/color][/b] provides the ability to send Push message on your smartphone via PushBullet service.
 [/list]
 [[b][u]Quester States[/u][/b]]
 [list]
@@ -11,8 +11,8 @@
 [[b][u]Quester Actions[/u][/b]]
 [list]
 [*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price, has flexible options
-[*][b]BuyItemRemote[/b]
-[*][b]GroupItems[/b]
+[*][b]BuyItemRemote[/b] - allows you to remotely buy in campaign stores
+[*][b]GroupItems[/b] - allows to group items in bags using using bounding and protection properties
 [*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
 [*][b]CloseAllFrames[/b] - toggles off ingame cursor mode
 [*][b]ConsoleCommand[/b] - execute any ingame console command
@@ -21,8 +21,8 @@
 [*][b]LoadPowersPreset[/b] - loads a preset of powers for the current paragon by number or name (regular expressions), if available in the database
 [*][b]MoonMask[/b] - travel to MoonMask if possible
 [*][b]Notify[/b] - shows popup notification window, writes to file and sends to PushBullet clients the specified message
-[*][b]ReportAD[/b]
-[*][b]RunUpgradeProfile[/b]
+[*][b]ReportAD[/b] - stores to a file information about AA and AD of current character
+[*][b]RunUpgradeProfile[/b] - tries to run selected profile for refining and evolving items
 [*][b]RefineAD[/b] - refine astral diamonds if possible
 [*][b]UseConsumable[/b] - use equiped consumable by ID (by [b][color=#0080FF]michaelprog[/color][/b])
 [*][b]VIPRewards[/b] - claim account and char rewards and open boxes

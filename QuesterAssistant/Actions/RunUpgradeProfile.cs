@@ -3,13 +3,16 @@ using Astral.Logic.Classes.Map;
 using MyNW.Classes;
 using QuesterAssistant.UpgradeManager;
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.Linq;
+using System.Xml.Serialization;
+using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Actions
 {
     [Serializable]
-    public class RunUpgradeProfile : Astral.Quester.Classes.Action
+    public class RunUpgradeProfile : Astral.Quester.Classes.Action, IListConverter
     {
         public override string ActionLabel => $"{GetType().Name} : {ProfileName}";
         public override string Category => Core.Category;
@@ -22,9 +25,13 @@ namespace QuesterAssistant.Actions
         public override void OnMapDraw(GraphicsNW graph) { }
 
         private UpgradeManagerData Data => Core.UpgradeManagerCore.Data;
-        private UpgradeManagerData.Profile CurrentProfle => Data.Profiles.ToList().Find(p => p.Name == ProfileName) ?? new UpgradeManagerData.Profile();
+        private UpgradeManagerData.Profile CurrentProfile => Data.Profiles.ToList().Find(p => p.Name == ProfileName) ?? new UpgradeManagerData.Profile();
 
+        [Browsable(false), XmlIgnore]
+        public IList ListConverterData => Data.Profiles;
+        
         [Description("Name of profile from list to run.")]
+        [TypeConverter(typeof(ListConverter))]
         public string ProfileName { get; set; }
 
         protected override bool IntenalConditions
@@ -36,7 +43,7 @@ namespace QuesterAssistant.Actions
                     Logger.WriteLine(ActionLabel + $": You must determine {nameof(ProfileName)} to run!");
                     return false;
                 }
-                if (!CurrentProfle.Tasks.Any())
+                if (!CurrentProfile.Tasks.Any())
                 {
                     Logger.WriteLine(ActionLabel + ": Tasks list is empty!");
                     return false;
@@ -58,13 +65,9 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (IntenalConditions)
-            {
-                CurrentProfle.Run(startIdx: 0);
-                return ActionResult.Completed;
-            }
-            return ActionResult.Fail;
+            if (!IntenalConditions) return ActionResult.Fail;
+            CurrentProfile.Run(startIdx: 0);
+            return ActionResult.Completed;
         }
-
     }
 }

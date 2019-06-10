@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 using QuesterAssistant.Panels;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.PowersManager

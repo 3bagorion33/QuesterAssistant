@@ -196,13 +196,13 @@ namespace QuesterAssistant.Actions
                         var item = s.Item;
                         string line = Mask;
                         line = line.Replace("%itemCount%", item.Count.ToString());
-                        line = line.Replace("%internalName%", item.ItemDef.InternalName.ToString());
-                        line = line.Replace("%displayName%", item.DisplayName.ToString());
+                        line = line.Replace("%internalName%", item.ItemDef.InternalName);
+                        line = line.Replace("%displayName%", item.DisplayName);
                         line = line.Replace("%isBound%", item.IsBound.ToString());
                         if (line.Contains("%itemPrice%"))
                         {
                             var lots = AuctionSearch.Get(item).Lots;
-                            Logger.WriteLine(AuctionSearch.LoggerMessage);
+                            AuctionSearch.WriteLogMessage();
                             var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
                             line = line.Replace("%itemPrice%", price);
                         }

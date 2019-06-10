@@ -2,7 +2,7 @@
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System.Threading.Tasks;
 using System.Windows.Forms;

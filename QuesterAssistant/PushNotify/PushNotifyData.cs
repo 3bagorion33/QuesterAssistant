@@ -1,5 +1,5 @@
 ﻿using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Common.Extensions;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.PushBulletClient;
 using QuesterAssistant.Classes.PushBulletClient.Models.Responses;
 using System;

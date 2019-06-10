@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using Astral;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 
 namespace QuesterAssistant.Actions
