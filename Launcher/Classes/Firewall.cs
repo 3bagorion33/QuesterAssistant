@@ -43,6 +43,7 @@ namespace Launcher.Classes
         public static void CrypticErrorDenyServer()
         {
             Deny("CrypticError server", "", "74.207.241.31");
+            Deny("Game Error server", "", "208.95.187.80");
         }
 
         public static void RemoveAllRules()

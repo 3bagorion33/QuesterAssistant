@@ -214,7 +214,7 @@
             this.dbtnWindowsFirewall.Name = "dbtnWindowsFirewall";
             this.dbtnWindowsFirewall.Size = new System.Drawing.Size(135, 23);
             this.dbtnWindowsFirewall.TabIndex = 2;
-            this.dbtnWindowsFirewall.Text = "Windows Firewal ...";
+            this.dbtnWindowsFirewall.Text = "Windows Firewall ...";
             // 
             // menuFirewall
             // 
