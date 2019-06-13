@@ -1,10 +1,11 @@
 ﻿using QuesterAssistant.Classes;
 using System;
 using System.Windows.Forms;
+using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
-    internal class CoreForm : UserControl
+    internal class CoreForm : XtraUserControl
     {
         protected ICore core;
 
@@ -19,14 +20,14 @@ namespace QuesterAssistant.Panels
         // protected из-за атавизма Power Manager
         protected void SaveSettings(object sender, EventArgs e)
         {
-            if (sender == Parent)
+            if ((sender as ControlCollection).Contains(this))
             {
                 core.SaveSettings();
             }
         }
         protected void LoadSettings(object sender, EventArgs e)
         {
-            if (sender == Parent)
+            if ((sender as ControlCollection).Contains(this))
             {
                 ActiveControl = null;
                 core.LoadSettings();

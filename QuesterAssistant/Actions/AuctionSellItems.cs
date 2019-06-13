@@ -62,17 +62,6 @@ namespace QuesterAssistant.Actions
             }
         }
 
-        private bool IsSellLotMatch(AuctionLot l)
-        {
-            var item = l.Items.First().Item;
-            return ItemsFilter.IsMatch(item) &&
-                (
-                    ActiveLots == ActiveLotType.Force ||
-                    l.TimeLeft < (uint) Duration / 5 ||
-                    item.Count == StackSize && l.Price / item.Count * 0.99 > GetActualPrice(item) * Multiply
-                );
-        }
-
         private uint GetActualPrice(Item item)
         {
             uint result = 0;
@@ -94,7 +83,7 @@ namespace QuesterAssistant.Actions
                         int range = 0;
                         while (!validLots.Any())
                         {
-                            var stacksize = (int)((StackSize == 0) ? item.Count : StackSize);
+                            var stacksize = (int)(StackSize == 0 ? item.Count : StackSize);
                             var minrange = stacksize - range;
                             var maxrange = stacksize + range;
                             validLots = availableLots.FindAll(l => (int)l.Count >= minrange && (int)l.Count <= maxrange);
@@ -109,7 +98,7 @@ namespace QuesterAssistant.Actions
                         itemPrice = (uint)validLots.Average(x => x.PricePerItem);
                     if (PriceType == SellingPriceType.Median)
                         itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
-                    result = (PriceMinimum > itemPrice) ? PriceMinimum : itemPrice;
+                    result = PriceMinimum > itemPrice ? PriceMinimum : itemPrice;
                 }
                 else
                 {
@@ -143,12 +132,25 @@ namespace QuesterAssistant.Actions
             
             if (ActiveLots != ActiveLotType.Keep && OpenFrame())
             {
+                bool IsSellLotMatch(AuctionLot l)
+                {
+                    var item = l.Items.First().Item;
+                    var actualPrice = GetActualPrice(item) * Multiply;
+                    var lotPrice = l.Price / item.Count;
+                    return ItemsFilter.IsMatch(item) &&
+                           (
+                               ActiveLots == ActiveLotType.Force ||
+                               l.TimeLeft < (uint)Duration / 5 ||
+                               item.Count == StackSize &&
+                               (lotPrice * 0.99 > actualPrice || 1.01 * lotPrice < actualPrice)
+                           );
+                }
+
                 Waiting();
                 Logger.WriteLine("Try to collect items for reselling...");
-                uint prevLotsCount;
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
-                    prevLotsCount = Auction.AuctionSellList.LotsCount;
+                    var prevLotsCount = Auction.AuctionSellList.LotsCount;
                     Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
                     Waiting();
                     if (Auction.AuctionSellList.LotsCount == prevLotsCount)
@@ -156,7 +158,7 @@ namespace QuesterAssistant.Actions
                 }
             }
 
-            new GroupItems() { ItemIdFilter = ItemsFilter }.Run();
+            new GroupItems { ItemIdFilter = ItemsFilter }.Run();
 
             bool GetItemsToSell()
             {

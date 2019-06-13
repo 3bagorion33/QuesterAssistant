@@ -28,69 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.mainTabControl = new DevExpress.XtraTab.XtraTabControl();
-            this.settingsTab = new DevExpress.XtraTab.XtraTabPage();
-            this.upgradeTab = new DevExpress.XtraTab.XtraTabPage();
-            this.pManagerTab = new DevExpress.XtraTab.XtraTabPage();
-            this.pushTab = new DevExpress.XtraTab.XtraTabPage();
-            this.aboutTab = new DevExpress.XtraTab.XtraTabPage();
+            DevExpress.XtraEditors.TileItemElement tileItemElement1 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement2 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement3 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement4 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement5 = new DevExpress.XtraEditors.TileItemElement();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
-            this.sidePanel1 = new DevExpress.XtraEditors.SidePanel();
-            this.sidePanel2 = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).BeginInit();
-            this.mainTabControl.SuspendLayout();
-            this.sidePanel1.SuspendLayout();
-            this.sidePanel2.SuspendLayout();
+            this.sideButtons = new DevExpress.XtraEditors.SidePanel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.tctlMain = new DevExpress.XtraEditors.TileControl();
+            this.sideMain = new DevExpress.XtraEditors.SidePanel();
+            this.tileMain = new DevExpress.XtraEditors.TileControl();
+            this.tileGroup2 = new DevExpress.XtraEditors.TileGroup();
+            this.tileSettings = new DevExpress.XtraEditors.TileItem();
+            this.tileUpgradeManager = new DevExpress.XtraEditors.TileItem();
+            this.tilePushNotify = new DevExpress.XtraEditors.TileItem();
+            this.tileAbout = new DevExpress.XtraEditors.TileItem();
+            this.tilePowersManager = new DevExpress.XtraEditors.TileItem();
+            this.sideButtons.SuspendLayout();
+            this.sideMain.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mainTabControl
-            // 
-            this.mainTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainTabControl.Location = new System.Drawing.Point(0, 0);
-            this.mainTabControl.Name = "mainTabControl";
-            this.mainTabControl.SelectedTabPage = this.settingsTab;
-            this.mainTabControl.Size = new System.Drawing.Size(370, 372);
-            this.mainTabControl.TabIndex = 8;
-            this.mainTabControl.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
-            this.settingsTab,
-            this.upgradeTab,
-            this.pManagerTab,
-            this.pushTab,
-            this.aboutTab});
-            // 
-            // settingsTab
-            // 
-            this.settingsTab.Name = "settingsTab";
-            this.settingsTab.Size = new System.Drawing.Size(368, 347);
-            this.settingsTab.Text = "Settings";
-            // 
-            // upgradeTab
-            // 
-            this.upgradeTab.Name = "upgradeTab";
-            this.upgradeTab.Size = new System.Drawing.Size(368, 347);
-            this.upgradeTab.Text = "Upgrade Manager";
-            // 
-            // pManagerTab
-            // 
-            this.pManagerTab.Name = "pManagerTab";
-            this.pManagerTab.Size = new System.Drawing.Size(368, 347);
-            this.pManagerTab.Text = "Powers Manager";
-            // 
-            // pushTab
-            // 
-            this.pushTab.Name = "pushTab";
-            this.pushTab.Size = new System.Drawing.Size(368, 347);
-            this.pushTab.Text = "Push Notify";
-            // 
-            // aboutTab
-            // 
-            this.aboutTab.Name = "aboutTab";
-            this.aboutTab.Padding = new System.Windows.Forms.Padding(3);
-            this.aboutTab.Size = new System.Drawing.Size(368, 347);
-            this.aboutTab.Text = "About";
             // 
             // btnSave
             // 
@@ -112,65 +70,143 @@
             this.btnLoad.ToolTip = "Load settings";
             this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
             // 
-            // sidePanel1
+            // sideButtons
             // 
-            this.sidePanel1.AllowResize = false;
-            this.sidePanel1.AllowSnap = false;
-            this.sidePanel1.BorderThickness = 0;
-            this.sidePanel1.Controls.Add(this.mainTabControl);
-            this.sidePanel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.sidePanel1.Location = new System.Drawing.Point(0, 0);
-            this.sidePanel1.Name = "sidePanel1";
-            this.sidePanel1.Size = new System.Drawing.Size(370, 372);
-            this.sidePanel1.TabIndex = 9;
-            this.sidePanel1.Text = "sidePanel1";
-            // 
-            // sidePanel2
-            // 
-            this.sidePanel2.AllowResize = false;
-            this.sidePanel2.AllowSnap = false;
-            this.sidePanel2.BorderThickness = 0;
-            this.sidePanel2.Controls.Add(this.btnLoad);
-            this.sidePanel2.Controls.Add(this.btnSave);
-            this.sidePanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.sidePanel2.Location = new System.Drawing.Point(0, 375);
-            this.sidePanel2.Name = "sidePanel2";
-            this.sidePanel2.Size = new System.Drawing.Size(370, 41);
-            this.sidePanel2.TabIndex = 10;
-            this.sidePanel2.Text = "sidePanel2";
+            this.sideButtons.AllowResize = false;
+            this.sideButtons.AllowSnap = false;
+            this.sideButtons.BorderThickness = 0;
+            this.sideButtons.Controls.Add(this.btnLoad);
+            this.sideButtons.Controls.Add(this.btnSave);
+            this.sideButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.sideButtons.Location = new System.Drawing.Point(0, 375);
+            this.sideButtons.Name = "sideButtons";
+            this.sideButtons.Size = new System.Drawing.Size(370, 41);
+            this.sideButtons.TabIndex = 10;
+            this.sideButtons.Text = "sidePanel2";
             // 
             // defaultLookAndFeel
             // 
             this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
+            // tctlMain
+            // 
+            this.tctlMain.ColumnCount = 3;
+            this.tctlMain.Location = new System.Drawing.Point(0, 0);
+            this.tctlMain.Name = "tctlMain";
+            this.tctlMain.Size = new System.Drawing.Size(240, 150);
+            this.tctlMain.TabIndex = 0;
+            // 
+            // sideMain
+            // 
+            this.sideMain.Controls.Add(this.tileMain);
+            this.sideMain.Location = new System.Drawing.Point(0, 0);
+            this.sideMain.Name = "sideMain";
+            this.sideMain.Size = new System.Drawing.Size(370, 372);
+            this.sideMain.TabIndex = 11;
+            this.sideMain.Text = "sidePanel1";
+            // 
+            // tileMain
+            // 
+            this.tileMain.AllowDrag = false;
+            this.tileMain.AllowDragTilesBetweenGroups = false;
+            this.tileMain.AllowSelectedItemBorder = false;
+            this.tileMain.AllowSmoothScrolling = false;
+            this.tileMain.AppearanceItem.Normal.BackColor = System.Drawing.Color.RoyalBlue;
+            this.tileMain.AppearanceItem.Normal.BackColor2 = System.Drawing.Color.CornflowerBlue;
+            this.tileMain.AppearanceItem.Normal.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.tileMain.AppearanceItem.Normal.Options.UseBackColor = true;
+            this.tileMain.AppearanceItem.Normal.Options.UseBorderColor = true;
+            this.tileMain.ColumnCount = 3;
+            this.tileMain.Groups.Add(this.tileGroup2);
+            this.tileMain.HorizontalContentAlignment = DevExpress.Utils.HorzAlignment.Center;
+            this.tileMain.IndentBetweenGroups = 0;
+            this.tileMain.IndentBetweenItems = 10;
+            this.tileMain.ItemSize = 110;
+            this.tileMain.Location = new System.Drawing.Point(0, 0);
+            this.tileMain.Margin = new System.Windows.Forms.Padding(0);
+            this.tileMain.MaxId = 6;
+            this.tileMain.Name = "tileMain";
+            this.tileMain.RowCount = 2;
+            this.tileMain.Size = new System.Drawing.Size(370, 372);
+            this.tileMain.TabIndex = 13;
+            this.tileMain.Text = "tileControl1";
+            // 
+            // tileGroup2
+            // 
+            this.tileGroup2.Items.Add(this.tileSettings);
+            this.tileGroup2.Items.Add(this.tileUpgradeManager);
+            this.tileGroup2.Items.Add(this.tilePushNotify);
+            this.tileGroup2.Items.Add(this.tileAbout);
+            this.tileGroup2.Items.Add(this.tilePowersManager);
+            this.tileGroup2.Name = "tileGroup2";
+            // 
+            // tileSettings
+            // 
+            tileItemElement1.Text = "Settings";
+            this.tileSettings.Elements.Add(tileItemElement1);
+            this.tileSettings.Id = 1;
+            this.tileSettings.Name = "tileSettings";
+            this.tileSettings.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tileUpgradeManager
+            // 
+            tileItemElement2.Text = "Upgrade Manager";
+            this.tileUpgradeManager.Elements.Add(tileItemElement2);
+            this.tileUpgradeManager.Id = 2;
+            this.tileUpgradeManager.Name = "tileUpgradeManager";
+            this.tileUpgradeManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tilePushNotify
+            // 
+            tileItemElement3.Text = "Push Notify";
+            this.tilePushNotify.Elements.Add(tileItemElement3);
+            this.tilePushNotify.Id = 4;
+            this.tilePushNotify.Name = "tilePushNotify";
+            this.tilePushNotify.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tileAbout
+            // 
+            tileItemElement4.Text = "About";
+            this.tileAbout.Elements.Add(tileItemElement4);
+            this.tileAbout.Id = 5;
+            this.tileAbout.Name = "tileAbout";
+            this.tileAbout.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tilePowersManager
+            // 
+            tileItemElement5.Text = "Powers Manager";
+            this.tilePowersManager.Elements.Add(tileItemElement5);
+            this.tilePowersManager.Id = 3;
+            this.tilePowersManager.Name = "tilePowersManager";
+            this.tilePowersManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.sidePanel2);
-            this.Controls.Add(this.sidePanel1);
+            this.Controls.Add(this.sideMain);
+            this.Controls.Add(this.sideButtons);
             this.Name = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.mainTabControl)).EndInit();
-            this.mainTabControl.ResumeLayout(false);
-            this.sidePanel1.ResumeLayout(false);
-            this.sidePanel2.ResumeLayout(false);
+            this.sideButtons.ResumeLayout(false);
+            this.sideMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private DevExpress.XtraTab.XtraTabControl mainTabControl;
-        private DevExpress.XtraTab.XtraTabPage pManagerTab;
-        private DevExpress.XtraTab.XtraTabPage aboutTab;
         private DevExpress.XtraEditors.SimpleButton btnSave;
         private DevExpress.XtraEditors.SimpleButton btnLoad;
-        private DevExpress.XtraEditors.SidePanel sidePanel1;
-        private DevExpress.XtraEditors.SidePanel sidePanel2;
+        private DevExpress.XtraEditors.SidePanel sideButtons;
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
-        private DevExpress.XtraTab.XtraTabPage settingsTab;
-        private DevExpress.XtraTab.XtraTabPage pushTab;
-        private DevExpress.XtraTab.XtraTabPage upgradeTab;
+        private DevExpress.XtraEditors.TileControl tctlMain;
+        private DevExpress.XtraEditors.SidePanel sideMain;
+        private DevExpress.XtraEditors.TileControl tileMain;
+        private DevExpress.XtraEditors.TileGroup tileGroup2;
+        private DevExpress.XtraEditors.TileItem tileSettings;
+        private DevExpress.XtraEditors.TileItem tileUpgradeManager;
+        private DevExpress.XtraEditors.TileItem tilePushNotify;
+        private DevExpress.XtraEditors.TileItem tileAbout;
+        private DevExpress.XtraEditors.TileItem tilePowersManager;
     }
 }

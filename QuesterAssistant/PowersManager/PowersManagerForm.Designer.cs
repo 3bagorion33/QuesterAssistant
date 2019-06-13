@@ -28,31 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject17 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions6 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject21 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject22 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject23 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject24 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions7 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject25 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject26 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject27 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject28 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions8 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject29 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject30 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject31 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject32 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions9 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject33 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject34 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject35 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject36 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions10 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject37 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject38 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject39 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject40 = new DevExpress.Utils.SerializableAppearanceObject();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.tedGlobHotKey = new DevExpress.XtraEditors.TextEdit();
             this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
@@ -86,7 +86,7 @@
             // 
             // labelControl5
             // 
-            this.labelControl5.Location = new System.Drawing.Point(162, 9);
+            this.labelControl5.Location = new System.Drawing.Point(161, 3);
             this.labelControl5.Name = "labelControl5";
             this.labelControl5.Padding = new System.Windows.Forms.Padding(3, 3, 0, 3);
             this.labelControl5.Size = new System.Drawing.Size(111, 19);
@@ -97,12 +97,12 @@
             // tedGlobHotKey
             // 
             this.tedGlobHotKey.EditValue = "";
-            this.tedGlobHotKey.Location = new System.Drawing.Point(279, 9);
+            this.tedGlobHotKey.Location = new System.Drawing.Point(287, 3);
             this.tedGlobHotKey.Name = "tedGlobHotKey";
             this.tedGlobHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
             this.tedGlobHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
             this.tedGlobHotKey.Properties.ReadOnly = true;
-            this.tedGlobHotKey.Size = new System.Drawing.Size(80, 20);
+            this.tedGlobHotKey.Size = new System.Drawing.Size(83, 20);
             this.tedGlobHotKey.TabIndex = 12;
             this.tedGlobHotKey.TabStop = false;
             this.tedGlobHotKey.ToolTip = "Click here to bind hotkey";
@@ -110,7 +110,7 @@
             // 
             // chkHotKeys
             // 
-            this.chkHotKeys.Location = new System.Drawing.Point(10, 9);
+            this.chkHotKeys.Location = new System.Drawing.Point(-1, 3);
             this.chkHotKeys.Name = "chkHotKeys";
             this.chkHotKeys.Properties.Caption = "Enable hotkeys";
             this.chkHotKeys.Size = new System.Drawing.Size(106, 19);
@@ -128,9 +128,9 @@
             this.gCtrlPowersPresets.Controls.Add(this.btnSetPowers);
             this.gCtrlPowersPresets.Controls.Add(this.gridControlPowers);
             this.gCtrlPowersPresets.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.gCtrlPowersPresets.Location = new System.Drawing.Point(11, 86);
+            this.gCtrlPowersPresets.Location = new System.Drawing.Point(0, 80);
             this.gCtrlPowersPresets.Name = "gCtrlPowersPresets";
-            this.gCtrlPowersPresets.Size = new System.Drawing.Size(348, 250);
+            this.gCtrlPowersPresets.Size = new System.Drawing.Size(370, 292);
             this.gCtrlPowersPresets.TabIndex = 10;
             this.gCtrlPowersPresets.Text = "Powers Preset";
             // 
@@ -151,7 +151,7 @@
             this.tedCurrHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
             this.tedCurrHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
             this.tedCurrHotKey.Properties.ReadOnly = true;
-            this.tedCurrHotKey.Size = new System.Drawing.Size(95, 20);
+            this.tedCurrHotKey.Size = new System.Drawing.Size(111, 20);
             this.tedCurrHotKey.TabIndex = 7;
             this.tedCurrHotKey.TabStop = false;
             this.tedCurrHotKey.ToolTip = "Click here to bind hotkey";
@@ -162,15 +162,15 @@
             this.cmbPresetsList.Location = new System.Drawing.Point(86, 1);
             this.cmbPresetsList.Name = "cmbPresetsList";
             this.cmbPresetsList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "Select", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "Add", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo, "Rename", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Rename current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Sort", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Change presets list order", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Delete", -1, true, true, false, editorButtonImageOptions5, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "Delete current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "Select", -1, true, true, false, editorButtonImageOptions6, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject21, serializableAppearanceObject22, serializableAppearanceObject23, serializableAppearanceObject24, "Select a preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "Add", -1, true, true, false, editorButtonImageOptions7, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject25, serializableAppearanceObject26, serializableAppearanceObject27, serializableAppearanceObject28, "Add a new preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo, "Rename", -1, true, true, false, editorButtonImageOptions8, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject29, serializableAppearanceObject30, serializableAppearanceObject31, serializableAppearanceObject32, "Rename current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Sort", -1, true, true, false, editorButtonImageOptions9, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject33, serializableAppearanceObject34, serializableAppearanceObject35, serializableAppearanceObject36, "Change presets list order", null, null, DevExpress.Utils.ToolTipAnchor.Default),
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Delete", -1, true, true, false, editorButtonImageOptions10, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject37, serializableAppearanceObject38, serializableAppearanceObject39, serializableAppearanceObject40, "Delete current preset", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.cmbPresetsList.Properties.NullText = "Create a new preset";
             this.cmbPresetsList.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             this.cmbPresetsList.Properties.PropertiesChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
-            this.cmbPresetsList.Size = new System.Drawing.Size(259, 20);
+            this.cmbPresetsList.Size = new System.Drawing.Size(275, 20);
             this.cmbPresetsList.TabIndex = 4;
             this.cmbPresetsList.TabStop = false;
             this.cmbPresetsList.SelectedIndexChanged += new System.EventHandler(this.cmbPresetsList_SelectedIndexChanged);
@@ -178,7 +178,7 @@
             // 
             // btnGetPowers
             // 
-            this.btnGetPowers.Location = new System.Drawing.Point(187, 27);
+            this.btnGetPowers.Location = new System.Drawing.Point(203, 27);
             this.btnGetPowers.Name = "btnGetPowers";
             this.btnGetPowers.Size = new System.Drawing.Size(75, 23);
             this.btnGetPowers.TabIndex = 1;
@@ -188,7 +188,7 @@
             // 
             // btnSetPowers
             // 
-            this.btnSetPowers.Location = new System.Drawing.Point(268, 27);
+            this.btnSetPowers.Location = new System.Drawing.Point(284, 27);
             this.btnSetPowers.Name = "btnSetPowers";
             this.btnSetPowers.Size = new System.Drawing.Size(75, 23);
             this.btnSetPowers.TabIndex = 1;
@@ -198,11 +198,14 @@
             // 
             // gridControlPowers
             // 
+            this.gridControlPowers.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gridControlPowers.DataSource = this.powerListSource;
             this.gridControlPowers.Location = new System.Drawing.Point(3, 56);
             this.gridControlPowers.MainView = this.gridViewPowers;
             this.gridControlPowers.Name = "gridControlPowers";
-            this.gridControlPowers.Size = new System.Drawing.Size(342, 191);
+            this.gridControlPowers.Size = new System.Drawing.Size(364, 233);
             this.gridControlPowers.TabIndex = 0;
             this.gridControlPowers.TabStop = false;
             this.gridControlPowers.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -269,9 +272,9 @@
             this.gctrlCharInfo.Controls.Add(this.labelCharacterName);
             this.gctrlCharInfo.Controls.Add(this.labelCharacterClass);
             this.gctrlCharInfo.GroupStyle = DevExpress.Utils.GroupStyle.Light;
-            this.gctrlCharInfo.Location = new System.Drawing.Point(11, 34);
+            this.gctrlCharInfo.Location = new System.Drawing.Point(0, 28);
             this.gctrlCharInfo.Name = "gctrlCharInfo";
-            this.gctrlCharInfo.Size = new System.Drawing.Size(348, 46);
+            this.gctrlCharInfo.Size = new System.Drawing.Size(370, 46);
             this.gctrlCharInfo.TabIndex = 11;
             this.gctrlCharInfo.Text = "Current Character Info";
             // 
@@ -308,9 +311,8 @@
             this.Controls.Add(this.chkHotKeys);
             this.Controls.Add(this.gCtrlPowersPresets);
             this.Controls.Add(this.gctrlCharInfo);
-            this.MinimumSize = new System.Drawing.Size(370, 348);
             this.Name = "PowersManagerForm";
-            this.Size = new System.Drawing.Size(370, 348);
+            this.Size = new System.Drawing.Size(370, 372);
             this.Load += new System.EventHandler(this.PowersManagerForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).EndInit();

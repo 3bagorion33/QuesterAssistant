@@ -164,7 +164,7 @@ namespace QuesterAssistant.UpgradeManager
             [XmlIgnore]
             public string Count => $"{CountUnfilled} | {CountFilled}";
 
-            private const int TIME_WAIT = 500;
+            private const int TIME_WAIT = 333;
             private InventorySlot slot;
             private static List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
             private Result FindResult
@@ -173,11 +173,11 @@ namespace QuesterAssistant.UpgradeManager
                 {
                     Result FindSlot()
                     {
-                        if ((slot = BagsItems.Find(FindFullFilled)) != null)
+                        if ((slot = BagsItems.LastOrDefault(FindFullFilled)) != null)
                             return Result.FullFilled;
-                        if ((slot = BagsItems.Find(FindPartiallyFilled)) != null)
+                        if ((slot = BagsItems.LastOrDefault(FindPartiallyFilled)) != null)
                             return Result.PartFilled;
-                        if ((slot = BagsItems.Find(FindUnfilled)) != null)
+                        if ((slot = BagsItems.LastOrDefault(FindUnfilled)) != null)
                             return Result.Unfilled;
                         return Result.Null;
                     }
@@ -291,7 +291,7 @@ namespace QuesterAssistant.UpgradeManager
                     InventorySlot catal = null;
                     if (UseWard)
                     {
-                        catal = BagsItems.First(sl => sl.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_"));
+                        catal = BagsItems.LastOrDefault(FindCatal);
                     }
                     s.Evolve(catal);
                     Thread.Sleep(TIME_WAIT);

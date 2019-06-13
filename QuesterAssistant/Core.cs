@@ -66,6 +66,8 @@ namespace QuesterAssistant
                 }
             }
 
+            DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
+
             Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
@@ -75,10 +77,7 @@ namespace QuesterAssistant
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
             // Эта херня нужна для избежания ошибок загрузки ресурсов и работы BinaryFormatter
-            if (args.Name.Contains($"{Category}.resources"))
-                return typeof(Astral.Forms.Main).Assembly;
-
-            return typeof(Core).Assembly;
+            return args.Name.Contains($"{Category}.resources") ? typeof(Astral.Forms.Main).Assembly : typeof(Core).Assembly;
         }
 
         private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)

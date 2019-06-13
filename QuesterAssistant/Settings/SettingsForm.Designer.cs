@@ -67,10 +67,10 @@
             // 
             this.gctrlCommonSettings.Controls.Add(this.chkRoleToggleEnabled);
             this.gctrlCommonSettings.Controls.Add(this.txtRoleToggleString);
-            this.gctrlCommonSettings.Location = new System.Drawing.Point(11, 11);
+            this.gctrlCommonSettings.Location = new System.Drawing.Point(0, 3);
             this.gctrlCommonSettings.Name = "gctrlCommonSettings";
             this.gctrlCommonSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.gctrlCommonSettings.Size = new System.Drawing.Size(348, 58);
+            this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 58);
             this.gctrlCommonSettings.TabIndex = 2;
             this.gctrlCommonSettings.Text = "Common";
             // 
@@ -79,9 +79,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gctrlCommonSettings);
-            this.MinimumSize = new System.Drawing.Size(370, 348);
+            this.MinimumSize = new System.Drawing.Size(370, 372);
             this.Name = "SettingsForm";
-            this.Size = new System.Drawing.Size(370, 348);
+            this.Size = new System.Drawing.Size(370, 372);
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).EndInit();

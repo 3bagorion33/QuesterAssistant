@@ -1,6 +1,8 @@
 ﻿using Astral.Forms;
 using System;
 using System.ComponentModel;
+using DevExpress.Utils.Extensions;
+using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
@@ -21,12 +23,12 @@ namespace QuesterAssistant.Panels
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveSettings(mainTabControl.SelectedTabPage, null);
+            SaveSettings(sideMain.Controls, null);
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
         {
-            LoadSettings(mainTabControl.SelectedTabPage, null);
+            LoadSettings(sideMain.Controls, null);
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -35,11 +37,21 @@ namespace QuesterAssistant.Panels
             //OnPanelLeave += Dispose;
 
             // Init Tabs
-            settingsTab.Controls.Add(Core.SettingsCore.Panel);
-            upgradeTab.Controls.Add(Core.UpgradeManagerCore.Panel);
-            pManagerTab.Controls.Add(Core.PowersManagerCore.Panel);
-            pushTab.Controls.Add(Core.PushNotifyCore.Panel);
-            aboutTab.Controls.Add(new About());
+            tileSettings.Tag = Core.SettingsCore.Panel;
+            tileUpgradeManager.Tag = Core.UpgradeManagerCore.Panel;
+            tilePowersManager.Tag = Core.PowersManagerCore.Panel;
+            tilePushNotify.Tag = Core.PushNotifyCore.Panel;
+            tileAbout.Tag = new About();
+        }
+
+        private void tile_ItemClick(object sender, TileItemEventArgs e)
+        {
+            void LoadPanel<T>(T form) where T : XtraUserControl
+            {
+                sideMain.InvokeSafe(() => sideMain.Controls.Remove(tileMain));
+                sideMain.InvokeSafe(() => sideMain.Controls.Add(form));
+            }
+            LoadPanel((sender as TileItem)?.Tag as XtraUserControl);
         }
     }
 }

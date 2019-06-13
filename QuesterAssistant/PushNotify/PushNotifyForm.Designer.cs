@@ -55,17 +55,17 @@
             // 
             // txtToken
             // 
-            this.txtToken.Location = new System.Drawing.Point(63, 13);
+            this.txtToken.Location = new System.Drawing.Point(63, 4);
             this.txtToken.Name = "txtToken";
             this.txtToken.Properties.AutoHeight = false;
             this.txtToken.Properties.UseSystemPasswordChar = true;
-            this.txtToken.Size = new System.Drawing.Size(250, 23);
+            this.txtToken.Size = new System.Drawing.Size(260, 23);
             this.txtToken.TabIndex = 0;
             this.txtToken.TabStop = false;
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(13, 18);
+            this.labelControl1.Location = new System.Drawing.Point(3, 8);
             this.labelControl1.Name = "labelControl1";
             this.labelControl1.Size = new System.Drawing.Size(44, 13);
             this.labelControl1.TabIndex = 1;
@@ -75,7 +75,7 @@
             // 
             this.cbxDevicesList.EditValue = ((object)(resources.GetObject("cbxDevicesList.EditValue")));
             this.cbxDevicesList.Enabled = false;
-            this.cbxDevicesList.Location = new System.Drawing.Point(63, 42);
+            this.cbxDevicesList.Location = new System.Drawing.Point(63, 33);
             this.cbxDevicesList.Name = "cbxDevicesList";
             this.cbxDevicesList.Properties.AllowMultiSelect = true;
             this.cbxDevicesList.Properties.AppearanceDisabled.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(246)))), ((int)(((byte)(246)))));
@@ -92,14 +92,14 @@
             this.cbxDevicesList.Properties.PopupSizeable = false;
             this.cbxDevicesList.Properties.SelectAllItemVisible = false;
             this.cbxDevicesList.Properties.ShowNullValuePromptWhenFocused = true;
-            this.cbxDevicesList.Size = new System.Drawing.Size(213, 23);
+            this.cbxDevicesList.Size = new System.Drawing.Size(223, 23);
             this.cbxDevicesList.TabIndex = 3;
             this.cbxDevicesList.TabStop = false;
             this.cbxDevicesList.Closed += new DevExpress.XtraEditors.Controls.ClosedEventHandler(this.cbxDevicesList_Closed);
             // 
             // labelControl2
             // 
-            this.labelControl2.Location = new System.Drawing.Point(13, 47);
+            this.labelControl2.Location = new System.Drawing.Point(3, 37);
             this.labelControl2.Name = "labelControl2";
             this.labelControl2.Size = new System.Drawing.Size(44, 13);
             this.labelControl2.TabIndex = 4;
@@ -108,7 +108,7 @@
             // chbtHide
             // 
             this.chbtHide.Checked = true;
-            this.chbtHide.Location = new System.Drawing.Point(319, 13);
+            this.chbtHide.Location = new System.Drawing.Point(329, 3);
             this.chbtHide.Name = "chbtHide";
             this.chbtHide.Size = new System.Drawing.Size(38, 23);
             this.chbtHide.TabIndex = 5;
@@ -154,39 +154,39 @@
             // 
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.barDockControlTop.Location = new System.Drawing.Point(10, 10);
+            this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
             this.barDockControlTop.Manager = this.bmDevicesActions;
-            this.barDockControlTop.Size = new System.Drawing.Size(130, 0);
+            this.barDockControlTop.Size = new System.Drawing.Size(370, 0);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(10, 140);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 372);
             this.barDockControlBottom.Manager = this.bmDevicesActions;
-            this.barDockControlBottom.Size = new System.Drawing.Size(130, 0);
+            this.barDockControlBottom.Size = new System.Drawing.Size(370, 0);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.barDockControlLeft.Location = new System.Drawing.Point(10, 10);
+            this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             this.barDockControlLeft.Manager = this.bmDevicesActions;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 130);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 372);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(140, 10);
+            this.barDockControlRight.Location = new System.Drawing.Point(370, 0);
             this.barDockControlRight.Manager = this.bmDevicesActions;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 130);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 372);
             // 
             // btnDevicesActions
             // 
             this.btnDevicesActions.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Hide;
             this.btnDevicesActions.DropDownControl = this.pmDevicesActions;
-            this.btnDevicesActions.Location = new System.Drawing.Point(282, 42);
+            this.btnDevicesActions.Location = new System.Drawing.Point(292, 32);
             this.btnDevicesActions.MenuManager = this.bmDevicesActions;
             this.btnDevicesActions.Name = "btnDevicesActions";
             this.btnDevicesActions.Size = new System.Drawing.Size(75, 23);
@@ -208,8 +208,9 @@
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
+            this.MinimumSize = new System.Drawing.Size(370, 372);
             this.Name = "PushNotifyForm";
-            this.Padding = new System.Windows.Forms.Padding(10);
+            this.Size = new System.Drawing.Size(370, 372);
             this.Load += new System.EventHandler(this.PushNotifyForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.txtToken.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcClient)).EndInit();
