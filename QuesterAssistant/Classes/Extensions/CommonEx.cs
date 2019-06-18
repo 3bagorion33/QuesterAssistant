@@ -24,7 +24,7 @@ namespace QuesterAssistant.Classes.Extensions
 
         public static int CheckZero(this int @int, int value)
         {
-            return (@int == 0) ? value : @int;
+            return @int == 0 ? value : @int;
         }
     }
 }

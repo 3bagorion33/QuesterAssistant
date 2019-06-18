@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections;
+using System.ComponentModel;
 
 namespace QuesterAssistant.Classes.Common
 {
@@ -15,5 +16,10 @@ namespace QuesterAssistant.Classes.Common
             }
             return new StandardValuesCollection(null);
         }
+    }
+
+    internal interface IListConverter
+    {
+        IList ListConverterData { get; }
     }
 }

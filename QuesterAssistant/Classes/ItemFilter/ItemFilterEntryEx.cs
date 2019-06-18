@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
-    internal static class MyItemFilterEntry
+    internal static class ItemFilterEntryEx
     {
         public static bool StrType(this ItemFilterEntry itemFilterEntry, Item item)
         {

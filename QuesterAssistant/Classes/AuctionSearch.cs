@@ -36,11 +36,11 @@ namespace QuesterAssistant.Classes
             if (cachedValue != null)
             {
                 loggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}"
-                    .CarryOnLenght();
+                    .CarryOnLength();
                 return cachedValue;
             }
 
-            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...".CarryOnLenght());
+            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...".CarryOnLength());
             Auction.LotsSearch(item.DisplayName);
             Thread.Sleep(2500);
             while (Auction.SearchWaiting)

@@ -11,11 +11,11 @@ namespace QuesterAssistant.Classes.Common
     public abstract class NotifyHashChanged : INotifyPropertyChanged, IDisposable
     {
         private int prevHashCode;
-        private static Timer checkChanged = new Timer() { Enabled = true, Interval = 200, AutoReset = true };
+        private static readonly Timer checkChanged = new Timer { Enabled = true, Interval = 200, AutoReset = true };
         public event Action HashChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public NotifyHashChanged()
+        protected NotifyHashChanged()
         {
             prevHashCode = 0;
             checkChanged.Elapsed += CheckChanged_Tick;
@@ -40,7 +40,7 @@ namespace QuesterAssistant.Classes.Common
         {
             if (string.IsNullOrEmpty(name))
             {
-                throw new ArgumentNullException("name");
+                throw new ArgumentNullException(nameof(name));
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }

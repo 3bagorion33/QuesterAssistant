@@ -3,7 +3,7 @@ using MyNW.Classes;
 
 namespace QuesterAssistant.Classes.ItemFilter
 {
-    internal static class MyItemFilterCore
+    internal static class ItemFilterCoreEx
     {
         public static bool IsMatch(this ItemFilterCore itemFilterCore, Item item)
         {

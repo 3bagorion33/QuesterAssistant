@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
-using System.Threading;
 using Astral;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
@@ -110,18 +109,8 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            Random random = new Random((ActionID + DateTime.Now.ToString()).GetHashCode());
-            Astral.Classes.Timeout timeout = new Astral.Classes.Timeout(2500);
+            Pause pause = new Pause((int)TimeOutMin, (int)TimeOutMax);
 
-            void RandomWaiting()
-            {
-                Thread.Sleep(timeout.Left);
-                timeout.ChangeTime(random.Next((int)TimeOutMin, (int)TimeOutMax));
-            }
-            void Waiting()
-            {
-                Thread.Sleep(2000);
-            }
             bool OpenFrame()
             {
                 if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
@@ -135,24 +124,24 @@ namespace QuesterAssistant.Actions
                 bool IsSellLotMatch(AuctionLot l)
                 {
                     var item = l.Items.First().Item;
+                    if (!ItemsFilter.IsMatch(item))
+                        return false;
+
                     var actualPrice = GetActualPrice(item) * Multiply;
                     var lotPrice = l.Price / item.Count;
-                    return ItemsFilter.IsMatch(item) &&
-                           (
-                               ActiveLots == ActiveLotType.Force ||
-                               l.TimeLeft < (uint)Duration / 5 ||
-                               item.Count == StackSize &&
-                               (lotPrice * 0.99 > actualPrice || 1.01 * lotPrice < actualPrice)
-                           );
+                    return ActiveLots == ActiveLotType.Force ||
+                           l.TimeLeft < (uint)Duration / 5 ||
+                           item.Count == StackSize &&
+                           (lotPrice * 0.99 > actualPrice || 1.01 * lotPrice < actualPrice);
                 }
 
-                Waiting();
+                Pause.Sleep(2000);
                 Logger.WriteLine("Try to collect items for reselling...");
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
                     var prevLotsCount = Auction.AuctionSellList.LotsCount;
                     Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
-                    Waiting();
+                    Pause.Sleep(2000);
                     if (Auction.AuctionSellList.LotsCount == prevLotsCount)
                         Auction.RequestAuctionsForPlayer();
                 }
@@ -189,7 +178,7 @@ namespace QuesterAssistant.Actions
                     return item.Count;
                 // Если размер стака указан, а количество не лимитировано или имеется, возвращаем StackSize или 0, если нет нужного кол-ва
                 if (StackSize > 0 && (SellStacks == 0 || stacksToSell > 0))
-                    return (StackSize <= item.Count) ? StackSize : 0;
+                    return StackSize <= item.Count ? StackSize : 0;
 
                 return 0;
             }
@@ -205,7 +194,7 @@ namespace QuesterAssistant.Actions
                         {
                             var itemPrice = GetActualPrice(itemToSell);
                             AuctionSearch.WriteLogMessage();
-                            Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD".CarryOnLenght());
+                            Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD".CarryOnLength());
                             uint itemCount;
 
                             while (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key && (itemCount = GetItemsCount(itemToSell)) > 0)
@@ -218,12 +207,12 @@ namespace QuesterAssistant.Actions
                                 var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * buyoutPrice),
                                     RoundDigits, RoundFilledBy);
 
-                                RandomWaiting();
-                                Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD".CarryOnLenght());
+                                pause.RandomWaiting();
+                                Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD".CarryOnLength());
                                 Auction.CreateLot(itemToSell, itemCount, buyoutPrice, startingBid, Duration);
 
-                                timeout.Reset();
-                                Thread.Sleep(1500);
+                                pause.Reset();
+                                Pause.Sleep(1500);
                                 slot.Group();
                             }
                         }
@@ -237,18 +226,36 @@ namespace QuesterAssistant.Actions
             return ActionResult.Completed;
         }
 
+        [Browsable(false), DefaultValue(0)]
+        public uint TimeOutMin { get; set; }
+        [Browsable(false), DefaultValue(0)]
+        public uint TimeOutMax { get; set; }
+
         [Category("Interaction")]
         [Description("Keep : active lots count is determined by SellStacks | Resell : cancel active lots before")]
         public ActiveLotType ActiveLots { get; set; }
         [Category("Interaction")]
-        [Description("Timeout range between lots operations, min value in ms")]
-        public uint TimeOutMin { get; set; } = 2000;
-        [Category("Interaction")]
-        [Description("Timeout range between lots operations, max value in ms")]
-        public uint TimeOutMax { get; set; } = 3000;
-        [Category("Interaction")]
         [Description("Leave Auction frame opening, improve cascade selling")]
         public bool DontCloseAuctionFrame { get; set; } = false;
+
+        private MinMaxPair<uint> timeOut = new MinMaxPair<uint>(2000, 3000);
+        [Category("Interaction")]
+        [TypeConverter(typeof(PropertySorter))]
+        [Description("Set min & max values of pause between interactions")]
+        public MinMaxPair<uint> TimeOut
+        {
+            get
+            {
+                if (TimeOutMin > 0 && TimeOutMax > 0)
+                {
+                    timeOut = new MinMaxPair<uint>(TimeOutMin, TimeOutMax);
+                    TimeOutMin = 0;
+                    TimeOutMax = 0;
+                }
+                return timeOut;
+            }
+            set => timeOut = value;
+        }
 
         [Category("Items")]
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]

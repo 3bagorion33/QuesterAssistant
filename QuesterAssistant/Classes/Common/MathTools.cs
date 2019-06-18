@@ -41,6 +41,25 @@ namespace QuesterAssistant.Classes.Common
             }
             return result;
         }
+
+        public static uint Min(params uint[] num)
+        {
+            if (num.Length == 1) return num[0];
+            uint value = Math.Min(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Min(value, num[i]);
+            return value;
+        }
+
+        public static uint Max(params uint[] num)
+        {
+            if (num.Length == 1) return num[0];
+            uint value = Math.Max(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Max(value, num[i]);
+            return value;
+        }
+
         public enum RoundType
         {
             Zero,

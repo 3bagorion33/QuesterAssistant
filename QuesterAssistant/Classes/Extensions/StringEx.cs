@@ -6,6 +6,11 @@ namespace QuesterAssistant.Classes.Extensions
 {
     public static class StringEx
     {
+        public static string OrDefault(this string @string, string @default = "Empty")
+        {
+            return string.IsNullOrEmpty(@string) ? @default : @string;
+        }
+
         public static bool CaseContains(this string @this, string value,
         StringComparison stringComparison = StringComparison.CurrentCultureIgnoreCase)
         {
@@ -45,7 +50,7 @@ namespace QuesterAssistant.Classes.Extensions
         }
 
 
-        public static string CarryOnLenght(this string @this, int length = 55)
+        public static string CarryOnLength(this string @this, int length = 55)
         {
             return string.Join("\r\n", @this.SplitOnLength(length));
         }
