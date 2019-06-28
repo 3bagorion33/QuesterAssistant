@@ -22,12 +22,12 @@ namespace Launcher.Classes
         public string OriginalTitle { get; set; } = string.Empty;
         public string NewTitle { get; set; } = string.Empty;
         private const int HASH_SIZE = 4;
-        private readonly List<byte[]> REWRITE_TITLE_ORIG = new List<byte[]>()
+        private readonly List<byte[]> REWRITE_TITLE_ORIG = new List<byte[]>
         {
             new byte[] { 0x1B, 0x30, 0x04, 0x00, 0x46, 0x01, 0x00, 0x00 },
             new byte[] { 0x06, 0x6F, 0x17, 0x01, 0x00, 0x0A, 0x28, 0xD2 },
         };
-        private readonly List<byte[]> REWRITE_TITLE_NEW = new List<byte[]>()
+        private readonly List<byte[]> REWRITE_TITLE_NEW = new List<byte[]>
         {
             new byte[] { 0x1B, 0x30, 0x0C, 0x00, 0x46, 0x01, 0x00, 0x00 },
             new byte[] { 0x06, 0x6F, 0xB0, 0x01, 0x00, 0x0A, 0x28, 0xD2 },
@@ -159,19 +159,30 @@ namespace Launcher.Classes
         }
 
         [SecurityCritical]
-        public static void KillSpy()
+        public static string KillSpy()
         {
+            string message = string.Empty;
             try
             {
-                Process.GetProcesses().
-                    Where(
-                        p => Regex.IsMatch(p.ProcessName, @"^(CrashReporter|CrypticError)", RegexOptions.IgnoreCase)
-                    ).
-                    ForEach(p => p.Kill());
-                var handle = WinAPI.FindWindow(null, "Невервинтер Crash");
-                if (handle != IntPtr.Zero) WinAPI.CloseWindow(handle);
+                var process = Process.GetProcesses().ToList()
+                    .Find(p => Regex.IsMatch(p.ProcessName, @"^(CrashReporter|CrypticError)", RegexOptions.IgnoreCase));
+                if (process != null)
+                {
+                    process.Kill();
+                    message = process.ProcessName;
+                }
+
+                string crashTitle = "Невервинтер Crash";
+                var handle = WinAPI.FindWindow(null, crashTitle);
+                if (handle != IntPtr.Zero)
+                {
+                    WinAPI.CloseWindow(handle);
+                    message = crashTitle;
+                }
             }
-            catch { }
+            catch{}
+
+            return message;
         }
 
         private string GetMd5Hash(MD5 md5Hash, string input)

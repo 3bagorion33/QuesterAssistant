@@ -37,7 +37,7 @@
             this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
             this.timerDelete = new System.Windows.Forms.Timer();
-            this.gridControl1 = new DevExpress.XtraGrid.GridControl();
+            this.gctlProcessList = new DevExpress.XtraGrid.GridControl();
             this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
             this.toolTipController1 = new DevExpress.Utils.ToolTipController();
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -57,13 +57,26 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.chkHideTitle = new DevExpress.XtraEditors.CheckEdit();
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
+            this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
+            this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.gctlLogEventList = new DevExpress.XtraGrid.GridControl();
+            this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuFirewall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barFirewall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideTitle.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
+            this.tabPane1.SuspendLayout();
+            this.tabNavigationPage1.SuspendLayout();
+            this.tabNavigationPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // defaultLookAndFeel
@@ -72,10 +85,11 @@
             // 
             // btnStart
             // 
-            this.btnStart.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.btnStart.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
             this.btnStart.Appearance.Options.UseFont = true;
-            this.btnStart.Location = new System.Drawing.Point(12, 304);
+            this.btnStart.Location = new System.Drawing.Point(12, 277);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(360, 46);
             this.btnStart.TabIndex = 0;
@@ -88,25 +102,26 @@
             this.timerDelete.Interval = 250;
             this.timerDelete.Tick += new System.EventHandler(this.timerDelete_Tick);
             // 
-            // gridControl1
+            // gctlProcessList
             // 
-            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.gctlProcessList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridControl1.DataSource = this.bsrcInstancesList;
-            this.gridControl1.EmbeddedNavigator.ToolTip = "Tooltip";
-            this.gridControl1.EmbeddedNavigator.ToolTipController = this.toolTipController1;
-            this.gridControl1.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gridControl1.Location = new System.Drawing.Point(12, 66);
-            this.gridControl1.MainView = this.gridInstances;
-            this.gridControl1.Name = "gridControl1";
-            this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
+            this.gctlProcessList.DataSource = this.bsrcInstancesList;
+            this.gctlProcessList.EmbeddedNavigator.ToolTip = "Tooltip";
+            this.gctlProcessList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
+            this.gctlProcessList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
+            this.gctlProcessList.Location = new System.Drawing.Point(12, 64);
+            this.gctlProcessList.MainView = this.gridInstances;
+            this.gctlProcessList.Name = "gctlProcessList";
+            this.gctlProcessList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.btnClose});
-            this.gridControl1.Size = new System.Drawing.Size(360, 232);
-            this.gridControl1.TabIndex = 1;
-            this.gridControl1.ToolTipController = this.toolTipController1;
-            this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gctlProcessList.Size = new System.Drawing.Size(360, 207);
+            this.gctlProcessList.TabIndex = 1;
+            this.gctlProcessList.ToolTipController = this.toolTipController1;
+            this.gctlProcessList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridInstances});
-            this.gridControl1.DoubleClick += new System.EventHandler(this.gridControl1_DoubleClick);
+            this.gctlProcessList.DoubleClick += new System.EventHandler(this.gridControl1_DoubleClick);
             // 
             // toolTipController1
             // 
@@ -123,7 +138,7 @@
             this.gcolNewTitle,
             this.gcolOrigTitle,
             this.gcolButton});
-            this.gridInstances.GridControl = this.gridControl1;
+            this.gridInstances.GridControl = this.gctlProcessList;
             this.gridInstances.Name = "gridInstances";
             this.gridInstances.OptionsBehavior.AutoUpdateTotalSummary = false;
             this.gridInstances.OptionsBehavior.KeepGroupExpandedOnSorting = false;
@@ -205,11 +220,9 @@
             // 
             // dbtnWindowsFirewall
             // 
-            this.dbtnWindowsFirewall.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dbtnWindowsFirewall.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Show;
             this.dbtnWindowsFirewall.DropDownControl = this.menuFirewall;
-            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(12, 37);
+            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(12, 35);
             this.dbtnWindowsFirewall.MenuManager = this.barFirewall;
             this.dbtnWindowsFirewall.Name = "dbtnWindowsFirewall";
             this.dbtnWindowsFirewall.Size = new System.Drawing.Size(135, 23);
@@ -294,25 +307,125 @@
             // 
             // chkHideTitle
             // 
-            this.chkHideTitle.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(11, 12);
+            this.chkHideTitle.Location = new System.Drawing.Point(11, 10);
             this.chkHideTitle.MenuManager = this.barFirewall;
             this.chkHideTitle.Name = "chkHideTitle";
             this.chkHideTitle.Properties.Caption = "Hide Astral title";
             this.chkHideTitle.Size = new System.Drawing.Size(134, 19);
             this.chkHideTitle.TabIndex = 7;
             // 
+            // tabPane1
+            // 
+            this.tabPane1.AllowCollapse = DevExpress.Utils.DefaultBoolean.Default;
+            this.tabPane1.Controls.Add(this.tabNavigationPage1);
+            this.tabPane1.Controls.Add(this.tabNavigationPage2);
+            this.tabPane1.Location = new System.Drawing.Point(0, 0);
+            this.tabPane1.Name = "tabPane1";
+            this.tabPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
+            this.tabNavigationPage1,
+            this.tabNavigationPage2});
+            this.tabPane1.RegularSize = new System.Drawing.Size(384, 362);
+            this.tabPane1.SelectedPage = this.tabNavigationPage1;
+            this.tabPane1.Size = new System.Drawing.Size(384, 362);
+            this.tabPane1.TabIndex = 12;
+            this.tabPane1.Text = "tabPane1";
+            // 
+            // tabNavigationPage1
+            // 
+            this.tabNavigationPage1.Caption = "Main";
+            this.tabNavigationPage1.Controls.Add(this.btnStart);
+            this.tabNavigationPage1.Controls.Add(this.gctlProcessList);
+            this.tabNavigationPage1.Controls.Add(this.chkHideTitle);
+            this.tabNavigationPage1.Controls.Add(this.dbtnWindowsFirewall);
+            this.tabNavigationPage1.Name = "tabNavigationPage1";
+            this.tabNavigationPage1.Size = new System.Drawing.Size(384, 335);
+            // 
+            // tabNavigationPage2
+            // 
+            this.tabNavigationPage2.Caption = "Log";
+            this.tabNavigationPage2.Controls.Add(this.gctlLogEventList);
+            this.tabNavigationPage2.Name = "tabNavigationPage2";
+            this.tabNavigationPage2.Size = new System.Drawing.Size(384, 335);
+            // 
+            // gctlLogEventList
+            // 
+            this.gctlLogEventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gctlLogEventList.DataSource = this.bsrcInstancesList;
+            this.gctlLogEventList.EmbeddedNavigator.ToolTip = "Tooltip";
+            this.gctlLogEventList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
+            this.gctlLogEventList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
+            this.gctlLogEventList.Location = new System.Drawing.Point(12, 13);
+            this.gctlLogEventList.MainView = this.gridView1;
+            this.gctlLogEventList.Name = "gctlLogEventList";
+            this.gctlLogEventList.Size = new System.Drawing.Size(360, 310);
+            this.gctlLogEventList.TabIndex = 2;
+            this.gctlLogEventList.ToolTipController = this.toolTipController1;
+            this.gctlLogEventList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView1});
+            // 
+            // gridView1
+            // 
+            this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn1,
+            this.gridColumn2});
+            this.gridView1.GridControl = this.gctlLogEventList;
+            this.gridView1.Name = "gridView1";
+            this.gridView1.OptionsBehavior.AutoUpdateTotalSummary = false;
+            this.gridView1.OptionsBehavior.KeepGroupExpandedOnSorting = false;
+            this.gridView1.OptionsCustomization.AllowColumnMoving = false;
+            this.gridView1.OptionsCustomization.AllowFilter = false;
+            this.gridView1.OptionsCustomization.AllowGroup = false;
+            this.gridView1.OptionsDetail.AllowZoomDetail = false;
+            this.gridView1.OptionsDetail.EnableMasterViewMode = false;
+            this.gridView1.OptionsDetail.ShowDetailTabs = false;
+            this.gridView1.OptionsDetail.SmartDetailExpand = false;
+            this.gridView1.OptionsFilter.AllowColumnMRUFilterList = false;
+            this.gridView1.OptionsFilter.AllowFilterEditor = false;
+            this.gridView1.OptionsFilter.AllowMRUFilterList = false;
+            this.gridView1.OptionsFind.AllowFindPanel = false;
+            this.gridView1.OptionsMenu.EnableColumnMenu = false;
+            this.gridView1.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridView1.OptionsPrint.UsePrintStyles = false;
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView1.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridView1.OptionsSelection.UseIndicatorForSelection = false;
+            this.gridView1.OptionsView.ShowDetailButtons = false;
+            this.gridView1.OptionsView.ShowGroupPanel = false;
+            this.gridView1.OptionsView.ShowIndicator = false;
+            // 
+            // gridColumn1
+            // 
+            this.gridColumn1.Caption = "DateTime";
+            this.gridColumn1.DisplayFormat.FormatString = "G";
+            this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            this.gridColumn1.FieldName = "DateTime";
+            this.gridColumn1.MaxWidth = 120;
+            this.gridColumn1.Name = "gridColumn1";
+            this.gridColumn1.OptionsColumn.AllowEdit = false;
+            this.gridColumn1.OptionsColumn.FixedWidth = true;
+            this.gridColumn1.Visible = true;
+            this.gridColumn1.VisibleIndex = 0;
+            this.gridColumn1.Width = 120;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "Event";
+            this.gridColumn2.FieldName = "Event";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.OptionsColumn.AllowEdit = false;
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 1;
+            this.gridColumn2.Width = 238;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 362);
-            this.Controls.Add(this.chkHideTitle);
-            this.Controls.Add(this.dbtnWindowsFirewall);
-            this.Controls.Add(this.gridControl1);
-            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.tabPane1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -324,13 +437,19 @@
             this.Text = "Launcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuFirewall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barFirewall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideTitle.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).EndInit();
+            this.tabPane1.ResumeLayout(false);
+            this.tabNavigationPage1.ResumeLayout(false);
+            this.tabNavigationPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,7 +460,7 @@
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
         private DevExpress.XtraEditors.SimpleButton btnStart;
         private System.Windows.Forms.Timer timerDelete;
-        private DevExpress.XtraGrid.GridControl gridControl1;
+        private DevExpress.XtraGrid.GridControl gctlProcessList;
         private DevExpress.XtraGrid.Views.Grid.GridView gridInstances;
         private System.Windows.Forms.BindingSource bsrcInstancesList;
         private DevExpress.XtraGrid.Columns.GridColumn gcolProcess;
@@ -361,6 +480,13 @@
         private DevExpress.XtraBars.BarButtonItem menuFirewallDenyAddress;
         private DevExpress.XtraBars.BarButtonItem menuFirewallDeleteRules;
         private DevExpress.XtraEditors.CheckEdit chkHideTitle;
+        private DevExpress.XtraBars.Navigation.TabPane tabPane1;
+        private DevExpress.XtraBars.Navigation.TabNavigationPage tabNavigationPage1;
+        private DevExpress.XtraBars.Navigation.TabNavigationPage tabNavigationPage2;
+        private DevExpress.XtraGrid.GridControl gctlLogEventList;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
     }
 }
 

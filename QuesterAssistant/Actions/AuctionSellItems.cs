@@ -42,9 +42,6 @@ namespace QuesterAssistant.Actions
                 if (ItemsFilter.Entries.Count == 0)
                     return new ActionValidity("List of items is empty!");
 
-                if (TimeOutMax <= TimeOutMin)
-                    return new ActionValidity("TimeOutMax must be greater than TimeOutMin");
-
                 if (PriceValue == 0)
                     return new ActionValidity("PriceValue should not be zero");
 
@@ -97,7 +94,7 @@ namespace QuesterAssistant.Actions
                         itemPrice = (uint)validLots.Average(x => x.PricePerItem);
                     if (PriceType == SellingPriceType.Median)
                         itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
-                    result = PriceMinimum > itemPrice ? PriceMinimum : itemPrice;
+                    result = itemPrice;
                 }
                 else
                 {
@@ -109,7 +106,7 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            Pause pause = new Pause((int)TimeOutMin, (int)TimeOutMax);
+            Pause pause = new Pause(TimeOut);
 
             bool OpenFrame()
             {
@@ -170,8 +167,7 @@ namespace QuesterAssistant.Actions
 
             uint GetItemsCount(Item item)
             {
-                int ownLotsCount = Auction.AuctionSellList.Lots.Count(l => l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName);
-                var stacksToSell = (int)SellStacks - ownLotsCount;
+                var stacksToSell = (int)SellStacks - item.GetOwnLotsCount();
 
                 // Если размер стака не определен, а количество слотов не определено или имеется, продаем как есть.
                 if (StackSize == 0 && (SellStacks == 0 || stacksToSell > 0))
@@ -196,6 +192,7 @@ namespace QuesterAssistant.Actions
                             AuctionSearch.WriteLogMessage();
                             Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD".CarryOnLength());
                             uint itemCount;
+                            var roundDigits = AuctionSearch.Get(itemToSell).Lots.Any() ? RoundDigits : 0;
 
                             while (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key && (itemCount = GetItemsCount(itemToSell)) > 0)
                             {
@@ -203,9 +200,9 @@ namespace QuesterAssistant.Actions
                                     goto Exit;
 
                                 var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * Multiply, PriceMinimum) * itemCount),
-                                    RoundDigits, RoundFilledBy);
+                                    roundDigits, RoundFilledBy);
                                 var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * buyoutPrice),
-                                    RoundDigits, RoundFilledBy);
+                                    roundDigits, RoundFilledBy);
 
                                 pause.RandomWaiting();
                                 Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD".CarryOnLength());

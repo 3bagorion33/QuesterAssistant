@@ -210,6 +210,7 @@
     <Compile Include="Classes\Coffer.cs" />
     <Compile Include="Classes\Common\PropertySorter.cs" />
     <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
+    <Compile Include="Classes\Extensions\ItemEx.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Panels\About.cs">
       <SubType>UserControl</SubType>

@@ -142,6 +142,7 @@
     <Compile Include="Classes\Assemblies.cs" />
     <Compile Include="Classes\Firewall.cs" />
     <Compile Include="Classes\Instance.cs" />
+    <Compile Include="Classes\LogEvent.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
