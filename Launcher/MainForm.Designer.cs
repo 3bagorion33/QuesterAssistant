@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
+            this.components = new System.ComponentModel.Container();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
-            this.timerDelete = new System.Windows.Forms.Timer();
+            this.timerDelete = new System.Windows.Forms.Timer(this.components);
             this.gctlProcessList = new DevExpress.XtraGrid.GridControl();
-            this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
-            this.toolTipController1 = new DevExpress.Utils.ToolTipController();
+            this.bsrcInstancesList = new System.Windows.Forms.BindingSource(this.components);
+            this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProcess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolNewTitle = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -47,11 +48,11 @@
             this.gcolButton = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnClose = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.dbtnWindowsFirewall = new DevExpress.XtraEditors.DropDownButton();
-            this.menuFirewall = new DevExpress.XtraBars.PopupMenu();
+            this.menuFirewall = new DevExpress.XtraBars.PopupMenu(this.components);
             this.menuFirewallDenyApps = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDenyAddress = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDeleteRules = new DevExpress.XtraBars.BarButtonItem();
-            this.barFirewall = new DevExpress.XtraBars.BarManager();
+            this.barFirewall = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -59,11 +60,16 @@
             this.chkHideTitle = new DevExpress.XtraEditors.CheckEdit();
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
+            this.chkClose = new DevExpress.XtraEditors.CheckEdit();
+            this.chkKill = new DevExpress.XtraEditors.CheckEdit();
             this.tabNavigationPage2 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.gctlLogEventList = new DevExpress.XtraGrid.GridControl();
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).BeginInit();
@@ -74,6 +80,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
             this.tabNavigationPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
+            this.groupControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
+            this.groupControl1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkClose.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkKill.Properties)).BeginInit();
             this.tabNavigationPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -111,12 +123,12 @@
             this.gctlProcessList.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlProcessList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
             this.gctlProcessList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gctlProcessList.Location = new System.Drawing.Point(12, 64);
+            this.gctlProcessList.Location = new System.Drawing.Point(12, 109);
             this.gctlProcessList.MainView = this.gridInstances;
             this.gctlProcessList.Name = "gctlProcessList";
             this.gctlProcessList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.btnClose});
-            this.gctlProcessList.Size = new System.Drawing.Size(360, 207);
+            this.gctlProcessList.Size = new System.Drawing.Size(360, 162);
             this.gctlProcessList.TabIndex = 1;
             this.gctlProcessList.ToolTipController = this.toolTipController1;
             this.gctlProcessList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -212,7 +224,7 @@
             // 
             this.btnClose.AutoHeight = false;
             this.btnClose.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.btnClose.Name = "btnClose";
             this.btnClose.Padding = new System.Windows.Forms.Padding(3);
             this.btnClose.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -222,10 +234,10 @@
             // 
             this.dbtnWindowsFirewall.DropDownArrowStyle = DevExpress.XtraEditors.DropDownArrowStyle.Show;
             this.dbtnWindowsFirewall.DropDownControl = this.menuFirewall;
-            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(12, 35);
+            this.dbtnWindowsFirewall.Location = new System.Drawing.Point(5, 24);
             this.dbtnWindowsFirewall.MenuManager = this.barFirewall;
             this.dbtnWindowsFirewall.Name = "dbtnWindowsFirewall";
-            this.dbtnWindowsFirewall.Size = new System.Drawing.Size(135, 23);
+            this.dbtnWindowsFirewall.Size = new System.Drawing.Size(151, 23);
             this.dbtnWindowsFirewall.TabIndex = 2;
             this.dbtnWindowsFirewall.Text = "Windows Firewall ...";
             // 
@@ -308,10 +320,10 @@
             // chkHideTitle
             // 
             this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(11, 10);
+            this.chkHideTitle.Location = new System.Drawing.Point(5, 26);
             this.chkHideTitle.MenuManager = this.barFirewall;
             this.chkHideTitle.Name = "chkHideTitle";
-            this.chkHideTitle.Properties.Caption = "Hide Astral title";
+            this.chkHideTitle.Properties.Caption = "Hide title";
             this.chkHideTitle.Size = new System.Drawing.Size(134, 19);
             this.chkHideTitle.TabIndex = 7;
             // 
@@ -334,12 +346,53 @@
             // tabNavigationPage1
             // 
             this.tabNavigationPage1.Caption = "Main";
+            this.tabNavigationPage1.Controls.Add(this.groupControl2);
+            this.tabNavigationPage1.Controls.Add(this.groupControl1);
             this.tabNavigationPage1.Controls.Add(this.btnStart);
             this.tabNavigationPage1.Controls.Add(this.gctlProcessList);
-            this.tabNavigationPage1.Controls.Add(this.chkHideTitle);
-            this.tabNavigationPage1.Controls.Add(this.dbtnWindowsFirewall);
             this.tabNavigationPage1.Name = "tabNavigationPage1";
             this.tabNavigationPage1.Size = new System.Drawing.Size(384, 335);
+            // 
+            // groupControl2
+            // 
+            this.groupControl2.Controls.Add(this.chkHideTitle);
+            this.groupControl2.Location = new System.Drawing.Point(12, 3);
+            this.groupControl2.Name = "groupControl2";
+            this.groupControl2.Size = new System.Drawing.Size(177, 100);
+            this.groupControl2.TabIndex = 9;
+            this.groupControl2.Text = "Astral\'s Instances";
+            // 
+            // groupControl1
+            // 
+            this.groupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupControl1.Controls.Add(this.chkClose);
+            this.groupControl1.Controls.Add(this.chkKill);
+            this.groupControl1.Controls.Add(this.dbtnWindowsFirewall);
+            this.groupControl1.Location = new System.Drawing.Point(195, 3);
+            this.groupControl1.Name = "groupControl1";
+            this.groupControl1.Size = new System.Drawing.Size(177, 100);
+            this.groupControl1.TabIndex = 8;
+            this.groupControl1.Text = "CrypticError";
+            // 
+            // chkClose
+            // 
+            this.chkClose.EditValue = true;
+            this.chkClose.Location = new System.Drawing.Point(4, 78);
+            this.chkClose.Name = "chkClose";
+            this.chkClose.Properties.Caption = "Close NWO crash frame";
+            this.chkClose.Size = new System.Drawing.Size(152, 19);
+            this.chkClose.TabIndex = 3;
+            // 
+            // chkKill
+            // 
+            this.chkKill.EditValue = true;
+            this.chkKill.Location = new System.Drawing.Point(4, 53);
+            this.chkKill.MenuManager = this.barFirewall;
+            this.chkKill.Name = "chkKill";
+            this.chkKill.Properties.Caption = "Kill CrypticError processes";
+            this.chkKill.Size = new System.Drawing.Size(152, 19);
+            this.chkKill.TabIndex = 3;
             // 
             // tabNavigationPage2
             // 
@@ -420,6 +473,12 @@
             this.gridColumn2.VisibleIndex = 1;
             this.gridColumn2.Width = 238;
             // 
+            // notifyTray
+            // 
+            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
+            this.notifyTray.Text = "Launcher";
+            this.notifyTray.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseClick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,6 +496,7 @@
             this.Text = "Launcher";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).EndInit();
@@ -447,6 +507,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).EndInit();
             this.tabPane1.ResumeLayout(false);
             this.tabNavigationPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
+            this.groupControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
+            this.groupControl1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkClose.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkKill.Properties)).EndInit();
             this.tabNavigationPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -487,6 +553,11 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraEditors.GroupControl groupControl1;
+        private DevExpress.XtraEditors.CheckEdit chkClose;
+        private DevExpress.XtraEditors.CheckEdit chkKill;
+        private DevExpress.XtraEditors.GroupControl groupControl2;
+        private System.Windows.Forms.NotifyIcon notifyTray;
     }
 }
 

@@ -6,7 +6,13 @@ using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using Launcher.Classes;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Linq;
+using System.Security;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
+using QuesterAssistant.Classes.Common;
 
 namespace Launcher
 {
@@ -27,11 +33,45 @@ namespace Launcher
             instances.Add(instance);
         }
 
+        [SecurityCritical]
+        private string KillSpy()
+        {
+            string message = string.Empty;
+            try
+            {
+                if (chkKill.Checked)
+                {
+                    var process = Process.GetProcesses().ToList()
+                        .Find(p => Regex.IsMatch(p.ProcessName, @"^(CrashReporter|CrypticError)",
+                            RegexOptions.IgnoreCase));
+                    if (process != null)
+                    {
+                        process.Kill();
+                        message = process.ProcessName;
+                    }
+                }
+
+                if (chkClose.Checked)
+                {
+                    string crashTitle = "Невервинтер Crash";
+                    var handle = WinAPI.FindWindow(null, crashTitle);
+                    if (handle != IntPtr.Zero)
+                    {
+                        WinAPI.CloseWindow(handle);
+                        message = crashTitle;
+                    }
+                }
+            }
+            catch { }
+
+            return message;
+        }
+
         private void timerDelete_Tick(object sender, EventArgs e)
         {
             string killResult;
 
-            if (!string.IsNullOrEmpty(killResult = Instance.KillSpy()))
+            if (!string.IsNullOrEmpty(killResult = KillSpy()))
             {
                 logEvents.Add(new LogEvent($"'{killResult}' has been closed"));
             }
@@ -109,6 +149,23 @@ namespace Launcher
         private void menuFirewallDeleteRules_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             Firewall.RemoveAllRules();
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Thread.Sleep(250);
+                ShowInTaskbar = false;
+                notifyTray.Visible = true;
+            }
+        }
+
+        private void notifyTray_MouseClick(object sender, MouseEventArgs e)
+        {
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+            notifyTray.Visible = false;
         }
     }
 }

@@ -158,33 +158,6 @@ namespace Launcher.Classes
             Directory.EnumerateFiles(path).ForEach(f => { if (Regex.IsMatch(f, $@"[0-9a-f]{{{HASH_SIZE * 2}}}\.exe")) File.Delete(f); });
         }
 
-        [SecurityCritical]
-        public static string KillSpy()
-        {
-            string message = string.Empty;
-            try
-            {
-                var process = Process.GetProcesses().ToList()
-                    .Find(p => Regex.IsMatch(p.ProcessName, @"^(CrashReporter|CrypticError)", RegexOptions.IgnoreCase));
-                if (process != null)
-                {
-                    process.Kill();
-                    message = process.ProcessName;
-                }
-
-                string crashTitle = "Невервинтер Crash";
-                var handle = WinAPI.FindWindow(null, crashTitle);
-                if (handle != IntPtr.Zero)
-                {
-                    WinAPI.CloseWindow(handle);
-                    message = crashTitle;
-                }
-            }
-            catch{}
-
-            return message;
-        }
-
         private string GetMd5Hash(MD5 md5Hash, string input)
         {
             byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
