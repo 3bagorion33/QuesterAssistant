@@ -123,8 +123,7 @@ namespace QuesterAssistant.Actions
                     var item = l.Items.First().Item;
                     if (!ItemsFilter.IsMatch(item))
                         return false;
-
-                    var actualPrice = GetActualPrice(item) * Multiply;
+                    var actualPrice = Math.Max(GetActualPrice(item) * Multiply, PriceMinimum);
                     var lotPrice = l.Price / item.Count;
                     return ActiveLots == ActiveLotType.Force ||
                            l.TimeLeft < (uint)Duration / 5 ||
@@ -133,11 +132,12 @@ namespace QuesterAssistant.Actions
                 }
 
                 Pause.Sleep(2000);
-                Logger.WriteLine("Try to collect items for reselling...");
                 while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
                 {
                     var prevLotsCount = Auction.AuctionSellList.LotsCount;
-                    Auction.AuctionSellList.Lots.Find(IsSellLotMatch).Remove();
+                    var lot = Auction.AuctionSellList.Lots.Find(IsSellLotMatch);
+                    Logger.WriteLine($"Collect '{lot.Items[0].Item.DisplayName}' with price {lot.Price}AD".CarryOnLength());
+                    lot.Remove();
                     Pause.Sleep(2000);
                     if (Auction.AuctionSellList.LotsCount == prevLotsCount)
                         Auction.RequestAuctionsForPlayer();

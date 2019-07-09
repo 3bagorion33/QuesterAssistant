@@ -17,7 +17,7 @@ namespace QuesterAssistant
     public class Core : Plugin
     {
         public override string Author => "DartKotik & MichaelProg";
-        public override Image Icon => null;
+        public override Image Icon => Properties.Resources.Icon;
         public override string Name => "Quester Assistant";
         public override Astral.Forms.BasePanel Settings => new Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");

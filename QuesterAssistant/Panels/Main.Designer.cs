@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.XtraEditors.TileItemElement tileItemElement1 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement2 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement3 = new DevExpress.XtraEditors.TileItemElement();
@@ -36,7 +37,7 @@
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.sideButtons = new DevExpress.XtraEditors.SidePanel();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
             this.tctlMain = new DevExpress.XtraEditors.TileControl();
             this.sideMain = new DevExpress.XtraEditors.SidePanel();
             this.tileMain = new DevExpress.XtraEditors.TileControl();
@@ -150,6 +151,8 @@
             // 
             // tileUpgradeManager
             // 
+            this.tileUpgradeManager.BackgroundImage = global::QuesterAssistant.Properties.Resources.UpgradeManagerIcon;
+            this.tileUpgradeManager.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter;
             tileItemElement2.Text = "Upgrade Manager";
             this.tileUpgradeManager.Elements.Add(tileItemElement2);
             this.tileUpgradeManager.Id = 2;

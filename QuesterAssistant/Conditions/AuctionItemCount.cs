@@ -34,6 +34,7 @@ namespace QuesterAssistant.Conditions
 
         private uint CurrentCount()
         {
+            Auction.RequestAuctionsForPlayer();
             uint num = (uint) Auction.AuctionSellList.Lots
                     .FindAll(l => ItemsFilter.IsMatch(l.Items.First().Item))
                     .Sum(l => l.Items.First().Item.Count);
