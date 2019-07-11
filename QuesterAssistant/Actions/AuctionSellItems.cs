@@ -66,10 +66,10 @@ namespace QuesterAssistant.Actions
 
             if (PriceType > SellingPriceType.Fixed)
             {
-                var availableLots = AuctionSearch.Get(item).Lots;
+                var availableLots = new AuctionSearch(item.ItemDef).Result.Lots;
                 if (availableLots.Any())
                 {
-                    var validLots = new List<AuctionSearch.Result.Lot>();
+                    var validLots = new List<AuctionSearch.SearchResult.Lot>();
                     if (PriceDetectionRange == PriceDetectionType.Full)
                     {
                         validLots = availableLots;
@@ -112,7 +112,7 @@ namespace QuesterAssistant.Actions
             {
                 if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
                     return false;
-                Auction.RequestAuctionsForPlayer();
+                AuctionSearch.RequestAuctionsForPlayer();
                 return true;
             }
             
@@ -140,7 +140,7 @@ namespace QuesterAssistant.Actions
                     lot.Remove();
                     Pause.Sleep(2000);
                     if (Auction.AuctionSellList.LotsCount == prevLotsCount)
-                        Auction.RequestAuctionsForPlayer();
+                        AuctionSearch.RequestAuctionsForPlayer();
                 }
             }
 
@@ -167,7 +167,7 @@ namespace QuesterAssistant.Actions
 
             uint GetItemsCount(Item item)
             {
-                var stacksToSell = (int)SellStacks - item.GetOwnLotsCount();
+                var stacksToSell = (int)SellStacks - item.GetOwnLotsCount(StackSize);
 
                 // Если размер стака не определен, а количество слотов не определено или имеется, продаем как есть.
                 if (StackSize == 0 && (SellStacks == 0 || stacksToSell > 0))
@@ -183,26 +183,42 @@ namespace QuesterAssistant.Actions
             {
                 foreach (KeyValuePair<string, IEnumerable<InventorySlot>> slotsList in slotsGroupList)
                 {
+                    var item = slotsList.Value.First().Item;
+                    var auctionSearch = new AuctionSearch(item.ItemDef);
+                    auctionSearch.WriteLogMessage();
+                    var itemPrice = GetActualPrice(item);
+                    Logger.WriteLine($"Best price for '{item.DisplayName}' is {itemPrice}AD".CarryOnLength());
                     foreach (InventorySlot slot in slotsList.Value)
                     {
                         var itemToSell = slot.Item;
                         if (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key)
                         {
-                            var itemPrice = GetActualPrice(itemToSell);
-                            AuctionSearch.WriteLogMessage();
-                            Logger.WriteLine($"Best price for '{itemToSell.DisplayName}' is {itemPrice}AD".CarryOnLength());
                             uint itemCount;
-                            var roundDigits = AuctionSearch.Get(itemToSell).Lots.Any() ? RoundDigits : 0;
 
-                            while (itemToSell.IsValid && itemToSell.ItemDef.InternalName == slotsList.Key && (itemCount = GetItemsCount(itemToSell)) > 0)
+                            while (itemToSell.IsValid &&
+                                   itemToSell.ItemDef.InternalName == slotsList.Key &&
+                                   (itemCount = GetItemsCount(itemToSell)) > 0)
                             {
                                 if (Auction.GetRemainingPostings() <= 0)
                                     goto Exit;
 
-                                var buyoutPrice = MathTools.Round((int)(Math.Max(itemPrice * Multiply, PriceMinimum) * itemCount),
-                                    roundDigits, RoundFilledBy);
-                                var startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * buyoutPrice),
-                                    roundDigits, RoundFilledBy);
+                                itemPrice = GetActualPrice(itemToSell);
+
+                                int buyoutPrice = MathTools.Max(MathTools.Round(
+                                        (int) (itemPrice * Multiply * itemCount),
+                                        RoundDigits,
+                                        RoundFilledBy),
+                                    (int) (PriceMinimum * itemCount));
+
+                                int startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * buyoutPrice),
+                                    RoundDigits, RoundFilledBy);
+
+                                if ((VIP.Rank < 8 || VIP.ExpirationSecondsLeft == 0) &&
+                                    EntityManager.LocalPlayer.Inventory.AstralDiamonds < (int) (startingBid.CheckZero(buyoutPrice) * 0.02))
+                                {
+                                    Logger.WriteLine($"Not enough AD to pay collateral value for '{itemToSell.DisplayName}'x{itemCount}".CarryOnLength());
+                                    break;
+                                }
 
                                 pause.RandomWaiting();
                                 Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD".CarryOnLength());

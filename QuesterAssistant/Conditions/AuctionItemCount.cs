@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
+using Astral.Classes;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.NW;
 using Astral.Quester.Classes;
@@ -10,6 +11,7 @@ using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.ItemFilter;
 
 namespace QuesterAssistant.Conditions
@@ -18,6 +20,7 @@ namespace QuesterAssistant.Conditions
     public class AuctionItemCount : Condition
     {
         private LocalPlayerEntity Player => EntityManager.LocalPlayer;
+
         public AuctionItemCount()
         {
             Sign = Relation.Inferior;
@@ -34,7 +37,7 @@ namespace QuesterAssistant.Conditions
 
         private uint CurrentCount()
         {
-            Auction.RequestAuctionsForPlayer();
+            AuctionSearch.RequestAuctionsForPlayer();
             uint num = (uint) Auction.AuctionSellList.Lots
                     .FindAll(l => ItemsFilter.IsMatch(l.Items.First().Item))
                     .Sum(l => l.Items.First().Item.Count);

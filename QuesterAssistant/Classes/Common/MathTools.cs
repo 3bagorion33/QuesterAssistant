@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 
 namespace QuesterAssistant.Classes.Common
 {
@@ -51,10 +52,10 @@ namespace QuesterAssistant.Classes.Common
             return value;
         }
 
-        public static uint Max(params uint[] num)
+        public static dynamic Max(params dynamic[] num)
         {
             if (num.Length == 1) return num[0];
-            uint value = Math.Max(num[0], num[1]);
+            var value = Math.Max(num[0], num[1]);
             for (int i = 2; i < num.Length - 2; i++)
                 value = Math.Max(value, num[i]);
             return value;

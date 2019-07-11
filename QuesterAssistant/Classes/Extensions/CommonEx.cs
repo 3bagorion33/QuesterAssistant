@@ -22,6 +22,9 @@ namespace QuesterAssistant.Classes.Extensions
             return @this.GetHashCode();
         }
 
+        /// <summary>
+        /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
+        /// </summary>
         public static int CheckZero(this int @int, int value)
         {
             return @int == 0 ? value : @int;

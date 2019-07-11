@@ -13,16 +13,26 @@ using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Classes
 {
-    internal static class AuctionSearch
+    internal class AuctionSearch
     {
         private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
-        private static List<Result> cachedSearch;
-        private static string loggerMessage;
+        private static readonly Astral.Classes.Timeout timeOut = new Astral.Classes.Timeout(1000);
+        private readonly ItemDef itemDef;
+        private List<SearchResult> cachedSearch;
 
-        public static Result Get(Item item)
+        private string loggerMessage;
+        public SearchResult Result { get; }
+
+        public AuctionSearch(ItemDef itemDef)
         {
-            if (string.IsNullOrEmpty(item.DisplayName))
-                return new Result(null, null);
+            this.itemDef = itemDef;
+            Result = GetResult();
+        }
+        
+        private SearchResult GetResult()
+        {
+            if (string.IsNullOrEmpty(itemDef.DisplayName))
+                return new SearchResult(null, null);
 
             uint PricePerItem(AuctionLot lot)
             {
@@ -30,8 +40,8 @@ namespace QuesterAssistant.Classes
                 var count = lot.Items.First().Item.Count;
                 return price > count ? price / count : 1;
             }
-            cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<Result>>(CachedSearchFile) : new List<Result>();
-            var cachedValue = cachedSearch.Find(l => l.InternalName == item.ItemDef.InternalName && l.DateTime.Subtract(DateTime.Now).TotalHours > -1);
+            cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
+            var cachedValue = cachedSearch.Find(l => l.InternalName == itemDef.InternalName && l.DateTime.Subtract(DateTime.Now).TotalHours > -1);
 
             if (cachedValue != null)
             {
@@ -40,30 +50,39 @@ namespace QuesterAssistant.Classes
                 return cachedValue;
             }
 
-            Logger.WriteLine($"Try to search actual price for '{item.DisplayName}'...".CarryOnLength());
-            Auction.LotsSearch(item.DisplayName);
+            Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'...".CarryOnLength());
+            Auction.LotsSearch(itemDef.DisplayName);
             Thread.Sleep(2500);
             while (Auction.SearchWaiting)
                 Thread.Sleep(250);
 
             var availableLots = Auction.AuctionLotList.Lots
-                .FindAll(l => l.Price > 0 && l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName)
+                .FindAll(l => l.Price > 0 && l.Items.First().Item.ItemDef.InternalName == itemDef.InternalName)
                 .OrderBy(PricePerItem).ToList();
 
-            cachedSearch.AddOrReplace(l => l.InternalName == item.ItemDef.InternalName,
-                new Result(item, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+            cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
+                new SearchResult(itemDef, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
-            return cachedSearch.Find(l => l.InternalName == item.ItemDef.InternalName);
+            return cachedSearch.Find(l => l.InternalName == itemDef.InternalName);
         }
 
-        public static void WriteLogMessage()
+        public void WriteLogMessage()
         {
             if (loggerMessage != null) Logger.WriteLine(loggerMessage);
         }
 
+        public static void RequestAuctionsForPlayer()
+        {
+            if (timeOut.IsTimedOut)
+            {
+                Auction.RequestAuctionsForPlayer();
+                timeOut.Reset();
+            }
+        }
+
         [Serializable]
-        internal sealed class Result
+        internal sealed class SearchResult
         {
             public string DisplayName;
             public string InternalName;
@@ -78,10 +97,10 @@ namespace QuesterAssistant.Classes
                 public uint PricePerItem => Price > Count ? Price / Count : 1;
             }
 
-            public Result(Item item, List<AuctionLot> auctionLots)
+            public SearchResult(ItemDef item, List<AuctionLot> auctionLots)
             {
-                DisplayName = item.ItemDef.DisplayName;
-                InternalName = item.ItemDef.InternalName;
+                DisplayName = item.DisplayName;
+                InternalName = item.InternalName;
                 Lots = new List<Lot>();
                 foreach (var lot in auctionLots)
                 {

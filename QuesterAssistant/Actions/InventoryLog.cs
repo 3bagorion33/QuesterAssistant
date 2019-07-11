@@ -201,8 +201,9 @@ namespace QuesterAssistant.Actions
                         line = line.Replace("%isBound%", item.IsBound.ToString());
                         if (line.Contains("%itemPrice%"))
                         {
-                            var lots = AuctionSearch.Get(item).Lots;
-                            AuctionSearch.WriteLogMessage();
+                            var auctionSearch = new AuctionSearch(item.ItemDef);
+                            var lots = auctionSearch.Result.Lots;
+                            auctionSearch.WriteLogMessage();
                             var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
                             line = line.Replace("%itemPrice%", price);
                         }
