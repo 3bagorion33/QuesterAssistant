@@ -7,7 +7,7 @@ namespace QuesterAssistant.Classes
 {
     internal class Pause
     {
-        private static readonly Random Random = new Random();
+        private static readonly Random random = new Random();
         private readonly Timeout timeout;
 
         private int min;
@@ -34,7 +34,12 @@ namespace QuesterAssistant.Classes
 
         private int RandomNext()
         {
-            return Random.Next(min, max);
+            return random.Next(min, max);
+        }
+
+        public static int Random(int min, int max)
+        {
+            return random.Next(min, max);
         }
 
         public static void Sleep(int @int)
@@ -44,7 +49,7 @@ namespace QuesterAssistant.Classes
 
         public static void RandomSleep(int min, int max)
         {
-            Thread.Sleep(Random.Next(min, max));
+            Thread.Sleep(random.Next(min, max));
         }
 
         public void Waiting()

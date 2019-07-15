@@ -95,7 +95,10 @@ namespace QuesterAssistant.Actions
 
         private static bool IsStrongholdMap => EntityManager.LocalPlayer.MapState.MapName == "Sh_Pve";
         private static Entity CofferEntity =>
-            EntityManager.GetEntities().Find(e => e.NameUntranslatedHash == 1351539263) ?? new Entity(IntPtr.Zero);
+            EntityManager.GetEntities()
+                .Find(e => e.NameUntranslated ==
+                           "Maps_Stronghold_Sh_Pve_Content_N0.Encounter_Coffer_Actor_1_Displayname.Encounter_Coffer") ??
+            new Entity(IntPtr.Zero);
 
         private static InventorySlotLite GuildMark => NumericList.Find(s => s.Name == "Stronghold_Currency_Guild_Mark");
         private const int GUILD_MARK_LIMIT = 30000;

@@ -149,6 +149,7 @@ namespace QuesterAssistant.Actions
             bool GetItemsToSell()
             {
                 var bags = EntityManager.LocalPlayer.BagsItems;
+                EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.Overflow).GetItems.ForEach(s => bags.Remove(s));
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.FashionItems).GetItems);

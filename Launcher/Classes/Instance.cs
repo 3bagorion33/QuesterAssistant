@@ -6,9 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,7 +16,7 @@ namespace Launcher.Classes
 {
     sealed class Instance : NotifyHashChanged
     {
-        public Process Process { get; set; } = new Process();
+        public Process Process { get; } = new Process();
         public string OriginalTitle { get; set; } = string.Empty;
         public string NewTitle { get; set; } = string.Empty;
         private const int HASH_SIZE = 4;

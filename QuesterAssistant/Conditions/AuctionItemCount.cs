@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
+using Astral;
 using Astral.Classes;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.NW;
@@ -85,7 +86,10 @@ namespace QuesterAssistant.Conditions
 
         public override string TestInfos => "Item count : " + CurrentCount();
 
-        public override void Reset() {}
+        public override void Reset()
+        {
+            AuctionSearch.RequestAuctionsForPlayer();
+        }
 
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemsFilter { get; set; }

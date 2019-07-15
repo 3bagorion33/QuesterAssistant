@@ -16,7 +16,7 @@ namespace QuesterAssistant.Classes
     internal class AuctionSearch
     {
         private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
-        private static readonly Astral.Classes.Timeout timeOut = new Astral.Classes.Timeout(1000);
+        private static readonly Astral.Classes.Timeout timeOut = new Astral.Classes.Timeout(0);
         private readonly ItemDef itemDef;
         private List<SearchResult> cachedSearch;
 
@@ -50,16 +50,25 @@ namespace QuesterAssistant.Classes
                 return cachedValue;
             }
 
-            Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'...".CarryOnLength());
-            Auction.LotsSearch(itemDef.DisplayName);
-            Thread.Sleep(2500);
-            while (Auction.SearchWaiting)
-                Thread.Sleep(250);
+            List<AuctionLot> availableLots;
+            int searchTrying = 0;
+            do
+            {
+                searchTrying++;
+                Auction.LotsSearch(itemDef.DisplayName);
+                Thread.Sleep(2500);
+                while (Auction.SearchWaiting)
+                    Thread.Sleep(250);
+            }
+            while (!(availableLots = Auction.AuctionLotList.Lots
+                             .FindAll(l => l.Items.First().Item.ItemDef.InternalName == itemDef.InternalName))
+                         .Any()
+                     && searchTrying < 3);
 
-            var availableLots = Auction.AuctionLotList.Lots
-                .FindAll(l => l.Price > 0 && l.Items.First().Item.ItemDef.InternalName == itemDef.InternalName)
-                .OrderBy(PricePerItem).ToList();
+            availableLots = availableLots.FindAll(l => l.Price > 0).OrderBy(PricePerItem).ToList();
 
+            Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'... Result contains {availableLots.Count} items.".CarryOnLength());
+            
             cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
                 new SearchResult(itemDef, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
@@ -77,6 +86,7 @@ namespace QuesterAssistant.Classes
             if (timeOut.IsTimedOut)
             {
                 Auction.RequestAuctionsForPlayer();
+                timeOut.ChangeTime(Pause.Random(1000, 2000));
                 timeOut.Reset();
             }
         }

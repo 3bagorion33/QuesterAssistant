@@ -29,6 +29,7 @@ namespace Launcher
         private void btnStart_Click(object sender, EventArgs e)
         {
             var instance = new Instance();
+            instance.Process.PriorityClass = ProcessPriorityClass.AboveNormal;
             logEvents.Add(new LogEvent($"Starting new Instance #{instance.Process.ProcessName}"));
             instances.Add(instance);
         }
