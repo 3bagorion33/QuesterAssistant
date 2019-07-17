@@ -29,7 +29,7 @@ namespace Launcher
         private void btnStart_Click(object sender, EventArgs e)
         {
             var instance = new Instance();
-            instance.Process.PriorityClass = ProcessPriorityClass.AboveNormal;
+            instance.Process.PriorityClass = (ProcessPriorityClass) cbxPriority.SelectedItem;
             logEvents.Add(new LogEvent($"Starting new Instance #{instance.Process.ProcessName}"));
             instances.Add(instance);
         }
@@ -103,6 +103,14 @@ namespace Launcher
             bsrcInstancesList.DataSource = instances;
             gctlLogEventList.DataSource = logEvents;
 
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.RealTime);
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.High);
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.AboveNormal);
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.Normal);
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.BelowNormal);
+            cbxPriority.Properties.Items.Add(ProcessPriorityClass.Idle);
+            cbxPriority.SelectedIndex = 2;
+
             logEvents.Add(new LogEvent("Launcher is started"));
         }
 
@@ -167,6 +175,11 @@ namespace Launcher
             ShowInTaskbar = true;
             WindowState = FormWindowState.Normal;
             notifyTray.Visible = false;
+        }
+
+        private void cbxPriority_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            instances.ForEach(i => i.Process.PriorityClass = (ProcessPriorityClass) cbxPriority.SelectedItem);
         }
     }
 }

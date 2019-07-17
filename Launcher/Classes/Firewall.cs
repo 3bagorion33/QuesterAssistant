@@ -44,6 +44,7 @@ namespace Launcher.Classes
         {
             Deny("CrypticError server", "", "74.207.241.31");
             Deny("Game Error server", "", "208.95.187.80");
+            Deny("TicketTracker server", "", "172.26.11.26");
         }
 
         public static void RemoveAllRules()

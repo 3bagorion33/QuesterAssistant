@@ -28,19 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
+            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
-            this.timerDelete = new System.Windows.Forms.Timer(this.components);
+            this.timerDelete = new System.Windows.Forms.Timer();
             this.gctlProcessList = new DevExpress.XtraGrid.GridControl();
-            this.bsrcInstancesList = new System.Windows.Forms.BindingSource(this.components);
-            this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
+            this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
+            this.toolTipController1 = new DevExpress.Utils.ToolTipController();
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProcess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolNewTitle = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -48,11 +47,11 @@
             this.gcolButton = new DevExpress.XtraGrid.Columns.GridColumn();
             this.btnClose = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.dbtnWindowsFirewall = new DevExpress.XtraEditors.DropDownButton();
-            this.menuFirewall = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.menuFirewall = new DevExpress.XtraBars.PopupMenu();
             this.menuFirewallDenyApps = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDenyAddress = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDeleteRules = new DevExpress.XtraBars.BarButtonItem();
-            this.barFirewall = new DevExpress.XtraBars.BarManager(this.components);
+            this.barFirewall = new DevExpress.XtraBars.BarManager();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -69,7 +68,9 @@
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notifyTray = new System.Windows.Forms.NotifyIcon();
+            this.cbxPriority = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).BeginInit();
@@ -89,6 +90,7 @@
             this.tabNavigationPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // defaultLookAndFeel
@@ -224,7 +226,7 @@
             // 
             this.btnClose.AutoHeight = false;
             this.btnClose.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Close, "", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Close this instance", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
             this.btnClose.Name = "btnClose";
             this.btnClose.Padding = new System.Windows.Forms.Padding(3);
             this.btnClose.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.HideTextEditor;
@@ -237,7 +239,7 @@
             this.dbtnWindowsFirewall.Location = new System.Drawing.Point(5, 24);
             this.dbtnWindowsFirewall.MenuManager = this.barFirewall;
             this.dbtnWindowsFirewall.Name = "dbtnWindowsFirewall";
-            this.dbtnWindowsFirewall.Size = new System.Drawing.Size(151, 23);
+            this.dbtnWindowsFirewall.Size = new System.Drawing.Size(167, 23);
             this.dbtnWindowsFirewall.TabIndex = 2;
             this.dbtnWindowsFirewall.Text = "Windows Firewall ...";
             // 
@@ -320,7 +322,7 @@
             // chkHideTitle
             // 
             this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(5, 26);
+            this.chkHideTitle.Location = new System.Drawing.Point(4, 53);
             this.chkHideTitle.MenuManager = this.barFirewall;
             this.chkHideTitle.Name = "chkHideTitle";
             this.chkHideTitle.Properties.Caption = "Hide title";
@@ -355,6 +357,8 @@
             // 
             // groupControl2
             // 
+            this.groupControl2.Controls.Add(this.labelControl1);
+            this.groupControl2.Controls.Add(this.cbxPriority);
             this.groupControl2.Controls.Add(this.chkHideTitle);
             this.groupControl2.Location = new System.Drawing.Point(12, 3);
             this.groupControl2.Name = "groupControl2";
@@ -479,6 +483,26 @@
             this.notifyTray.Text = "Launcher";
             this.notifyTray.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseClick);
             // 
+            // cbxPriority
+            // 
+            this.cbxPriority.Location = new System.Drawing.Point(52, 26);
+            this.cbxPriority.MenuManager = this.barFirewall;
+            this.cbxPriority.Name = "cbxPriority";
+            this.cbxPriority.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbxPriority.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxPriority.Size = new System.Drawing.Size(120, 20);
+            this.cbxPriority.TabIndex = 8;
+            this.cbxPriority.SelectedIndexChanged += new System.EventHandler(this.cbxPriority_SelectedIndexChanged);
+            // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(5, 29);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(41, 13);
+            this.labelControl1.TabIndex = 0;
+            this.labelControl1.Text = "Priority :";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -509,6 +533,7 @@
             this.tabNavigationPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
+            this.groupControl2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkClose.Properties)).EndInit();
@@ -516,6 +541,7 @@
             this.tabNavigationPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -558,6 +584,8 @@
         private DevExpress.XtraEditors.CheckEdit chkKill;
         private DevExpress.XtraEditors.GroupControl groupControl2;
         private System.Windows.Forms.NotifyIcon notifyTray;
+        private DevExpress.XtraEditors.ComboBoxEdit cbxPriority;
+        private DevExpress.XtraEditors.LabelControl labelControl1;
     }
 }
 

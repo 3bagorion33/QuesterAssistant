@@ -43,16 +43,21 @@ namespace QuesterAssistant.Actions
                     return new ActionValidity("List of items is empty!");
 
                 if (PriceValue == 0)
-                    return new ActionValidity("PriceValue should not be zero");
+                    return new ActionValidity($"{nameof(PriceValue)} should not be zero");
 
                 if (PriceType > SellingPriceType.Fixed && (PricePercent < 1 || PricePercent > 199))
-                    return new ActionValidity("PricePercent should be a percent (1-199 range)");
+                    return new ActionValidity($"{nameof(PricePercent)} should be a percent (1-199 range)");
 
                 if (PriceValue < PriceMinimum)
-                    return new ActionValidity("PriceValue must be greater than PriceMinimum");
+                    return new ActionValidity($"{nameof(PriceValue)} must be greater than PriceMinimum");
 
                 if (PriceStartingBid > 99)
-                    return new ActionValidity("StartingBid must be in 0-99 range");
+                    return new ActionValidity($"{nameof(PriceStartingBid)} must be in 0-99 range");
+
+                if (ActiveLots == ActiveLotType.Resell && (Tolerance <= 0 || Tolerance >= 1))
+                {
+                    return new ActionValidity($"{nameof(Tolerance)} must be greater than 0 and less then 1");
+                }
 
                 return new ActionValidity();
             }
@@ -128,7 +133,7 @@ namespace QuesterAssistant.Actions
                     return ActiveLots == ActiveLotType.Force ||
                            l.TimeLeft < (uint)Duration / 5 ||
                            item.Count == StackSize &&
-                           (lotPrice * 0.99 > actualPrice || 1.01 * lotPrice < actualPrice);
+                           (lotPrice * (1 - Tolerance) > actualPrice || (1 + Tolerance) * lotPrice < actualPrice);
                 }
 
                 Pause.Sleep(2000);
@@ -249,9 +254,11 @@ namespace QuesterAssistant.Actions
         [Description("Keep : active lots count is determined by SellStacks | Resell : cancel active lots before")]
         public ActiveLotType ActiveLots { get; set; }
         [Category("Interaction")]
+        [Description("Tolerance of actual Price to resell items")]
+        public double Tolerance { get; set; } = 0.01;
+        [Category("Interaction")]
         [Description("Leave Auction frame opening, improve cascade selling")]
         public bool DontCloseAuctionFrame { get; set; } = false;
-
         private MinMaxPair<uint> timeOut = new MinMaxPair<uint>(2000, 3000);
         [Category("Interaction")]
         [TypeConverter(typeof(PropertySorter))]
