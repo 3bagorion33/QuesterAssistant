@@ -37,17 +37,17 @@ namespace QuesterAssistant.Classes.Common
         {
             return NativeMethods.GetForegroundWindow();
         }
-        public static bool SetForegroundWindow(IntPtr intptr)
+        public static bool SetForegroundWindow(IntPtr hWnd)
         {
-            return NativeMethods.SetForegroundWindow(intptr);
+            return NativeMethods.SetForegroundWindow(hWnd);
+        }
+        public static bool IsWindowVisible(IntPtr hWnd)
+        {
+            return NativeMethods.IsWindowVisible(hWnd);
         }
         public static IntPtr FindWindow(string className, string windowName)
         {
             return NativeMethods.FindWindow(className, windowName);
-        }
-        public static bool ShowWindowAsync(IntPtr hWnd, int nCmdShow)
-        {
-            return NativeMethods.ShowWindowAsync(hWnd, nCmdShow);
         }
         public static bool SetWindowText(IntPtr hWnd, string text)
         {
@@ -78,6 +78,22 @@ namespace QuesterAssistant.Classes.Common
         {
             return NativeMethods.SendMessage(hWnd, NativeMethods.WM_SYSCOMMAND, NativeMethods.SC_CLOSE, 0);
         }
+        public static bool RestoreWindow(IntPtr hWnd)
+        {
+            return
+                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_SHOWNORMAL) &
+                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_RESTORE);
+        }
+        public static bool MinimizeWindow(IntPtr hWnd)
+        {
+            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_FORCEMINIMIZE);
+        }
+        public static bool HideWindow(IntPtr hWnd)
+        {
+            return
+                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_MINIMIZE) &
+                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_HIDE);
+        }
         public static int GetProcessId(IntPtr hWnd)
         {
             return NativeMethods.GetProcessId(hWnd);
@@ -85,51 +101,67 @@ namespace QuesterAssistant.Classes.Common
 
         private static class NativeMethods
         {
+            private const string USER = "user32";
+            private const string KERNEL = "kernel32";
+
+            public const int SW_FORCEMINIMIZE = 11;
+            public const int SW_HIDE = 0;
+            public const int SW_MINIMIZE = 6;
+            public const int SW_RESTORE = 9;
+            public const int SW_SHOWNORMAL = 1;
             public const int WM_SYSCOMMAND = 0x0112;
             public const int SC_CLOSE = 0xF060;
+            public const int SC_RESTORE = 0xF120;
 
-            [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+            [DllImport(USER, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
             public static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
-            [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
+            [DllImport(USER, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, SetLastError = true)]
             public static extern int UnhookWindowsHookEx(IntPtr idHook);
-            [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+            [DllImport(USER, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
             public static extern IntPtr CallNextHookEx(IntPtr idHook, int nCode, IntPtr wParam, IntPtr lParam);
-            [DllImport("user32")]
+            [DllImport(USER)]
             public static extern int ToAscii(int uVirtKey, int uScanCode, byte[] lpbKeyState, byte[] lpwTransKey, int fuState);
-            [DllImport("user32")]
+            [DllImport(USER)]
             public static extern int GetKeyboardState(byte[] pbKeyState);
-            [DllImport("user32", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
+            [DllImport(USER, CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
             public static extern short GetKeyState(int vKey);
-            [DllImport("user32")]
+            [DllImport(USER)]
             public static extern IntPtr GetForegroundWindow();
-            [DllImport("user32")]
+            [DllImport(USER)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetForegroundWindow(IntPtr intptr);
-            [DllImport("user32", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(USER)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool IsWindowVisible(IntPtr hWnd);
+            [DllImport(USER, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern IntPtr FindWindow(string className, string windowName);
-            [DllImport("user32")]
+            [DllImport(USER)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+            [DllImport(USER)]
+            [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
-            [DllImport("user32", CharSet = CharSet.Unicode, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(USER, CharSet = CharSet.Unicode, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern bool SetWindowText(IntPtr hWnd, string text);
-            [DllImport("user32", SetLastError = true)]
-            public static extern int GetWindowTextLength(IntPtr hwnd);
-            [DllImport("user32", CharSet = CharSet.Unicode, SetLastError = true)]
+            [DllImport(USER, SetLastError = true)]
+            public static extern int GetWindowTextLength(IntPtr hWnd);
+            [DllImport(USER, CharSet = CharSet.Unicode, SetLastError = true)]
             public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-            [DllImport("kernel32", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+            [DllImport(KERNEL, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern IntPtr LoadLibrary(string lpFileName);
-            [DllImport("user32", CharSet = CharSet.Unicode)]
+            [DllImport(USER, CharSet = CharSet.Unicode)]
             public static extern IntPtr SendMessage(IntPtr hWnd, int uMsg, int wParam, int lParam);
-            [DllImport("user32")]
+            [DllImport(USER)]
             public static extern bool DestroyWindow(IntPtr hWnd);
-            [DllImport("kernel32", SetLastError = true)]
+            [DllImport(KERNEL, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool TerminateProcess(IntPtr processHandle, int exitCode);
-            [DllImport("kernel32")]
+            [DllImport(KERNEL)]
             public static extern int GetProcessId(IntPtr hWnd);
-            [DllImport("kernel32.dll", SetLastError = true)]
+            [DllImport(KERNEL, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool CloseHandle(IntPtr hWnd);
-            [DllImport("kernel32")]
+            [DllImport(KERNEL)]
             public static extern IntPtr OpenProcess(int Access, bool InheritHandle, int ProcessId);
         }
     }

@@ -22,10 +22,10 @@ namespace QuesterAssistant
         public override Astral.Forms.BasePanel Settings => new Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
         internal static string Category => typeof(Core).Namespace;
-        private static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
-        internal static IntPtr GameHandle => GameProcess.MainWindowHandle;
+        internal static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
+        internal static IntPtr GameWindowHandle => GameProcess.MainWindowHandle;
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
-        internal static bool IsGameForeground => GameHandle == WinAPI.GetForegroundWindow();
+        internal static bool IsGameForeground => GameWindowHandle == WinAPI.GetForegroundWindow();
         internal static bool IsAstralForeground => AstralHandle == WinAPI.GetForegroundWindow();
 
         /// <summary>

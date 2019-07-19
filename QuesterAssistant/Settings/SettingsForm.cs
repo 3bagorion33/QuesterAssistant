@@ -29,10 +29,14 @@ namespace QuesterAssistant.Settings
 
         private void SettingsForm_Load(object sender, System.EventArgs e)
         {
-            bsrcHotKey.DataSource = Core.Data.RoleToggleHotKey;
+            bsrcRoleToggleHotKey.DataSource = Core.Data.RoleToggleHotKey;
+            bsrcHideGameHotKey.DataSource = Core.Data.HideGameHotKey;
 
-            chkRoleToggleEnabled.BindAdd(bsrcHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
-            txtRoleToggleString.BindAdd(bsrcHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
+            chkRoleToggleEnabled.BindAdd(bsrcRoleToggleHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+            txtRoleToggleString.BindAdd(bsrcRoleToggleHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
+
+            chkHideGameEnabled.BindAdd(bsrcHideGameHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+            txtHideGameString.BindAdd(bsrcHideGameHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
         }
     }
 }

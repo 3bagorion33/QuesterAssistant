@@ -28,17 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.gctrlCommonSettings = new DevExpress.XtraEditors.GroupControl();
-            this.bsrcHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcData = new System.Windows.Forms.BindingSource();
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.chkHideGameEnabled = new DevExpress.XtraEditors.CheckEdit();
+            this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
             this.gctrlCommonSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // chkRoleToggleEnabled
@@ -52,7 +57,7 @@
             // 
             // txtRoleToggleString
             // 
-            this.txtRoleToggleString.Location = new System.Drawing.Point(153, 27);
+            this.txtRoleToggleString.Location = new System.Drawing.Point(166, 27);
             this.txtRoleToggleString.Name = "txtRoleToggleString";
             this.txtRoleToggleString.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
             this.txtRoleToggleString.Properties.AppearanceReadOnly.Options.UseBackColor = true;
@@ -65,14 +70,38 @@
             // 
             // gctrlCommonSettings
             // 
+            this.gctrlCommonSettings.Controls.Add(this.chkHideGameEnabled);
             this.gctrlCommonSettings.Controls.Add(this.chkRoleToggleEnabled);
+            this.gctrlCommonSettings.Controls.Add(this.txtHideGameString);
             this.gctrlCommonSettings.Controls.Add(this.txtRoleToggleString);
             this.gctrlCommonSettings.Location = new System.Drawing.Point(0, 3);
             this.gctrlCommonSettings.Name = "gctrlCommonSettings";
             this.gctrlCommonSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 58);
+            this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 98);
             this.gctrlCommonSettings.TabIndex = 2;
             this.gctrlCommonSettings.Text = "Common";
+            // 
+            // chkHideGameEnabled
+            // 
+            this.chkHideGameEnabled.Location = new System.Drawing.Point(8, 53);
+            this.chkHideGameEnabled.Name = "chkHideGameEnabled";
+            this.chkHideGameEnabled.Properties.Caption = "Enable hide Gameclient by :";
+            this.chkHideGameEnabled.Size = new System.Drawing.Size(152, 19);
+            this.chkHideGameEnabled.TabIndex = 0;
+            this.chkHideGameEnabled.TabStop = false;
+            // 
+            // txtHideGameString
+            // 
+            this.txtHideGameString.Location = new System.Drawing.Point(166, 53);
+            this.txtHideGameString.Name = "txtHideGameString";
+            this.txtHideGameString.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
+            this.txtHideGameString.Properties.AppearanceReadOnly.Options.UseBackColor = true;
+            this.txtHideGameString.Properties.ReadOnly = true;
+            this.txtHideGameString.Size = new System.Drawing.Size(100, 20);
+            this.txtHideGameString.TabIndex = 1;
+            this.txtHideGameString.TabStop = false;
+            this.txtHideGameString.ToolTip = "Click here to bind hotkey";
+            this.txtHideGameString.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtRoleToggleString_KeyDown);
             // 
             // SettingsForm
             // 
@@ -87,8 +116,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).EndInit();
             this.gctrlCommonSettings.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -98,7 +129,9 @@
         private DevExpress.XtraEditors.CheckEdit chkRoleToggleEnabled;
         private DevExpress.XtraEditors.TextEdit txtRoleToggleString;
         private DevExpress.XtraEditors.GroupControl gctrlCommonSettings;
-        private System.Windows.Forms.BindingSource bsrcHotKey;
-        private System.Windows.Forms.BindingSource bsrcData;
+        private System.Windows.Forms.BindingSource bsrcRoleToggleHotKey;
+        private System.Windows.Forms.BindingSource bsrcHideGameHotKey;
+        private DevExpress.XtraEditors.CheckEdit chkHideGameEnabled;
+        private DevExpress.XtraEditors.TextEdit txtHideGameString;
     }
 }

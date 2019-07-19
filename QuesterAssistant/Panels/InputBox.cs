@@ -58,7 +58,7 @@ namespace QuesterAssistant.Panels
         {
             if (center && (Handle != WinAPI.GetForegroundWindow()))
             {
-                WinAPI.SetForegroundWindow(Core.GameHandle);
+                WinAPI.SetForegroundWindow(Core.GameWindowHandle);
                 WinAPI.SetForegroundWindow(Handle);
             }
         }

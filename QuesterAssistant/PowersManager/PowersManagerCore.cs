@@ -36,7 +36,7 @@ namespace QuesterAssistant.PowersManager
                 }
             }
             var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
-                Core.GameHandle == WinAPI.GetForegroundWindow();
+                Core.GameWindowHandle == WinAPI.GetForegroundWindow();
             if (flag)
             {
                 Task.Factory.StartNew(FindAndApply);

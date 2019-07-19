@@ -28,7 +28,7 @@ namespace Launcher.Classes
             }
         }
 
-        public static void CrypticErrorDenyApps()
+        public static void DenyCrypticErrorApps()
         {
             if (string.IsNullOrEmpty(InstallPath))
                 return;
@@ -37,14 +37,24 @@ namespace Launcher.Classes
                 .Where(file => Regex.IsMatch(file.Name, @"(CrashReporter|CrypticError)", RegexOptions.IgnoreCase))
                 .ToList();
 
-            files.ForEach(file => Deny(file.FullName.Replace(InstallPath + "\\", "").Replace("\\", " : "), file.FullName));
+            files.ForEach(file => DenyAddress(file.FullName.Replace(InstallPath + "\\", "").Replace("\\", " : "), file.FullName));
         }
 
-        public static void CrypticErrorDenyServer()
+        public static void DenyCrypticErrorServer()
         {
-            Deny("CrypticError server", "", "74.207.241.31");
-            Deny("Game Error server", "", "208.95.187.80");
-            Deny("TicketTracker server", "", "172.26.11.26");
+            DenyAddress("CrypticError server", "", "74.207.241.31");
+            DenyAddress("Game Error server", "", "208.95.187.80");
+            DenyAddress("TicketTracker server", "", "172.26.11.26");
+        }
+
+        public static void DenyCrypticErrorPorts()
+        {
+            if (string.IsNullOrEmpty(InstallPath))
+                return;
+
+            var files = new DirectoryInfo(InstallPath).GetFiles("GameClient.exe", SearchOption.AllDirectories).ToList();
+
+            files.ForEach(file => DenyPort(file.FullName.Replace(InstallPath + "\\", "").Replace("\\", " : "), file.FullName, "7255"));
         }
 
         public static void RemoveAllRules()
@@ -53,7 +63,7 @@ namespace Launcher.Classes
             rules.ForEach(r => Rules.Remove(r.Name));
         }
 
-        private static bool Deny(string name, string appPath, string remoteAddress = "")
+        private static bool DenyAddress(string name, string appPath, string remoteAddress = "")
         {
             return Rules.Add
                 (
@@ -78,6 +88,33 @@ namespace Launcher.Classes
                 edgeTraversalOptions: 0
                 );
         }
+
+        private static bool DenyPort(string name, string appPath, string remotePorts = "")
+        {
+            return Rules.Add
+            (
+                name: name,
+                description: "",
+                applicationName: appPath,
+                serviceName: "",
+                protocol: (int)Rules.EFirewallProtocol.Tcp,
+                localPorts: "",
+                remotePorts: remotePorts,
+                localAddresses: "",
+                remoteAddresses: "",
+                IcmpTypesAndCodes: "",
+                direction: Rules.EFirewallRuleDirection.Out,
+                interfaces: null,
+                interfaceTypes: "",
+                enabled: true,
+                grouping: "CrypticError",
+                profiles: (int)Rules.EFirewallProfiles.All,
+                edgeTraversal: false,
+                action: Rules.EFirewallRuleAction.Block,
+                edgeTraversalOptions: 0
+            );
+        }
+
 
         private struct App
         {

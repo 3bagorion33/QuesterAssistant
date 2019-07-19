@@ -479,7 +479,7 @@
             // 
             // notifyTray
             // 
-            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
+            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("Launcher.Icon")));
             this.notifyTray.Text = "Launcher";
             this.notifyTray.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseClick);
             // 
@@ -514,7 +514,7 @@
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("Launcher.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Launcher";

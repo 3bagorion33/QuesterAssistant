@@ -147,12 +147,12 @@ namespace Launcher
 
         private void menuFirewallDenyApps_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Firewall.CrypticErrorDenyApps();
+            Firewall.DenyCrypticErrorApps();
         }
 
         private void menuFirewallDenyAddress_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            Firewall.CrypticErrorDenyServer();
+            Firewall.DenyCrypticErrorServer();
         }
 
         private void menuFirewallDeleteRules_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
