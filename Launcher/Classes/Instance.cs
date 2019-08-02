@@ -143,7 +143,7 @@ namespace Launcher.Classes
 
         public void Close()
         {
-            Process.Close();
+            Process.CloseMainWindow();
             while (!Process.HasExited)
                 Thread.Sleep(200);
         }

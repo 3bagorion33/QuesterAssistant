@@ -10,7 +10,7 @@ namespace QuesterAssistant.Settings
     internal class SettingsCore : ACore<SettingsData, SettingsForm>
     {
         protected override bool IsValid => true;
-        protected override bool HookEnableFlag => Data.RoleToggleHotKey.Enabled || Data.HideGameHotKey.Enabled;
+        protected override bool HookEnableFlag => Data.RoleToggleHotKey.Enabled || Data.HideClient.HotKey.Enabled;
 
         private IntPtr handle;
 
@@ -18,16 +18,19 @@ namespace QuesterAssistant.Settings
         {
             if (Core.GameProcess.HasExited) return;
 
-            if (WinAPI.IsWindowVisible(Core.GameWindowHandle))
+            if (WinAPI.IsWindowVisible(Core.GameWindowHandle) && !WinAPI.IsWindowMinimize(Core.GameWindowHandle))
             {
                 handle = Core.GameWindowHandle;
-                WinAPI.HideWindow(handle);
+                WinAPI.MinimizeWindow(handle);
+                if (Data.HideClient.HideMode == SettingsData.HideGameClient.Mode.Hide)
+                    WinAPI.HideWindow(handle);
                 return;
             }
             if (handle != IntPtr.Zero)
             {
+                if (Data.HideClient.HideMode == SettingsData.HideGameClient.Mode.Hide)
+                    WinAPI.UnhideWindow(handle);
                 WinAPI.RestoreWindow(handle);
-                Pause.Sleep(50);
                 WinAPI.SetForegroundWindow(handle);
             }
         }
@@ -39,9 +42,10 @@ namespace QuesterAssistant.Settings
                 Task.Factory.StartNew(API.ToogleRole); 
             }
 
-            if (Data.HideGameHotKey.Keys == e.KeyData)
+            if (Data.HideClient.HotKey.Keys == e.KeyData)
             {
                 HideGameWindow();
+                e.SuppressKeyPress = false;
             }
         }
     }

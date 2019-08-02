@@ -78,25 +78,35 @@ namespace QuesterAssistant.Classes.Common
         {
             return NativeMethods.SendMessage(hWnd, NativeMethods.WM_SYSCOMMAND, NativeMethods.SC_CLOSE, 0);
         }
-        public static bool RestoreWindow(IntPtr hWnd)
+        public static bool UnhideWindow(IntPtr hWnd)
         {
-            return
-                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_SHOWNORMAL) &
-                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_RESTORE);
+            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_SHOWNORMAL);
         }
         public static bool MinimizeWindow(IntPtr hWnd)
         {
-            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_FORCEMINIMIZE);
+            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_MINIMIZE);
+        }
+        public static bool RestoreWindow(IntPtr hWnd)
+        {
+            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_RESTORE);
         }
         public static bool HideWindow(IntPtr hWnd)
         {
-            return
-                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_MINIMIZE) &
-                NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_HIDE);
+            return NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_HIDE);
         }
         public static int GetProcessId(IntPtr hWnd)
         {
             return NativeMethods.GetProcessId(hWnd);
+        }
+        public static int GetWindowState(IntPtr hWnd)
+        {
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
+            NativeMethods.GetWindowPlacement(hWnd, ref wp);
+            return wp.showCmd; // 1- Normal; 2 - Minimize; 3 - Maximize;
+        }
+        public static bool IsWindowMinimize(IntPtr hWnd)
+        {
+            return GetWindowState(hWnd) == 2;
         }
 
         private static class NativeMethods
@@ -137,10 +147,13 @@ namespace QuesterAssistant.Classes.Common
             public static extern IntPtr FindWindow(string className, string windowName);
             [DllImport(USER)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+            public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
             [DllImport(USER)]
             [return: MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
+            public static extern bool GetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+            [DllImport(USER)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
             [DllImport(USER, CharSet = CharSet.Unicode, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern bool SetWindowText(IntPtr hWnd, string text);
             [DllImport(USER, SetLastError = true)]
@@ -163,6 +176,28 @@ namespace QuesterAssistant.Classes.Common
             public static extern bool CloseHandle(IntPtr hWnd);
             [DllImport(KERNEL)]
             public static extern IntPtr OpenProcess(int Access, bool InheritHandle, int ProcessId);
+
+            public struct POINTAPI
+            {
+                public int x;
+                public int y;
+            }
+            public struct RECT
+            {
+                public int left;
+                public int top;
+                public int right;
+                public int bottom;
+            }
+            public struct WINDOWPLACEMENT
+            {
+                public int length;
+                public int flags;
+                public int showCmd;
+                public POINTAPI ptMinPosition;
+                public POINTAPI ptMaxPosition;
+                public RECT rcNormalPosition;
+            }
         }
     }
 }
