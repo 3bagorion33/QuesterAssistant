@@ -39,6 +39,7 @@
             this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
@@ -128,10 +129,20 @@
             this.txtHideGameString.ToolTip = "Click here to bind hotkey";
             this.txtHideGameString.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtRoleToggleString_KeyDown);
             // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Location = new System.Drawing.Point(34, 156);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton1.TabIndex = 3;
+            this.simpleButton1.Text = "simpleButton1";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.gctrlCommonSettings);
             this.MinimumSize = new System.Drawing.Size(370, 372);
             this.Name = "SettingsForm";
@@ -164,5 +175,6 @@
         private DevExpress.XtraEditors.ComboBoxEdit cbxHideMinimize;
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private System.Windows.Forms.BindingSource bsrcHideMode;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
     }
 }

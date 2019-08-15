@@ -93,12 +93,25 @@ namespace QuesterAssistant.Actions
                     }
 
                     uint itemPrice = 0;
-                    if (PriceType == SellingPriceType.Minimal)
-                        itemPrice = validLots.First().PricePerItem;
-                    if (PriceType == SellingPriceType.Average)
-                        itemPrice = (uint)validLots.Average(x => x.PricePerItem);
-                    if (PriceType == SellingPriceType.Median)
-                        itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
+                    switch (PriceType)
+                    {
+                        case SellingPriceType.Minimal:
+                            itemPrice = validLots.First().PricePerItem;
+                            break;
+                        case SellingPriceType.Average:
+                            itemPrice = (uint)validLots.Average(x => x.PricePerItem);
+                            break;
+                        case SellingPriceType.Median:
+                            itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
+                            break;
+                        case SellingPriceType.Top3:
+                            itemPrice = validLots.Count > 2 ? validLots.ElementAt(2).PricePerItem : PriceValue;
+                            break;
+                        case SellingPriceType.Top5:
+                            itemPrice = validLots.Count > 4 ? validLots.ElementAt(4).PricePerItem : PriceValue;
+                            break;
+                    }
+
                     result = itemPrice;
                 }
                 else
@@ -322,7 +335,9 @@ namespace QuesterAssistant.Actions
             Fixed = 0,
             Minimal = 1,
             Average = 2,
-            Median = 3
+            Median = 3,
+            Top3 = 4,
+            Top5 = 5
         }
         public enum PriceDetectionType
         {

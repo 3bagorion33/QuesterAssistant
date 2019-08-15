@@ -1,8 +1,10 @@
-﻿using DevExpress.XtraEditors;
+﻿using System;
+using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using MyNW;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
-using System.Windows.Forms;
 
 namespace QuesterAssistant.Settings
 {
@@ -27,7 +29,7 @@ namespace QuesterAssistant.Settings
             }
         }
 
-        private void SettingsForm_Load(object sender, System.EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             bsrcRoleToggleHotKey.DataSource = Core.Data.RoleToggleHotKey;
             bsrcHideGameHotKey.DataSource = Core.Data.HideClient.HotKey;
@@ -53,6 +55,22 @@ namespace QuesterAssistant.Settings
 
             cbxHideMinimize.DataBindings.Clear();
             cbxHideMinimize.BindAdd(Core.Data.HideClient, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideGameClient.HideMode));
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            //string[] mnemonics = {
+            //    "push 0",
+            //    "call " + (Memory.BaseAdress + 0x5c9fd0),
+            //    "add esp, 0x4",
+            //    "retn"
+            //};
+            //Hooks.Executor.Execute<IntPtr>(mnemonics, "UIGen_AuctionRequestAuctionsBidByPlayer");
+            string[] mnemonics = {
+                "call " + (Memory.BaseAdress + 0x5CC110),
+                "retn"
+            };
+            Hooks.Executor.Execute<IntPtr>(mnemonics, "gslGarrison_TendStructureOnCurrentPlot");
         }
     }
 }

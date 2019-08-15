@@ -43,7 +43,7 @@ namespace QuesterAssistant.Classes.Common
             return result;
         }
 
-        public static uint Min(params uint[] num)
+        public static dynamic Min(params dynamic[] num)
         {
             if (num.Length == 1) return num[0];
             uint value = Math.Min(num[0], num[1]);
