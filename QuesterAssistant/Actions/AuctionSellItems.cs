@@ -71,7 +71,7 @@ namespace QuesterAssistant.Actions
 
             if (PriceType > SellingPriceType.Fixed)
             {
-                var availableLots = new AuctionSearch(item.ItemDef).Result.Lots;
+                var availableLots = new AuctionSearch(item.ItemDef, CheckInternalName).Result.Lots;
                 if (availableLots.Any())
                 {
                     var validLots = new List<AuctionSearch.SearchResult.Lot>();
@@ -154,7 +154,7 @@ namespace QuesterAssistant.Actions
                 {
                     var prevLotsCount = Auction.AuctionSellList.LotsCount;
                     var lot = Auction.AuctionSellList.Lots.Find(IsSellLotMatch);
-                    Logger.WriteLine($"Collect '{lot.Items[0].Item.DisplayName}' with price {lot.Price}AD".CarryOnLength());
+                    Logger.WriteLine($"Collect '{lot.Items.First().Item.DisplayName}' with price {lot.Price}AD".CarryOnLength());
                     lot.Remove();
                     Pause.Sleep(2000);
                     if (Auction.AuctionSellList.LotsCount == prevLotsCount)
@@ -295,6 +295,9 @@ namespace QuesterAssistant.Actions
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         [Description("Item to sell filter")]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
+        [Category("Items")]
+        [Description("Verify InternalName")]
+        public bool CheckInternalName { get; set; } = true;
 
         [Category("Lot settings")]
         public Auction.AuctionDuration Duration { get; set; } = Auction.AuctionDuration.Long;

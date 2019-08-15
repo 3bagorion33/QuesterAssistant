@@ -23,13 +23,13 @@ namespace QuesterAssistant.Classes
         private string loggerMessage;
         public SearchResult Result { get; }
 
-        public AuctionSearch(ItemDef itemDef)
+        public AuctionSearch(ItemDef itemDef, bool checkInternalName = true)
         {
             this.itemDef = itemDef;
-            Result = GetResult();
+            Result = GetResult(checkInternalName);
         }
         
-        private SearchResult GetResult()
+        private SearchResult GetResult(bool checkInternalName = true)
         {
             if (string.IsNullOrEmpty(itemDef.DisplayName))
                 return new SearchResult(null, null);
@@ -40,8 +40,16 @@ namespace QuesterAssistant.Classes
                 var count = lot.Items.First().Item.Count;
                 return price > count ? price / count : 1;
             }
+
+            bool ResultFilter(SearchResult l)
+            {
+                return checkInternalName
+                    ? l.InternalName == itemDef.InternalName
+                    : l.DisplayName == itemDef.DisplayName;
+            }
+
             cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
-            var cachedValue = cachedSearch.Find(l => l.InternalName == itemDef.InternalName && l.DateTime.Subtract(DateTime.Now).TotalHours > -1);
+            var cachedValue = cachedSearch.Find(l => ResultFilter(l) && l.DateTime.Subtract(DateTime.Now).TotalHours > -1);
 
             if (cachedValue != null)
             {
@@ -60,20 +68,31 @@ namespace QuesterAssistant.Classes
                 while (Auction.SearchWaiting)
                     Thread.Sleep(250);
             }
-            while (!(availableLots = Auction.AuctionLotList.Lots
-                             .FindAll(l => l.Items.First().Item.ItemDef.InternalName == itemDef.InternalName))
-                         .Any()
-                     && searchTrying < 3);
+            while (!(availableLots = Auction.AuctionLotList.Lots).Any() && searchTrying < 3);
 
-            availableLots = availableLots.FindAll(l => l.Price > 0).OrderBy(PricePerItem).ToList();
+            availableLots = availableLots
+                .FindAll(l => l.Items.First().Item.ItemDef.DisplayName == itemDef.DisplayName && l.Price > 0)
+                .OrderBy(PricePerItem).ToList();
 
             Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'... Result contains {availableLots.Count} items.".CarryOnLength());
-            
-            cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
-                new SearchResult(itemDef, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+
+            var groupedLots = availableLots
+                .GroupBy(l => l.Items.First().Item.ItemDef.InternalName, (g, l) => new KeyValuePair<string, IEnumerable<AuctionLot>>(g, l))
+                .ToDictionary(l => l.Key, l => l.Value.ToList());
+
+            foreach (var lots in groupedLots)
+            {
+                cachedSearch.AddOrReplace(l => l.InternalName == lots.Key,
+                    new SearchResult(lots.Value.First().Items.First().Item.ItemDef,
+                        lots.Value.FindAll(l =>
+                            l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+            }
+
+            //cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
+            //    new SearchResult(itemDef, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
 
             BinFile.Save(cachedSearch, CachedSearchFile);
-            return cachedSearch.Find(l => l.InternalName == itemDef.InternalName);
+            return cachedSearch.Find(ResultFilter);
         }
 
         public void WriteLogMessage()
