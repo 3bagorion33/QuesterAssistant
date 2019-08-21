@@ -76,21 +76,26 @@ namespace QuesterAssistant.Classes
 
             Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'... Result contains {availableLots.Count} items.".CarryOnLength());
 
-            var groupedLots = availableLots
-                .GroupBy(l => l.Items.First().Item.ItemDef.InternalName, (g, l) => new KeyValuePair<string, IEnumerable<AuctionLot>>(g, l))
-                .ToDictionary(l => l.Key, l => l.Value.ToList());
-
-            foreach (var lots in groupedLots)
+            if (availableLots.Any())
             {
-                cachedSearch.AddOrReplace(l => l.InternalName == lots.Key,
-                    new SearchResult(lots.Value.First().Items.First().Item.ItemDef,
-                        lots.Value.FindAll(l =>
-                            l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+                var groupedLots = availableLots
+                    .GroupBy(l => l.Items.First().Item.ItemDef.InternalName,
+                        (g, l) => new KeyValuePair<string, IEnumerable<AuctionLot>>(g, l))
+                    .ToDictionary(l => l.Key, l => l.Value.ToList());
+
+                foreach (var lots in groupedLots)
+                {
+                    cachedSearch.AddOrReplace(l => l.InternalName == lots.Key,
+                        new SearchResult(lots.Value.First().Items.First().Item.ItemDef,
+                            lots.Value.FindAll(l =>
+                                l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
+                }
             }
-
-            //cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
-            //    new SearchResult(itemDef, availableLots.FindAll(l => l.OptionalData.OwnerHandle != EntityManager.LocalPlayer.AccountLoginUsername)));
-
+            else
+            {
+                cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
+                    new SearchResult(itemDef, availableLots));
+            }
             BinFile.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(ResultFilter);
         }

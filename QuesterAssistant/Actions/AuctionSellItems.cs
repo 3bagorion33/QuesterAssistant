@@ -168,6 +168,7 @@ namespace QuesterAssistant.Actions
             {
                 var bags = EntityManager.LocalPlayer.BagsItems;
                 EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.Overflow).GetItems.ForEach(s => bags.Remove(s));
+                bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.Currency).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingInventory).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.CraftingResources).GetItems);
                 bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.FashionItems).GetItems);
@@ -223,11 +224,11 @@ namespace QuesterAssistant.Actions
 
                                 itemPrice = GetActualPrice(itemToSell);
 
-                                int buyoutPrice = MathTools.Max(MathTools.Round(
-                                        (int) (itemPrice * Multiply * itemCount),
-                                        RoundDigits,
-                                        RoundFilledBy),
-                                    (int) (PriceMinimum * itemCount));
+                                int buyoutPrice = (int) (itemPrice * Multiply * itemCount);
+                                if (buyoutPrice != PriceValue)
+                                    buyoutPrice = MathTools.Round(buyoutPrice, RoundDigits, RoundFilledBy);
+
+                                buyoutPrice = MathTools.Max(buyoutPrice, (int) (PriceMinimum * itemCount));
 
                                 int startingBid = MathTools.Round((int)((double)PriceStartingBid / 100 * buyoutPrice),
                                     RoundDigits, RoundFilledBy);
@@ -296,7 +297,7 @@ namespace QuesterAssistant.Actions
         [Description("Item to sell filter")]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
         [Category("Items")]
-        [Description("Verify InternalName")]
+        [Description("Verify InternalName, uses DisplayName only if disabled")]
         public bool CheckInternalName { get; set; } = true;
 
         [Category("Lot settings")]

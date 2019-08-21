@@ -40,6 +40,8 @@
             this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
+            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
@@ -50,6 +52,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // chkRoleToggleEnabled
@@ -131,17 +134,35 @@
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(34, 156);
+            this.simpleButton1.Location = new System.Drawing.Point(0, 107);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(75, 23);
             this.simpleButton1.TabIndex = 3;
-            this.simpleButton1.Text = "simpleButton1";
+            this.simpleButton1.Text = "Get Key";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
+            // textEdit1
+            // 
+            this.textEdit1.Location = new System.Drawing.Point(0, 136);
+            this.textEdit1.Name = "textEdit1";
+            this.textEdit1.Size = new System.Drawing.Size(370, 20);
+            this.textEdit1.TabIndex = 4;
+            // 
+            // simpleButton2
+            // 
+            this.simpleButton2.Location = new System.Drawing.Point(81, 107);
+            this.simpleButton2.Name = "simpleButton2";
+            this.simpleButton2.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton2.TabIndex = 5;
+            this.simpleButton2.Text = "Set Key";
+            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.simpleButton2);
+            this.Controls.Add(this.textEdit1);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.gctrlCommonSettings);
             this.MinimumSize = new System.Drawing.Size(370, 372);
@@ -159,6 +180,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -176,5 +198,7 @@
         private DevExpress.XtraEditors.LabelControl labelControl1;
         private System.Windows.Forms.BindingSource bsrcHideMode;
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.TextEdit textEdit1;
+        private DevExpress.XtraEditors.SimpleButton simpleButton2;
     }
 }
