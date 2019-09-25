@@ -94,10 +94,10 @@ namespace QuesterAssistant.Classes
             else
             {
                 cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
-                    new SearchResult(itemDef, availableLots));
+                    new SearchResult(itemDef, new List<AuctionLot>()));
             }
             BinFile.Save(cachedSearch, CachedSearchFile);
-            return cachedSearch.Find(ResultFilter);
+            return cachedSearch.Find(ResultFilter) ?? new SearchResult(itemDef, new List<AuctionLot>());
         }
 
         public void WriteLogMessage()

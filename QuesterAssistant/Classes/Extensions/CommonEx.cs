@@ -27,7 +27,17 @@ namespace QuesterAssistant.Classes.Extensions
         /// </summary>
         public static int CheckZero(this int @int, int value)
         {
-            return @int == 0 ? value : @int;
+            return DynCheckZero(@int, value);
+        }
+
+        public static uint CheckZero(this uint @uint, uint value)
+        {
+            return DynCheckZero(@uint, value);
+        }
+
+        private static dynamic DynCheckZero(dynamic @this, dynamic value)
+        {
+            return @this == 0 ? value : @this;
         }
     }
 }
