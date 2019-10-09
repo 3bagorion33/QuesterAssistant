@@ -1,15 +1,15 @@
-﻿using Astral.Quester.Classes;
-using MyNW.Internals;
-using System;
-using System.Linq;
-using System.Xml.Serialization;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Linq;
+using System.Xml.Serialization;
+using Astral.Quester.Classes;
 using MyNW.Classes;
+using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.UIEditors;
 
-namespace EntityTools.Conditions
+namespace QuesterAssistant.Conditions
 {
     [Serializable]
     public class PlayerParagon : Condition

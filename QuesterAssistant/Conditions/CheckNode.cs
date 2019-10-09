@@ -1,13 +1,13 @@
-﻿using Astral.Logic.NW;
-using Astral.Quester.UIEditors;
-using MyNW.Classes;
-using MyNW.Internals;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
+using Astral.Logic.NW;
+using Astral.Quester.UIEditors;
+using MyNW.Classes;
+using MyNW.Internals;
 
-namespace EntityTools.Conditions
+namespace QuesterAssistant.Conditions
 {
     public enum NodeState
     {
