@@ -4,27 +4,42 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
+using System.Xml.Serialization;
 
 namespace QuesterAssistant.UIEditors
 {
-    internal class CheckedListBoxEditor<T> : UITypeEditor
+    internal class CheckedListBoxEditor<T> : UITypeEditor , IDisposable
     {
         private bool isListLoaded = false;
         private CheckedListBox cbx = new CheckedListBox();
         private object value;
         private IWindowsFormsEditorService es;
         public override bool IsDropDownResizable => true;
+        private ToolTip toolTip;
+        private int toolTipIndex;
 
         internal CheckedListBoxEditor()
         {
             cbx.Leave += bx_Leave;
             cbx.KeyDown += cbx_KeyDown;
+            cbx.MouseHover += cbx_ShowTooltip;
+            toolTip = new ToolTip() { ToolTipTitle = "Ctrl+A to select all, Ctrl+D to deselect, Ctrl+I to inverse, Ctrl+S to sort" };
+        }
+
+        private void cbx_ShowTooltip(object sender, EventArgs e)
+        {
+            toolTipIndex = cbx.IndexFromPoint(cbx.PointToClient(Control.MousePosition));
+            if (toolTipIndex > -1)
+            {
+                toolTip.SetToolTip(cbx, cbx.Items[toolTipIndex].ToString());
+            }
         }
 
         private void cbx_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.KeyCode == Keys.S)
+            if (e.Control && e.KeyCode == Keys.A)
             {
+                e.SuppressKeyPress = true;
                 for (int i = 0; i < cbx.Items.Count; i++)
                 {
                     cbx.SetItemChecked(i, true);
@@ -32,6 +47,7 @@ namespace QuesterAssistant.UIEditors
             }
             if (e.Control && e.KeyCode == Keys.D)
             {
+                e.SuppressKeyPress = true;
                 for (int i = 0; i < cbx.Items.Count; i++)
                 {
                     cbx.SetItemChecked(i, false);
@@ -39,9 +55,18 @@ namespace QuesterAssistant.UIEditors
             }
             if (e.Control && e.KeyCode == Keys.I)
             {
+                e.SuppressKeyPress = true;
                 for (int i = 0; i < cbx.Items.Count; i++)
                 {
                     cbx.SetItemChecked(i, !cbx.GetItemChecked(i));
+                }
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                e.SuppressKeyPress = true;
+                for (int i = 0; i < cbx.Items.Count; i++)
+                {
+                    cbx.Sorted = true;
                 }
             }
         }
@@ -58,7 +83,6 @@ namespace QuesterAssistant.UIEditors
             if (es != null)
             {
                 LoadListBoxItems(value);
-                cbx.Sorted = true;
                 es.DropDownControl(cbx);
             }
             return this.value;
@@ -69,7 +93,8 @@ namespace QuesterAssistant.UIEditors
             if (!isListLoaded)
             {
                 int idx = 0;
-                foreach (var item in value as Dictionary<T, bool>)
+                var dict = value as CheckedListBoxSelector<T>;
+                foreach (var item in dict.Dictionary)
                 {
                     cbx.Items.Add(item.Key);
                     cbx.SetItemChecked(idx, item.Value);
@@ -88,7 +113,54 @@ namespace QuesterAssistant.UIEditors
                 var item = (T)cbx.Items[i];
                 dict.Add(item, cbx.GetItemChecked(i));
             }
-            value = dict;
+            var listSelector = value as CheckedListBoxSelector<T>;
+            listSelector.Dictionary = dict;
+        }
+
+        public void Dispose()
+        {
+            cbx.Dispose();
+        }
+    }
+
+    [Serializable]
+    public class CheckedListBoxSelector<T>
+    {
+        public List<T> Items { get; set; } = new List<T>();
+        [XmlIgnore]
+        public Dictionary<T, bool> Dictionary
+        {
+            get
+            {
+                var value = new Dictionary<T, bool>();
+                if (typeof(T).BaseType.Name == nameof(Enum))
+                {
+                    foreach (var s in Enum.GetNames(typeof(T)))
+                    {
+                        if (s != "None")
+                        {
+                            var item = (T)Enum.Parse(typeof(T), s);
+                            value.Add(item, Items.Contains(item));
+                        }
+                    }
+                }
+                return value;
+            }
+            set
+            {
+                Items.Clear();
+                foreach (var item in value)
+                {
+                    if (item.Value)
+                    {
+                        Items.Add(item.Key);
+                    }
+                }
+            }
+        }
+        public override string ToString()
+        {
+            return $"{Items.Count} of {Dictionary.Count} in {typeof(T).Name}";
         }
     }
 }

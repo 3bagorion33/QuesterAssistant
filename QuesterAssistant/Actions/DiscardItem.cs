@@ -8,6 +8,8 @@ using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using QuesterAssistant.Classes.ItemFilter;
+using QuesterAssistant.UIEditors;
+using MyNW.Patchables.Enums;
 
 namespace QuesterAssistant.Actions
 {
@@ -40,11 +42,18 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             EntityManager.LocalPlayer.BagsItems.FindAll
-                (x => !x.Item.ItemDef.CantDiscard && ((MyItemFilterCore)ItemIdFilter).IsMatch(x.Item)).ForEach(Interact.DiscardItem);
+                (x => !x.Item.ItemDef.CantDiscard &&
+                SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality) &&
+                ItemIdFilter.IsMatch(x.Item)).ForEach(Interact.DiscardItem);
             return ActionResult.Completed;
         }
 
-        [Description("Items to discard"), Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Description("Items to discard")]
+        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemIdFilter { get; set; } = new ItemFilterCore();
+
+        [Description("Discard selected grade only")]
+        [Editor(typeof(CheckedListBoxEditor<ItemQuality>), typeof(UITypeEditor))]
+        public CheckedListBoxSelector<ItemQuality> SpecificGrade { get; set; } = new CheckedListBoxSelector<ItemQuality>();
     }
 }

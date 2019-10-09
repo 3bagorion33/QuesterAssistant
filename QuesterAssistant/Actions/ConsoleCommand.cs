@@ -21,7 +21,6 @@ namespace QuesterAssistant.Actions
         [Description("Type ingame console command without starting /")]
         public string GameCommand { get; set; }
 
-        // Methods
         public override void GatherInfos() { }
         public override void InternalReset() { }
         public override void OnMapDraw(GraphicsNW graph) { }

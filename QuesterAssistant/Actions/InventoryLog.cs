@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 using System.IO;
 using System.ComponentModel;
 using QuesterAssistant.UIEditors;
 using System.Drawing.Design;
 using MyNW.Patchables.Enums;
-using System.Xml.Serialization;
-using DevExpress.Utils.Extensions;
-using QuesterAssistant.Classes.Common;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using Astral.Classes.ItemFilter;
-using Astral.Quester.UIEditors;
 using QuesterAssistant.Classes.ItemFilter;
+using Astral;
 
 namespace QuesterAssistant.Actions
 {
@@ -43,43 +37,13 @@ namespace QuesterAssistant.Actions
         [Description("Default is %displayName%;%internalName%;%isBound%;%itemCount%;%itemPrice%")]
         public string Mask { get; set; }
 
-        [Browsable(false)]
-        public List<InvBagIDs> Bags = new List<InvBagIDs>();
-
-        [Editor(typeof(ItemFilterEditor), typeof(UITypeEditor))]
         [Description("Items to log. All if empty")]
+        [Editor(typeof(ItemFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemsFilter { get; set; } = new ItemFilterCore();
 
-        [XmlIgnore]
+        [Description("Choose bags in which to do")]
         [Editor(typeof(CheckedListBoxEditor<InvBagIDs>), typeof(UITypeEditor))]
-        [Description("Choose bags in which to do | Ctrl+S to select all, Ctrl+D to deselect, Ctrl+I to inverse")]
-        public Dictionary<InvBagIDs, bool> SpecificBags
-        {
-            get
-            {
-                var value = new Dictionary<InvBagIDs, bool>();
-                foreach (var s in Enum.GetNames(typeof(InvBagIDs)))
-                {
-                    if (s != "None")
-                    {
-                        var item = (InvBagIDs)Enum.Parse(typeof(InvBagIDs), s);
-                        value.Add(item, Bags.Contains(item));
-                    }
-                }
-                return value;
-            }
-            set
-            {
-                Bags.Clear();
-                foreach (var item in value)
-                {
-                    if (item.Value)
-                    {
-                        Bags.Add(item.Key);
-                    }
-                }
-            }
-        }
+        public CheckedListBoxSelector<InvBagIDs> SpecificBags { get; set; } = new CheckedListBoxSelector<InvBagIDs>();
 
         public InventoryLog()
         {
@@ -105,8 +69,8 @@ namespace QuesterAssistant.Actions
             }
             catch (Exception ex)
             {
-                Astral.Logger.WriteLine("failed to access the file");
-                Astral.Logger.WriteLine(ex.ToString());
+                Logger.WriteLine("Failed to access the file");
+                Logger.WriteLine(ex.ToString());
                 return ActionResult.Fail;
             }
 
@@ -118,7 +82,6 @@ namespace QuesterAssistant.Actions
                 {
                     oldText.Add(sr.ReadLine());
                 }
-                sr.Close();
             }
             AccEnd = oldText.Count;
             // find account start line
@@ -147,7 +110,6 @@ namespace QuesterAssistant.Actions
                     if (oldText[i].Contains("<") & i > CharStart)
                     {
                         CharEnd = i;
-                        //break;
                     }
                 }
             }
@@ -204,7 +166,6 @@ namespace QuesterAssistant.Actions
                 {
                     sw.WriteLine(t);
                 }
-                sw.Close();
             }
             System.Threading.Thread.Sleep(500);
             return ActionResult.Completed;
@@ -215,7 +176,7 @@ namespace QuesterAssistant.Actions
             List<string> tempItems = new List<string>();
             if (EntityManager.LocalPlayer.IsValid)
             {
-                Bags.ForEach(b => AddItems(b, tempItems));
+                SpecificBags.Items.ForEach(b => AddItems(b, tempItems));
             }
             return tempItems;
         }
@@ -225,7 +186,7 @@ namespace QuesterAssistant.Actions
             {
                 var items = EntityManager.LocalPlayer.GetInventoryBagById(bagID).GetItems;
                 if (ItemsFilter.Entries.Count > 0)
-                    items = items.FindAll(x => ((MyItemFilterCore)ItemsFilter).IsMatch(x.Item));
+                    items = items.FindAll(x => ItemsFilter.IsMatch(x.Item));
 
                 if (items.Count > 0)
                 {
@@ -235,12 +196,14 @@ namespace QuesterAssistant.Actions
                         var item = s.Item;
                         string line = Mask;
                         line = line.Replace("%itemCount%", item.Count.ToString());
-                        line = line.Replace("%internalName%", item.ItemDef.InternalName.ToString());
-                        line = line.Replace("%displayName%", item.DisplayName.ToString());
+                        line = line.Replace("%internalName%", item.ItemDef.InternalName);
+                        line = line.Replace("%displayName%", item.DisplayName);
                         line = line.Replace("%isBound%", item.IsBound.ToString());
                         if (line.Contains("%itemPrice%"))
                         {
-                            var lots = AuctionSearch.Get(item).Lots;
+                            var auctionSearch = new AuctionSearch(item.ItemDef);
+                            var lots = auctionSearch.Result.Lots;
+                            auctionSearch.WriteLogMessage();
                             var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
                             line = line.Replace("%itemPrice%", price);
                         }

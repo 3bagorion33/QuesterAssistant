@@ -43,7 +43,7 @@ namespace QuesterAssistant.Classes.Hooks
 
         #region Methods
 
-        protected override int HookCallbackProcedure(int nCode, int wParam, IntPtr lParam)
+        protected override IntPtr HookCallbackProcedure(int nCode, IntPtr wParam, IntPtr lParam)
         {
             bool handled = false;
             if (nCode > -1 && (KeyDown != null || KeyUp != null || KeyPress != null))
@@ -51,16 +51,16 @@ namespace QuesterAssistant.Classes.Hooks
                 KeyboardHookStruct keyboardHookStruct =
                     (KeyboardHookStruct)Marshal.PtrToStructure(lParam, typeof(KeyboardHookStruct));
                 // Is Control being held down?
-                bool control = ((Win32.User32.GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
-                               ((Win32.User32.GetKeyState(VK_RCONTROL) & 0x80) != 0);
+                bool control = ((WinAPI.GetKeyState(VK_LCONTROL) & 0x80) != 0) ||
+                               ((WinAPI.GetKeyState(VK_RCONTROL) & 0x80) != 0);
                 // Is Shift being held down?
-                bool shift = ((Win32.User32.GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
-                             ((Win32.User32.GetKeyState(VK_RSHIFT) & 0x80) != 0);
+                bool shift = ((WinAPI.GetKeyState(VK_LSHIFT) & 0x80) != 0) ||
+                             ((WinAPI.GetKeyState(VK_RSHIFT) & 0x80) != 0);
                 // Is Alt being held down?
-                bool alt = ((Win32.User32.GetKeyState(VK_LALT) & 0x80) != 0) ||
-                           ((Win32.User32.GetKeyState(VK_RALT) & 0x80) != 0);
+                bool alt = ((WinAPI.GetKeyState(VK_LALT) & 0x80) != 0) ||
+                           ((WinAPI.GetKeyState(VK_RALT) & 0x80) != 0);
                 // Is CapsLock on?
-                bool capslock = (Win32.User32.GetKeyState(VK_CAPITAL) != 0);
+                bool capslock = (WinAPI.GetKeyState(VK_CAPITAL) != 0);
                 // Create event using keycode and control/shift/alt values found above
                 KeyEventArgs e = new KeyEventArgs(
                     (Keys)(
@@ -70,7 +70,7 @@ namespace QuesterAssistant.Classes.Hooks
                         (alt ? (int)Keys.Alt : 0)
                         ));
                 // Handle KeyDown and KeyUp events
-                switch (wParam)
+                switch ((int)wParam)
                 {
                     case WM_KEYDOWN:
                     case WM_SYSKEYDOWN:
@@ -90,15 +90,15 @@ namespace QuesterAssistant.Classes.Hooks
                         break;
                 }
                 // Handle KeyPress event
-                if (wParam == WM_KEYDOWN &&
+                if ((int)wParam == WM_KEYDOWN &&
                    !handled &&
                    !e.SuppressKeyPress &&
                     KeyPress != null)
                 {
                     byte[] keyState = new byte[256];
                     byte[] inBuffer = new byte[2];
-                    Win32.User32.GetKeyboardState(keyState);
-                    if (Win32.User32.ToAscii(keyboardHookStruct.vkCode,
+                    WinAPI.GetKeyboardState(keyState);
+                    if (WinAPI.ToAscii(keyboardHookStruct.vkCode,
                               keyboardHookStruct.scanCode,
                               keyState,
                               inBuffer,
@@ -115,11 +115,11 @@ namespace QuesterAssistant.Classes.Hooks
             }
             if (handled)
             {
-                return 1;
+                return new IntPtr(1);
             }
             else
             {
-                return Win32.User32.CallNextHookEx(_handleToHook, nCode, wParam, lParam);
+                return WinAPI.CallNextHookEx(_handleToHook, nCode, wParam, lParam);
             }
         }
 

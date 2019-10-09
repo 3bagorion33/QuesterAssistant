@@ -1,22 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Astral;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.PowersManager;
+using QuesterAssistant.PowersManager;
+using static QuesterAssistant.PowersManager.PowersManagerData;
 
 namespace QuesterAssistant.Actions
 {
     [Serializable]
     public class LoadPowersPreset : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().Name;
+        public override string ActionLabel => $"{GetType().Name} : {GetLabel()}";
         public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
@@ -50,12 +48,7 @@ namespace QuesterAssistant.Actions
                     return false;
                 }
 
-                pManager = new PowersManagerData();
-                if (!pManager.LoadSettings())
-                {
-                    Logger.WriteLine(ActionLabel + ": Unable to read preset file!");
-                    return false;
-                }
+                pManager = Core.PowersManagerCore.Data;
 
                 if (!pManager.CurrPresets.Any())
                 {
@@ -78,6 +71,20 @@ namespace QuesterAssistant.Actions
             }
         }
 
+        private string GetLabel()
+        {
+            if (!string.IsNullOrEmpty(PresetName))
+            {
+                return PresetName;
+            }
+
+            if (PresetNumber > 0)
+            {
+                return PresetNumber.ToString();
+            }
+            return "<Empty>";
+        }
+
         public override ActionResult Run()
         {
             if (IntenalConditions)
@@ -87,13 +94,13 @@ namespace QuesterAssistant.Actions
                 {
                     if (PresetNumber > pManager.CurrPresets.Capacity)
                     {
-                        Logger.WriteLine(ActionLabel + ": PresetNumber is superior than preset list for this paragon!");
+                        Logger.WriteLine($"{ActionLabel} : PresetNumber is superior than preset list for this paragon!");
                         return ActionResult.Skip;
                     }
                     _pres = pManager.CurrPresets.ElementAtOrDefault(PresetNumber - 1);
                     if (_pres != null)
                     {
-                        Logger.WriteLine(ActionLabel + ": Applying preset with name '" + _pres.Name + "'...");
+                        Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");
                         Powers.ApplyPowers(_pres?.PowersList);
                         return ActionResult.Completed;
                     }
@@ -103,12 +110,12 @@ namespace QuesterAssistant.Actions
                     _pres = pManager.CurrPresets.Find(x => Regex.IsMatch(x.Name, PresetName));
                     if (_pres != null)
                     {
-                        Logger.WriteLine(ActionLabel + ": Applying preset with name '" + _pres.Name + "'...");
+                        Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");
                         Powers.ApplyPowers(_pres?.PowersList);
                         return ActionResult.Completed;
                     }
                 }
-                Logger.WriteLine(ActionLabel + ": Unable to find a preset for these parameters, skip.");
+                Logger.WriteLine($"{ActionLabel} : Unable to find a preset for these parameters, skip.");
                 return ActionResult.Skip;
             }
             return ActionResult.Fail;

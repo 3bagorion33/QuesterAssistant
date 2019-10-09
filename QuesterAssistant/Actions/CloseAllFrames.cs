@@ -1,5 +1,6 @@
 ﻿using Astral.Logic.Classes.Map;
 using MyNW.Classes;
+using MyNW.Internals;
 
 namespace QuesterAssistant.Actions
 {
@@ -19,9 +20,13 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            MyNW.Internals.Game.ToggleCursorMode(false);
-            System.Threading.Thread.Sleep(1000);
-            return ActionResult.Completed;
+            if (Game.IsCursorModeEnabled)
+            {
+                Game.ToggleCursorMode(false);
+                System.Threading.Thread.Sleep(1000);
+                return ActionResult.Completed;
+            }
+            return ActionResult.Skip;
         }
     }
 }

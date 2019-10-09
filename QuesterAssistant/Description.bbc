@@ -1,0 +1,36 @@
+[[b][u]Functionality[/u][/b]]
+[list]
+[*][b]Settings[/b] manages some functions of this plugin.
+[*][b]Upgrade Manager[/b] provides engine to refine and evolve stones.
+[*][b]Powers Manager[/b] provides the ability to manage a set of powers puting in slots. It supports for hot keys.
+[*][b]Push Notify [color=red]beta![/color][/b] provides the ability to send Push message on your smartphone via PushBullet service.
+[/list]
+[[b][u]Quester States[/u][/b]]
+[list]
+[/list]
+[[b][u]Quester Actions[/u][/b]]
+[list]
+[*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price, has flexible options
+[*][b]BuyItemRemote[/b] - allows you to remotely buy in campaign stores
+[*][b]GroupItems[/b] - allows to group items in bags using using bounding and protection properties
+[*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
+[*][b]CloseAllFrames[/b] - toggles off ingame cursor mode
+[*][b]ConsoleCommand[/b] - execute any ingame console command
+[*][b]DiscardItem[/b] - delete items using filter and grade quality
+[*][b]InventoryLog[/b] - write to file all inventory availabled in the API using pattern, can to save auction price
+[*][b]LoadPowersPreset[/b] - loads a preset of powers for the current paragon by number or name (regular expressions), if available in the database
+[*][b]MoonMask[/b] - travel to MoonMask if possible
+[*][b]Notify[/b] - shows popup notification window, writes to file and sends to PushBullet clients the specified message
+[*][b]ReportAD[/b] - stores to a file information about AA and AD of current character
+[*][b]RunUpgradeProfile[/b] - tries to run selected profile for refining and evolving items
+[*][b]RefineAD[/b] - refine astral diamonds if possible
+[*][b]UseConsumable[/b] - use equiped consumable by ID (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]VIPRewards[/b] - claim account and char rewards and open boxes
+[*][b]VIPSell[/b] - sale items to VIP or Artifact ([color=red]beta![/color]) vendor if possible using global sale filter (forced flag "Discard if can't sell")
+[/list]
+[[b][u]Quester Conditions[/u][/b]]
+[list]
+[*][b]CountOfRuns [color=red]beta![/color][/b] - an iteration count of the action, works only with Loop and is not always correct, but there is no other solution until Jarod makes support at the engine level http://www.neverwinter-bot.com/forums/viewtopic.php?f=99&t=9983
+[*][b]PlayerHealth[/b] - check characters HP level in % (by [b][color=#0080FF]michaelprog[/color][/b])
+[*][b]ReceivedChatMessage[/b] - monitor messages in the chat until a message is received in the specified channel using the specified pattern (regular expressions), when you select the channel Unknown messages are checked for each channel
+[/list]

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Common
 {
     public static class MathTools
     {
@@ -44,6 +42,25 @@ namespace QuesterAssistant.Classes
             }
             return result;
         }
+
+        public static dynamic Min(params dynamic[] num)
+        {
+            if (num.Length == 1) return num[0];
+            uint value = Math.Min(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Min(value, num[i]);
+            return value;
+        }
+
+        public static dynamic Max(params dynamic[] num)
+        {
+            if (num.Length == 1) return num[0];
+            var value = Math.Max(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Max(value, num[i]);
+            return value;
+        }
+
         public enum RoundType
         {
             Zero,

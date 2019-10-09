@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Windows.Forms;
 using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
     internal partial class ChangeListOrder<T> : XtraForm where T : class
     {
-        private List<T> usedList;
+        private IList<T> usedList;
         private T SelectedItem
         {
             get
@@ -25,15 +19,17 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        internal ChangeListOrder(List<T> list)
+        private ChangeListOrder(IList<T> list, T selected)
         {
             InitializeComponent();
             usedList = list;
+            RefreshList();
+            lbxItems.SelectedItem = selected;
         }
 
-        internal static void Show<T2>(List<T2> list, string message) where T2 : class
+        public static void Show(IList<T> list, T selected, string message)
         {
-            new ChangeListOrder<T2>(list) { lblMessage = { Text = message } }.ShowDialog();
+            new ChangeListOrder<T>(list, selected) { lblMessage = { Text = message } }.ShowDialog();
         }
 
         private void RefreshList()
@@ -41,29 +37,25 @@ namespace QuesterAssistant.Panels
             lbxItems.DataSource = usedList;
         }
 
-        private void ReverseList(int _startIdx)
+        private void ReverseList(int startIdx, Direction direction)
         {
             T selected = SelectedItem;
-            usedList.Reverse(_startIdx, 2);
+            usedList.Remove(selected);
+            usedList.Insert(startIdx + (int)direction, selected);
             RefreshList();
             lbxItems.SelectedItem = selected;
         }
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            base.Close();
-        }
-
-        private void ChangeListOrder_Load(object sender, EventArgs e)
-        {
-            RefreshList();
+            Close();
         }
 
         private void btnUp_Click(object sender, EventArgs e)
         {
             if (lbxItems.SelectedIndex > 0)
             {
-                ReverseList(lbxItems.SelectedIndex - 1);
+                ReverseList(lbxItems.SelectedIndex, Direction.Up);
             }
         }
 
@@ -71,15 +63,14 @@ namespace QuesterAssistant.Panels
         {
             if ((lbxItems.SelectedIndex + 1) < usedList.Count)
             {
-                ReverseList(lbxItems.SelectedIndex);
+                ReverseList(lbxItems.SelectedIndex, Direction.Down);
             }
         }
 
-        private void btnRename_Click(object sender, EventArgs e)
+        private enum Direction : int
         {
-            if (lbxItems.SelectedIndex > 0)
-            {
-            }
+            Up = -1,
+            Down = 1
         }
     }
 }
