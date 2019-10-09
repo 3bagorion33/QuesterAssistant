@@ -260,3 +260,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/References/x32/Astral.exe
+/References/x32/MyNW.dll

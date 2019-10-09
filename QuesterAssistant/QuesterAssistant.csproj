@@ -144,20 +144,6 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(Platform)' == 'x64' ">
-    <Reference Include="Astral">
-      <HintPath>Temp\x64\Astral.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MyNW">
-      <HintPath>Temp\x64\MyNW.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MyMemory-x64">
-      <HintPath>Temp\x64\MyMemory-x64.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup Condition=" '$(Platform)' == 'x86' ">
     <Reference Include="Astral">
       <HintPath>Temp\x86\Astral.exe</HintPath>
@@ -167,12 +153,11 @@
       <HintPath>Temp\x86\MyNW.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MyMemory-x86">
-      <HintPath>Temp\x86\MyMemory-x86.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Astral">
+      <HintPath>..\..\EntityAddon\References\x64\Astral.exe</HintPath>
+    </Reference>
     <Reference Include="DevExpress.Data.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -237,6 +222,15 @@
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
+    <Reference Include="MyMemory-x64">
+      <HintPath>..\References\x64\MyMemory-x64.dll</HintPath>
+    </Reference>
+    <Reference Include="MyMemory-x86">
+      <HintPath>..\References\x64\MyMemory-x86.dll</HintPath>
+    </Reference>
+    <Reference Include="MyNW">
+      <HintPath>..\..\EntityAddon\References\x64\MyNW.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System">
@@ -269,6 +263,7 @@
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\MoveItems.cs" />
+    <Compile Include="Actions\MoveToSea.cs" />
     <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
@@ -284,14 +279,20 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <Compile Include="Classes\Common\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\MinMaxPair.cs" />
     <Compile Include="Classes\Common\ListConverter.cs" />
     <Compile Include="Classes\Coffer.cs" />
     <Compile Include="Classes\Common\PropertySorter.cs" />
+    <Compile Include="Classes\CopyHelper.cs" />
     <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
     <Compile Include="Classes\Extensions\ItemEx.cs" />
+    <Compile Include="Classes\ParagonTools.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
+    <Compile Include="Conditions\CheckNode.cs" />
+    <Compile Include="Conditions\ComplexCondition.cs" />
+    <Compile Include="Conditions\PlayerParagon.cs" />
     <Compile Include="Panels\About.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -306,13 +307,27 @@
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="UIEditors\ConditionListEditor.cs" />
     <Compile Include="UIEditors\DonateTaskEditor.cs" />
+    <Compile Include="UIEditors\Forms\ConditionsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\ConditionsListForm.designer.cs">
+      <DependentUpon>ConditionsListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIEditors\Forms\DonateTaskEditorForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="UIEditors\Forms\DonateTaskEditorForm.Designer.cs">
       <DependentUpon>DonateTaskEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIEditors\Forms\PlayerParagonSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\PlayerParagonSelectForm.designer.cs">
+      <DependentUpon>PlayerParagonSelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\ParagonListEditor.cs" />
     <Compile Include="UpgradeManager\UpgradeManagerCore.cs" />
     <Compile Include="UpgradeManager\UpgradeManagerData.cs" />
     <Compile Include="UpgradeManager\UpgradeManagerForm.cs">
@@ -324,8 +339,14 @@
     <EmbeddedResource Include="Panels\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\ConditionsListForm.resx">
+      <DependentUpon>ConditionsListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\DonateTaskEditorForm.resx">
       <DependentUpon>DonateTaskEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\PlayerParagonSelectForm.resx">
+      <DependentUpon>PlayerParagonSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradeManager\UpgradeManagerForm.resx">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
