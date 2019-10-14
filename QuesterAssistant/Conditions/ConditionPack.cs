@@ -16,12 +16,12 @@ namespace QuesterAssistant.UIEditors.Forms
     }
 
     [Serializable]
-    public class ComplexCondition : Astral.Quester.Classes.Condition
+    public class ConditionPack : Astral.Quester.Classes.Condition
     {
-        [Description("Displayed name of the ComplexCondition")]
+        [Description("Displayed name of the ConditionPack")]
         public string Name { get; set; }
 
-        [Description("The negation of the result of the ComplexCondition")]
+        [Description("The negation of the result of the ConditionPack")]
         public bool Not { get; set; }
 
         [Description("Logical rule of the Conditions checks\n" +
@@ -32,7 +32,7 @@ namespace QuesterAssistant.UIEditors.Forms
         [Description("The list of the Conditions")]
         [TypeConverter(typeof(CollectionTypeConverter))]
         [Editor(typeof(ConditionListEditor), typeof(UITypeEditor))]
-        public ConditionList Conditions { get; set; }
+        public ConditionList Conditions { get; set; } = new ConditionList();
 
         public override bool IsValid
         {

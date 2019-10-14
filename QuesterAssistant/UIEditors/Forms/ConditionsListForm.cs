@@ -3,6 +3,8 @@ using Astral.Quester.Forms;
 using DevExpress.XtraEditors;
 using QuesterAssistant.Classes;
 using System;
+using System.Collections;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Condition>;
@@ -31,8 +33,9 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
+            
             if (Conditions.SelectedIndex >= 0 
-                && MessageBox.Show("Are you sure to delete selected condition ?", "Deleted Conditions ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                && /*MessageBox.Show*/XtraMessageBox.Show("Are you sure to remove selected condition ?", "Remove Condition ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 Conditions.Items.RemoveAt(Conditions.SelectedIndex);
             }
@@ -40,18 +43,30 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void btnCopy_Click(object sender, EventArgs e)
         {
-            conditionCopy = null;
+            //conditionCopy = null;
+            //Condition cond = Conditions.SelectedItem as Condition;
+            //if (cond != null)
+            //    conditionCopy = CopyHelper.CreateDeepCopy(cond); // Этот метод быстрее
+            //  //conditionCopy = CopyHelper.CreateXmlCopy(cond); // Этот метод дольше
+
             Condition cond = Conditions.SelectedItem as Condition;
-            if (cond != null)
-                conditionCopy = CopyHelper.CreateDeepCopy(cond); // Этот метод быстрее
-                //conditionCopy = CopyHelper.CreateXmlCopy(cond); // Этот метод дольше
+            if(cond != null && SetConditionCopy(cond))
+                XtraMessageBox.Show($"Condition {cond.ToString()} copied!");
+            else XtraMessageBox.Show($"Error while copying of the condition!");
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
         {
-            if (conditionCopy != null)
-                Conditions.Items.Add(CopyHelper.CreateDeepCopy(conditionCopy)); // Этот метод быстрее
-                //Conditions.Items.Add(CopyHelper.CreateXmlCopy(conditionCopy)); // Этот метод дольше
+            //if (conditionCopy != null)
+            //    Conditions.Items.Add(CopyHelper.CreateDeepCopy(conditionCopy)); // Этот метод быстрее
+            //    //Conditions.Items.Add(CopyHelper.CreateXmlCopy(conditionCopy)); // Этот метод дольше
+
+            Condition cond = GetConditionCopy();
+            if (cond != null)
+            {
+                int ind = Conditions.Items.Add(CopyHelper.CreateDeepCopy(cond));
+                Conditions.SelectedIndex = ind;
+            }
         }
 
         private void btnTest_Click(object sender, EventArgs e)
@@ -63,7 +78,8 @@ namespace QuesterAssistant.UIEditors.Forms
                 sb.AppendLine(cond.TestInfos).AppendLine();
                 sb.Append("Result: ").Append(cond.IsValid);
 
-                MessageBox.Show(sb.ToString());
+                //MessageBox.Show(sb.ToString());
+                XtraMessageBox.Show(sb.ToString());
             }
         }
 
@@ -129,6 +145,54 @@ namespace QuesterAssistant.UIEditors.Forms
             }
 
             return conditions;
+        }
+
+        /// <summary>
+        /// Получении копии Condition из приватного поля copiedCondition в QuesterEditor'е
+        /// </summary>
+        /// <returns></returns>
+        protected Condition GetConditionCopy()
+        {
+            Astral.Quester.Forms.Editor qEditor = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is Astral.Quester.Forms.Editor)
+                {
+                    qEditor = (Astral.Quester.Forms.Editor)form;
+                    break;
+                }
+            }
+
+            if (qEditor != null)
+            {
+                Condition cond = ReflectionHelper.GetPrivateFieldValue(typeof(Astral.Quester.Forms.Editor), "copiedCondition", qEditor/*, BindingFlags.GetField | BindingFlags.NonPublic*/) as Condition;
+                if (cond != null)
+                    return CopyHelper.CreateDeepCopy(cond);
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Сохранение копии Condition в приватное поле copiedCondition в QuesterEditor
+        /// </summary>
+        /// <returns></returns>
+        protected bool SetConditionCopy(Condition cond)
+        {
+            Astral.Quester.Forms.Editor qEditor = null;
+            foreach (Form form in Application.OpenForms)
+            {
+                if (form is Astral.Quester.Forms.Editor)
+                {
+                    qEditor = (Astral.Quester.Forms.Editor)form;
+                    break;
+                }
+            }
+
+            if (qEditor != null)
+                return ReflectionHelper.SetPrivateFieldValue(qEditor, "copiedCondition", CopyHelper.CreateDeepCopy(cond)/*, BindingFlags.SetField | BindingFlags.NonPublic, true*/);
+
+            return false;
         }
 
     }
