@@ -50,7 +50,7 @@ namespace QuesterAssistant.Classes.Extensions
         }
 
 
-        public static string CarryOnLength(this string @this, int length = 55)
+        public static string CarryOnLength(this string @this, int length = 54)
         {
             return string.Join("\r\n", @this.SplitOnLength(length));
         }

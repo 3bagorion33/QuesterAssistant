@@ -162,6 +162,12 @@ namespace QuesterAssistant.Actions
                 }
             }
 
+            if (Auction.GetRemainingPostings() <= 0)
+            {
+                Logger.WriteLine("No slots available to place, skip...");
+                goto Exit;
+            }
+
             new GroupItems { ItemIdFilter = ItemsFilter }.Run();
 
             bool GetItemsToSell()
