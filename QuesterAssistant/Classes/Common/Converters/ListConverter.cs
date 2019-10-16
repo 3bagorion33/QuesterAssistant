@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.ComponentModel;
 
-namespace QuesterAssistant.Classes.Common
+namespace QuesterAssistant.Classes.Common.Converters
 {
     internal class ListConverter : TypeConverter
     {

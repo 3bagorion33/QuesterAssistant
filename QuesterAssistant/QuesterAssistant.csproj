@@ -185,6 +185,10 @@
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="DevExpress.Xpo.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.XtraBars.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -274,6 +278,7 @@
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
+    <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
     <Compile Include="Actions\MoveItems.cs" />
     <Compile Include="Actions\Deprecated\MoveToSea.cs" />
     <Compile Include="Actions\ReportAD.cs" />
@@ -288,12 +293,14 @@
     <Compile Include="Actions\LoadPowersPreset.cs" />
     <Compile Include="Actions\MoonMask.cs" />
     <Compile Include="Actions\Notify.cs" />
+    <Compile Include="Actions\PullProfileFromStack.cs" />
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
-    <Compile Include="Classes\Common\CollectionTypeConverter.cs" />
+    <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
+    <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
     <Compile Include="Classes\Common\MinMaxPair.cs" />
-    <Compile Include="Classes\Common\ListConverter.cs" />
+    <Compile Include="Classes\Common\Converters\ListConverter.cs" />
     <Compile Include="Classes\Coffer.cs" />
     <Compile Include="Classes\Common\PropertySorter.cs" />
     <Compile Include="Classes\CopyHelper.cs" />
@@ -301,6 +308,7 @@
     <Compile Include="Classes\Extensions\ItemEx.cs" />
     <Compile Include="Classes\ParagonTools.cs" />
     <Compile Include="Classes\Pause.cs" />
+    <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\ReflectionHelper.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
     <Compile Include="Conditions\CheckNode.cs" />

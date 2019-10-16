@@ -1,12 +1,13 @@
-﻿using Astral.Quester.Classes;
-using QuesterAssistant.Classes.Common;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
+using Astral.Quester.Classes;
+using QuesterAssistant.Classes.Common.Converters;
+using QuesterAssistant.UIEditors;
 using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Condition>;
 
-namespace QuesterAssistant.UIEditors.Forms
+namespace QuesterAssistant.Conditions
 {
     [Serializable]
     public enum ConditionCheck

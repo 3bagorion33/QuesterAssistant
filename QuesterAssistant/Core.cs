@@ -21,6 +21,7 @@ namespace QuesterAssistant
         public override string Name => "Quester Assistant";
         public override Astral.Forms.BasePanel Settings => new Main();
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
+        internal static string ProfilesPath => Astral.Controllers.Directories.ProfilesPath;
         internal static string Category => typeof(Core).Namespace;
         internal static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
         internal static IntPtr GameWindowHandle => GameProcess.MainWindowHandle;

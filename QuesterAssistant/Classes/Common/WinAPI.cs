@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -108,6 +109,12 @@ namespace QuesterAssistant.Classes.Common
         {
             return GetWindowState(hWnd) == 2;
         }
+        public static string RelativePath(string fNameFrom, string fNameTo)
+        {
+            StringBuilder str = new StringBuilder(256);
+            NativeMethods.PathRelativePathTo(str, fNameFrom, FileAttributes.Normal, fNameTo, FileAttributes.Normal);
+            return str.ToString();
+        }
 
         private static class NativeMethods
         {
@@ -176,6 +183,14 @@ namespace QuesterAssistant.Classes.Common
             public static extern bool CloseHandle(IntPtr hWnd);
             [DllImport(KERNEL)]
             public static extern IntPtr OpenProcess(int Access, bool InheritHandle, int ProcessId);
+            [DllImport("shlwapi.dll", CharSet = CharSet.Auto)]
+            public static extern bool PathRelativePathTo(
+                [Out] StringBuilder pszPath,
+                [In] string pszFrom,
+                [In] FileAttributes dwAttrFrom,
+                [In] string pszTo,
+                [In] FileAttributes dwAttrTo
+            );
 
             public struct POINTAPI
             {

@@ -17,9 +17,9 @@ namespace QuesterAssistant.Conditions
         [NonSerialized]
         private Message lastMatchedMessage = new Message();
         private bool isMatched = false;
-        private static List<Message> buffMessages = new List<Message>();
+        private static readonly List<Message> buffMessages = new List<Message>();
         [NonSerialized]
-        private Timer resetTimer = new Timer()
+        private readonly Timer resetTimer = new Timer()
         {
             Enabled = true,
         };
@@ -28,10 +28,10 @@ namespace QuesterAssistant.Conditions
         {
             get
             {
-                var _msg = buffMessages.FindLast(x => ((Channel != ChatLogEntryType.Unknown) ? x.Channel == Channel : true) && Regex.IsMatch(x.Text, MessageRegex));
-                if (_msg != null)
+                var msg = buffMessages.FindLast(x => (Channel == ChatLogEntryType.Unknown || x.Channel == Channel) && Regex.IsMatch(x.Text, MessageRegex));
+                if (msg != null)
                 {
-                    lastMatchedMessage = _msg;
+                    lastMatchedMessage = msg;
                     isMatched = true;
                 }
                 return CheckAbsence ? !isMatched : isMatched;
@@ -53,12 +53,12 @@ namespace QuesterAssistant.Conditions
             Reset();
         }
 
-        private void OnChatMessage(ChatLogEntryType _channel, string _msg)
+        private void OnChatMessage(ChatLogEntryType channel, string msg)
         {
-            const int BUFF_SIZE = 10;
-            if (buffMessages.Count > BUFF_SIZE)
-                buffMessages.RemoveRange(0, buffMessages.Count - BUFF_SIZE);
-            buffMessages.AddOrReplace(x => x.Channel == _channel && x.Text == _msg, new Message() { Channel = _channel, Text = _msg });
+            const int buffSize = 10;
+            if (buffMessages.Count > buffSize)
+                buffMessages.RemoveRange(0, buffMessages.Count - buffSize);
+            buffMessages.AddOrReplace(x => x.Channel == channel && x.Text == msg, new Message { Channel = channel, Text = msg });
         }
 
         public override string ToString()

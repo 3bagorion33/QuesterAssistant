@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace QuesterAssistant.Classes
 {
@@ -51,7 +47,6 @@ namespace QuesterAssistant.Classes
             {
                 return fi.GetValue(o);
             }
-
             return null;
         }
 
@@ -77,8 +72,15 @@ namespace QuesterAssistant.Classes
                 info.SetValue(obj, value);
                 return true;
             }
-            else return false;
+            return false;
         }
 
+        public static T GetPrivatePropertyValue<T, TO>(string propertyName, BindingFlags flags = BindingFlags.Default)
+        {
+            var ass = Assembly.GetAssembly(typeof(TO));
+            var type = ass.GetType(typeof(TO).FullName);
+            var prop = type.GetProperty(propertyName, flags);
+            return (T) prop.GetValue(type);
+        }
     }
 }
