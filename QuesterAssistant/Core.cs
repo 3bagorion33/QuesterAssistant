@@ -1,6 +1,5 @@
 using Astral;
 using Astral.Addons;
-using MyNW;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Hooks;
 using QuesterAssistant.Panels;
@@ -23,7 +22,7 @@ namespace QuesterAssistant
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
         internal static string ProfilesPath => Astral.Controllers.Directories.ProfilesPath;
         internal static string Category => typeof(Core).Namespace;
-        internal static Process GameProcess => Process.GetProcessById((int)Memory.ProcessId);
+        internal static Process GameProcess => API.AttachedGameProcess ?? new Process();
         internal static IntPtr GameWindowHandle => GameProcess.MainWindowHandle;
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
         internal static bool IsGameForeground => GameWindowHandle == WinAPI.GetForegroundWindow();

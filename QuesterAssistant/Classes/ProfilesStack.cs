@@ -2,13 +2,18 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using Astral.Quester.Forms;
+using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Classes
 {
     internal static class ProfilesStack
     {
-        public static readonly List<Item> Items = new List<Item>();
+        private static readonly Dictionary<string, List<Item>> Items = new Dictionary<string, List<Item>>();
+        private static string CurrentCharacter => EntityManager.LocalPlayer.InternalName;
 
         public static List<FileInfo> GetProfiles =>
             new DirectoryInfo(Core.ProfilesPath)
@@ -16,12 +21,39 @@ namespace QuesterAssistant.Classes
                 .OrderBy(f => f.FullName)
                 .ToList();
 
-        public static string CurrentProfilePath => Astral.Controllers.Settings.Get.LastQuesterProfile;
+        public static string CurrentProfilePath =>
+            new FileInfo(Astral.Controllers.Settings.Get.LastQuesterProfile).FullName;
         public static string CurrentProfileName => CurrentProfilePath.Substring(Core.ProfilesPath.Length + 1);
+        public static Item Last =>
+            Any ? Items[CurrentCharacter].LastOrDefault() : new Item();
+        public static bool Any =>
+            Items.Any() &&
+            Items.ContainsKey(CurrentCharacter) &&
+            Items[CurrentCharacter].Any();
 
         public static string RelativePath(string destProfile)
         {
             return WinAPI.RelativePath(CurrentProfilePath, destProfile).Replace('\\', '/');
+        }
+
+        public static void Add(Guid actionId)
+        {
+            if (!Items.ContainsKey(CurrentCharacter))
+                Items.Add(CurrentCharacter, new List<Item>());
+            Items[CurrentCharacter].Add(new Item { ProfilePath = CurrentProfilePath, ActionID = actionId });
+        }
+
+        public static void RemoveLast()
+        {
+            Items[CurrentCharacter].Remove(Last);
+        }
+
+        public static void Clear(bool allCharacters = false)
+        {
+            if (allCharacters)
+                Items.Clear();
+            else if (Items.ContainsKey(CurrentCharacter) && Items[CurrentCharacter].Any())
+                Items[CurrentCharacter].Clear();
         }
 
         public struct Item
@@ -29,9 +61,27 @@ namespace QuesterAssistant.Classes
             public string ProfilePath;
             public Guid ActionID;
 
+            public bool Load()
+            {
+                var result = new FileInfo(ProfilePath).Exists;
+                if (result)
+                {
+                    Astral.Quester.API.LoadProfile(ProfilePath);
+                    var profile = Astral.Quester.API.CurrentProfile;
+                    var lastAction = profile.GetActionByID(ActionID);
+                    profile.MainActionPack.SetStartPoint(lastAction);
+                    lastAction.SetCompleted(true);
+                    Pause.Sleep(500);
+                    ReflectionHelper.GetStaticFieldValue(typeof(Editor), "editorForm", out var obj, BindingFlags.NonPublic | BindingFlags.Static);
+                    (obj as Editor)?.refreshAll();
+                }
+
+                return result;
+            }
+
             public override string ToString()
             {
-                return RelativePath(ProfilePath);
+                return RelativePath(ProfilePath).OrDefault("none");
             }
         }
     }

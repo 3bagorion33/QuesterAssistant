@@ -62,6 +62,12 @@ namespace QuesterAssistant.Actions
                 Logger.WriteLine("No items found to move!");
                 return ActionResult.Skip;
             }
+            var destBag = EntityManager.LocalPlayer.GetInventoryBagById(DestinationBag);
+            if (destBag.MaxSlots - destBag.FilledSlots == 0)
+            {
+                Logger.WriteLine($"{DestinationBag} is filled!");
+                return ActionResult.Skip;
+            }
 
             foreach (var slot in items)
             {

@@ -1,4 +1,5 @@
 ﻿using MyNW.Internals;
+using MyNW.Patchables.Enums;
 using System;
 using System.Linq;
 
@@ -73,40 +74,77 @@ namespace QuesterAssistant.Classes
             {
                 string currentParagon = EntityManager.LocalPlayer.Character.CurrentPowerTreeBuild.SecondaryPaths.FirstOrDefault()?.Path.Name;
 
-                // Реализовать через Switch не удалось, т.к. case допускает только статичную строку.
-                if (currentParagon == ParagonTools.idWizard_Thaumaturge)
-                    return Wizard_Thaumaturge;
-                if (currentParagon == ParagonTools.idWizard_Arcanist)
-                        return Wizard_Arcanist;
-                if (currentParagon == ParagonTools.idCleric_Arbiter)
-                    return Cleric_Arbiter;
-                if (currentParagon == ParagonTools.idCleric_Devout)
-                    return Cleric_Devout;
-                if (currentParagon == ParagonTools.idBarbarian_Blademaster)
-                    return Barbarian_Blademaster;
-                if (currentParagon == ParagonTools.idBarbarian_Sentinel)
-                    return Barbarian_Sentinel;
-                if (currentParagon == ParagonTools.idFighter_Dreadnought)
-                    return Fighter_Dreadnought;
-                if (currentParagon == ParagonTools.idFighter_Vanguard)
-                    return Fighter_Vanguard;
-                if (currentParagon == ParagonTools.idRanger_Warden)
-                    return Ranger_Warden;
-                if (currentParagon == ParagonTools.idRanger_Hunter)
-                    return Ranger_Hunter;
-                if (currentParagon == ParagonTools.idPaladin_Oathkeeper)
-                    return Paladin_Oathkeeper;
-                if (currentParagon == ParagonTools.idPaladin_Justicar)
-                    return Paladin_Justicar;
-                if (currentParagon == ParagonTools.idWarlock_Hellbringer)
-                    return Warlock_Hellbringer;
-                if (currentParagon == ParagonTools.idWarlock_Soulweaver)
-                    return Warlock_Soulweaver;
-                if (currentParagon == ParagonTools.idRogue_Whisperknife)
-                    return Rogue_Whisperknife;
-                if (currentParagon == ParagonTools.idRogue_Assassin)
-                    return Rogue_Assassin;
+                switch (EntityManager.LocalPlayer.Character.Class.Category)
+                {
+                    case CharClassCategory.ControlWizard:
+                        if (Wizard_Thaumaturge && Wizard_Arcanist)
+                            return true;
+                        if (currentParagon == ParagonTools.idWizard_Thaumaturge)
+                            return Wizard_Thaumaturge;
+                        if (currentParagon == ParagonTools.idWizard_Arcanist)
+                            return Wizard_Arcanist;
+                        break;
+                    case CharClassCategory.DevotedCleric:
+                        if (Cleric_Arbiter && Cleric_Devout)
+                            return true;
+                        if (currentParagon == ParagonTools.idCleric_Arbiter)
+                            return Cleric_Arbiter;
+                        if (currentParagon == ParagonTools.idCleric_Devout)
+                            return Cleric_Devout;
+                        break;
+                    case CharClassCategory.GreatWeaponFigher:
+                        if (Barbarian_Blademaster && Barbarian_Sentinel)
+                            return true;
+                        if (currentParagon == ParagonTools.idBarbarian_Blademaster)
+                            return Barbarian_Blademaster;
+                        if (currentParagon == ParagonTools.idBarbarian_Sentinel)
+                            return Barbarian_Sentinel;
+                        break;
+                    case CharClassCategory.GuardianFighter:
+                        if (Fighter_Dreadnought && Fighter_Vanguard)
+                            return true;
+                        if (currentParagon == ParagonTools.idFighter_Dreadnought)
+                            return Fighter_Dreadnought;
+                        if (currentParagon == ParagonTools.idFighter_Vanguard)
+                            return Fighter_Vanguard;
+                        break;
+                    case CharClassCategory.HunterRanger:
+                        if (Ranger_Warden && Ranger_Hunter)
+                            return true;
+                        if (currentParagon == ParagonTools.idRanger_Warden)
+                            return Ranger_Warden;
+                        if (currentParagon == ParagonTools.idRanger_Hunter)
+                            return Ranger_Hunter;
+                        break;
+                    case CharClassCategory.OathboundPaladin:
+                        if (Paladin_Oathkeeper && Paladin_Justicar)
+                            return true;
+                        if (currentParagon == ParagonTools.idPaladin_Oathkeeper)
+                            return Paladin_Oathkeeper;
+                        if (currentParagon == ParagonTools.idPaladin_Justicar)
+                            return Paladin_Justicar;
+                        break;
+                    case CharClassCategory.SourgeWarlock:
+                        if (Warlock_Hellbringer && Warlock_Soulweaver)
+                            return true;
+                        if (currentParagon == ParagonTools.idWarlock_Hellbringer)
+                            return Warlock_Hellbringer;
+                        if (currentParagon == ParagonTools.idWarlock_Soulweaver)
+                            return Warlock_Soulweaver;
+                        break;
+                    case CharClassCategory.TricksterRogue:
+                        if (Rogue_Whisperknife && Rogue_Assassin)
+                            return true;
+                        if (currentParagon == ParagonTools.idRogue_Whisperknife)
+                            return Rogue_Whisperknife;
+                        if (currentParagon == ParagonTools.idRogue_Assassin)
+                            return Rogue_Assassin;
+                        break;
+                    default:
+                        return false;
+                }
 
+                // Реализовать через Switch не удалось, т.к. case допускает только статичную строку.
                 return false;
             }
         }

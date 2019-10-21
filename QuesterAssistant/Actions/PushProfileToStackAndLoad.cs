@@ -38,11 +38,11 @@ namespace QuesterAssistant.Actions
                 return ActionResult.Fail;
 
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
-            ProfilesStack.Items.Add(new ProfilesStack.Item {ProfilePath = ProfilesStack.CurrentProfilePath, ActionID = ActionID});
+            ProfilesStack.Add(ActionID);
             return new LoadProfile {ProfileName = profileName}.Run();
         }
 
-        [Description("Profile file must be in the same directory as the current")]
+        [Description("Select profile for loading")]
         [TypeConverter(typeof(FileInfoListConverter))]
         public string ProfileName
         {

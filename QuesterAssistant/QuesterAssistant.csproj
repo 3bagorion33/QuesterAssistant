@@ -237,9 +237,6 @@
       <HintPath>Temp\x64\MyMemory-x64.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MyMemory-x86">
-      <HintPath>..\References\x64\MyMemory-x86.dll</HintPath>
-    </Reference>
     <Reference Include="MyNW">
       <HintPath>..\..\EntityAddon\References\x64\MyNW.dll</HintPath>
     </Reference>
@@ -276,6 +273,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
+    <Compile Include="Actions\ClearProfilesStack.cs" />
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
@@ -309,7 +307,7 @@
     <Compile Include="Classes\ParagonTools.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
-    <Compile Include="Classes\ReflectionHelper.cs" />
+    <Compile Include="Classes\Common\ReflectionHelper.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />

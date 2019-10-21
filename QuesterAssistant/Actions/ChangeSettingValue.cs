@@ -9,8 +9,8 @@ namespace QuesterAssistant.Actions
     [Serializable]
     public class ChangeSettingValue : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().Name + " : " + Property + " => " + Value;
-        public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
+        public override string ActionLabel => $"{GetType().Name} : {Property} => {Value}";
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
@@ -24,7 +24,9 @@ namespace QuesterAssistant.Actions
         public enum SProperty
         {
             PathFinding,
-            Loot
+            Loot,
+            AutoEquip,
+            AutoUCC
         }
 
         [Description("Select property to change")]
@@ -42,6 +44,12 @@ namespace QuesterAssistant.Actions
                     break;
                 case SProperty.Loot:
                     API.CurrentSettings.Loot = Value;
+                    break;
+                case SProperty.AutoEquip:
+                    API.CurrentSettings.EnableAutoEquip = Value;
+                    break;
+                case SProperty.AutoUCC:
+                    API.CurrentSettings.LastCustomClass = Value ? "AutoUCC" : "UCC";
                     break;
                 default:
                     return ActionResult.Fail;

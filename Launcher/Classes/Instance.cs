@@ -68,6 +68,18 @@ namespace Launcher.Classes
             new byte[] { 0x2C, 0xDB, 0x16, 0x16 }
         };
 
+        // Patrol
+        private readonly List<byte[]> PATROL_PAUSE_ORIG = new List<byte[]>
+        {
+            new byte[] { 0x5E, 0x02, 0x20, 0x10, 0x27, 0x00, 0x00, 0x73 },
+            new byte[] { 0x5E, 0x02, 0x20, 0x10, 0x27, 0x00, 0x00, 0x73 },
+        };
+        private readonly List<byte[]> PATROL_PAUSE_NEW = new List<byte[]>
+        {
+            new byte[] { 0x5E, 0x02, 0x20, 0xC8, 0x00, 0x00, 0x00, 0x73 },
+            new byte[] { 0x5E, 0x02, 0x20, 0xC8, 0x00, 0x00, 0x00, 0x73 },
+        };
+
         public Instance()
         {
             bool ByteArraysEqual(byte[] b1, byte[] b2)
@@ -120,6 +132,7 @@ namespace Launcher.Classes
                     Rewrite(REWRITE_TITLE_ORIG, REWRITE_TITLE_NEW);
                     Rewrite(ASSEMBLYINFO_ORIG, ASSEMBLYINFO_NEW);
                     Rewrite(PRAY_PAUSE_ORIG, PRAY_PAUSE_NEW);
+                    Rewrite(PATROL_PAUSE_ORIG, PATROL_PAUSE_NEW);
                     Process = Process.Start(procName);
                 }
                 catch (Exception)
