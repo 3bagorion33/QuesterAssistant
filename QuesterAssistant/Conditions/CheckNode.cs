@@ -3,9 +3,10 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
 using Astral.Logic.NW;
-using Astral.Quester.UIEditors;
+using Astral.Quester.Classes;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.UIEditors;
 
 namespace QuesterAssistant.Conditions
 {
@@ -19,14 +20,14 @@ namespace QuesterAssistant.Conditions
         NotInteractable
     }
 
-    public class CheckNode : Astral.Quester.Classes.Condition
+    public class CheckNode : Condition
     {
         [NonSerialized]
         private Interact.DynaNode currentNode;
 
         public NodeState Tested { get; set; }
 
-        [Editor(typeof(PositionEditor), typeof(UITypeEditor))]
+        [Editor(typeof(PositionNodeEditor), typeof(UITypeEditor))]
         [Description("Position of the Node that is checked")]
         public Vector3 Position { get; set; }
 
@@ -34,7 +35,7 @@ namespace QuesterAssistant.Conditions
             "If the distance from the Player to the 'Position' greater then 'VisibilityDistance' then the condition is considered True")]
         public double VisibilityDistance { get; set; }
 
-        public CheckNode() :base()
+        public CheckNode() : base()
         {
             Tested = NodeState.Exist;
             Position = new Vector3();
