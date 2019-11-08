@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassPatcher", "ClassPatche
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "Launcher\Launcher.csproj", "{45EB6824-2C23-4110-A815-086C4FB41E81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AMClient", "AMClient\AMClient.csproj", "{826016A9-7C52-4D89-A915-10FA29A77C99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug into folder|Any CPU = Debug into folder|Any CPU
@@ -34,6 +36,12 @@ Global
 		{45EB6824-2C23-4110-A815-086C4FB41E81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45EB6824-2C23-4110-A815-086C4FB41E81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45EB6824-2C23-4110-A815-086C4FB41E81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Debug into folder|Any CPU.ActiveCfg = Debug|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Debug into folder|Any CPU.Build.0 = Debug|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826016A9-7C52-4D89-A915-10FA29A77C99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
