@@ -1,12 +1,11 @@
-﻿using Astral.Forms;
-using System;
+﻿using System;
 using System.ComponentModel;
 using DevExpress.Utils.Extensions;
 using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
-    public partial class Main : BasePanel
+    public partial class Main : Astral.Forms.BasePanel
     {
         internal static event EventHandler LoadSettings;
         internal static event EventHandler SaveSettings;

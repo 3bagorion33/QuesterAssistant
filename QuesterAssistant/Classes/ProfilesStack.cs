@@ -72,7 +72,7 @@ namespace QuesterAssistant.Classes
                     profile.MainActionPack.SetStartPoint(lastAction);
                     lastAction.SetCompleted(true);
                     Pause.Sleep(500);
-                    ReflectionHelper.GetStaticFieldValue(typeof(Editor), "editorForm", out var obj, BindingFlags.NonPublic | BindingFlags.Static);
+                    typeof(Editor).GetStaticFieldValue("editorForm", out var obj, BindingFlags.NonPublic | BindingFlags.Static);
                     (obj as Editor)?.refreshAll();
                 }
 

@@ -16,14 +16,7 @@ namespace QuesterAssistant.Classes.Common
                                    | BindingFlags.Public
                                    | BindingFlags.NonPublic;
 
-        /// <summary>
-        /// Получение списка методов объекта <see cref="obj">
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static MethodInfo[] GetListOfMethods(object obj, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static MethodInfo[] GetListOfMethods(this object obj, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             if (obj == null)
                 return null;
@@ -33,32 +26,18 @@ namespace QuesterAssistant.Classes.Common
             {
                 type = type.BaseType;
             }
-            return GetListOfMethods(type, flags);
+            return type.GetListOfMethods(flags);
         }
 
-        /// <summary>
-        /// Получение списка методов типа <see cref="type">
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="flags"></param>
-        /// <returns></returns>
-        public static MethodInfo[] GetListOfMethods(Type type, BindingFlags flags = BindingFlags.Default)
+        public static MethodInfo[] GetListOfMethods(this Type type, BindingFlags flags = BindingFlags.Default)
         {
             flags = DefaultFlags | flags;
-            // get all public static methods of MyClass type
             MethodInfo[] methodInfos = type.GetMethods(flags);
 
             return methodInfos;
         }
 
-        /// <summary>
-        /// Получение списка полей объекта <see cref="obj">
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static FieldInfo[] GetListOfFields(object obj, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static FieldInfo[] GetListOfFields(this object obj, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             if (obj == null)
                 return null;
@@ -76,20 +55,14 @@ namespace QuesterAssistant.Classes.Common
             return fields;
         }
 
-        /// <summary>
-        /// Получить FildInfo, описывающий приватное поле <see cref="fieldName"> типа <see cref="type">
-        /// </summary>
-        /// <param name="type">The Type that has the private field</param>
-        /// <param name="fieldName">The name of the private field</param>
-        /// <returns>FieldInfo object. It has the field name and a useful GetValue() method.</returns>
-        public static FieldInfo GetFieldInfo(Type type, string fieldName, BindingFlags flags = BindingFlags.Default)
+        public static FieldInfo GetFieldInfo(this Type type, string fieldName, BindingFlags flags = BindingFlags.Default)
         {
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags;
             FieldInfo[] fields = type.GetFields(flags);
             if (fields != null)
             {
-                foreach (FieldInfo fi in fields) //fields.FirstOrDefault(feildInfo => feildInfo.Name == fieldName);
+                foreach (FieldInfo fi in fields)
                 {
                     if (fi.Name.ToLower() == fieldName.ToLower())
                         return fi;
@@ -98,11 +71,6 @@ namespace QuesterAssistant.Classes.Common
             return null;
         }
 
-        /// <summary>
-        /// Поиск типа по имени <see cref="typeName">
-        /// </summary>
-        /// <param name="typeName"></param>
-        /// <returns></returns>
         public static Type GetTypeByName(string typeName, bool fullTypeName = false)
         {
             if (!string.IsNullOrEmpty(typeName))
@@ -117,16 +85,8 @@ namespace QuesterAssistant.Classes.Common
             return null;
         }
 
-        /// <summary>
-        /// Задать значение <see cref="value"> совойству <see cref="propName"> объекта <see cref="obj">.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="propName"></param>
-        /// <param name="value"></param>
-        /// <param name="flags"></param>
-        /// <param name="searchBaseRecursive"></param>
-        /// <returns></returns>
-        public static bool SetPropertyValue(object obj, string propName, object value, BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
+        public static bool SetPropertyValue(this object obj, string propName, object value,
+            BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
             if (obj == null)
                 return false;
@@ -135,7 +95,7 @@ namespace QuesterAssistant.Classes.Common
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags;
 
-            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Instance);//GetPrivateFieldInfo(type, fieldName, flags);
+            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Instance);
             if (pi != null)
             {
                 MethodInfo[] accessors = pi.GetAccessors(true);
@@ -151,6 +111,7 @@ namespace QuesterAssistant.Classes.Common
 
             return false;
         }
+
         private static bool SetBasePropertyValue(Type type, object obj, string propName, object value, BindingFlags flags = BindingFlags.Default)
         {
             if (obj == null || type == null || type == typeof(object))
@@ -159,7 +120,7 @@ namespace QuesterAssistant.Classes.Common
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags | BindingFlags.Instance;
 
-            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Instance);//GetPrivateFieldInfo(type, fieldName, flags);
+            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Instance);
             if (pi == null)
                 return SetBasePropertyValue(type.BaseType, obj, propName, value, flags | BindingFlags.Instance);
             else
@@ -176,25 +137,13 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-        /// <summary>
-        /// Задать значение <see cref="value"> статическому совойству <see cref="propName">, объявленному в типе <see cref="type">.
-        /// </summary>
-        /// <returns>The value of the property boxed as an object.</returns>
-        public static bool SetStaticPropertyValue(Type type, string propName, object value, BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
+        public static bool SetStaticPropertyValue(this Type type, string propName, object value,
+            BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
-            //if (flags == BindingFlags.Default)
-            //    flags = DefaultFlags;
-            //if (BaseType)
-            //{
-            //    type = type.BaseType;
-            //}
-            //object[] arg = new object[] { value };
-            //return ExecStaticMethod(type, "set_" + propName, ref arg, out object result, flags | BindingFlags.Static | BindingFlags.InvokeMethod, false);
-
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags | BindingFlags.Static;
 
-            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Static);//GetPrivateFieldInfo(type, fieldName, flags);
+            PropertyInfo pi = type.GetProperty(propName, flags | BindingFlags.Static);
             if (pi != null)
             {
                 MethodInfo[] accessors = pi.GetAccessors(true);
@@ -211,15 +160,8 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-        /// <summary>
-        /// Получить значение свойства <see cref="propName"> объекта <see cref="obj">
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="propName"></param>
-        /// <param name="flags"></param>
-        /// <param name="searchBaseRecursive">Свойсто инкапсулировано в базовом классе</param>
-        /// <returns></returns>
-        public static bool GetPropertyValue(object obj, string propName, out object result, BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
+        public static bool GetPropertyValue(this object obj, string propName, out object result,
+            BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
             result = null;
 
@@ -246,7 +188,9 @@ namespace QuesterAssistant.Classes.Common
 
             return false;
         }
-        private static bool GetBasePropertyValue(Type type, object obj, string propName, out object result, BindingFlags flags = BindingFlags.Default)
+
+        private static bool GetBasePropertyValue(Type type, object obj, string propName, out object result,
+            BindingFlags flags = BindingFlags.Default)
         {
             result = null;
 
@@ -268,35 +212,14 @@ namespace QuesterAssistant.Classes.Common
                     result = accessors[0]?.Invoke(obj, arg);
                     return true;
                 }
-                //MethodInfo getter = pi.GetGetMethod();
-                //if (getter != null)
-                //{
-                //    object[] arg = new object[] { };
-                //    result = getter.Invoke(obj, arg);
-                //    return true;
-                //}
             }
 
             return false;
         }
 
-        /// <summary>
-        /// Получить значение статического свойства <see cref="propName"> типа <see cref="type">
-        /// </summary>
-        /// <returns>The value of the property boxed as an object.</returns>
-        public static bool GetStaticPropertyValue(Type type, string propName, out object result, BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
+        public static bool GetStaticPropertyValue(this Type type, string propName, out object result,
+            BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
-            //result = null;
-            //if (flags == BindingFlags.Default)
-            //    flags = DefaultFlags;
-            //if (BaseType)
-            //{
-            //    type = type.BaseType;
-            //}
-            //object[] arg = new object[] { };
-
-            //return ExecStaticMethod(type, "get_" + propName, ref arg, out result, flags | BindingFlags.Static | BindingFlags.InvokeMethod, false);
-
             result = null;
 
             if (flags == BindingFlags.Default)
@@ -319,17 +242,8 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-
-        /// <summary>
-        /// Задать значение <see cref="value"> поля <see cref="fieldName"> объекта <see cref="obj">.
-        /// </summary>
-        /// <param name="obj">The instance contains private filed</param>
-        /// <param name="fieldName">The name of the private field</param>
-        /// <param name="value">The value which assigns to the private field</param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static bool SetFieldValue(object obj, string fieldName, object value, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool SetFieldValue(this object obj, string fieldName, object value,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags;
@@ -342,7 +256,7 @@ namespace QuesterAssistant.Classes.Common
             {
                 type = type.BaseType;
             }
-            FieldInfo info = type.GetField(fieldName, flags);//GetFieldInfo(type, fieldName, flags);
+            FieldInfo info = type.GetField(fieldName, flags);
             if (info != null)
             {
                 info.SetValue(obj, value);
@@ -351,16 +265,8 @@ namespace QuesterAssistant.Classes.Common
             else return false;
         }
 
-        /// <summary>
-        /// Задать значение <see cref="value"> статического поля <see cref="fieldName"> типа <see cref="type">.
-        /// </summary>
-        /// <param name="type">The type that contains static filed</param>
-        /// <param name="fieldName">The name of the private field</param>
-        /// <param name="value">The value which assigns to the private field</param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static bool SetStaticFieldValue(Type type, string fieldName, object value, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool SetStaticFieldValue(this Type type, string fieldName, object value,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags;
@@ -378,13 +284,8 @@ namespace QuesterAssistant.Classes.Common
             else return false;
         }
 
-        /// <summary>
-        /// Получить значение приватного поля <see cref="fieldName"> объекта <see cref="type">
-        /// </summary>
-        /// <param name="obj">The instance from which to read the private value.</param>
-        /// <param name="fieldName">The name of the private field</param>
-        /// <returns>The value of the property boxed as an object.</returns>
-        public static bool GetFieldValue(object obj, string fieldName, out object result, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool GetFieldValue(this object obj, string fieldName, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             result = null;
 
@@ -400,7 +301,7 @@ namespace QuesterAssistant.Classes.Common
                 type = type.BaseType;
             }
 
-            FieldInfo fi = type.GetField(fieldName, flags);//GetPrivateFieldInfo(type, fieldName, flags);
+            FieldInfo fi = type.GetField(fieldName, flags);
             if (fi != null)
             {
                 result = fi.GetValue(obj);
@@ -410,13 +311,8 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-        /// <summary>
-        /// Получить значение статического поля <see cref="fieldName"> типа <see cref="type">
-        /// </summary>
-        /// <param name="type">The Type that has the private field</param>
-        /// <param name="fieldName">The name of the private field</param>
-        /// <returns>The value of the property boxed as an object.</returns>
-        public static bool GetStaticFieldValue(Type type, string fieldName, out object result, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool GetStaticFieldValue(this Type type, string fieldName, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             result = null;
             if (flags == BindingFlags.Default)
@@ -436,17 +332,8 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-
-        /// <summary>
-        /// Вызов метода <see cref="methodName"> объекта <see cref="obj">
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <param name="methodName"></param>
-        /// <param name="arguments">Массив с аргументами вызываемого метода. Если аргумент ссылочный вида ref или out, то после вызова invoke массив <see cref="arguments"> будет изменен</param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static bool ExecMethod(object obj, string methodName, ref Object[] arguments, out object result, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool ExecMethod(this object obj, string methodName, object[] arguments, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             result = null;
 
@@ -472,16 +359,20 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-        /// <summary>
-        /// Вызов статического метода <see cref="methodName"> типа <see cref="type">
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="MethodName"></param>
-        /// <param name="arguments">Массив с аргументами вызываемого метода. Если аргумент ссылочный вида ref или out, то после вызова invoke массив <see cref="arguments"> будет изменен</param>
-        /// <param name="flags"></param>
-        /// <param name="BaseType"></param>
-        /// <returns></returns>
-        public static bool ExecStaticMethod(Type type, string MethodName, ref Object[] arguments, out object result, BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        public static bool ExecStaticMethod(this Type type, string MethodName,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        {
+            return type.ExecStaticMethod(MethodName, out var result, flags);
+        }
+
+        public static bool ExecStaticMethod(this Type type, string MethodName, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        {
+            return type.ExecStaticMethod(MethodName, new object[0], out result, flags);
+        }
+
+        public static bool ExecStaticMethod(this Type type, string MethodName, object[] arguments, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             result = null;
 
@@ -502,22 +393,40 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-
-        /// <summary>
-        /// Подписка на событие
-        /// </summary>
-        /// <param name="obj">Объект класса в котором создано событие</param>
-        /// <param name="control">Control в котром формируется событие. Скажем, кнопка</param>
-        /// <param name="typeHandler">делегат: typeof(...)</param>
-        /// <param name="EventName"></param>
-        /// <param name="method">метод, который будет вызываться при возникновении события</param>
-        /// <param name="IsConsole"></param>
-        public static void SubscribeEvent(object obj, Type control, Type typeHandler, string EventName, MethodInfo method, bool IsConsole = false)
+        public static bool ExecStaticMethodByArgs(this Type type, string MethodName, object[] arguments, out object result,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
-            EventInfo eventInfo = control.GetEvent(EventName); //"Load"
-                                                               // Create the delegate on the test class because that's where the
-                                                               // method is. This corresponds with `new EventHandler(test.WriteTrace)`.
-                                                               //Type type = typeof(EventHandler);
+            result = null;
+
+            if (flags == BindingFlags.Default)
+                flags = DefaultFlags;
+
+            if (BaseType)
+            {
+                type = type.BaseType;
+            }
+
+            Type[] types;
+            if (arguments != null && arguments.Length > 0)
+            {
+                types = new Type[arguments.Length];
+                for (int i = 0; i < arguments.Length; i++)
+                    types[i] = arguments[i].GetType();
+            }
+            else types = new Type[] { };
+
+            MethodInfo methodInfo = type.GetMethod(MethodName, flags | BindingFlags.Static, null, types, null);
+            if (methodInfo != null)
+            {
+                result = methodInfo.Invoke(null, arguments);
+                return true;
+            }
+            return false;
+        }
+
+        private static void SubscribeEvent(this object obj, Type control, Type typeHandler, string EventName, MethodInfo method, bool IsConsole = false)
+        {
+            EventInfo eventInfo = control.GetEvent(EventName);
             Delegate handler;
             if (IsConsole)
             {
@@ -531,58 +440,38 @@ namespace QuesterAssistant.Classes.Common
             }
         }
 
-        /// <summary>
-        /// Подписка на событие
-        /// </summary>
-        /// <param name="obj">Объект класса в котором создано событие</param>
-        /// <param name="control">Control в котром формируется событие. Скажем, кнопка</param>
-        /// <param name="typeHandler">делегат: typeof(...)</param>
-        /// <param name="EventName"></param>
-        /// <param name="method">метод, который будет вызываться при возникновении события</param>
-        public static void SubscribeEvent(object obj, Control control, Type typeHandler, string EventName, MethodInfo method)
+        public static void SubscribeEvent(this object obj, Control control, Type typeHandler, string EventName, MethodInfo method)
         {
             if (typeof(Control).IsAssignableFrom(control.GetType()))
             {
-                SubscribeEvent(obj, control.GetType(), typeHandler, EventName, method);
+                obj.SubscribeEvent(control.GetType(), typeHandler, EventName, method);
             }
         }
 
-        /// <summary>
-        /// Отписка от события
-        /// </summary>
-        /// <param name="obj">Объект, на событие которого подписываемся</param>
-        /// <param name="control"></param>
-        /// <param name="typeHandler"></param>
-        /// <param name="EventName"></param>
-        /// <param name="method"></param>
-        /// <param name="IsConsole"></param>
-        public static void UnSubscribeEvent(object obj, Type control, Type typeHandler, string EventName, MethodInfo method, bool IsConsole = false)
+        private static void UnSubscribeEvent(this object obj, Type control, Type typeHandler, string EventName, MethodInfo method, bool IsConsole = false)
         {
             if (obj != null)
             {
                 EventInfo eventInfo = control.GetEvent(EventName);
-                //Type type = typeof(EventHandler);
                 if (IsConsole)
                 {
                     Delegate handler = Delegate.CreateDelegate(typeHandler, null, method);
-                    // detach the event handler
                     if (handler != null)
                         eventInfo.RemoveEventHandler(obj, handler);
                 }
                 else
                 {
                     Delegate handler = Delegate.CreateDelegate(typeHandler, obj, method);
-                    // detach the event handler
                     if (handler != null)
                         eventInfo.RemoveEventHandler(control, handler);
                 }
             }
         }
-        public static void UnSubscribeEvent(object obj, Control control, Type typeHandler, string EventName, MethodInfo method)
+        public static void UnSubscribeEvent(this object obj, Control control, Type typeHandler, string EventName, MethodInfo method)
         {
             if (typeof(Control).IsAssignableFrom(control.GetType()))
             {
-                UnSubscribeEvent(obj, control.GetType(), typeHandler, EventName, method);
+                obj.UnSubscribeEvent(control.GetType(), typeHandler, EventName, method);
             }
         }
     }

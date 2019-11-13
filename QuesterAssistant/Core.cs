@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuesterAssistant.Classes;
 
 namespace QuesterAssistant
 {
@@ -72,6 +73,8 @@ namespace QuesterAssistant
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Task.Factory.StartNew(HooksLoader.SetHook);
+
+            Patcher.Apply();
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)

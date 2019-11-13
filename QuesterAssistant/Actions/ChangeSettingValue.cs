@@ -3,6 +3,7 @@ using System.ComponentModel;
 using Astral;
 using Astral.Logic.Classes.Map;
 using MyNW.Classes;
+using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Actions
 {
@@ -50,6 +51,8 @@ namespace QuesterAssistant.Actions
                     break;
                 case SProperty.AutoUCC:
                     API.CurrentSettings.LastCustomClass = Value ? "AutoUCC" : "UCC";
+                    Astral.Controllers.Settings.Save();
+                    typeof(Astral.Controllers.Settings).ExecStaticMethod("CommitChanges");
                     break;
                 default:
                     return ActionResult.Fail;

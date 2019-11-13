@@ -153,7 +153,7 @@ namespace QuesterAssistant.UIEditors.Forms
 
             if (qEditor != null)
             {
-                if (ReflectionHelper.GetFieldValue(qEditor, "copiedCondition", out object cond))
+                if (qEditor.GetFieldValue("copiedCondition", out object cond))
                     return CopyHelper.CreateDeepCopy(cond as Condition);
             }
             return null;
@@ -178,11 +178,11 @@ namespace QuesterAssistant.UIEditors.Forms
             if (qEditor != null)
             {
                 // помещаем копию условия в буфер редактора QuesterEditor
-                if (ReflectionHelper.SetFieldValue(qEditor, "copiedCondition", CopyHelper.CreateDeepCopy(cond)))
+                if (qEditor.SetFieldValue("copiedCondition", CopyHelper.CreateDeepCopy(cond)))
                 {
                     // Включаем кнопку "Вставки условия"
-                    if (ReflectionHelper.GetFieldValue(qEditor, "b_PasteCond", out object btnPaste))
-                        return ReflectionHelper.SetPropertyValue(btnPaste, "Enabled", true, BindingFlags.Instance | BindingFlags.Public, true);
+                    if (qEditor.GetFieldValue("b_PasteCond", out object btnPaste))
+                        return btnPaste.SetPropertyValue("Enabled", true, BindingFlags.Instance | BindingFlags.Public, true);
                 }
             }
             return false;

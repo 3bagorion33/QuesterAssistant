@@ -35,6 +35,8 @@ namespace ClassPatcher
                         enumerator.Current.Name == "ProcessInfos" ||
                         enumerator.Current.Name == "RemoteContactEditor" ||
                         enumerator.Current.Name == "GetFileEdit" ||
+                        enumerator.Current.Name == "Plugins" ||
+                        enumerator.Current.Name == "GetTypes" ||
 
                         action == "/show")
                     {
