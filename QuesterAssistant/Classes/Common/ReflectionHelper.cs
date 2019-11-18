@@ -71,16 +71,13 @@ namespace QuesterAssistant.Classes.Common
             return null;
         }
 
-        public static Type GetTypeByName(string typeName, bool fullTypeName = false)
+        public static Type GetTypeByName(string assemblyName, string typeName, bool fullTypeName = false)
         {
-            if (!string.IsNullOrEmpty(typeName))
+            if (!string.IsNullOrEmpty(typeName) && !string.IsNullOrEmpty(assemblyName))
             {
-                foreach (var assambly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    if (fullTypeName)
-                        return assambly.GetTypes().First(t => t.FullName == typeName);
-                    else return assambly.GetTypes().First(t => t.Name == typeName);
-                }
+                return AppDomain.CurrentDomain.GetAssemblies()
+                    .FirstOrDefault(a => a.FullName.Contains(assemblyName))
+                    .GetTypes().ToList().FirstOrDefault(t => t.FullName != null && t.FullName.Contains(typeName));
             }
             return null;
         }
@@ -363,6 +360,12 @@ namespace QuesterAssistant.Classes.Common
             BindingFlags flags = BindingFlags.Default, bool BaseType = false)
         {
             return type.ExecStaticMethod(MethodName, out var result, flags);
+        }
+
+        public static bool ExecStaticMethod(this Type type, string MethodName, object[] arguments,
+            BindingFlags flags = BindingFlags.Default, bool BaseType = false)
+        {
+            return type.ExecStaticMethod(MethodName, arguments, out var result, flags);
         }
 
         public static bool ExecStaticMethod(this Type type, string MethodName, out object result,

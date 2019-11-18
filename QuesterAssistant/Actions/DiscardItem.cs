@@ -19,7 +19,7 @@ namespace QuesterAssistant.Actions
         public override string ActionLabel => GetType().Name;
         public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
         public override bool NeedToRun => true;
-        public override string InternalDisplayName => ActionLabel;
+        public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
         protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();

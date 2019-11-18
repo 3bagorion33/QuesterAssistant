@@ -10,8 +10,7 @@ namespace QuesterAssistant.UIEditors
 {
     internal class CheckedListBoxEditor<T> : UITypeEditor , IDisposable
     {
-        private bool isListLoaded = false;
-        private CheckedListBox cbx = new CheckedListBox();
+        private readonly CheckedListBox cbx = new CheckedListBox();
         private object value;
         private IWindowsFormsEditorService es;
         public override bool IsDropDownResizable => true;
@@ -20,7 +19,7 @@ namespace QuesterAssistant.UIEditors
 
         internal CheckedListBoxEditor()
         {
-            cbx.Leave += bx_Leave;
+            cbx.Leave += cbx_Leave;
             cbx.KeyDown += cbx_KeyDown;
             cbx.MouseHover += cbx_ShowTooltip;
             toolTip = new ToolTip() { ToolTipTitle = "Ctrl+A to select all, Ctrl+D to deselect, Ctrl+I to inverse, Ctrl+S to sort" };
@@ -90,26 +89,27 @@ namespace QuesterAssistant.UIEditors
 
         private void LoadListBoxItems(object value)
         {
-            if (!isListLoaded)
+            int idx = 0;
+            var dict = value as CheckedListBoxSelector<T>;
+            cbx.Items.Clear();
+            foreach (var item in dict.Dictionary)
             {
-                int idx = 0;
-                var dict = value as CheckedListBoxSelector<T>;
-                foreach (var item in dict.Dictionary)
-                {
-                    cbx.Items.Add(item.Key);
-                    cbx.SetItemChecked(idx, item.Value);
-                    idx++;
-                }
-                isListLoaded = true;
-                this.value = value;
+                cbx.Items.Add(item.Key);
+                cbx.SetItemChecked(idx, item.Value);
+                idx++;
             }
+            this.value = value;
         }
 
-        private void bx_Leave(object sender, EventArgs e)
+        private void cbx_Leave(object sender, EventArgs e)
         {
             var dict = new Dictionary<T, bool>();
             for (int i = 0; i < cbx.Items.Count; i++)
             {
+                if (i == 90)
+                {
+                    int a = 10 + i;
+                }
                 var item = (T)cbx.Items[i];
                 dict.Add(item, cbx.GetItemChecked(i));
             }

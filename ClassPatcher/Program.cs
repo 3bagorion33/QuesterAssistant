@@ -36,7 +36,8 @@ namespace ClassPatcher
                         enumerator.Current.Name == "RemoteContactEditor" ||
                         enumerator.Current.Name == "GetFileEdit" ||
                         enumerator.Current.Name == "Plugins" ||
-                        enumerator.Current.Name == "GetTypes" ||
+                        enumerator.Current.Name == "CustomClasses" ||
+                        enumerator.Current.Name == "Main" ||
 
                         action == "/show")
                     {

@@ -14,17 +14,11 @@ namespace QuesterAssistant.Actions
     public class UseConsumable : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => $"{GetType().Name} [{ConsumableID}]";
-
         public override bool NeedToRun => true;
-
-        public override string InternalDisplayName => GetType().Name;
-
+        public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
-
         protected override bool IntenalConditions => true;
-
         protected override Vector3 InternalDestination => new Vector3();
-
         protected override ActionValidity InternalValidity
         {
             get
@@ -38,18 +32,9 @@ namespace QuesterAssistant.Actions
         }
 
         public override string Category => Core.Category;
-
-        public override void GatherInfos()
-        {
-        }
-
-        public override void InternalReset()
-        {
-        }
-
-        public override void OnMapDraw(GraphicsNW graph)
-        {
-        }
+        public override void GatherInfos(){}
+        public override void InternalReset(){}
+        public override void OnMapDraw(GraphicsNW graph){}
 
         [Description("ID (an internal name) of the Consumable (regex)")]
         /// Редактор ItemIdEditor является закрытым членом

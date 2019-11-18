@@ -100,7 +100,9 @@ namespace QuesterAssistant.Actions
                            "Maps_Stronghold_Sh_Pve_Content_N0.Encounter_Coffer_Actor_1_Displayname.Encounter_Coffer") ??
             new Entity(IntPtr.Zero);
 
-        private static InventorySlotLite GuildMark => NumericList.Find(s => s.Name == "Stronghold_Currency_Guild_Mark");
+        private static InventorySlotLite GuildMark =>
+            NumericList.Find(s => s.Name == "Stronghold_Currency_Guild_Mark") ??
+            new InventorySlotLite(IntPtr.Zero);
         private const int GUILD_MARK_LIMIT = 30000;
 
         public override void GatherInfos() { }
@@ -132,16 +134,6 @@ namespace QuesterAssistant.Actions
             var shCoffer = Player.PlayerGuild.GroupProjectContainer.ProjectList
                 .Find(p => p.ProjectDef.Name == "Nw_Stronghold");
 
-            //List<DonateCofferItemConversion> itemsList = new List<DonateCofferItemConversion>();
-            //foreach (var cofferItem in shCoffer.CofferNumericData)
-            //{
-            //    itemsList.AddRange(cofferItem.CofferNumericDef.ItemConversion);
-            //}
-            //foreach (DonateCofferItemConversion itemConversion in itemsList)
-            //{
-            //    Logger.WriteLine($"{itemConversion} : {itemConversion.Item.InternalName} : {itemConversion.Item.Type} : {itemConversion.BatchSize} : {itemConversion.ValuePerBatch}");
-            //}
-
             GroupProjectCofferNumericData cofferData = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == Coffer.InternalName);
             if (cofferData != null)
             {
@@ -162,7 +154,6 @@ namespace QuesterAssistant.Actions
                         var slotNum = NumericList.Find(s => s.Name == item.InternalName);
                         if (slotNum == null) break;
                         count = MathTools.Min(toDonate, (uint) item.InBags, countByLimit) / cItem.BatchSize * cItem.BatchSize;
-                        //Debug.WriteLine($"{cofferData} : {count}");
                         if (count == 0) break;
                         pause.RandomWaiting();
                         shCoffer.DonateToCoffer(cofferData, slotNum, count);
@@ -175,7 +166,6 @@ namespace QuesterAssistant.Actions
                         {
                             if (string.IsNullOrEmpty(slotItem.Item.ItemDef.InternalName)) break;
                             count = MathTools.Min(toDonate, slotItem.Item.Count, countByLimit);
-                            //Debug.WriteLine($"{cofferData} : {slotItem.Slot} : {count}");
                             if (count == 0) break;
                             pause.RandomWaiting();
                             shCoffer.DonateToCoffer(cofferData, slotItem, count);

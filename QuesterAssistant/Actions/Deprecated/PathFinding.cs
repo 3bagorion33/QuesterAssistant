@@ -23,7 +23,7 @@ namespace QuesterAssistant.Actions.Deprecated
             }
         }
         protected override Vector3 InternalDestination => new Vector3();
-        public override string InternalDisplayName => "PathFinding";
+        public override string InternalDisplayName => string.Empty;
         protected override ActionValidity InternalValidity
         {
             get

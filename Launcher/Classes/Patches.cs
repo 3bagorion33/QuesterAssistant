@@ -9,11 +9,6 @@ namespace Launcher.Classes
     {
         private static readonly List<Patch> REWRITE_TITLE = new List<Patch> // Astral.Forms.Main.method_5
         {
-            //new Patch
-            //{
-            //    Orig = new byte[] {0x1B, 0x30, 0x04, 0x00, 0x46, 0x01, 0x00, 0x00},
-            //    Ptch = new byte[] {0x1B, 0x30, 0x0C, 0x00, 0x46, 0x01, 0x00, 0x00},
-            //},
             new Patch
             {
                 Orig = new byte[] {0x06, 0x6F, 0x17, 0x01, 0x00, 0x0A, 0x28, 0xD2},
@@ -42,25 +37,20 @@ namespace Launcher.Classes
             },
         };
 
-        private static readonly List<Patch> PRAY_PAUSE = new List<Patch> // Astral.Professions.FSM.States.Main.Run
-        {
-            new Patch
-            {
-                Orig = new byte[] {0x06, 0x1B, 0x58, 0x28},
-                Ptch = new byte[] {0x06, 0x16, 0x58, 0x28},
+        //private static readonly List<Patch> PRAY_PAUSE = new List<Patch> // Astral.Professions.FSM.States.Main.Run
+        //{
+        //    new Patch
+        //    {
+        //        Orig = new byte[] {0x06, 0x1B, 0x58, 0x28},
+        //        Ptch = new byte[] {0x06, 0x16, 0x58, 0x28},
 
-            },
-            //new Patch
-            //{
-            //    Orig = new byte[] {0x1B, 0x30, 0x03, 0x00, 0x24, 0x07, 0x00, 0x00},
-            //    Ptch = new byte[] {0x1B, 0x30, 0x0B, 0x00, 0x24, 0x07, 0x00, 0x00},
-            //},
-            new Patch
-            {
-                Orig = new byte[] {0x2C, 0xDB, 0x18, 0x1A},
-                Ptch = new byte[] {0x2C, 0xDB, 0x16, 0x16}
-            }
-        };
+        //    },
+        //    new Patch
+        //    {
+        //        Orig = new byte[] {0x2C, 0xDB, 0x18, 0x1A},
+        //        Ptch = new byte[] {0x2C, 0xDB, 0x16, 0x16}
+        //    }
+        //};
 
         private static readonly List<Patch> PATROL_PAUSE = new List<Patch> // Patrol
         {

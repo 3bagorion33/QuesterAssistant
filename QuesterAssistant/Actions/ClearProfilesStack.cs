@@ -12,7 +12,7 @@ namespace QuesterAssistant.Actions
         public override string ActionLabel => GetType().Name;
         public override string Category => Core.Category;
         public override bool NeedToRun => true;
-        public override string InternalDisplayName => ActionLabel;
+        public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
         protected override Vector3 InternalDestination => new Vector3();
         protected override ActionValidity InternalValidity => new ActionValidity();

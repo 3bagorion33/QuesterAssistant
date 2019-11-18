@@ -24,7 +24,7 @@ namespace QuesterAssistant.Actions
         public override string ActionLabel => $"{GetType().Name} : to {DestinationBag}";
         public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
         public override bool NeedToRun => true;
-        public override string InternalDisplayName => ActionLabel;
+        public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
         protected override Vector3 InternalDestination => new Vector3();
 
@@ -63,14 +63,14 @@ namespace QuesterAssistant.Actions
                 return ActionResult.Skip;
             }
             var destBag = EntityManager.LocalPlayer.GetInventoryBagById(DestinationBag);
-            if (destBag.MaxSlots - destBag.FilledSlots == 0)
-            {
-                Logger.WriteLine($"{DestinationBag} is filled!");
-                return ActionResult.Skip;
-            }
 
             foreach (var slot in items)
             {
+                if (destBag.MaxSlots - destBag.FilledSlots == 0)
+                {
+                    Logger.WriteLine($"{DestinationBag} is filled!");
+                    return ActionResult.Completed;
+                }
                 Logger.WriteLine($"Move '{slot.Item.DisplayName}' to {DestinationBag}");
                 var count = MathTools.Min(CountToMove.CheckZero(slot.Item.Count), slot.Item.Count);
                 slot.Move(DestinationBag, count);

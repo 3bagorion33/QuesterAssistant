@@ -255,6 +255,7 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <Compile Include="Classes\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
     <Compile Include="Classes\Common\MinMaxPair.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Classes\Patches\AddClass.Designer.cs">
       <DependentUpon>AddClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Patches\Methods.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Common\ReflectionHelper.cs" />
