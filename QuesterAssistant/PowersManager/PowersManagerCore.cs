@@ -1,4 +1,5 @@
-﻿using Astral;
+﻿using System.Linq;
+using Astral;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
@@ -23,11 +24,11 @@ namespace QuesterAssistant.PowersManager
                 if (e.KeyData == Data.HotKey.Keys)
                 {
                     string name = InputBox.MessageText("Type partial name of preset and press Enter:", center: true);
-                    pres = Data.CurrPresets?.Find(x => x.Name.CaseContains(name));
+                    pres = Data.ParagonPresets.ToList().Find(x => x.Name.CaseContains(name));
                 }
                 else
                 {
-                    pres = Data.CurrPresets?.Find(x => x.HotKey.Keys == e.KeyData);
+                    pres = Data.ParagonPresets.ToList().Find(x => x.HotKey.Keys == e.KeyData);
                 }
                 if (pres != null)
                 {

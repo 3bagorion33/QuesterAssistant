@@ -30,33 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpgradeManagerForm));
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions1 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject1 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject2 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject3 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject4 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions2 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject5 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject6 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject7 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject8 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions3 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject9 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject10 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject11 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject12 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions4 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject13 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject14 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject15 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject16 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.XtraEditors.Controls.EditorButtonImageOptions editorButtonImageOptions5 = new DevExpress.XtraEditors.Controls.EditorButtonImageOptions();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject17 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject18 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject19 = new DevExpress.Utils.SerializableAppearanceObject();
-            DevExpress.Utils.SerializableAppearanceObject serializableAppearanceObject20 = new DevExpress.Utils.SerializableAppearanceObject();
             this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
             this.gctrlProfile = new DevExpress.XtraEditors.GroupControl();
+            this.lcProfilesList = new QuesterAssistant.Panels.ListControl();
             this.cbxRunCondition = new DevExpress.XtraEditors.ComboBoxEdit();
             this.bmTasksList = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
@@ -77,15 +53,14 @@
             this.gridTasksList = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolRank = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolDisplayName = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.riButtonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.gcolCount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolChance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.lkupProfilesList = new DevExpress.XtraEditors.LookUpEdit();
             this.pmTasksList = new DevExpress.XtraBars.PopupMenu(this.components);
             this.chkHotKey = new DevExpress.XtraEditors.CheckEdit();
             this.txtHotKey = new DevExpress.XtraEditors.TextEdit();
             this.bsrcHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.riButtonEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxRunCondition.Properties)).BeginInit();
@@ -94,12 +69,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).BeginInit();
             this.SuspendLayout();
             // 
             // toolTipController
@@ -108,6 +82,7 @@
             // 
             // gctrlProfile
             // 
+            this.gctrlProfile.Controls.Add(this.lcProfilesList);
             this.gctrlProfile.Controls.Add(this.cbxRunCondition);
             this.gctrlProfile.Controls.Add(this.labelControl3);
             this.gctrlProfile.Controls.Add(this.labelControl2);
@@ -116,12 +91,20 @@
             this.gctrlProfile.Controls.Add(this.numIterationCont);
             this.gctrlProfile.Controls.Add(this.btnTasksAction);
             this.gctrlProfile.Controls.Add(this.gctlTasks);
-            this.gctrlProfile.Controls.Add(this.lkupProfilesList);
             this.gctrlProfile.Location = new System.Drawing.Point(0, 29);
             this.gctrlProfile.Name = "gctrlProfile";
             this.gctrlProfile.Size = new System.Drawing.Size(370, 343);
             this.gctrlProfile.TabIndex = 1;
             this.gctrlProfile.Text = "Profile";
+            // 
+            // lcProfilesList
+            // 
+            this.lcProfilesList.Location = new System.Drawing.Point(54, 1);
+            this.lcProfilesList.Margin = new System.Windows.Forms.Padding(0);
+            this.lcProfilesList.Name = "lcProfilesList";
+            this.lcProfilesList.Size = new System.Drawing.Size(307, 20);
+            this.lcProfilesList.TabIndex = 15;
+            this.lcProfilesList.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.lcProfilesList_ListChanged);
             // 
             // cbxRunCondition
             // 
@@ -362,6 +345,15 @@
             this.gcolDisplayName.VisibleIndex = 0;
             this.gcolDisplayName.Width = 231;
             // 
+            // riButtonEdit
+            // 
+            this.riButtonEdit.AutoHeight = false;
+            this.riButtonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton()});
+            this.riButtonEdit.Name = "riButtonEdit";
+            this.riButtonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.riButtonEdit.Click += new System.EventHandler(this.riButtonEdit_Click);
+            // 
             // gcolCount
             // 
             this.gcolCount.Caption = "Count";
@@ -406,31 +398,6 @@
             this.gcolWard.VisibleIndex = 3;
             this.gcolWard.Width = 20;
             // 
-            // lkupProfilesList
-            // 
-            this.lkupProfilesList.EditValue = "";
-            this.lkupProfilesList.Location = new System.Drawing.Point(54, 1);
-            this.lkupProfilesList.Name = "lkupProfilesList";
-            this.lkupProfilesList.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo, "Select", -1, true, true, false, editorButtonImageOptions1, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject1, serializableAppearanceObject2, serializableAppearanceObject3, serializableAppearanceObject4, "Select a profile", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Plus, "Add", -1, true, true, false, editorButtonImageOptions2, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject5, serializableAppearanceObject6, serializableAppearanceObject7, serializableAppearanceObject8, "Add a new profile", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Redo, "Rename", -1, true, true, false, editorButtonImageOptions3, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject9, serializableAppearanceObject10, serializableAppearanceObject11, serializableAppearanceObject12, "Rename current profile", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Ellipsis, "Sort", -1, true, true, false, editorButtonImageOptions4, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject13, serializableAppearanceObject14, serializableAppearanceObject15, serializableAppearanceObject16, "Change profiles order", null, null, DevExpress.Utils.ToolTipAnchor.Default),
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Delete, "Delete", -1, true, true, false, editorButtonImageOptions5, new DevExpress.Utils.KeyShortcut(System.Windows.Forms.Keys.None), serializableAppearanceObject17, serializableAppearanceObject18, serializableAppearanceObject19, serializableAppearanceObject20, "Delete current profile", null, null, DevExpress.Utils.ToolTipAnchor.Default)});
-            this.lkupProfilesList.Properties.Columns.AddRange(new DevExpress.XtraEditors.Controls.LookUpColumnInfo[] {
-            new DevExpress.XtraEditors.Controls.LookUpColumnInfo("Name", "")});
-            this.lkupProfilesList.Properties.NullText = "";
-            this.lkupProfilesList.Properties.NullValuePrompt = "Create a new profile";
-            this.lkupProfilesList.Properties.NullValuePromptShowForEmptyValue = true;
-            this.lkupProfilesList.Properties.PopupSizeable = false;
-            this.lkupProfilesList.Properties.ShowFooter = false;
-            this.lkupProfilesList.Properties.ShowHeader = false;
-            this.lkupProfilesList.Properties.ShowLines = false;
-            this.lkupProfilesList.Properties.ShowNullValuePromptWhenFocused = true;
-            this.lkupProfilesList.Size = new System.Drawing.Size(307, 20);
-            this.lkupProfilesList.TabIndex = 5;
-            this.lkupProfilesList.TabStop = false;
-            // 
             // pmTasksList
             // 
             this.pmTasksList.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
@@ -461,15 +428,6 @@
             this.txtHotKey.TabIndex = 7;
             this.txtHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtHotKey_KeyDown);
             // 
-            // riButtonEdit
-            // 
-            this.riButtonEdit.AutoHeight = false;
-            this.riButtonEdit.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton()});
-            this.riButtonEdit.Name = "riButtonEdit";
-            this.riButtonEdit.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.riButtonEdit.Click += new System.EventHandler(this.riButtonEdit_Click);
-            // 
             // UpgradeManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -493,12 +451,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numIterationCont.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlTasks)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridTasksList)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lkupProfilesList.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pmTasksList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHotKey)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.riButtonEdit)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -519,7 +476,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.PopupMenu pmTasksList;
         private DevExpress.XtraBars.BarButtonItem miTaskRunCurrent;
-        private DevExpress.XtraEditors.LookUpEdit lkupProfilesList;
         private DevExpress.XtraGrid.Columns.GridColumn gcolChance;
         private DevExpress.XtraGrid.Columns.GridColumn gcolWard;
         private DevExpress.XtraBars.BarButtonItem miTaskDelete;
@@ -536,5 +492,6 @@
         private DevExpress.XtraEditors.ComboBoxEdit cbxRunCondition;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit riButtonEdit;
+        private Panels.ListControl lcProfilesList;
     }
 }

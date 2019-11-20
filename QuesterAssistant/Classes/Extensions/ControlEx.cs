@@ -8,7 +8,10 @@ namespace QuesterAssistant.Classes.Extensions
             (this TEditor editor, object source, string editorProperty, string sourceProperty, DataSourceUpdateMode updateMode = DataSourceUpdateMode.OnPropertyChanged)
                 where TEditor : IBindableComponent
         {
-            editor.DataBindings.Add(editorProperty, source, sourceProperty, false, updateMode);
+            if (source != null)
+            {
+                editor.DataBindings.Add(editorProperty, source, sourceProperty, false, updateMode);
+            }
         }
     }
 }

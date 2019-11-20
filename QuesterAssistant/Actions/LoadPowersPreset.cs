@@ -50,7 +50,7 @@ namespace QuesterAssistant.Actions
 
                 pManager = Core.PowersManagerCore.Data;
 
-                if (!pManager.CurrPresets.Any())
+                if (!pManager.ParagonPresets.Any())
                 {
                     Logger.WriteLine(ActionLabel + ": Preset list is empty for this paragon!");
                     return false;
@@ -92,12 +92,12 @@ namespace QuesterAssistant.Actions
                 Preset _pres;
                 if (PresetNumber > 0)
                 {
-                    if (PresetNumber > pManager.CurrPresets.Capacity)
+                    if (PresetNumber > pManager.ParagonPresets.Count)
                     {
                         Logger.WriteLine($"{ActionLabel} : PresetNumber is superior than preset list for this paragon!");
                         return ActionResult.Skip;
                     }
-                    _pres = pManager.CurrPresets.ElementAtOrDefault(PresetNumber - 1);
+                    _pres = pManager.ParagonPresets.ElementAtOrDefault(PresetNumber - 1);
                     if (_pres != null)
                     {
                         Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");
@@ -107,7 +107,7 @@ namespace QuesterAssistant.Actions
                 }
                 if (PresetName.Any())
                 {
-                    _pres = pManager.CurrPresets.Find(x => Regex.IsMatch(x.Name, PresetName));
+                    _pres = pManager.ParagonPresets.ToList().Find(x => Regex.IsMatch(x.Name, PresetName));
                     if (_pres != null)
                     {
                         Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");

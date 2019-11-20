@@ -6,7 +6,10 @@ using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Enums;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using DevExpress.Utils.Extensions;
+using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.PowersManager
 {
@@ -36,15 +39,15 @@ namespace QuesterAssistant.PowersManager
             CharClassesList.Add(new CharClass(ParagonCategory.TR_Masterinfiltrator));
             CharClassesList.Add(new CharClass(ParagonCategory.TR_Whisperknife));
         }
-        protected internal List<Preset> CurrPresets
+        protected internal BindingList<Preset> ParagonPresets
         {
             get
             {
                 if (EntityManager.LocalPlayer.IsValid)
                 {
-                    return this?.CharClassesList?.Find(x => x.ParagonCategory == Paragon.Category)?.PresetsList ?? new List<Preset>();
+                    return CharClassesList?.Find(x => x.ParagonCategory == Paragon.Category)?.PresetsList ?? new BindingList<Preset>();
                 }
-                return new List<Preset>();
+                return new BindingList<Preset>();
             }
         }
         public override int GetHashCode()
@@ -64,8 +67,8 @@ namespace QuesterAssistant.PowersManager
         public class CharClass : IParse<CharClass>
         {
             [XmlAttribute]
-            public ParagonCategory ParagonCategory { get; set; } = new ParagonCategory();
-            public List<Preset> PresetsList { get; set; } = new List<Preset>();
+            public ParagonCategory ParagonCategory { get; set; }
+            public BindingList<Preset> PresetsList { get; set; } = new BindingList<Preset>();
 
             public CharClass() { }
             public CharClass(ParagonCategory charClass)
@@ -86,7 +89,7 @@ namespace QuesterAssistant.PowersManager
         }
 
         [Serializable]
-        public class Preset : IParse<Preset>
+        public class Preset : IParse<Preset>, IListControlSource
         {
             [XmlAttribute]
             public string Name { get; set; }
@@ -138,7 +141,7 @@ namespace QuesterAssistant.PowersManager
             [XmlText]
             public string InternalName { get; set; }
             [XmlAttribute]
-            public TraySlot TraySlot { get; set; } = new TraySlot();
+            public TraySlot TraySlot { get; set; }
 
             public Power() { }
             public Power(TraySlot traySlot, string iName)
@@ -154,7 +157,7 @@ namespace QuesterAssistant.PowersManager
             }
             public override int GetHashCode()
             {
-                return TraySlot.GetHashCode() ^ InternalName.GetHashCode();
+                return TraySlot.GetHashCode() ^ ToDispName().InternalName.GetHashCode();
             }
             public void Parse(Power source)
             {

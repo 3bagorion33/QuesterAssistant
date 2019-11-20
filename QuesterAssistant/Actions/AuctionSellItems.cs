@@ -143,10 +143,14 @@ namespace QuesterAssistant.Actions
                         return false;
                     var actualPrice = Math.Max(GetActualPrice(item) * Multiply, PriceMinimum);
                     var lotPrice = l.Price / item.Count;
-                    return ActiveLots == ActiveLotType.Force ||
-                           l.TimeLeft < (uint)Duration / 5 ||
-                           item.Count == StackSize &&
-                           (lotPrice * (1 - Tolerance) > actualPrice || (1 + Tolerance) * lotPrice < actualPrice);
+                    return
+                        l.BiddingInfo.CurrentBid == 0 &&
+                        (
+                            ActiveLots == ActiveLotType.Force ||
+                            l.TimeLeft < (uint) Duration / 5 ||
+                            item.Count == StackSize &&
+                            (lotPrice * (1 - Tolerance) > actualPrice || (1 + Tolerance) * lotPrice < actualPrice)
+                        );
                 }
 
                 Pause.Sleep(2000);

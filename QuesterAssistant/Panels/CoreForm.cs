@@ -37,9 +37,6 @@ namespace QuesterAssistant.Panels
         private void InitializeComponent()
         {
             SuspendLayout();
-            // 
-            // CoreForm
-            // 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             MinimumSize = new System.Drawing.Size(370, 348);
             Name = "CoreForm";

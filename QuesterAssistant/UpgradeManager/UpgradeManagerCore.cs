@@ -1,6 +1,7 @@
 ﻿using Astral;
 using QuesterAssistant.Classes;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -34,8 +35,6 @@ namespace QuesterAssistant.UpgradeManager
                 case true:
                     StopTasks();
                     break;
-                default:
-                    break;
             }
         }
 
@@ -65,7 +64,10 @@ namespace QuesterAssistant.UpgradeManager
                 TasksStarted?.Invoke();
                 using (cancelTokenSource.Token.Register(Thread.CurrentThread.Abort))
                 {
-                    result = Panel.CurrentProfile.Run(runTaskStartIdx, runTaskStopIdx, runCount);
+                    if (Panel.CurrentProfile != null && Panel.CurrentProfile.Tasks.Any())
+                    {
+                        result = Panel.CurrentProfile.Run(runTaskStartIdx, runTaskStopIdx, runCount);
+                    }
                 }
             }
             catch (ThreadAbortException)

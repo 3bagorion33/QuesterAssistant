@@ -38,7 +38,7 @@ namespace QuesterAssistant.UpgradeManager
         }
 
         [Serializable]
-        public class Profile
+        public class Profile : IListControlSource
         {
             [XmlAttribute]
             public string Name { get; set; } = string.Empty;

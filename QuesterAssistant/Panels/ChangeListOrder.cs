@@ -1,25 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
-    internal partial class ChangeListOrder<T> : XtraForm where T : class
+    internal partial class ChangeListOrder : XtraForm
     {
-        private IList<T> usedList;
-        private T SelectedItem
+        private IList usedList;
+        private object SelectedItem
         {
             get
             {
                 if (lbxItems.SelectedIndex >= 0)
                 {
-                    return lbxItems.SelectedValue as T;
+                    return lbxItems.SelectedValue;
                 }
-                return default(T);
+                return null;
             }
         }
 
-        private ChangeListOrder(IList<T> list, T selected)
+        private ChangeListOrder(IList list, object selected)
         {
             InitializeComponent();
             usedList = list;
@@ -27,9 +28,9 @@ namespace QuesterAssistant.Panels
             lbxItems.SelectedItem = selected;
         }
 
-        public static void Show(IList<T> list, T selected, string message)
+        public static void Show(IList list, object selected, string message)
         {
-            new ChangeListOrder<T>(list, selected) { lblMessage = { Text = message } }.ShowDialog();
+            new ChangeListOrder(list, selected) { lblMessage = { Text = message } }.ShowDialog();
         }
 
         private void RefreshList()
@@ -39,7 +40,7 @@ namespace QuesterAssistant.Panels
 
         private void ReverseList(int startIdx, Direction direction)
         {
-            T selected = SelectedItem;
+            object selected = SelectedItem;
             usedList.Remove(selected);
             usedList.Insert(startIdx + (int)direction, selected);
             RefreshList();

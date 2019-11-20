@@ -1,6 +1,6 @@
 ﻿namespace QuesterAssistant.Panels
 {
-    partial class ChangeListOrder<T>
+    partial class ChangeListOrder
     {
         /// <summary>
         /// Required designer variable.
