@@ -1,14 +1,14 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace QuesterAssistant.Classes.Common
 {
     internal static class Debug
     {
+        [Conditional("DEBUG")]
         internal static void WriteLine(string text)
         {
-#if DEBUG
             Astral.Logger.WriteLine($"[{DateTime.Now.Second}.{DateTime.Now.Millisecond}] {text}");
-#endif
         }
 
         internal static string DeprecatedMessage(string actionLabel, string actionInstead)

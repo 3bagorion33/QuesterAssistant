@@ -33,12 +33,11 @@ namespace QuesterAssistant.PowersManager
                 if (pres != null)
                 {
                     Logger.WriteLine($"Applying preset with name '{pres.Name}'...");
-                    Powers.ApplyPowers(pres?.PowersList);
+                    Powers.ApplyPowers(pres.PowersList);
                 }
             }
-            var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
-                Core.GameWindowHandle == WinAPI.GetForegroundWindow();
-            if (flag)
+            if (EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
+                Core.GameWindowHandle == WinAPI.GetForegroundWindow())
             {
                 Task.Factory.StartNew(FindAndApply);
             }

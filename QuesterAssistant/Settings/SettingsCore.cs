@@ -3,6 +3,7 @@ using Astral;
 using QuesterAssistant.Classes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Settings
@@ -22,17 +23,22 @@ namespace QuesterAssistant.Settings
             {
                 handle = Core.GameWindowHandle;
                 WinAPI.MinimizeWindow(handle);
-                if (Data.HideClient.HideMode == SettingsData.HideGameClient.Mode.Hide)
+                if (Data.HideClient.HideMode == SettingsData.HideClientClass.Mode.Hide)
                     WinAPI.HideWindow(handle);
                 return;
             }
             if (handle != IntPtr.Zero)
             {
-                if (Data.HideClient.HideMode == SettingsData.HideGameClient.Mode.Hide)
+                if (Data.HideClient.HideMode == SettingsData.HideClientClass.Mode.Hide)
                     WinAPI.UnhideWindow(handle);
                 WinAPI.RestoreWindow(handle);
                 WinAPI.SetForegroundWindow(handle);
             }
+        }
+
+        private void PauseBot()
+        {
+            new Astral.Logic.UCC.Actions.AbordCombat {IgnoreCombatTime = 1, IgnoreCombatMinHP = 0}.Run();
         }
 
         protected override void KeyboardHook(KeyEventArgs e)
@@ -44,8 +50,17 @@ namespace QuesterAssistant.Settings
 
             if (Data.HideClient.HotKey.Keys == e.KeyData)
             {
-                HideGameWindow();
                 e.SuppressKeyPress = false;
+                Task.Factory.StartNew(HideGameWindow);
+            }
+
+            var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
+                       Core.GameWindowHandle == WinAPI.GetForegroundWindow();
+
+            if (Data.PauseBot.HotKey.Enabled && flag && (e.KeyCode == Keys.W || e.KeyCode == Keys.A || e.KeyCode == Keys.S || e.KeyCode == Keys.D))
+            {
+                e.SuppressKeyPress = false;
+                Task.Factory.StartNew(PauseBot);
             }
         }
     }

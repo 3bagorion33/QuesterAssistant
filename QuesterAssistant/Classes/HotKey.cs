@@ -14,7 +14,7 @@ namespace QuesterAssistant.Classes
         [XmlText]
         public string String { get; set; } = Keys.None.ConvertToString();
         [XmlAttribute]
-        public bool Enabled { get; set; } = false;
+        public bool Enabled { get; set; }
         [XmlIgnore]
         public Keys Keys => (Keys)kc.ConvertFromString(String);
 

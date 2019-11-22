@@ -9,28 +9,31 @@ namespace QuesterAssistant.Settings
     public class SettingsData : NotifyHashChanged , IParse<SettingsData>
     {
         public HotKey RoleToggleHotKey { get; set; } = new HotKey();
-        public HideGameClient HideClient { get; set; } = new HideGameClient();
+        public HideClientClass HideClient { get; set; } = new HideClientClass();
+        public PauseBotClass PauseBot { get; set; } = new PauseBotClass();
+
         public override int GetHashCode()
         {
-            return RoleToggleHotKey.GetSafeHashCode() ^ HideClient.GetSafeHashCode();
+            return RoleToggleHotKey.GetSafeHashCode() ^ HideClient.GetSafeHashCode() ^ PauseBot.GetSafeHashCode();
         }
 
         public void Parse(SettingsData source)
         {
             RoleToggleHotKey.Parse(source.RoleToggleHotKey);
             HideClient.Parse(source.HideClient);
+            PauseBot.Parse(source.PauseBot);
         }
 
         public void Init() { }
 
-        public class HideGameClient : IParse<HideGameClient>
+        public class HideClientClass : IParse<HideClientClass>
         {
             public HotKey HotKey { get; set; } = new HotKey();
             public Mode HideMode { get; set; }
 
             public void Init() { }
 
-            public void Parse(HideGameClient source)
+            public void Parse(HideClientClass source)
             {
                 HideMode = source.HideMode;
                 HotKey.Parse(source.HotKey);
@@ -42,6 +45,23 @@ namespace QuesterAssistant.Settings
             }
 
             public enum Mode { Minimize, Hide }
+        }
+
+        public class PauseBotClass : IParse<PauseBotClass>
+        {
+            public HotKey HotKey { get; set; } = new HotKey();
+
+            public void Init() { }
+
+            public void Parse(PauseBotClass source)
+            {
+                HotKey.Parse(source.HotKey);
+            }
+
+            public override int GetHashCode()
+            {
+                return HotKey.GetSafeHashCode();
+            }
         }
     }
 }

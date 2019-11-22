@@ -35,7 +35,8 @@ namespace QuesterAssistant.Settings
             bsrcRoleToggleHotKey.DataSource = Core.Data.RoleToggleHotKey;
             bsrcHideGameHotKey.DataSource = Core.Data.HideClient.HotKey;
             bsrcHideMode.DataSource = Core.Data.HideClient.HideMode;
-            cbxHideMinimize.Properties.Items.AddRange(typeof(SettingsData.HideGameClient.Mode).GetEnumValues());
+            bsrcPauseBotHotKey.DataSource = Core.Data.PauseBot.HotKey;
+            cbxHideMinimize.Properties.Items.AddRange(typeof(SettingsData.HideClientClass.Mode).GetEnumValues());
 
             Core.SettingsLoaded += Rebind;
 
@@ -55,7 +56,10 @@ namespace QuesterAssistant.Settings
             txtHideGameString.BindAdd(bsrcHideGameHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
 
             cbxHideMinimize.DataBindings.Clear();
-            cbxHideMinimize.BindAdd(Core.Data.HideClient, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideGameClient.HideMode));
+            cbxHideMinimize.BindAdd(Core.Data.HideClient, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideClientClass.HideMode));
+
+            chkPauseBotHotKey.DataBindings.Clear();
+            chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)

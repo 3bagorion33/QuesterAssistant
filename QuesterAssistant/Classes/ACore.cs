@@ -20,7 +20,7 @@ namespace QuesterAssistant.Classes
         protected abstract bool HookEnableFlag { get; }
         protected abstract void KeyboardHook(KeyEventArgs e);
 
-        public ACore()
+        protected ACore()
         {
             Panel.Init(this);
             if (!LoadSettings()) Data.Init();

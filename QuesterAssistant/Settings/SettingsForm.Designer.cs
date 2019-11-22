@@ -42,6 +42,8 @@
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.chkPauseBotHotKey = new DevExpress.XtraEditors.CheckEdit();
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
@@ -53,6 +55,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).BeginInit();
             this.SuspendLayout();
             // 
             // chkRoleToggleEnabled
@@ -82,13 +86,14 @@
             this.gctrlCommonSettings.Controls.Add(this.cbxHideMinimize);
             this.gctrlCommonSettings.Controls.Add(this.labelControl1);
             this.gctrlCommonSettings.Controls.Add(this.chkHideGameEnabled);
+            this.gctrlCommonSettings.Controls.Add(this.chkPauseBotHotKey);
             this.gctrlCommonSettings.Controls.Add(this.chkRoleToggleEnabled);
             this.gctrlCommonSettings.Controls.Add(this.txtHideGameString);
             this.gctrlCommonSettings.Controls.Add(this.txtRoleToggleString);
             this.gctrlCommonSettings.Location = new System.Drawing.Point(0, 3);
             this.gctrlCommonSettings.Name = "gctrlCommonSettings";
             this.gctrlCommonSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 98);
+            this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 117);
             this.gctrlCommonSettings.TabIndex = 2;
             this.gctrlCommonSettings.Text = "Common";
             // 
@@ -134,7 +139,7 @@
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(0, 107);
+            this.simpleButton1.Location = new System.Drawing.Point(0, 204);
             this.simpleButton1.Name = "simpleButton1";
             this.simpleButton1.Size = new System.Drawing.Size(75, 23);
             this.simpleButton1.TabIndex = 3;
@@ -143,19 +148,28 @@
             // 
             // textEdit1
             // 
-            this.textEdit1.Location = new System.Drawing.Point(0, 136);
+            this.textEdit1.Location = new System.Drawing.Point(0, 233);
             this.textEdit1.Name = "textEdit1";
             this.textEdit1.Size = new System.Drawing.Size(370, 20);
             this.textEdit1.TabIndex = 4;
             // 
             // simpleButton2
             // 
-            this.simpleButton2.Location = new System.Drawing.Point(81, 107);
+            this.simpleButton2.Location = new System.Drawing.Point(81, 204);
             this.simpleButton2.Name = "simpleButton2";
             this.simpleButton2.Size = new System.Drawing.Size(75, 23);
             this.simpleButton2.TabIndex = 5;
             this.simpleButton2.Text = "Set Key";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+            // 
+            // chkPauseBotHotKey
+            // 
+            this.chkPauseBotHotKey.Location = new System.Drawing.Point(8, 78);
+            this.chkPauseBotHotKey.Name = "chkPauseBotHotKey";
+            this.chkPauseBotHotKey.Properties.Caption = "Pause bot while WASD are pressed";
+            this.chkPauseBotHotKey.Size = new System.Drawing.Size(196, 19);
+            this.chkPauseBotHotKey.TabIndex = 0;
+            this.chkPauseBotHotKey.TabStop = false;
             // 
             // SettingsForm
             // 
@@ -181,6 +195,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -200,5 +216,7 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton1;
         private DevExpress.XtraEditors.TextEdit textEdit1;
         private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraEditors.CheckEdit chkPauseBotHotKey;
+        private System.Windows.Forms.BindingSource bsrcPauseBotHotKey;
     }
 }

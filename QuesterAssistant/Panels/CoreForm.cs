@@ -17,15 +17,15 @@ namespace QuesterAssistant.Panels
             Main.SaveSettings += SaveSettings;
         }
 
-        // protected из-за атавизма Power Manager
-        protected void SaveSettings(object sender, EventArgs e)
+        private void SaveSettings(object sender, EventArgs e)
         {
             if ((sender as ControlCollection).Contains(this))
             {
                 core.SaveSettings();
             }
         }
-        protected void LoadSettings(object sender, EventArgs e)
+
+        private void LoadSettings(object sender, EventArgs e)
         {
             if ((sender as ControlCollection).Contains(this))
             {
