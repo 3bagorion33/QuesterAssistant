@@ -329,11 +329,17 @@
     <Compile Include="UIEditors\Forms\PlayerParagonSelectForm.designer.cs">
       <DependentUpon>PlayerParagonSelectForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="UIEditors\Forms\PositionEditorForm.cs">
+    <None Include="UIEditors\Forms\PositionEditorForm.cs">
+      <SubType>Form</SubType>
+    </None>
+    <None Include="UIEditors\Forms\PositionEditorForm.Designer.cs">
+      <DependentUpon>PositionEditorForm.cs</DependentUpon>
+    </None>
+    <Compile Include="UIEditors\Forms\TargetSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UIEditors\Forms\PositionEditorForm.Designer.cs">
-      <DependentUpon>PositionEditorForm.cs</DependentUpon>
+    <Compile Include="UIEditors\Forms\TargetSelectForm.designer.cs">
+      <DependentUpon>TargetSelectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UIEditors\ParagonListEditor.cs" />
     <Compile Include="UIEditors\PositionNodeEditor.cs" />
@@ -368,6 +374,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\PositionEditorForm.resx">
       <DependentUpon>PositionEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\TargetSelectForm.resx">
+      <DependentUpon>TargetSelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradeManager\UpgradeManagerForm.resx">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>

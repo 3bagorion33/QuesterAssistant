@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
 using Astral.Logic.NW;
-using Astral.Quester.Classes;
 using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.UIEditors;
@@ -20,7 +19,7 @@ namespace QuesterAssistant.Conditions
         NotInteractable
     }
 
-    public class CheckNode : Condition
+    public class CheckNode : Astral.Quester.Classes.Condition
     {
         [NonSerialized]
         private Interact.DynaNode currentNode;
@@ -28,31 +27,34 @@ namespace QuesterAssistant.Conditions
         public NodeState Tested { get; set; }
 
         [Editor(typeof(PositionNodeEditor), typeof(UITypeEditor))]
-        [Description("Position of the Node that is checked")]
+        [Description("Position of the Node that is checked.\n" +
+            "Координаты проверяемой Ноды.")]
         public Vector3 Position { get; set; }
 
         [Description("The maximum distance at which the bot can detect the Node\r\n" +
-            "If the distance from the Player to the 'Position' greater then 'VisibilityDistance' then the condition is considered True")]
+            "If the distance from the Player to the 'Position' greater then 'VisibilityDistance' then the condition is considered True\n" +
+            "Максимальное расстояние, в пределах которого от заданной позиции бот будет искать Ноду.\n" +
+            "Если расстояние от персонажа до заданной позиции 'Position' будет больше 'VisibilityDistance', тогда условие будет истиным.")]
         public double VisibilityDistance { get; set; }
 
-        public CheckNode() : base()
+        public CheckNode() :base()
         {
             Tested = NodeState.Exist;
             Position = new Vector3();
             VisibilityDistance = 150;
         }
 
-        private bool getNode()
+        private Interact.DynaNode GetNode()
         {
-            TargetableNode targetableNode = EntityManager.LocalPlayer.Player.InteractStatus.TargetableNodes.Find((TargetableNode node) => (node.WorldInteractionNode.Location.Distance3D(Position) < 1.0));
-            if (targetableNode != null && targetableNode.IsValid)
-            {
-                currentNode = new Interact.DynaNode(targetableNode.WorldInteractionNode.Key);
-                return currentNode.Node.IsValid;
-            }
-            return false;
+            var targetableNode =
+                EntityManager.LocalPlayer.Player.InteractStatus.TargetableNodes.Find(node =>
+                    node.WorldInteractionNode.Location.Distance3D(Position) < 1.0);
+            currentNode = targetableNode != null && targetableNode.IsValid
+                ? new Interact.DynaNode(targetableNode.WorldInteractionNode.Key)
+                : null;
+            return currentNode;
         }
-        
+
         public override bool IsValid
         {
             get
@@ -60,12 +62,9 @@ namespace QuesterAssistant.Conditions
                 if (Position.Distance3DFromPlayer > VisibilityDistance)
                     return true;
 
-                if ((currentNode == null || !currentNode.Node.IsValid))
+                if (currentNode == null || !currentNode.Node.IsValid)
                 {
-                    TargetableNode targetableNode = EntityManager.LocalPlayer.Player.InteractStatus.TargetableNodes.Find((TargetableNode node) => (node.WorldInteractionNode.Location.Distance3D(Position) < 1.0));
-                    if (targetableNode != null && targetableNode.IsValid)
-                        currentNode = new Interact.DynaNode(targetableNode.WorldInteractionNode.Key);
-                    else currentNode = null;
+                    currentNode = GetNode();
                 }
 
                 switch(Tested)
@@ -102,7 +101,7 @@ namespace QuesterAssistant.Conditions
 
             if (Position.IsValid)
             {
-                strBldr.AppendFormat(" at Position <{0,4:N2};{1,4:N2};{2,4:N2}>", new object[] { Position.X, Position.Y, Position.Z });
+                strBldr.AppendFormat(" at Position <{0,4:N2}; {1,4:N2}; {2,4:N2}>", new object[] { Position.X, Position.Y, Position.Z });
             }
             return strBldr.ToString();
         }
@@ -116,16 +115,13 @@ namespace QuesterAssistant.Conditions
                 if (Position.IsValid)
                 {
                     if (Position.Distance3DFromPlayer > VisibilityDistance)
-                        strBldr.AppendFormat("Distance from Player to the Position <{0,4:N2};{1,4:N2};{2,4:N2}> greater then ", new object[] { Position.X, Position.Y, Position.Z  })
+                        strBldr.AppendFormat("Distance from Player to the Position <{0,4:N2}; {1,4:N2}; {2,4:N2}> greater then ", new object[] { Position.X, Position.Y, Position.Z  })
                             .Append(nameof(VisibilityDistance)).Append('(').Append(VisibilityDistance).Append(')');
                     else
                     {
-                        if ((currentNode == null || !currentNode.Node.IsValid))
+                        if (currentNode == null || !currentNode.Node.IsValid)
                         {
-                            TargetableNode targetableNode = EntityManager.LocalPlayer.Player.InteractStatus.TargetableNodes.Find((TargetableNode node) => (node.WorldInteractionNode.Location.Distance3D(Position) < 1.0));
-                            if (targetableNode != null && targetableNode.IsValid)
-                                currentNode = new Interact.DynaNode(targetableNode.WorldInteractionNode.Key);
-                            else currentNode = null;
+                            currentNode = GetNode();
                         }
 
                         if (currentNode != null && currentNode.Node.IsValid)
@@ -143,7 +139,7 @@ namespace QuesterAssistant.Conditions
 
                             if (strBldr2.Length > 0)
                                 strBldr.Append('{').Append(strBldr2).Append("} ");
-                            strBldr.AppendFormat("in Position <{0,4:N2};{1,4:N2};{2,4:N2}> ", new object[] { currentNode.Node.WorldInteractionNode.Location.X,
+                            strBldr.AppendFormat("in Position <{0,4:N2}; {1,4:N2}; {2,4:N2}> ", new object[] { currentNode.Node.WorldInteractionNode.Location.X,
                                                                                    currentNode.Node.WorldInteractionNode.Location.Y,
                                                                                    currentNode.Node.WorldInteractionNode.Location.Z});
 
@@ -161,8 +157,8 @@ namespace QuesterAssistant.Conditions
                             }
                             strBldr.AppendLine();
                         }
-                        else strBldr.AppendFormat("Node does 'NotExist' in Position <{0,4:N2};{1,4:N2};{2,4:N2}>", new object[] { Position.X, Position.Y, Position.Z }).AppendLine();
-                        strBldr.AppendLine("Distance from Player is ").Append(Position.Distance3DFromPlayer);
+                        else strBldr.AppendFormat("Node does 'NotExist' in Position <{0,4:N2}; {1,4:N2}; {2,4:N2}>", new object[] { Position.X, Position.Y, Position.Z }).AppendLine();
+                        strBldr.Append("Distance from Player is ").Append(Position.Distance3DFromPlayer.ToString("N4"));
                     }
                 }
 

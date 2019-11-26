@@ -1,27 +1,24 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing.Design;
-using DevExpress.XtraEditors;
-using MyNW.Classes;
+using System.Windows.Forms;
 using MyNW.Internals;
 using QuesterAssistant.UIEditors.Forms;
 
 namespace QuesterAssistant.UIEditors
 {
-    internal class PositionNodeEditor : UITypeEditor
+    class PositionNodeEditor : UITypeEditor
     {
-        private Vector3 acquisition()
-        {
-            var mouseOverNode = EntityManager.LocalPlayer.Player.InteractStatus.MouseOverNode;
-            if (mouseOverNode.IsValid)
-                return mouseOverNode.Location;
-            XtraMessageBox.Show("No node under mouse.");
-            return new Vector3();
-        }
-
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            PositionEditorForm.Show(value as Vector3, acquisition);
+            while (TargetSelectForm.TargetGuiRequest("Target the node and press ok.") == DialogResult.OK)
+            {
+                if (EntityManager.LocalPlayer.Player.InteractStatus.pMouseOverNode != IntPtr.Zero)
+                {
+                    return EntityManager.LocalPlayer.Player.InteractStatus.TargetableNodes
+                               .Find(n => n.IsValid && n.IsMouseOver)?.WorldInteractionNode.Location.Clone() ?? value;
+                }
+            }
             return value;
         }
 
