@@ -29,6 +29,7 @@ namespace QuesterAssistant.PowersManager
         private void PowersManagerForm_Load(object sender, EventArgs e)
         {
             Data.HashChanged += gridControlPowers_SafeUpdate;
+            Data.HashChanged += bsrcGlobHotKey.ResetCurrentItem;
 
             bsrcGlobHotKey.DataSource = Data.HotKey;
             chkHotKeys.BindAdd(bsrcGlobHotKey, nameof(CheckEdit.Checked), nameof(PowersManagerData.HotKey.Enabled));

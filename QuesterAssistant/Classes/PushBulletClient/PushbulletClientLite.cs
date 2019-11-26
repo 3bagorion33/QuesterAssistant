@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 namespace QuesterAssistant.Classes.PushBulletClient
 {
     [Serializable]
-    public class PushBulletClientLite :  NotifyHashChanged, IParse<PushBulletClientLite>
+    public class PushBulletClientLite :  OverrideHash, IParse<PushBulletClientLite>
     {
         #region Constructors
 
@@ -44,6 +44,7 @@ namespace QuesterAssistant.Classes.PushBulletClient
         /// <value>
         /// The access token.
         /// </value>
+        [HashInclude]
         public string AccessToken { get; set; } = string.Empty;
         /// <summary>
         /// Gets the time zone information.
@@ -52,6 +53,7 @@ namespace QuesterAssistant.Classes.PushBulletClient
         /// The time zone information.
         /// </value>
         [XmlIgnore]
+        [HashInclude]
         public TimeZoneInfo TimeZoneInfo { get; } = TimeZoneInfo.Utc;
 
         #endregion properties
@@ -463,10 +465,5 @@ namespace QuesterAssistant.Classes.PushBulletClient
         }
 
         public void Init() { }
-
-        public override int GetHashCode()
-        {
-            return AccessToken.GetHashCode() ^ TimeZoneInfo.GetSafeHashCode();
-        }
     }
 }

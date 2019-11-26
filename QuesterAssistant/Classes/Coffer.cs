@@ -7,7 +7,6 @@ using MyNW.Classes.GroupProject;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Classes
 {
@@ -21,6 +20,7 @@ namespace QuesterAssistant.Classes
         public string DisplayName { get; set; } = string.Empty;
         [DisplayName(nameof(Coffer)), XmlIgnore]
         public string FullName => $"{DisplayName} [{InternalName}]";
+        [HashInclude]
         public List<Item> Items { get; set; } = new List<Item>();
 
         public Coffer() { }
@@ -48,11 +48,6 @@ namespace QuesterAssistant.Classes
         public override string ToString()
         {
             return string.IsNullOrEmpty(InternalName) ? "Select a coffer to donate" : FullName;
-        }
-
-        public override int GetHashCode()
-        {
-            return Items.GetSafeHashCode();
         }
 
         [XmlRoot]
@@ -93,14 +88,14 @@ namespace QuesterAssistant.Classes
 
             public void Init() { }
 
-            public override string ToString()
-            {
-                return DisplayName;
-            }
-
             public override int GetHashCode()
             {
                 return Donate.GetHashCode();
+            }
+
+            public override string ToString()
+            {
+                return DisplayName;
             }
         }
     }

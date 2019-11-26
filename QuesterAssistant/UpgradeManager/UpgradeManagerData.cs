@@ -20,13 +20,10 @@ namespace QuesterAssistant.UpgradeManager
     [Serializable]
     public class UpgradeManagerData : NotifyHashChanged, IParse<UpgradeManagerData>
     {
+        [HashInclude]
         public HotKey ToggleHotKey { get; set; } = new HotKey();
+        [HashInclude]
         public BindingList<Profile> Profiles { get; set; } = new BindingList<Profile>();
-
-        public override int GetHashCode()
-        {
-            return Profiles.GetSafeHashCode() ^ ToggleHotKey.GetSafeHashCode();
-        }
 
         public void Init() { }
 
@@ -38,13 +35,17 @@ namespace QuesterAssistant.UpgradeManager
         }
 
         [Serializable]
-        public class Profile : IListControlSource
+        public class Profile : OverrideHash, IListControlSource
         {
-            [XmlAttribute]
+            [XmlAttribute, HashInclude]
             public string Name { get; set; } = string.Empty;
+            [HashInclude]
             public AlgorithmDirection Algorithm { get; set; } = AlgorithmDirection.UpToDown;
+            [HashInclude]
             public ErrorBehavior RunCondition { get; set; } = ErrorBehavior.WhilePossible;
+            [HashInclude]
             public int IterationsCount { get; set; } = 0;
+            [HashInclude]
             public List<Task> Tasks { get; set; } = new List<Task>();
 
             public void AddTask(GetAnItem.ListItem item)
@@ -82,7 +83,7 @@ namespace QuesterAssistant.UpgradeManager
                     for (int j = start; j <= stop; j++)
                     {
                         int i = 0;
-                        while ((i < count) && ((result = Tasks[j].Run()) > 0))
+                        while (i < count && (result = Tasks[j].Run()) > 0)
                         {
                             if (result == Task.Result.Evolved) i++;
                         }
@@ -110,24 +111,15 @@ namespace QuesterAssistant.UpgradeManager
                                 break;
                             }
                         }
-                        runconditions = 
-                            (RunCondition == ErrorBehavior.StopOnError) ? 
-                            result > 0 : 
-                            (result > Task.Result.HaventRefinimentCurrency && Tasks.Exists(t => t.HaveRequiredItems));
+                        runconditions =
+                            RunCondition == ErrorBehavior.StopOnError
+                                ? result > 0
+                                : result > Task.Result.HaventRefinimentCurrency &&
+                                  Tasks.Exists(t => t.HaveRequiredItems);
                     }
                     while (j < count && runconditions);
                 }
                 return result;
-            }
-
-            public override int GetHashCode()
-            {
-                return 
-                    Name.GetSafeHashCode() ^
-                    Algorithm.GetSafeHashCode() ^
-                    RunCondition.GetSafeHashCode() ^
-                    IterationsCount.GetSafeHashCode() ^
-                    Tasks.GetSafeHashCode();
             }
 
             private int Sort(Task t1, Task t2)
@@ -147,7 +139,7 @@ namespace QuesterAssistant.UpgradeManager
         }
 
         [Serializable]
-        public class Task
+        public class Task : OverrideHash
         {
             public uint Rank { get; set; } = 0;
             public string ItemId { get; set; } = string.Empty;
@@ -155,9 +147,9 @@ namespace QuesterAssistant.UpgradeManager
             public uint Chance { get; set; } = 0;
             public bool UseWard { get; set; } = false;
 
-            [XmlIgnore]
+            [XmlIgnore, HashInclude]
             public string FullName => $"{DisplayName} [{ItemId}]";
-            [XmlIgnore]
+            [XmlIgnore, HashInclude]
             public int CountUnfilled => BagsItems.FindAll(FindUnfilled).Sum(s => (int)s.Item.Count);
             [XmlIgnore]
             public int CountFilled => BagsItems.FindAll(s => FindFullFilled(s) || FindPartiallyFilled(s)).Sum(s => (int)s.Item.Count);
@@ -311,17 +303,8 @@ namespace QuesterAssistant.UpgradeManager
                         if (!Evolve(slot)) result = Run();
                         else result = Result.Evolved;
                         break;
-                    default:
-                        break;
                 }
                 return result;
-            }
-
-            public override int GetHashCode()
-            {
-                return
-                    FullName.GetSafeHashCode() ^
-                    CountUnfilled;
             }
 
             public override string ToString()

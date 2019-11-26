@@ -1,21 +1,18 @@
 ﻿using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using System;
-using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Settings
 {
     [Serializable]
     public class SettingsData : NotifyHashChanged , IParse<SettingsData>
     {
+        [HashInclude]
         public HotKey RoleToggleHotKey { get; set; } = new HotKey();
+        [HashInclude]
         public HideClientClass HideClient { get; set; } = new HideClientClass();
+        [HashInclude]
         public PauseBotClass PauseBot { get; set; } = new PauseBotClass();
-
-        public override int GetHashCode()
-        {
-            return RoleToggleHotKey.GetSafeHashCode() ^ HideClient.GetSafeHashCode() ^ PauseBot.GetSafeHashCode();
-        }
 
         public void Parse(SettingsData source)
         {
@@ -26,9 +23,11 @@ namespace QuesterAssistant.Settings
 
         public void Init() { }
 
-        public class HideClientClass : IParse<HideClientClass>
+        public class HideClientClass : OverrideHash, IParse<HideClientClass>
         {
+            [HashInclude]
             public HotKey HotKey { get; set; } = new HotKey();
+            [HashInclude]
             public Mode HideMode { get; set; }
 
             public void Init() { }
@@ -39,16 +38,12 @@ namespace QuesterAssistant.Settings
                 HotKey.Parse(source.HotKey);
             }
 
-            public override int GetHashCode()
-            {
-                return HotKey.GetSafeHashCode() ^ HideMode.GetSafeHashCode();
-            }
-
             public enum Mode { Minimize, Hide }
         }
 
-        public class PauseBotClass : IParse<PauseBotClass>
+        public class PauseBotClass : OverrideHash, IParse<PauseBotClass>
         {
+            [HashInclude]
             public HotKey HotKey { get; set; } = new HotKey();
 
             public void Init() { }
@@ -56,11 +51,6 @@ namespace QuesterAssistant.Settings
             public void Parse(PauseBotClass source)
             {
                 HotKey.Parse(source.HotKey);
-            }
-
-            public override int GetHashCode()
-            {
-                return HotKey.GetSafeHashCode();
             }
         }
     }

@@ -14,7 +14,7 @@ namespace QuesterAssistant.UpgradeManager
 {
     internal partial class UpgradeManagerForm : CoreForm
     {
-        private UpgradeManagerCore Core => QuesterAssistant.Core.UpgradeManagerCore;
+        private UpgradeManagerCore Core => core as UpgradeManagerCore;
         private UpgradeManagerData Data => Core.Data;
         public Profile CurrentProfile => lcProfilesList.CurrentItem as Profile ?? new Profile();
 
@@ -29,6 +29,7 @@ namespace QuesterAssistant.UpgradeManager
             lcProfilesList.BindSource<Profile>(Data.Profiles);
 
             Data.HashChanged += gridTasksList.RefreshData;
+            Data.HashChanged += bsrcHotKey.ResetCurrentItem;
 
             Core.TasksStarted += TasksStarted;
             Core.TasksStopped += TasksStopped;

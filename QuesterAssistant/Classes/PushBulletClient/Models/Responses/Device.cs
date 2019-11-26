@@ -1,5 +1,4 @@
 ﻿using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 using System;
 using System.Runtime.Serialization;
 
@@ -7,7 +6,7 @@ namespace QuesterAssistant.Classes.PushBulletClient.Models.Responses
 {
     [Serializable]
     [DataContract]
-    public class Device : NotifyHashChanged
+    public class Device : OverrideHash
     {
         /// <summary>
         /// Gets or sets the iden.
@@ -15,7 +14,7 @@ namespace QuesterAssistant.Classes.PushBulletClient.Models.Responses
         /// <value>
         /// The iden.
         /// </value>
-        [DataMember(Name = "iden")]
+        [DataMember(Name = "iden"), HashInclude]
         public string Iden { get; set; }
 
         /// <summary>
@@ -24,7 +23,7 @@ namespace QuesterAssistant.Classes.PushBulletClient.Models.Responses
         /// <value>
         /// The nickname.
         /// </value>
-        [DataMember(Name = "nickname")]
+        [DataMember(Name = "nickname"), HashInclude]
         public string Nickname { get; set; }
 
         /// <summary>
@@ -33,7 +32,7 @@ namespace QuesterAssistant.Classes.PushBulletClient.Models.Responses
         /// <value>
         ///   <c>true</c> if active; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Name = "active")]
+        [DataMember(Name = "active"), HashInclude]
         public bool Active { get; set; }
 
         /// <summary>
@@ -42,15 +41,10 @@ namespace QuesterAssistant.Classes.PushBulletClient.Models.Responses
         /// <value>
         ///   <c>true</c> if pushable; otherwise, <c>false</c>.
         /// </value>
-        [DataMember(Name = "pushable")]
+        [DataMember(Name = "pushable"), HashInclude]
         public bool Pushable { get; set; }
 
         //public bool Selected { get; set; }
-
-        public override int GetHashCode()
-        {
-            return Iden.GetSafeHashCode() ^ Nickname.GetSafeHashCode() ^ Active.GetHashCode() ^ Pushable.GetHashCode();
-        }
 
         public override string ToString()
         {

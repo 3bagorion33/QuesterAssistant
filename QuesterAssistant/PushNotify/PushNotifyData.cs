@@ -10,13 +10,10 @@ namespace QuesterAssistant.PushNotify
     [Serializable]
     public class PushNotifyData : NotifyHashChanged, IParse<PushNotifyData>
     {
+        [HashInclude]
         public PushBulletClientLite Client { get; set; } = new PushBulletClientLite();
+        [HashInclude]
         public List<Device> Devices { get; set; } = new List<Device>();
-
-        public override int GetHashCode()
-        {
-            return Client.GetHashCode() ^ Devices.GetSafeHashCode();
-        }
 
         public void Init() { }
 

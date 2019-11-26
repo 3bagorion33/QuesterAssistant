@@ -2,7 +2,6 @@
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Enums;
 using System;
 using System.Collections.Generic;
@@ -16,7 +15,9 @@ namespace QuesterAssistant.PowersManager
     [Serializable]
     public class PowersManagerData : NotifyHashChanged , IParse<PowersManagerData>
     {
+        [HashInclude]
         public HotKey HotKey { get; set; } = new HotKey();
+        [HashInclude]
         public List<CharClass> CharClassesList { get; set; } = new List<CharClass>();
 
         public PowersManagerData() { }
@@ -50,10 +51,6 @@ namespace QuesterAssistant.PowersManager
                 return new BindingList<Preset>();
             }
         }
-        public override int GetHashCode()
-        {
-            return CharClassesList.GetSafeHashCode() ^ HotKey.GetHashCode();
-        }
         public void Parse(PowersManagerData source)
         {
             HotKey.Parse(source.HotKey);
@@ -64,20 +61,17 @@ namespace QuesterAssistant.PowersManager
         }
 
         [Serializable]
-        public class CharClass : IParse<CharClass>
+        public class CharClass : OverrideHash, IParse<CharClass>
         {
-            [XmlAttribute]
+            [XmlAttribute, HashInclude]
             public ParagonCategory ParagonCategory { get; set; }
+            [HashInclude]
             public BindingList<Preset> PresetsList { get; set; } = new BindingList<Preset>();
 
             public CharClass() { }
             public CharClass(ParagonCategory charClass)
             {
                 ParagonCategory = charClass;
-            }
-            public override int GetHashCode()
-            {
-                return PresetsList.GetSafeHashCode() ^ ParagonCategory.GetHashCode();
             }
             public void Parse(CharClass source)
             {
@@ -89,11 +83,13 @@ namespace QuesterAssistant.PowersManager
         }
 
         [Serializable]
-        public class Preset : IParse<Preset>, IListControlSource
+        public class Preset : OverrideHash, IParse<Preset>, IListControlSource
         {
-            [XmlAttribute]
+            [XmlAttribute, HashInclude]
             public string Name { get; set; }
+            [HashInclude]
             public HotKey HotKey { get; set; } = new HotKey();
+            [HashInclude]
             public List<Power> PowersList { get; set; } = new List<Power>();
 
             public Preset() { }
@@ -121,10 +117,6 @@ namespace QuesterAssistant.PowersManager
             {
                 return Name;
             }
-            public override int GetHashCode()
-            {
-                return PowersList.GetSafeHashCode() ^ HotKey.GetHashCode() ^ Name.GetHashCode();
-            }
             public void Parse(Preset source)
             {
                 Name = source.Name;
@@ -136,12 +128,14 @@ namespace QuesterAssistant.PowersManager
         }
 
         [Serializable]
-        public class Power : IParse<Power>
+        public class Power : OverrideHash, IParse<Power>
         {
             [XmlText]
             public string InternalName { get; set; }
-            [XmlAttribute]
+            [XmlAttribute, HashInclude]
             public TraySlot TraySlot { get; set; }
+            [HashInclude]
+            private string DispName => ToDispName().InternalName;
 
             public Power() { }
             public Power(TraySlot traySlot, string iName)
@@ -151,13 +145,9 @@ namespace QuesterAssistant.PowersManager
             }
             internal Power ToDispName()
             {
-                var pwr = Powers.GetPowerByInternalName(InternalName);
+                var pwr = Astral.Logic.NW.Powers.GetPowerByInternalName(InternalName);
                 if (!pwr.IsValid) return new Power(TraySlot, "Unknown spell");
                 return new Power(TraySlot, (pwr.IsInTray ? "[Slotted] " : "") + pwr.PowerDef.DisplayName);
-            }
-            public override int GetHashCode()
-            {
-                return TraySlot.GetHashCode() ^ ToDispName().InternalName.GetHashCode();
             }
             public void Parse(Power source)
             {

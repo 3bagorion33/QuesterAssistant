@@ -8,7 +8,7 @@ using System.Timers;
 namespace QuesterAssistant.Classes.Common
 {
     [DataContract]
-    public abstract class NotifyHashChanged : INotifyPropertyChanged, IDisposable
+    public abstract class NotifyHashChanged : OverrideHash, INotifyPropertyChanged, IDisposable
     {
         private int prevHashCode;
         private static readonly Timer checkChanged = new Timer { Enabled = true, Interval = 200, AutoReset = true };
@@ -23,17 +23,18 @@ namespace QuesterAssistant.Classes.Common
 
         private void CheckChanged_Tick(object sender, EventArgs e)
         {
-            void Tick()
-            {
-                var hashCode = GetHashCode();
-                if (prevHashCode != hashCode)
-                {
-                    prevHashCode = hashCode;
-                    HashChanged?.Invoke();
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(GetType().Name));
-                }
-            }
             Task.Factory.StartNew(Tick);
+        }
+
+        private void Tick()
+        {
+            var hashCode = GetHashCode();
+            if (prevHashCode != hashCode)
+            {
+                prevHashCode = hashCode;
+                HashChanged?.Invoke();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(GetType().Name));
+            }
         }
 
         protected void OnPropertyChanged([CallerMemberName] string name = "")
@@ -44,8 +45,6 @@ namespace QuesterAssistant.Classes.Common
             }
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-
-        public abstract override int GetHashCode();
 
         public void Dispose()
         {

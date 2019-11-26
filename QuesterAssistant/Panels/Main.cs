@@ -15,11 +15,6 @@ namespace QuesterAssistant.Panels
             InitializeComponent();
         }
 
-        private void Dispose(object s, EventArgs e)
-        {
-            Dispose(true);
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveSettings(sideMain.Controls, null);
@@ -32,7 +27,8 @@ namespace QuesterAssistant.Panels
 
         private void Main_Load(object sender, EventArgs e)
         {
-            components = new Container();
+            //components = new Container();
+            sideButtons.Visible = false;
             //OnPanelLeave += Dispose;
 
             // Init Tabs
@@ -49,6 +45,7 @@ namespace QuesterAssistant.Panels
             {
                 sideMain.InvokeSafe(() => sideMain.Controls.Remove(tileMain));
                 sideMain.InvokeSafe(() => sideMain.Controls.Add(form));
+                sideButtons.Visible = true;
             }
             LoadPanel((sender as TileItem)?.Tag as XtraUserControl);
         }

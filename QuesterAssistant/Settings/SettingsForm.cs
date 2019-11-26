@@ -12,6 +12,7 @@ namespace QuesterAssistant.Settings
     internal partial class SettingsForm : CoreForm
     {
         private SettingsCore Core => core as SettingsCore;
+        private SettingsData Data => Core.Data;
 
         public SettingsForm()
         {
@@ -32,34 +33,23 @@ namespace QuesterAssistant.Settings
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
-            bsrcRoleToggleHotKey.DataSource = Core.Data.RoleToggleHotKey;
-            bsrcHideGameHotKey.DataSource = Core.Data.HideClient.HotKey;
-            bsrcHideMode.DataSource = Core.Data.HideClient.HideMode;
-            bsrcPauseBotHotKey.DataSource = Core.Data.PauseBot.HotKey;
+            bsrcRoleToggleHotKey.DataSource = Data.RoleToggleHotKey;
+            bsrcHideGameHotKey.DataSource = Data.HideClient.HotKey;
+            bsrcHideMode.DataSource = Data.HideClient;
+            bsrcPauseBotHotKey.DataSource = Data.PauseBot.HotKey;
             cbxHideMinimize.Properties.Items.AddRange(typeof(SettingsData.HideClientClass.Mode).GetEnumValues());
 
-            Core.SettingsLoaded += Rebind;
-
-            Rebind();
-        }
-
-        private void Rebind()
-        {
-            chkRoleToggleEnabled.DataBindings.Clear();
             chkRoleToggleEnabled.BindAdd(bsrcRoleToggleHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
-            txtRoleToggleString.DataBindings.Clear();
             txtRoleToggleString.BindAdd(bsrcRoleToggleHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
-
-            chkHideGameEnabled.DataBindings.Clear();
             chkHideGameEnabled.BindAdd(bsrcHideGameHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
-            txtHideGameString.DataBindings.Clear();
             txtHideGameString.BindAdd(bsrcHideGameHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
-
-            cbxHideMinimize.DataBindings.Clear();
-            cbxHideMinimize.BindAdd(Core.Data.HideClient, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideClientClass.HideMode));
-
-            chkPauseBotHotKey.DataBindings.Clear();
+            cbxHideMinimize.BindAdd(bsrcHideMode, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideClientClass.HideMode));
             chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+
+            Data.HashChanged += bsrcRoleToggleHotKey.ResetCurrentItem;
+            Data.HashChanged += bsrcHideMode.ResetCurrentItem;
+            Data.HashChanged += bsrcHideGameHotKey.ResetCurrentItem;
+            Data.HashChanged += bsrcPauseBotHotKey.ResetCurrentItem;
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)

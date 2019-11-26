@@ -7,21 +7,16 @@ using System.Xml.Serialization;
 namespace QuesterAssistant.Classes
 {
     [Serializable]
-    public class HotKey : NotifyHashChanged, IParse<HotKey>
+    public class HotKey : OverrideHash, IParse<HotKey>
     {
         private static KeysConverter kc = new KeysConverter();
 
-        [XmlText]
+        [XmlText, HashInclude]
         public string String { get; set; } = Keys.None.ConvertToString();
-        [XmlAttribute]
+        [XmlAttribute, HashInclude]
         public bool Enabled { get; set; }
         [XmlIgnore]
         public Keys Keys => (Keys)kc.ConvertFromString(String);
-
-        public override int GetHashCode()
-        {
-            return String.GetHashCode() ^ Enabled.GetHashCode();
-        }
 
         public void Parse(HotKey source)
         {

@@ -32,10 +32,6 @@ namespace QuesterAssistant.PushNotify
 
         sealed class NotifyStatus : NotifyHashChanged
         {
-            public override int GetHashCode()
-            {
-                throw new System.NotImplementedException();
-            }
         }
     }
 }

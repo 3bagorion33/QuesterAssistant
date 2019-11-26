@@ -28,34 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.gctrlCommonSettings = new DevExpress.XtraEditors.GroupControl();
             this.cbxHideMinimize = new DevExpress.XtraEditors.ComboBoxEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.chkHideGameEnabled = new DevExpress.XtraEditors.CheckEdit();
+            this.chkPauseBotHotKey = new DevExpress.XtraEditors.CheckEdit();
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.chkPauseBotHotKey = new DevExpress.XtraEditors.CheckEdit();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
             this.gctrlCommonSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxHideMinimize.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,6 +123,15 @@
             this.chkHideGameEnabled.TabIndex = 0;
             this.chkHideGameEnabled.TabStop = false;
             // 
+            // chkPauseBotHotKey
+            // 
+            this.chkPauseBotHotKey.Location = new System.Drawing.Point(8, 78);
+            this.chkPauseBotHotKey.Name = "chkPauseBotHotKey";
+            this.chkPauseBotHotKey.Properties.Caption = "Pause bot while WASD are pressed";
+            this.chkPauseBotHotKey.Size = new System.Drawing.Size(196, 19);
+            this.chkPauseBotHotKey.TabIndex = 0;
+            this.chkPauseBotHotKey.TabStop = false;
+            // 
             // txtHideGameString
             // 
             this.txtHideGameString.Location = new System.Drawing.Point(262, 53);
@@ -162,15 +170,6 @@
             this.simpleButton2.Text = "Set Key";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
-            // chkPauseBotHotKey
-            // 
-            this.chkPauseBotHotKey.Location = new System.Drawing.Point(8, 78);
-            this.chkPauseBotHotKey.Name = "chkPauseBotHotKey";
-            this.chkPauseBotHotKey.Properties.Caption = "Pause bot while WASD are pressed";
-            this.chkPauseBotHotKey.Size = new System.Drawing.Size(196, 19);
-            this.chkPauseBotHotKey.TabIndex = 0;
-            this.chkPauseBotHotKey.TabStop = false;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -190,12 +189,12 @@
             this.gctrlCommonSettings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxHideMinimize.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideMode)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).EndInit();
             this.ResumeLayout(false);
 

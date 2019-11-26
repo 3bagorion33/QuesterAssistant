@@ -256,6 +256,7 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
@@ -389,7 +390,6 @@
       <DependentUpon>HooksLoader.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\HotKey.cs" />
-    <Compile Include="Classes\ICore.cs" />
     <Compile Include="Classes\PushBulletClient\Constants.cs" />
     <Compile Include="Classes\PushBulletClient\Extensions.cs" />
     <Compile Include="Classes\PushBulletClient\Filters\PushResponseFilter.cs" />
