@@ -45,12 +45,15 @@ namespace QuesterAssistant.Settings
         {
             [HashInclude]
             public HotKey HotKey { get; set; } = new HotKey();
+            [HashInclude]
+            public int Delay { get; set; } = 1;
 
             public void Init() { }
 
             public void Parse(PauseBotClass source)
             {
                 HotKey.Parse(source.HotKey);
+                Delay = source.Delay;
             }
         }
     }

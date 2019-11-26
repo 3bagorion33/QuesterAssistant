@@ -14,6 +14,8 @@ namespace QuesterAssistant.Classes
     {
         private static readonly Dictionary<string, List<Item>> Items = new Dictionary<string, List<Item>>();
         private static string CurrentCharacter => EntityManager.LocalPlayer.InternalName;
+        private static string CurrentProfilePath =>
+            new FileInfo(Astral.Controllers.Settings.Get.LastQuesterProfile).FullName;
 
         public static List<FileInfo> GetProfiles =>
             new DirectoryInfo(Core.ProfilesPath)
@@ -21,8 +23,6 @@ namespace QuesterAssistant.Classes
                 .OrderBy(f => f.FullName)
                 .ToList();
 
-        public static string CurrentProfilePath =>
-            new FileInfo(Astral.Controllers.Settings.Get.LastQuesterProfile).FullName;
         public static string CurrentProfileName => CurrentProfilePath.Substring(Core.ProfilesPath.Length + 1);
         public static Item Last =>
             Any ? Items[CurrentCharacter].LastOrDefault() : new Item();
@@ -52,8 +52,13 @@ namespace QuesterAssistant.Classes
         {
             if (allCharacters)
                 Items.Clear();
-            else if (Items.ContainsKey(CurrentCharacter) && Items[CurrentCharacter].Any())
+            else if (Any)
                 Items[CurrentCharacter].Clear();
+        }
+
+        public static string Show()
+        {
+            return string.Join("<br><br>", Items[CurrentCharacter].Select(i => $"<b>{i.ProfilePath}</b><br>    {i.ActionID}"));
         }
 
         public struct Item

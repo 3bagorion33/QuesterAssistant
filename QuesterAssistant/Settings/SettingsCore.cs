@@ -38,7 +38,7 @@ namespace QuesterAssistant.Settings
 
         private void PauseBot()
         {
-            new Astral.Logic.UCC.Actions.AbordCombat {IgnoreCombatTime = 1, IgnoreCombatMinHP = 0}.Run();
+            new Astral.Logic.UCC.Actions.AbordCombat {IgnoreCombatTime = 1, IgnoreCombatMinHP = Data.PauseBot.Delay}.Run();
         }
 
         protected override void KeyboardHook(KeyEventArgs e)

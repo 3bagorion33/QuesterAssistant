@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using MyNW;
 using QuesterAssistant.Classes;
@@ -37,6 +39,7 @@ namespace QuesterAssistant.Settings
             bsrcHideGameHotKey.DataSource = Data.HideClient.HotKey;
             bsrcHideMode.DataSource = Data.HideClient;
             bsrcPauseBotHotKey.DataSource = Data.PauseBot.HotKey;
+            bsrcPauseBot.DataSource = Data.PauseBot;
             cbxHideMinimize.Properties.Items.AddRange(typeof(SettingsData.HideClientClass.Mode).GetEnumValues());
 
             chkRoleToggleEnabled.BindAdd(bsrcRoleToggleHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
@@ -45,11 +48,13 @@ namespace QuesterAssistant.Settings
             txtHideGameString.BindAdd(bsrcHideGameHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
             cbxHideMinimize.BindAdd(bsrcHideMode, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideClientClass.HideMode));
             chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+            numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
 
             Data.HashChanged += bsrcRoleToggleHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcHideMode.ResetCurrentItem;
             Data.HashChanged += bsrcHideGameHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcPauseBotHotKey.ResetCurrentItem;
+            Data.HashChanged += bsrcPauseBot.ResetCurrentItem;
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)
@@ -89,6 +94,16 @@ namespace QuesterAssistant.Settings
         {
             var machineid = textEdit1.Text;
             Memory.MMemory.WriteString(Memory.BaseAdress + 0x2640BD0, Encoding.UTF8, machineid);
+        }
+
+        private void btnClearStack_Click(object sender, EventArgs e)
+        {
+            ProfilesStack.Clear();
+        }
+
+        private void btnShowStack_Click(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(() => XtraMessageBox.Show(ProfilesStack.Show(), DefaultBoolean.True));
         }
     }
 }
