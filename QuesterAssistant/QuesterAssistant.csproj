@@ -27,6 +27,25 @@
     <OldToolsVersion>0.0</OldToolsVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
+    <ShouldCreateLogs>False</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    <AssemblyInfoFilePath>
+    </AssemblyInfoFilePath>
+    <AssemblyInfoVersionSettings>
+    </AssemblyInfoVersionSettings>
+    <AssemblyInfoVersionSemVerSettings>
+    </AssemblyInfoVersionSemVerSettings>
+    <AssemblyFileVersionSettings>None.IncrementOnDemand.MMddStamp.TimeStamp</AssemblyFileVersionSettings>
+    <AssemblyVersionSettings>None.IncrementOnDemand.IncrementOnDemand.IncrementOnDemand</AssemblyVersionSettings>
+    <PrimaryVersionType>
+    </PrimaryVersionType>
+    <AssemblyVersion>.</AssemblyVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
@@ -49,6 +68,18 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>x86</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>
+    </AssemblyVersionSettings>
+    <AssemblyFileVersionSettings />
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\..\..\LazyLauncher\Astral_RU_2\Plugins\</OutputPath>
@@ -72,6 +103,20 @@
     <ErrorReport>prompt</ErrorReport>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <Prefer32Bit>false</Prefer32Bit>
+    <PrimaryVersionType>AssemblyVersionAttribute</PrimaryVersionType>
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>
+    </AssemblyVersionSettings>
+    <AssemblyFileVersionSettings />
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    <AssemblyInfoVersionSettings>None.None.None.None</AssemblyInfoVersionSettings>
+    <AssemblyInfoVersionSemVerSettings>AssemblyFileVersion.NoneWithAutoReset.ReleaseCandidate</AssemblyInfoVersionSemVerSettings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug into folder|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -85,6 +130,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
+    <ShouldCreateLogs>True</ShouldCreateLogs>
+    <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+    <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdatePackageVersion>False</UpdatePackageVersion>
+    <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+    <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
+    <AssemblyInfoVersionSemVerSettings>AssemblyVersion.NoneWithAutoReset.Beta</AssemblyInfoVersionSemVerSettings>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
@@ -239,7 +293,7 @@
     <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
     <Compile Include="Actions\MoveItems.cs" />
-    <Compile Include="Actions\Deprecated\MoveToSea.cs" />
+    <Compile Include="Actions\MoveToSea.cs" />
     <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
@@ -289,7 +343,6 @@
     <Compile Include="Panels\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
     </Compile>
-    <Compile Include="Panels\DialogBox.cs" />
     <Compile Include="Panels\ListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -309,6 +362,7 @@
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="UCCActions\UCCLoadPowersPreset.cs" />
     <Compile Include="UIEditors\ConditionListEditor.cs" />
     <Compile Include="UIEditors\DonateTaskEditor.cs" />
     <Compile Include="UIEditors\Forms\ConditionsListForm.cs">
@@ -414,7 +468,7 @@
     <Compile Include="Classes\PushBulletClient\Models\Responses\UserDevices.cs" />
     <Compile Include="Classes\PushBulletClient\Models\Responses\UserPreferences.cs" />
     <Compile Include="Classes\PushBulletClient\PushBulletClientLite.cs" />
-    <Compile Include="Panels\ErrorBox.cs" />
+    <Compile Include="Panels\QMessageBox.cs" />
     <Compile Include="PowersManager\PowersManagerCore.cs" />
     <Compile Include="PowersManager\PowersManagerForm.cs">
       <SubType>UserControl</SubType>

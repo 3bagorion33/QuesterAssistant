@@ -98,7 +98,7 @@ namespace QuesterAssistant.PowersManager
                     ActiveControl = null;
                     if (Data.ParagonPresets.Any(x => x.HotKey.Keys == e.KeyData && x.Name != CurrentPreset.Name))
                     {
-                        ErrorBox.Show("This hotkey is already in use.");
+                        QMessageBox.ShowError("This hotkey is already in use.");
                         tedCurrHotKey.DataBindings[0].ReadValue();
                         return;
                     }

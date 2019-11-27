@@ -77,7 +77,7 @@ namespace QuesterAssistant.UpgradeManager
 #if DEBUG
             catch (Exception e)
             {
-                ErrorBox.Show(e.ToString());
+                QMessageBox.ShowError(e.ToString());
             }
 #endif
             finally

@@ -9,11 +9,10 @@ using Astral.Logic.Classes.FSM;
 using Astral.Logic.Classes.Map;
 using Astral.Quester;
 using Astral.Quester.UIEditors;
-using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 
-namespace EntityTools.Actions.Deprecated
+namespace QuesterAssistant.Actions
 {
     [Serializable]
     public class MoveToSea : Astral.Quester.Classes.Action
@@ -122,7 +121,7 @@ namespace EntityTools.Actions.Deprecated
 
         public override void GatherInfos()
         {
-            XtraMessageBox.Show("Place mark on the InGame's map and press OK");
+            MessageBox.Show("Place mark on the InGame's map and press OK");
             Position = EntityManager.LocalPlayer.Player.MyFirstWaypoint.Position.Clone();
         }
 

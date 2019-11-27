@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.LookAndFeel;
 using QuesterAssistant.Classes;
 
 namespace QuesterAssistant
@@ -28,6 +29,7 @@ namespace QuesterAssistant
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
         internal static bool IsGameForeground => GameWindowHandle == WinAPI.GetForegroundWindow();
         internal static bool IsAstralForeground => AstralHandle == WinAPI.GetForegroundWindow();
+        internal static string SkinName => "Office 2013 Light Gray";
 
         /// <summary>
         /// Объект, отслеживающий изменение состояний бота
@@ -62,7 +64,7 @@ namespace QuesterAssistant
                 }
                 catch (Exception ex)
                 {
-                    ErrorBox.Show(ex.ToString());
+                    QMessageBox.ShowError(ex.ToString());
                     Logger.WriteLine(ex.ToString());
                 }
             }

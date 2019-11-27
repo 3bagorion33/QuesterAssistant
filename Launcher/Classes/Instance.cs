@@ -34,7 +34,7 @@ namespace Launcher.Classes
                 }
                 catch (Exception)
                 {
-                    ErrorBox.Show("Unable to start a new instance");
+                    QMessageBox.ShowError("Unable to start a new instance");
                 }
                 finally
                 {
@@ -85,7 +85,7 @@ namespace Launcher.Classes
                 SetNewTitle();
                 WinAPI.SetWindowText(Process.MainWindowHandle, NewTitle);
             }
-            catch (Exception ex) { ErrorBox.Show(ex.ToString()); }
+            catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
         }
 
         public void Close()
@@ -104,7 +104,7 @@ namespace Launcher.Classes
                 {
                     File.Delete($"{Process.ProcessName}.exe");
                 }
-                catch (Exception ex) { ErrorBox.Show(ex.ToString()); }
+                catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
             }
         }
 

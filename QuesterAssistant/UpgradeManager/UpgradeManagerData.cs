@@ -54,12 +54,12 @@ namespace QuesterAssistant.UpgradeManager
                 Task task;
                 if ((task = Task.New(item)) == null)
                 {
-                    ErrorBox.Show($"'{item}' can't be upgraded!");
+                    QMessageBox.ShowError($"'{item}' can't be upgraded!");
                     return;
                 }
                 if (Tasks.Exists(t => t.Rank == task.Rank))
                 {
-                    if (DialogBox.Show($"Task with Rank{task.Rank} is already exist. Replace?", "Confirm") == DialogResult.Yes)
+                    if (QMessageBox.ShowDialog($"Task with Rank{task.Rank} is already exist. Replace?", "Confirm") == DialogResult.Yes)
                         Tasks.AddOrReplace(t => t.Rank == task.Rank, task);
                 }
                 else

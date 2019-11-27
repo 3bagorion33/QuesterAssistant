@@ -76,7 +76,7 @@ namespace QuesterAssistant.Panels
                     result = ((IListControlSource)item).Name == name;
                     if (result)
                     {
-                        ErrorBox.Show($"{dataTypeName} with this name already exist!");
+                        QMessageBox.ShowError($"{dataTypeName} with this name already exist!");
                         break;
                     }
                 }
@@ -102,7 +102,7 @@ namespace QuesterAssistant.Panels
 
                 case "Delete":
                     if (DataSource.Count != 0 &&
-                        DialogBox.Show($"Delete this {dataTypeName}?", "Confirm") == DialogResult.Yes)
+                        QMessageBox.ShowDialog($"Delete this {dataTypeName}?", "Confirm") == DialogResult.Yes)
                     {
                         DataSource.Remove(CurrentItem);
                         lkupList.ItemIndex = 0;

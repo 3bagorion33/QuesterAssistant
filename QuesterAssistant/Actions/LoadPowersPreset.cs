@@ -74,14 +74,9 @@ namespace QuesterAssistant.Actions
         private string GetLabel()
         {
             if (!string.IsNullOrEmpty(PresetName))
-            {
                 return PresetName;
-            }
-
             if (PresetNumber > 0)
-            {
                 return PresetNumber.ToString();
-            }
             return "<Empty>";
         }
 
@@ -94,14 +89,14 @@ namespace QuesterAssistant.Actions
                 {
                     if (PresetNumber > pManager.ParagonPresets.Count)
                     {
-                        Logger.WriteLine($"{ActionLabel} : PresetNumber is superior than preset list for this paragon!");
+                        Logger.WriteLine($"{ActionLabel} :\n PresetNumber is superior than preset list for this paragon!");
                         return ActionResult.Skip;
                     }
                     _pres = pManager.ParagonPresets.ElementAtOrDefault(PresetNumber - 1);
                     if (_pres != null)
                     {
-                        Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");
-                        Powers.ApplyPowers(_pres?.PowersList);
+                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{_pres.Name}'...");
+                        Powers.ApplyPowers(_pres.PowersList);
                         return ActionResult.Completed;
                     }
                 }
@@ -110,12 +105,12 @@ namespace QuesterAssistant.Actions
                     _pres = pManager.ParagonPresets.ToList().Find(x => Regex.IsMatch(x.Name, PresetName));
                     if (_pres != null)
                     {
-                        Logger.WriteLine($"{ActionLabel} : Applying preset with name '{_pres.Name}'...");
-                        Powers.ApplyPowers(_pres?.PowersList);
+                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{_pres.Name}'...");
+                        Powers.ApplyPowers(_pres.PowersList);
                         return ActionResult.Completed;
                     }
                 }
-                Logger.WriteLine($"{ActionLabel} : Unable to find a preset for these parameters, skip.");
+                Logger.WriteLine($"{ActionLabel} :\n Unable to find a preset for these parameters, skip.");
                 return ActionResult.Skip;
             }
             return ActionResult.Fail;

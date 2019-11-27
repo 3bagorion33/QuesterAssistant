@@ -39,7 +39,7 @@ namespace QuesterAssistant.PushNotify
             }
             catch (Exception ex)
             {
-                ErrorBox.Show(ex.ToString());
+                QMessageBox.ShowError(ex.ToString());
             }
             cbx.Enabled = false;
             cbx.Properties.DataSource = bsrcUserDevices;
@@ -57,7 +57,7 @@ namespace QuesterAssistant.PushNotify
                 cbxDevicesList.Properties.DataSource = Data.Client.CurrentUsersDevices().Devices;
                 cbxDevicesList.Enabled = true;
             }
-            catch (Exception ex) { ErrorBox.Show(ex.Message); }
+            catch (Exception ex) { QMessageBox.ShowError(ex.Message); }
         }
 
         private void bmiSendTest_ItemClick(object sender, ItemClickEventArgs e)
@@ -68,7 +68,7 @@ namespace QuesterAssistant.PushNotify
                 {
                     Core.PushMessage("This is a test message.");
                 }
-                catch (Exception ex) { ErrorBox.Show(ex.Message); }
+                catch (Exception ex) { QMessageBox.ShowError(ex.Message); }
             }
         }
 

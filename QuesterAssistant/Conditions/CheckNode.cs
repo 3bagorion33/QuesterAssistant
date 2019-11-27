@@ -37,7 +37,7 @@ namespace QuesterAssistant.Conditions
             "Если расстояние от персонажа до заданной позиции 'Position' будет больше 'VisibilityDistance', тогда условие будет истиным.")]
         public double VisibilityDistance { get; set; }
 
-        public CheckNode() :base()
+        public CheckNode()
         {
             Tested = NodeState.Exist;
             Position = new Vector3();

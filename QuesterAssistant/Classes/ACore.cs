@@ -58,7 +58,7 @@ namespace QuesterAssistant.Classes
                 catch (Exception ex)
                 {
                     string msg = ex.ToString();
-                    ErrorBox.Show("Error: Could not read file from disk. Original error:\n" + msg);
+                    QMessageBox.ShowError("Error: Could not read file from disk. Original error:\n" + msg);
                     Logger.WriteLine($"{Name}.xml is wrong, using default...");
                 }
                 finally
@@ -80,7 +80,7 @@ namespace QuesterAssistant.Classes
             }
             catch (Exception ex)
             {
-                ErrorBox.Show("Error: Could not save file. Original error: " + ex.Message);
+                QMessageBox.ShowError("Error: Could not save file. Original error: " + ex.Message);
             }
         }
     }

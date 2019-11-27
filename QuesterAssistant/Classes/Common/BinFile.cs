@@ -21,7 +21,7 @@ namespace QuesterAssistant.Classes.Common
                 }
                 catch (Exception ex)
                 {
-                    ErrorBox.Show(ex.ToString());
+                    QMessageBox.ShowError(ex.ToString());
                     Logger.WriteLine(ex.ToString());
                 }
             }
