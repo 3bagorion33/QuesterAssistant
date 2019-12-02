@@ -30,7 +30,7 @@ namespace Launcher
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Fatal error : " + Environment.NewLine + ex.ToString());
+                MessageBox.Show($@"Fatal error : {Environment.NewLine}{ex}");
             }
         }
     }

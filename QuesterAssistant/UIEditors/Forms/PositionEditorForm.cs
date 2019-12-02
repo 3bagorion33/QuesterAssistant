@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.UIEditors.Forms
 {
@@ -45,7 +46,7 @@ namespace QuesterAssistant.UIEditors.Forms
                 RefreshPos();
                 return;
             }
-            XtraMessageBox.Show("No valid player position.");
+            QMessageBox.ShowError("No valid player position");
         }
 
         private void b_TargetPos_Click(object sender, EventArgs e)
@@ -59,7 +60,7 @@ namespace QuesterAssistant.UIEditors.Forms
                 RefreshPos();
                 return;
             }
-            XtraMessageBox.Show("No valid target position.");
+            QMessageBox.ShowError("No valid target position");
         }
 
         private void b_Valid_Click(object sender, EventArgs e)

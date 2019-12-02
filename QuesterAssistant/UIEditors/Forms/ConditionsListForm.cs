@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Panels;
 using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Condition>;
 
 namespace QuesterAssistant.UIEditors.Forms
@@ -33,7 +34,7 @@ namespace QuesterAssistant.UIEditors.Forms
         {
 
             if (Conditions.SelectedIndex >= 0
-                && XtraMessageBox.Show("Are you sure to remove selected condition ?", "Remove Condition ?", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                && QMessageBox.ShowDialog("Are you sure to remove selected condition ?", "Remove Condition ?") == DialogResult.Yes)
             {
                 Conditions.Items.RemoveAt(Conditions.SelectedIndex);
             }
@@ -42,8 +43,8 @@ namespace QuesterAssistant.UIEditors.Forms
         private void btnCopy_Click(object sender, EventArgs e)
         {
             if (Conditions.SelectedItem is Condition cond && SetConditionCopy(cond))
-                XtraMessageBox.Show($"Condition {cond.ToString()} copied!");
-            else XtraMessageBox.Show($"Error while copying of the condition!");
+                QMessageBox.ShowInfo($"Condition {cond} copied!");
+            else QMessageBox.ShowError($"Error while copying of the condition!");
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
@@ -60,14 +61,13 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void btnTest_Click(object sender, EventArgs e)
         {
-            Condition cond = Conditions.SelectedItem as Condition;
-            if (cond != null)
+            if (Conditions.SelectedItem is Condition cond)
             {
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine(cond.TestInfos).AppendLine();
                 sb.Append("Result: ").Append(cond.IsValid);
 
-                XtraMessageBox.Show(sb.ToString());
+                QMessageBox.ShowInfo(sb.ToString());
             }
         }
 

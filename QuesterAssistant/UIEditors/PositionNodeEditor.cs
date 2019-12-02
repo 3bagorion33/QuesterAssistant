@@ -17,7 +17,7 @@ namespace QuesterAssistant.UIEditors
         {
             if (API.SelectedEditorAction is InteractSpecificNode action &&
                 action.Conditions.Contains(context.Instance as Condition)
-                && QMessageBox.ShowDialog("Import node's coordinates from current action?", "Question") == DialogResult.Yes)
+                && QMessageBox.ShowDialog("Import node's coordinates from current action?") == DialogResult.Yes)
                 return action.Position;
 
             while (TargetSelectForm.TargetGuiRequest("Target the node and press ok.") == DialogResult.OK)

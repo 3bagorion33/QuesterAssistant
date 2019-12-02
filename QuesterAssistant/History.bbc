@@ -1,5 +1,47 @@
 Version history:
 [spoiler]
+[[b][u]v 1.3[/u][/b]]
+[[b][u]Functionality[/u][/b]]
+
+Added:
+[list]
+[*][b]Settings[/b]: minimize GameClient hotkeys, pause combat HK, Profiles Stack clear button
+[*][b]Profiles Stack[/b][/list]
+
+[[b][u]UCC Actions[/u][/b]]
+
+Added:
+[list]
+[*][b]UCCLoadPowersPreset[/b][/list]
+
+[[b][u]Quester Actions[/u][/b]]
+
+Added:
+[list]
+[*][b]ClearProfilesStack[/b]
+[*][b]DonateToStronghold[/b]
+[*][b]MoveItems[/b]
+[*][b]PushProfileToStackAndLoad[/b]
+[*][b]PullProfileFromStack[/b][/list]
+
+Updated:
+[list]
+[*][b]AuctionSellItems[/b] - minor and major improvements
+[*][b]ChangeSettingValue[/b] - added supports to enable and disable using AutoEquip and AutoUCC[/list]
+
+[[b][u]Quester Conditions[/u][/b]]
+
+Added:
+[list]
+[*][b]AuctionItemCount[/b]
+[*][b]CheckNode[/b]
+[*][b]ConditionPack[/b]
+[*][b]PlayerParagon[/b]
+[*][b]TeamMembersCount[/b]
+[*][b]TeamMemberCountInCustomRegion[/b][/list]
+
+[hr]
+
 [[b][u]v 1.2[/u][/b]]
 [[b][u]Functionality[/u][/b]]
 
@@ -7,14 +49,14 @@ Added:
 [list]
 [*][b]Settings[/b] alternative Start/Stop hotkeys
 [*][b]Upgrade Manager[/b]
-[*][b]Push Notify [color=red]beta![/color][/b]
-[/list]
+[*][b]Push Notify [color=#ff0000]beta![/color][/b][/list]
+
 [[b][u]Quester States[/u][/b]]
 
 Removed:
 [list]
-[*][b]Indetify[/b] as deprecated
-[/list]
+[*][b]Identify[/b] as deprecated[/list]
+
 [[b][u]Quester Actions[/u][/b]]
 
 Added:
@@ -22,72 +64,74 @@ Added:
 [*][b]BuyItemRemote[/b]
 [*][b]GroupItems[/b]
 [*][b]ReportAD[/b]
-[*][b]RunUpgradeProfile[/b]
-[/list]
+[*][b]RunUpgradeProfile[/b][/list]
+
 Updated:
 [list]
 [*][b]AuctionSellItems[/b] - added resell option, variable timeout between placing lots
-[*][b]Notify[/b] - added options to write to file and to send via PushBullet protocol ([color=red]beta![/color])
-[*][b]VIPSell[/b] - added interaction with Seal and Artifact traders ([color=red]beta![/color])
-[/list]
+[*][b]Notify[/b] - added options to write to file and to send via PushBullet protocol ([color=#ff0000]beta![/color])
+[*][b]VIPSell[/b] - added interaction with Seal and Artifact traders ([color=#ff0000]beta![/color])[/list]
+
+[hr]
 
 [[b][u]v 1.1.1[/u][/b]]
 [[b][u]Functionality[/u][/b]]
 
 Added:
 [list]
-[*][b]Powers Manager[/b] popup window for loading presets
-[/list]
+[*][b]Powers Manager[/b] popup window for loading presets[/list]
+
 [[b][u]Quester Actions[/u][/b]]
 
 Added:
 [list]
 [*][b]AuctionSellItems[/b]
 [*][b]CloseAllFrames[/b]
-[*][b]UseConsumable[/b]
-[/list]
+[*][b]UseConsumable[/b][/list]
+
 Updated:
 [list]
 [*][b]DiscardItem[/b]
-[*][b]InventoryLog[/b]
-[/list]
+[*][b]InventoryLog[/b][/list]
+
 [[b][u]Quester Conditions[/u][/b]]
 
 Added:
 [list]
-[*][b]PlayerHealth [/b]
-[/list]
+[*][b]PlayerHealth[/b][/list]
+
 [hr]
+
 [[b][u]v 1.1[/u][/b]]
 [[b][u]Functionality[/u][/b]]
 
 Added:
 [list]
-[*][b]Powers Manager[/b] engine
-[/list]
+[*][b]Powers Manager[/b] engine[/list]
+
 [[b][u]Quester States[/u][/b]]
 
 Bugfix:
 [list]
-[*][b]Identify[/b] changed to State with own algorithm without conflict with minor scrolls.
-[/list]
+[*][b]Identify[/b] changed to State with own algorithm without conflict with minor scrolls.[/list]
+
 [[b][u]Quester Actions[/u][/b]]
 
 Added:
 [list]
 [*][b]ChangeSettingsValue[/b]
-[*][b]LoadPowersPreset[/b]
-[/list]
+[*][b]LoadPowersPreset[/b][/list]
+
 [[b][u]Quester Conditions[/u][/b]]
 
 Added:
 [list]
 [*][b]ReceivedChatMessage[/b]
-[*][b]CountOfRuns[/b]
-[/list]
+[*][b]CountOfRuns[/b][/list]
+
 [hr]
-[b][u]v 1.0[/u][/b]
+[[b][u]v 1.0[/u][/b]]
 [list]
-[*]Start this project
-[/list]
+[*]Start this project[/list]
+
 [/spoiler]

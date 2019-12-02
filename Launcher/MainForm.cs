@@ -12,14 +12,17 @@ using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using Launcher.Properties;
 using QuesterAssistant.Classes.Common;
 
 namespace Launcher
 {
     public partial class MainForm : XtraForm
     {
-        private BindingList<Instance> instances = new BindingList<Instance>();
-        private BindingList<LogEvent> logEvents = new BindingList<LogEvent>();
+        private readonly BindingList<Instance> instances = new BindingList<Instance>();
+        private readonly BindingList<LogEvent> logEvents = new BindingList<LogEvent>();
+        private readonly Patches patches = new Patches();
+        private readonly Settings settings = new Settings();
 
         public MainForm()
         {
@@ -28,7 +31,7 @@ namespace Launcher
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var instance = new Instance();
+            var instance = new Instance(patches.Items);
             instance.Process.PriorityClass = (ProcessPriorityClass) cbxPriority.SelectedItem;
             logEvents.Add(new LogEvent($"Starting new Instance #{instance.Process.ProcessName}"));
             instances.Add(instance);
@@ -77,10 +80,7 @@ namespace Launcher
                 logEvents.Add(new LogEvent($"'{killResult}' has been closed"));
             }
 
-            if (chkHideTitle.Checked)
-            {
-                instances.ForEach(i => i.Rename());
-            }
+            instances.ForEach(i => i.Rename());
             instances.Remove(i =>
             {
                 if (i.Process.HasExited)
@@ -99,9 +99,21 @@ namespace Launcher
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            Closing += MainForm_Closing;
+            settings.Load();
+
+            if (settings.Patches != null)
+            {
+                for (int i = 0; i < settings.Patches.Count; i++)
+                {
+                    patches.Items[i].Active = settings.Patches[i];
+                }
+            }
+
             Instance.Clean();
             bsrcInstancesList.DataSource = instances;
             gctlLogEventList.DataSource = logEvents;
+            gctlPatchesList.DataSource = patches.Items;
 
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.RealTime);
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.High);
@@ -109,9 +121,18 @@ namespace Launcher
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.Normal);
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.BelowNormal);
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.Idle);
-            cbxPriority.SelectedIndex = 2;
+
+            cbxPriority.DataBindings.Add(nameof(ComboBoxEdit.EditValue), settings, nameof(Settings.Priority));
+            chkKill.DataBindings.Add(nameof(CheckEdit.EditValue), settings, nameof(Settings.KillCrypticError));
+            chkClose.DataBindings.Add(nameof(CheckEdit.EditValue), settings, nameof(Settings.CloseCrashError));
 
             logEvents.Add(new LogEvent("Launcher is started"));
+        }
+
+        private void MainForm_Closing(object sender, CancelEventArgs e)
+        {
+            settings.Patches = patches.Items.Select(p => p.Active).ToList();
+            settings.Save();
         }
 
         private void btnClose_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)

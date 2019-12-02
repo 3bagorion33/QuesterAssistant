@@ -10,9 +10,9 @@ using Astral.Quester.Classes;
 using Astral.Quester.Forms;
 using Astral.Quester.UIEditors;
 using Astral.Quester.UIEditors.Forms;
-using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Actions
 {
@@ -38,7 +38,7 @@ namespace QuesterAssistant.Actions
             RemoteContact = GetAnId.GetARemoteContact();
             
             if (!string.IsNullOrEmpty(RemoteContact) && 
-                (XtraMessageBox.Show("Call it now ?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes))
+                (QMessageBox.ShowDialog("Call it now ?") == DialogResult.Yes))
             {
                 foreach (RemoteContact remoteContact in EntityManager.LocalPlayer.Player.InteractInfo.RemoteContacts)
                 {
@@ -49,7 +49,7 @@ namespace QuesterAssistant.Actions
                 }
             }
            
-            if (XtraMessageBox.Show("Add a dialog ? (open the dialog window before)", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (QMessageBox.ShowDialog("Add a dialog ? (open the dialog window before)") == DialogResult.Yes)
             {
                 DialogEdit.Show(Dialogs);
             }            

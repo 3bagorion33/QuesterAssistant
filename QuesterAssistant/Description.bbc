@@ -1,36 +1,53 @@
 [[b][u]Functionality[/u][/b]]
 [list]
 [*][b]Settings[/b] manages some functions of this plugin.
-[*][b]Upgrade Manager[/b] provides engine to refine and evolve stones.
-[*][b]Powers Manager[/b] provides the ability to manage a set of powers puting in slots. It supports for hot keys.
-[*][b]Push Notify [color=red]beta![/color][/b] provides the ability to send Push message on your smartphone via PushBullet service.
-[/list]
-[[b][u]Quester States[/u][/b]]
+[*][b]Upgrade Manager[/b] provides engine for the stone refinement and evolution.
+[*][b]Powers Manager[/b] provides the ability to manage sets of equipped powers. Hotkeys support included.
+[*][b]Profiles Stack[/b] provides a mechanism like programm stack: you can load another profile, execute it and return to previous right to the point of interruption.
 [list]
-[/list]
+[*]supports nesting levels
+[*]each character has his own stack
+[*]look for [b]PushProfileToStackAndLoad[/b], [b]PullProfileFromStack[/b] and [b]ClearProfilesStack[/b] Quester actions[/list]
+
+[*][b]Push Notify [color=#ff0000]beta![/color][/b] provides the ability to send Push message to your smartphone via PushBullet service.[/list]
+
+[[b][u]UCC Actions[/u][/b]]
+[list]
+[*][b]UCCLoadPowersPreset[/b] - provides the ability to change set of slotted powers even in combat status[/list]
+
+[[b][u]Quester States[/u][/b]]
 [[b][u]Quester Actions[/u][/b]]
 [list]
-[*][b]AuctionSellItems[/b] - sells items using a flexible algorithm for finding the best price, has flexible options
-[*][b]BuyItemRemote[/b] - allows you to remotely buy in campaign stores
-[*][b]GroupItems[/b] - allows to group items in bags using using bounding and protection properties
-[*][b]ChangeSettingsValue[/b] - changes the value of the current profile settings, saved after changing roles
+[*][b]AuctionSellItems[/b] - sells items using a flexible algorithm, finding the best price, has flexible options
+[*][b]BuyItemRemote[/b] - allows buying in campaign stores remotely through the campaign window
+[*][b]ChangeSettingsValue[/b] - changes various Astral global settings, saved upon changing the Astral roles
+[*][b]ClearProfilesStack[/b] - completely clears the profiles stack for current char or for all characters
 [*][b]CloseAllFrames[/b] - toggles off ingame cursor mode
-[*][b]ConsoleCommand[/b] - execute any ingame console command
-[*][b]DiscardItem[/b] - delete items using filter and grade quality
-[*][b]InventoryLog[/b] - write to file all inventory availabled in the API using pattern, can to save auction price
-[*][b]LoadPowersPreset[/b] - loads a preset of powers for the current paragon by number or name (regular expressions), if available in the database
-[*][b]MoonMask[/b] - travel to MoonMask if possible
+[*][b]ConsoleCommand[/b] - execution of ingame console commands
+[*][b]DiscardItem[/b] - destroy items using filter and grade quality
+[*][b]DonateToStronghold[/b] - donates various items to the Stronghold Chest
+[*][b]GroupItems[/b] - allows grouping items in bags using bounding and protection properties
+[*][b]InventoryLog[/b] - write to file all inventory available in the API using pattern, can be used for saving the list of auction prices
+[*][b]LoadPowersPreset[/b] - loads a preset of powers for the current paragon using the preset assigned number or preset name (regular expressions), if available in the database
+[*][b]MoonMask[/b] - teleport to MoonMask if possible
+[*][b]MoveItems[/b] - moves selected items from multiple bags to one selected; various bags can be used, such as adventurer equipment, pet equipment, etc.
+[*][b]MoveToSea[/b] - alternative of [u]MoveTo[/u] action for moving into Sea Of Moving Ice location
 [*][b]Notify[/b] - shows popup notification window, writes to file and sends to PushBullet clients the specified message
-[*][b]ReportAD[/b] - stores to a file information about AA and AD of current character
+[*][b]PushProfileToStackAndLoad[/b] - pushes the current Quester profile into the stack, suspends it and loads another specified profile; relative paths are supported - it is safe to move between folders, the folder structure shall be preserved
+[*][b]PullProfileFromStack[/b] - pulls the previous profile from the stack and continues execution from the point where it was pushed into the stack and, thus, suspended
+[*][b]RefineAD[/b] - refine rough astral diamonds into astral diamonds if possible
+[*][b]ReportAD[/b] - stores to a file the amount of Rough Astral Diamonds and Astral Diamonds of the current character
 [*][b]RunUpgradeProfile[/b] - tries to run selected profile for refining and evolving items
-[*][b]RefineAD[/b] - refine astral diamonds if possible
-[*][b]UseConsumable[/b] - use equiped consumable by ID (by [b][color=#0080FF]michaelprog[/color][/b])
-[*][b]VIPRewards[/b] - claim account and char rewards and open boxes
-[*][b]VIPSell[/b] - sale items to VIP or Artifact ([color=red]beta![/color]) vendor if possible using global sale filter (forced flag "Discard if can't sell")
-[/list]
+[*][b]UseConsumable[/b] - use equipped consumable by ID (by [b][color=#0080ff]michaelprog[/color][/b])
+[*][b]VIPRewards[/b] - claim the account and character rewards and open the boxes
+[*][b]VIPSell[/b] - sale items to VIP or Artifact ([color=#ff0000]beta![/color]) vendor if possible using global sale filter (forced flag "Discard if can't sell")[/list]
+
 [[b][u]Quester Conditions[/u][/b]]
 [list]
-[*][b]CountOfRuns [color=red]beta![/color][/b] - an iteration count of the action, works only with Loop and is not always correct, but there is no other solution until Jarod makes support at the engine level http://www.neverwinter-bot.com/forums/viewtopic.php?f=99&t=9983
-[*][b]PlayerHealth[/b] - check characters HP level in % (by [b][color=#0080FF]michaelprog[/color][/b])
-[*][b]ReceivedChatMessage[/b] - monitor messages in the chat until a message is received in the specified channel using the specified pattern (regular expressions), when you select the channel Unknown messages are checked for each channel
-[/list]
+[*][b]AuctionItemCount[/b] - estimated the number of selected item from the auction lots. The inventory can be taken into account at will.
+[*][b]CheckNode[/b] - checks presence, absence and interactability of the selected node, useful with [u]InteractSpecificNode [/u]action (by [b][color=#0080ff]michaelprog[/color][/b])
+[*][b]ConditionPack[/b] - [u]very useful feature,[/u] which allows combining, copying and pasting grouped conditions, which adds greater flexibility to customization and verification of the conditions (by [b][color=#0080ff]michaelprog[/color][/b])
+[*][b]CountOfRuns [color=#ff0000]beta![/color][/b] - estimated the number of iterations of the action, works only with Loop flag and is not always correct, but there is no other solution until Jarod adds support at the Astral engine level http://www.neverwinter-bot.com/forums/viewtopic.php?f=99&t=9983
+[*][b]PlayerHealth[/b] - check characters HP level in % (by [b][color=#0080ff]michaelprog[/color][/b])
+[*][b]PlayerParagon[/b] - allows you to check the character class and/or paragon (charcer lvl should be 30 or higher) (by [b][color=#0080ff]michaelprog[/color][/b])
+[*][b]ReceivedChatMessage[/b] - monitors chat until a specified message is received in the specified channel using the specified pattern (regular expressions), when the channel is set to “Unknown”, the messages are being checked in all channels[/list]

@@ -102,7 +102,7 @@ namespace QuesterAssistant.Panels
 
                 case "Delete":
                     if (DataSource.Count != 0 &&
-                        QMessageBox.ShowDialog($"Delete this {dataTypeName}?", "Confirm") == DialogResult.Yes)
+                        QMessageBox.ShowDialog($"Delete this {dataTypeName}?") == DialogResult.Yes)
                     {
                         DataSource.Remove(CurrentItem);
                         lkupList.ItemIndex = 0;

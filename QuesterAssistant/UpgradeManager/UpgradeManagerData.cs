@@ -59,7 +59,7 @@ namespace QuesterAssistant.UpgradeManager
                 }
                 if (Tasks.Exists(t => t.Rank == task.Rank))
                 {
-                    if (QMessageBox.ShowDialog($"Task with Rank{task.Rank} is already exist. Replace?", "Confirm") == DialogResult.Yes)
+                    if (QMessageBox.ShowDialog($"Task with Rank{task.Rank} is already exist. Replace?") == DialogResult.Yes)
                         Tasks.AddOrReplace(t => t.Rank == task.Rank, task);
                 }
                 else

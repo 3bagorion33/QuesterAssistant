@@ -36,6 +36,7 @@ namespace QuesterAssistant.Classes.Common
         public static int GetSafeHashCode<T>(this T @this)
         {
             if (@this == null) return 0;
+            if (@this is string) return @this.GetHashCode();
             if (@this is IEnumerable @enum)
             {
                 int hash = 0;

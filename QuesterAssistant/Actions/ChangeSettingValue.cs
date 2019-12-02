@@ -51,13 +51,13 @@ namespace QuesterAssistant.Actions
                 case SProperty.AutoEquip:
                     API.CurrentSettings.EnableAutoEquip = Value;
                     break;
-                case SProperty.AutoUCC:
-                    var customClass = Value ? "AutoUCC" : "UCC";
-                    ReflectionHelper.GetTypeByName("Astral", "CustomClasses")
-                        ?.ExecStaticMethod("SelectCC", new object[] {customClass, true});
-                    Astral.Controllers.Settings.Save();
-                    Astral.Logic.UCC.Entrypoint2.ForceRefresh();
-                    break;
+                //case SProperty.AutoUCC:
+                //    var customClass = Value ? "AutoUCC" : "UCC";
+                //    ReflectionHelper.GetTypeByName("Astral", "CustomClasses")
+                //        ?.ExecStaticMethod("SelectCC", new object[] {customClass, true});
+                //    Astral.Controllers.Settings.Save();
+                //    Astral.Logic.UCC.Entrypoint2.ForceRefresh();
+                //    break;
                 default:
                     return ActionResult.Fail;
             }

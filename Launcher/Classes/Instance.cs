@@ -3,8 +3,10 @@ using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
@@ -19,8 +21,9 @@ namespace Launcher.Classes
         public string OriginalTitle { get; set; } = string.Empty;
         public string NewTitle { get; set; } = string.Empty;
         private const int HASH_SIZE = 4;
+        private readonly bool doRename;
         
-        public Instance()
+        public Instance(IList<Patch> patches)
         {
             HashChanged += Delete;
             using (MD5 md5Hash = MD5.Create())
@@ -29,7 +32,11 @@ namespace Launcher.Classes
                 try
                 {
                     File.Copy("Astral.exe", procName);
-                    Patches.Apply(procName);
+
+                    var stream = File.ReadAllBytes(procName);
+                    patches.ToList().FindAll(p => p.Active).ForEach(p => Rewrite(ref stream, p.Bytes));
+                    File.WriteAllBytes(procName, stream);
+
                     Process = Process.Start(procName);
                 }
                 catch (Exception)
@@ -38,7 +45,35 @@ namespace Launcher.Classes
                 }
                 finally
                 {
+                    doRename = patches[0].Active;
                     Delete();
+                }
+            }
+        }
+
+        private void Rewrite(ref byte[] stream, List<Bytes> patches)
+        {
+            IEnumerable<int> Search(byte[] src, byte[] pattern)
+            {
+                int c = src.Length - pattern.Length + 1;
+                int j;
+                for (int i = 0; i < c; i++)
+                {
+                    if (src[i] != pattern[0]) continue;
+                    for (j = pattern.Length - 1; j >= 1 && src[i + j] == pattern[j]; j--) ;
+                    if (j == 0) yield return i;
+                }
+            }
+
+            foreach (Bytes patch in patches)
+            {
+                var idx3 = Search(stream, patch.Orig);
+                foreach (var i in idx3)
+                {
+                    for (int j = 0; j < patch.Orig.Length; j++)
+                    {
+                        stream[i + j] = patch.Ptch[j];
+                    }
                 }
             }
         }
@@ -64,6 +99,7 @@ namespace Launcher.Classes
 
         public void Rename()
         {
+            if (!doRename) return;
             try
             {
                 void SetNewTitle()
@@ -95,7 +131,7 @@ namespace Launcher.Classes
                 Thread.Sleep(200);
         }
 
-        public void Delete()
+        private void Delete()
         {
             while (Process != null && Process.HasExited && File.Exists($"{Process.ProcessName}.exe"))
             {

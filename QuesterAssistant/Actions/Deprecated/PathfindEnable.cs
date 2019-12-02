@@ -1,9 +1,9 @@
 ﻿using Astral;
 using Astral.Logic.Classes.Map;
-using DevExpress.XtraEditors;
 using MyNW.Classes;
 using QuesterAssistant.Classes.Common;
 using System;
+using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Actions.Deprecated
 {
@@ -17,11 +17,7 @@ namespace QuesterAssistant.Actions.Deprecated
         {
             get
             {
-                Logger.WriteLine(Debug.DeprecatedWriteLine(this.ActionLabel));
-                if (API.RoleIsRunning)
-                {
-                    //API.ToogleRole();
-                }
+                Logger.WriteLine(Debug.DeprecatedWriteLine(ActionLabel));
                 return false;
             }
         }
@@ -29,20 +25,15 @@ namespace QuesterAssistant.Actions.Deprecated
         protected override Vector3 InternalDestination => new Vector3();
         public override string InternalDisplayName => string.Empty;
 
-        protected override ActionValidity InternalValidity
-        {
-            get
-            {
-                return new ActionValidity(Debug.DeprecatedMessage(this.ActionLabel, "PathFinding: Enable"));
-            }
-        }
+        protected override ActionValidity InternalValidity =>
+            new ActionValidity(Debug.DeprecatedMessage(ActionLabel, "PathFinding: Enable"));
 
         public override bool NeedToRun => true;
         public override bool UseHotSpots => false;
 
         public override void GatherInfos()
         {
-            XtraMessageBox.Show(Debug.DeprecatedMessage(this.ActionLabel, "PathFinding: Disable"));
+            QMessageBox.ShowInfo(Debug.DeprecatedMessage(ActionLabel, "PathFinding: Disable"));
         }
 
         public override void InternalReset() { }

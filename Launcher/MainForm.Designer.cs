@@ -56,7 +56,6 @@
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
-            this.chkHideTitle = new DevExpress.XtraEditors.CheckEdit();
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
@@ -70,6 +69,12 @@
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.tabNavigationPage3 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.gctlPatchesList = new DevExpress.XtraGrid.GridControl();
+            this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.notifyTray = new System.Windows.Forms.NotifyIcon();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
@@ -77,7 +82,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuFirewall)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.barFirewall)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHideTitle.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
             this.tabNavigationPage1.SuspendLayout();
@@ -91,6 +95,9 @@
             this.tabNavigationPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
+            this.tabNavigationPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gctlPatchesList)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // defaultLookAndFeel
@@ -103,7 +110,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.btnStart.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
             this.btnStart.Appearance.Options.UseFont = true;
-            this.btnStart.Location = new System.Drawing.Point(12, 277);
+            this.btnStart.Location = new System.Drawing.Point(12, 350);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(360, 46);
             this.btnStart.TabIndex = 0;
@@ -130,7 +137,7 @@
             this.gctlProcessList.Name = "gctlProcessList";
             this.gctlProcessList.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.btnClose});
-            this.gctlProcessList.Size = new System.Drawing.Size(360, 162);
+            this.gctlProcessList.Size = new System.Drawing.Size(360, 200);
             this.gctlProcessList.TabIndex = 1;
             this.gctlProcessList.ToolTipController = this.toolTipController1;
             this.gctlProcessList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -299,7 +306,7 @@
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 362);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 408);
             this.barDockControlBottom.Manager = this.barFirewall;
             this.barDockControlBottom.Size = new System.Drawing.Size(384, 0);
             // 
@@ -309,7 +316,7 @@
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
             this.barDockControlLeft.Manager = this.barFirewall;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 362);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 408);
             // 
             // barDockControlRight
             // 
@@ -317,31 +324,23 @@
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(384, 0);
             this.barDockControlRight.Manager = this.barFirewall;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 362);
-            // 
-            // chkHideTitle
-            // 
-            this.chkHideTitle.EditValue = true;
-            this.chkHideTitle.Location = new System.Drawing.Point(4, 53);
-            this.chkHideTitle.MenuManager = this.barFirewall;
-            this.chkHideTitle.Name = "chkHideTitle";
-            this.chkHideTitle.Properties.Caption = "Hide title";
-            this.chkHideTitle.Size = new System.Drawing.Size(134, 19);
-            this.chkHideTitle.TabIndex = 7;
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 408);
             // 
             // tabPane1
             // 
             this.tabPane1.AllowCollapse = DevExpress.Utils.DefaultBoolean.Default;
             this.tabPane1.Controls.Add(this.tabNavigationPage1);
             this.tabPane1.Controls.Add(this.tabNavigationPage2);
+            this.tabPane1.Controls.Add(this.tabNavigationPage3);
             this.tabPane1.Location = new System.Drawing.Point(0, 0);
             this.tabPane1.Name = "tabPane1";
             this.tabPane1.Pages.AddRange(new DevExpress.XtraBars.Navigation.NavigationPageBase[] {
             this.tabNavigationPage1,
+            this.tabNavigationPage3,
             this.tabNavigationPage2});
-            this.tabPane1.RegularSize = new System.Drawing.Size(384, 362);
+            this.tabPane1.RegularSize = new System.Drawing.Size(384, 336);
             this.tabPane1.SelectedPage = this.tabNavigationPage1;
-            this.tabPane1.Size = new System.Drawing.Size(384, 362);
+            this.tabPane1.Size = new System.Drawing.Size(384, 336);
             this.tabPane1.TabIndex = 12;
             this.tabPane1.Text = "tabPane1";
             // 
@@ -350,16 +349,14 @@
             this.tabNavigationPage1.Caption = "Main";
             this.tabNavigationPage1.Controls.Add(this.groupControl2);
             this.tabNavigationPage1.Controls.Add(this.groupControl1);
-            this.tabNavigationPage1.Controls.Add(this.btnStart);
             this.tabNavigationPage1.Controls.Add(this.gctlProcessList);
             this.tabNavigationPage1.Name = "tabNavigationPage1";
-            this.tabNavigationPage1.Size = new System.Drawing.Size(384, 335);
+            this.tabNavigationPage1.Size = new System.Drawing.Size(384, 309);
             // 
             // groupControl2
             // 
             this.groupControl2.Controls.Add(this.labelControl1);
             this.groupControl2.Controls.Add(this.cbxPriority);
-            this.groupControl2.Controls.Add(this.chkHideTitle);
             this.groupControl2.Location = new System.Drawing.Point(12, 3);
             this.groupControl2.Name = "groupControl2";
             this.groupControl2.Size = new System.Drawing.Size(177, 100);
@@ -423,21 +420,20 @@
             this.tabNavigationPage2.Caption = "Log";
             this.tabNavigationPage2.Controls.Add(this.gctlLogEventList);
             this.tabNavigationPage2.Name = "tabNavigationPage2";
-            this.tabNavigationPage2.Size = new System.Drawing.Size(384, 335);
+            this.tabNavigationPage2.Size = new System.Drawing.Size(384, 309);
             // 
             // gctlLogEventList
             // 
             this.gctlLogEventList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gctlLogEventList.DataSource = this.bsrcInstancesList;
             this.gctlLogEventList.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlLogEventList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
             this.gctlLogEventList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
             this.gctlLogEventList.Location = new System.Drawing.Point(12, 13);
             this.gctlLogEventList.MainView = this.gridView1;
             this.gctlLogEventList.Name = "gctlLogEventList";
-            this.gctlLogEventList.Size = new System.Drawing.Size(360, 310);
+            this.gctlLogEventList.Size = new System.Drawing.Size(360, 296);
             this.gctlLogEventList.TabIndex = 2;
             this.gctlLogEventList.ToolTipController = this.toolTipController1;
             this.gctlLogEventList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -497,6 +493,92 @@
             this.gridColumn2.VisibleIndex = 1;
             this.gridColumn2.Width = 238;
             // 
+            // tabNavigationPage3
+            // 
+            this.tabNavigationPage3.Caption = "Patches";
+            this.tabNavigationPage3.Controls.Add(this.gctlPatchesList);
+            this.tabNavigationPage3.Name = "tabNavigationPage3";
+            this.tabNavigationPage3.Size = new System.Drawing.Size(384, 309);
+            // 
+            // gctlPatchesList
+            // 
+            this.gctlPatchesList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gctlPatchesList.EmbeddedNavigator.ToolTip = "Tooltip";
+            this.gctlPatchesList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
+            this.gctlPatchesList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
+            this.gctlPatchesList.Location = new System.Drawing.Point(12, 13);
+            this.gctlPatchesList.MainView = this.gridView2;
+            this.gctlPatchesList.Name = "gctlPatchesList";
+            this.gctlPatchesList.Size = new System.Drawing.Size(360, 296);
+            this.gctlPatchesList.TabIndex = 3;
+            this.gctlPatchesList.ToolTipController = this.toolTipController1;
+            this.gctlPatchesList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridView2});
+            // 
+            // gridView2
+            // 
+            this.gridView2.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
+            this.gridColumn3,
+            this.gridColumn4,
+            this.gridColumn5});
+            this.gridView2.GridControl = this.gctlPatchesList;
+            this.gridView2.Name = "gridView2";
+            this.gridView2.OptionsBehavior.AutoUpdateTotalSummary = false;
+            this.gridView2.OptionsBehavior.KeepGroupExpandedOnSorting = false;
+            this.gridView2.OptionsCustomization.AllowColumnMoving = false;
+            this.gridView2.OptionsCustomization.AllowFilter = false;
+            this.gridView2.OptionsCustomization.AllowGroup = false;
+            this.gridView2.OptionsDetail.AllowZoomDetail = false;
+            this.gridView2.OptionsDetail.EnableMasterViewMode = false;
+            this.gridView2.OptionsDetail.ShowDetailTabs = false;
+            this.gridView2.OptionsDetail.SmartDetailExpand = false;
+            this.gridView2.OptionsFilter.AllowColumnMRUFilterList = false;
+            this.gridView2.OptionsFilter.AllowFilterEditor = false;
+            this.gridView2.OptionsFilter.AllowMRUFilterList = false;
+            this.gridView2.OptionsFind.AllowFindPanel = false;
+            this.gridView2.OptionsMenu.EnableColumnMenu = false;
+            this.gridView2.OptionsMenu.EnableGroupPanelMenu = false;
+            this.gridView2.OptionsPrint.UsePrintStyles = false;
+            this.gridView2.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.gridView2.OptionsSelection.EnableAppearanceFocusedRow = false;
+            this.gridView2.OptionsSelection.UseIndicatorForSelection = false;
+            this.gridView2.OptionsView.ShowDetailButtons = false;
+            this.gridView2.OptionsView.ShowGroupPanel = false;
+            this.gridView2.OptionsView.ShowIndicator = false;
+            // 
+            // gridColumn3
+            // 
+            this.gridColumn3.Caption = "Name";
+            this.gridColumn3.FieldName = "Name";
+            this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsColumn.AllowEdit = false;
+            this.gridColumn3.Visible = true;
+            this.gridColumn3.VisibleIndex = 0;
+            this.gridColumn3.Width = 80;
+            // 
+            // gridColumn4
+            // 
+            this.gridColumn4.Caption = "Description";
+            this.gridColumn4.FieldName = "Desc";
+            this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsColumn.AllowEdit = false;
+            this.gridColumn4.Visible = true;
+            this.gridColumn4.VisibleIndex = 1;
+            this.gridColumn4.Width = 258;
+            // 
+            // gridColumn5
+            // 
+            this.gridColumn5.FieldName = "Active";
+            this.gridColumn5.MaxWidth = 20;
+            this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.OptionsColumn.FixedWidth = true;
+            this.gridColumn5.OptionsColumn.ShowCaption = false;
+            this.gridColumn5.Visible = true;
+            this.gridColumn5.VisibleIndex = 2;
+            this.gridColumn5.Width = 20;
+            // 
             // notifyTray
             // 
             this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
@@ -507,8 +589,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 362);
+            this.ClientSize = new System.Drawing.Size(384, 408);
             this.Controls.Add(this.tabPane1);
+            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
@@ -527,7 +610,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.btnClose)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.menuFirewall)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.barFirewall)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chkHideTitle.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).EndInit();
             this.tabPane1.ResumeLayout(false);
             this.tabNavigationPage1.ResumeLayout(false);
@@ -542,6 +624,9 @@
             this.tabNavigationPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
+            this.tabNavigationPage3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gctlPatchesList)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -571,7 +656,6 @@
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
         private DevExpress.XtraBars.BarButtonItem menuFirewallDenyAddress;
         private DevExpress.XtraBars.BarButtonItem menuFirewallDeleteRules;
-        private DevExpress.XtraEditors.CheckEdit chkHideTitle;
         private DevExpress.XtraBars.Navigation.TabPane tabPane1;
         private DevExpress.XtraBars.Navigation.TabNavigationPage tabNavigationPage1;
         private DevExpress.XtraBars.Navigation.TabNavigationPage tabNavigationPage2;
@@ -586,6 +670,12 @@
         private System.Windows.Forms.NotifyIcon notifyTray;
         private DevExpress.XtraEditors.ComboBoxEdit cbxPriority;
         private DevExpress.XtraEditors.LabelControl labelControl1;
+        private DevExpress.XtraBars.Navigation.TabNavigationPage tabNavigationPage3;
+        private DevExpress.XtraGrid.GridControl gctlPatchesList;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridView2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
     }
 }
 
