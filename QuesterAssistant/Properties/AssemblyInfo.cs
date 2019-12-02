@@ -10,5 +10,5 @@
 [assembly: System.Reflection.AssemblyTrademark("")]
 [assembly: System.Runtime.InteropServices.ComVisible(false)]
 [assembly: System.Runtime.InteropServices.Guid("bda9e0e0-e277-4e37-85f7-78a40939901c")]
-[assembly: System.Reflection.AssemblyFileVersion("1.2.1129.1045")]
+[assembly: System.Reflection.AssemblyFileVersion("1.2.1202.1211")]
 [assembly: System.Reflection.AssemblyVersion("1.2.1.0")]

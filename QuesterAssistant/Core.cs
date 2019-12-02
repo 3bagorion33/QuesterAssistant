@@ -10,7 +10,6 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.LookAndFeel;
 using QuesterAssistant.Classes;
 
 namespace QuesterAssistant
@@ -69,7 +68,7 @@ namespace QuesterAssistant
                 }
             }
 
-            DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
+            //DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
 
             Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;

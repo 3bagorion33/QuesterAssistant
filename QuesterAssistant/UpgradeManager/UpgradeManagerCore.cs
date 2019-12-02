@@ -87,7 +87,7 @@ namespace QuesterAssistant.UpgradeManager
             }
         }
 
-        protected override void KeyboardHook(KeyEventArgs e)
+        protected override void KeyboardHookDown(KeyEventArgs e)
         {
             if ((Core.IsAstralForeground || Core.IsGameForeground) && (Data.ToggleHotKey.Keys == e.KeyData))
             {

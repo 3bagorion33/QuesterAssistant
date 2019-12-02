@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace QuesterAssistant.Settings
 {
@@ -41,7 +42,7 @@ namespace QuesterAssistant.Settings
             new Astral.Logic.UCC.Actions.AbordCombat {IgnoreCombatTime = 1, IgnoreCombatMinHP = Data.PauseBot.Delay}.Run();
         }
 
-        protected override void KeyboardHook(KeyEventArgs e)
+        protected override void KeyboardHookDown(KeyEventArgs e)
         {
             if (Data.RoleToggleHotKey.Keys == e.KeyData)
             {
@@ -57,7 +58,7 @@ namespace QuesterAssistant.Settings
             var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
                        Core.GameWindowHandle == WinAPI.GetForegroundWindow();
 
-            if (Data.PauseBot.HotKey.Enabled && flag && (e.KeyCode == Keys.W || e.KeyCode == Keys.A || e.KeyCode == Keys.S || e.KeyCode == Keys.D))
+            if (Data.PauseBot.HotKey.Enabled && flag && (e.KeyCode & Keys.W) != 0)
             {
                 e.SuppressKeyPress = false;
                 Task.Factory.StartNew(PauseBot);

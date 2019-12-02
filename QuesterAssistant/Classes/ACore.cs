@@ -18,18 +18,26 @@ namespace QuesterAssistant.Classes
 
         protected abstract bool IsValid { get; }
         protected abstract bool HookEnableFlag { get; }
-        protected abstract void KeyboardHook(KeyEventArgs e);
+        protected virtual void KeyboardHookDown(KeyEventArgs e) { }
+
+        protected virtual void KeyboardHookPress(KeyPressEventArgs e) { }
 
         protected ACore()
         {
             Panel.Init(this);
             if (!LoadSettings()) Data.Init();
-            Core.KeyboardHook.KeyDown += KeyboardHook_KeyDown; ;
+            Core.KeyboardHook.KeyDown += KeyboardHook_KeyDown;
+            Core.KeyboardHook.KeyPress += KeyboardHook_KeyPress;
+        }
+
+        private void KeyboardHook_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (HookEnableFlag) KeyboardHookPress(e);
         }
 
         private void KeyboardHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (HookEnableFlag) KeyboardHook(e);
+            if (HookEnableFlag) KeyboardHookDown(e);
         }
 
         public bool LoadSettings()

@@ -128,7 +128,7 @@ namespace QuesterAssistant.Classes
             {
                 public uint Price;
                 public uint Count;
-                public uint PricePerItem => Price > Count ? Price / Count : 1;
+                public double PricePerItem => Price > Count ? Price / Count : 1;
             }
 
             public SearchResult(ItemDef item, List<AuctionLot> auctionLots)

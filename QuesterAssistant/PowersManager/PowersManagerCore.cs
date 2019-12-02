@@ -16,7 +16,7 @@ namespace QuesterAssistant.PowersManager
         protected override bool IsValid => Data.CharClassesList.Count > 0;
         protected override bool HookEnableFlag => Data.HotKey.Enabled;
 
-        protected override void KeyboardHook(KeyEventArgs e)
+        protected override void KeyboardHookDown(KeyEventArgs e)
         {
             void FindAndApply()
             {

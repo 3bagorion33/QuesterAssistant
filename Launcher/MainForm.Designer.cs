@@ -60,6 +60,8 @@
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.cbxPriority = new DevExpress.XtraEditors.ComboBoxEdit();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.chkClose = new DevExpress.XtraEditors.CheckEdit();
             this.chkKill = new DevExpress.XtraEditors.CheckEdit();
@@ -69,8 +71,6 @@
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.notifyTray = new System.Windows.Forms.NotifyIcon();
-            this.cbxPriority = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).BeginInit();
@@ -83,6 +83,7 @@
             this.tabNavigationPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkClose.Properties)).BeginInit();
@@ -90,7 +91,6 @@
             this.tabNavigationPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // defaultLookAndFeel
@@ -366,6 +366,26 @@
             this.groupControl2.TabIndex = 9;
             this.groupControl2.Text = "Astral\'s Instances";
             // 
+            // labelControl1
+            // 
+            this.labelControl1.Location = new System.Drawing.Point(5, 29);
+            this.labelControl1.Name = "labelControl1";
+            this.labelControl1.Size = new System.Drawing.Size(41, 13);
+            this.labelControl1.TabIndex = 0;
+            this.labelControl1.Text = "Priority :";
+            // 
+            // cbxPriority
+            // 
+            this.cbxPriority.Location = new System.Drawing.Point(52, 26);
+            this.cbxPriority.MenuManager = this.barFirewall;
+            this.cbxPriority.Name = "cbxPriority";
+            this.cbxPriority.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbxPriority.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxPriority.Size = new System.Drawing.Size(120, 20);
+            this.cbxPriority.TabIndex = 8;
+            this.cbxPriority.SelectedIndexChanged += new System.EventHandler(this.cbxPriority_SelectedIndexChanged);
+            // 
             // groupControl1
             // 
             this.groupControl1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -479,29 +499,9 @@
             // 
             // notifyTray
             // 
-            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("Launcher.Icon")));
+            this.notifyTray.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyTray.Icon")));
             this.notifyTray.Text = "Launcher";
             this.notifyTray.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyTray_MouseClick);
-            // 
-            // cbxPriority
-            // 
-            this.cbxPriority.Location = new System.Drawing.Point(52, 26);
-            this.cbxPriority.MenuManager = this.barFirewall;
-            this.cbxPriority.Name = "cbxPriority";
-            this.cbxPriority.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cbxPriority.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbxPriority.Size = new System.Drawing.Size(120, 20);
-            this.cbxPriority.TabIndex = 8;
-            this.cbxPriority.SelectedIndexChanged += new System.EventHandler(this.cbxPriority_SelectedIndexChanged);
-            // 
-            // labelControl1
-            // 
-            this.labelControl1.Location = new System.Drawing.Point(5, 29);
-            this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(41, 13);
-            this.labelControl1.TabIndex = 0;
-            this.labelControl1.Text = "Priority :";
             // 
             // MainForm
             // 
@@ -514,7 +514,7 @@
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("Launcher.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Launcher";
@@ -534,6 +534,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             this.groupControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkClose.Properties)).EndInit();
@@ -541,7 +542,6 @@
             this.tabNavigationPage2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gctlLogEventList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

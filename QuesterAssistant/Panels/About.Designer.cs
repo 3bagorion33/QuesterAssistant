@@ -67,7 +67,7 @@
             this.pictureBox1.Location = new System.Drawing.Point(101, 87);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Padding = new System.Windows.Forms.Padding(3);
-            this.pictureBox1.Size = new System.Drawing.Size(162, 74);
+            this.pictureBox1.Size = new System.Drawing.Size(156, 74);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 9;
             this.pictureBox1.TabStop = false;
@@ -77,12 +77,12 @@
             // 
             this.labelControl4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelControl4.Location = new System.Drawing.Point(63, 38);
+            this.labelControl4.Location = new System.Drawing.Point(34, 37);
             this.labelControl4.Name = "labelControl4";
             this.labelControl4.Padding = new System.Windows.Forms.Padding(3);
-            this.labelControl4.Size = new System.Drawing.Size(228, 19);
+            this.labelControl4.Size = new System.Drawing.Size(293, 19);
             this.labelControl4.TabIndex = 8;
-            this.labelControl4.Text = "Do you like it? You can gift us a cup of beer =)";
+            this.labelControl4.Text = "Is this plugin useful to you? You can gift us a cup of beer =)";
             // 
             // groupControl2
             // 

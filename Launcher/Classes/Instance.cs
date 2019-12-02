@@ -97,7 +97,7 @@ namespace Launcher.Classes
 
         public void Delete()
         {
-            while ((Process?.HasExited ?? true) && File.Exists($"{Process?.ProcessName}.exe"))
+            while (Process != null && Process.HasExited && File.Exists($"{Process.ProcessName}.exe"))
             {
                 Thread.Sleep(100);
                 try

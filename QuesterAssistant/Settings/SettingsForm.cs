@@ -23,14 +23,19 @@ namespace QuesterAssistant.Settings
 
         private void txtRoleToggleString_KeyDown(object sender, KeyEventArgs e)
         {
-            var txtEdit = sender as TextEdit;
             var k = e.KeyData;
-            txtEdit.Text = k.IgnoreBack().ConvertToString();
+            (sender as TextEdit).Text = k.IgnoreBack().ConvertToString();
 
             if (k.IsNotModifier())
             {
                 ActiveControl = null;
             }
+        }
+
+        private void txtPauseBotHotKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            (sender as TextEdit).Text = e.KeyData.IgnoreBack().ConvertToString();
+            ActiveControl = null;
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -48,6 +53,7 @@ namespace QuesterAssistant.Settings
             txtHideGameString.BindAdd(bsrcHideGameHotKey, nameof(TextEdit.Text), nameof(HotKey.String), DataSourceUpdateMode.OnValidation);
             cbxHideMinimize.BindAdd(bsrcHideMode, nameof(ComboBoxEdit.EditValue), nameof(SettingsData.HideClientClass.HideMode));
             chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
+            txtPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(TextEdit.Text), nameof(HotKey.String));
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
 
             Data.HashChanged += bsrcRoleToggleHotKey.ResetCurrentItem;

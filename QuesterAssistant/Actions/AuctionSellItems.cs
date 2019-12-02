@@ -63,9 +63,9 @@ namespace QuesterAssistant.Actions
             }
         }
 
-        private uint GetActualPrice(Item item)
+        private double GetActualPrice(Item item)
         {
-            uint result = 0;
+            double result = 0;
             if (PriceType == SellingPriceType.Fixed)
                 result = PriceValue;
 
@@ -92,7 +92,7 @@ namespace QuesterAssistant.Actions
                         }
                     }
 
-                    uint itemPrice = 0;
+                    double itemPrice = 0;
                     switch (PriceType)
                     {
                         case SellingPriceType.Minimal:
@@ -142,7 +142,7 @@ namespace QuesterAssistant.Actions
                     if (!ItemsFilter.IsMatch(item))
                         return false;
                     var actualPrice = Math.Max(GetActualPrice(item) * Multiply, PriceMinimum);
-                    var lotPrice = l.Price / item.Count;
+                    var lotPrice = (double) l.Price / item.Count;
                     return
                         l.BiddingInfo.CurrentBid == 0 &&
                         (

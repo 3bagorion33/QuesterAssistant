@@ -3,14 +3,11 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.PushBulletClient.Models.Requests;
 using System.Diagnostics;
-using System.Windows.Forms;
 
 namespace QuesterAssistant.PushNotify
 {
     internal class PushNotifyCore : ACore<PushNotifyData, PushNotifyForm>
     {
-        protected override void KeyboardHook(KeyEventArgs e) { }
-
         protected override bool IsValid => !string.IsNullOrEmpty(Data.Client.AccessToken);
         protected override bool HookEnableFlag => false;
         private string PushTitle => EntityManager.LocalPlayer.IsValid ? EntityManager.LocalPlayer.InternalName : $"Astral(#{Process.GetCurrentProcess().Id})";

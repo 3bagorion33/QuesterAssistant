@@ -28,34 +28,38 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.gctrlCommonSettings = new DevExpress.XtraEditors.GroupControl();
+            this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
             this.cbxHideMinimize = new DevExpress.XtraEditors.ComboBoxEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.chkHideGameEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.chkPauseBotHotKey = new DevExpress.XtraEditors.CheckEdit();
+            this.txtPauseBotHotKey = new DevExpress.XtraEditors.TextEdit();
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.gctlProfilesStack = new DevExpress.XtraEditors.GroupControl();
             this.btnClearStack = new DevExpress.XtraEditors.SimpleButton();
             this.btnShowStack = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
-            this.bsrcPauseBot = new System.Windows.Forms.BindingSource();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).BeginInit();
             this.gctrlCommonSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbxHideMinimize.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPauseBotHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).BeginInit();
@@ -64,7 +68,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProfilesStack)).BeginInit();
             this.gctlProfilesStack.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBot)).BeginInit();
             this.SuspendLayout();
             // 
@@ -94,7 +97,6 @@
             // 
             this.gctrlCommonSettings.Controls.Add(this.numPauseDelay);
             this.gctrlCommonSettings.Controls.Add(this.cbxHideMinimize);
-            this.gctrlCommonSettings.Controls.Add(this.labelControl1);
             this.gctrlCommonSettings.Controls.Add(this.chkHideGameEnabled);
             this.gctrlCommonSettings.Controls.Add(this.chkPauseBotHotKey);
             this.gctrlCommonSettings.Controls.Add(this.chkRoleToggleEnabled);
@@ -106,6 +108,32 @@
             this.gctrlCommonSettings.Size = new System.Drawing.Size(370, 97);
             this.gctrlCommonSettings.TabIndex = 2;
             this.gctrlCommonSettings.Text = "Common";
+            // 
+            // numPauseDelay
+            // 
+            this.numPauseDelay.EditValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPauseDelay.Location = new System.Drawing.Point(317, 72);
+            this.numPauseDelay.Name = "numPauseDelay";
+            this.numPauseDelay.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.numPauseDelay.Properties.IsFloatValue = false;
+            this.numPauseDelay.Properties.Mask.EditMask = "N00";
+            this.numPauseDelay.Properties.MaxValue = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numPauseDelay.Properties.MinValue = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numPauseDelay.Size = new System.Drawing.Size(45, 20);
+            this.numPauseDelay.TabIndex = 8;
             // 
             // cbxHideMinimize
             // 
@@ -119,11 +147,12 @@
             // 
             // labelControl1
             // 
-            this.labelControl1.Location = new System.Drawing.Point(182, 50);
+            this.labelControl1.Location = new System.Drawing.Point(234, 209);
             this.labelControl1.Name = "labelControl1";
-            this.labelControl1.Size = new System.Drawing.Size(76, 13);
+            this.labelControl1.Size = new System.Drawing.Size(103, 13);
             this.labelControl1.TabIndex = 2;
-            this.labelControl1.Text = "GameClient by :";
+            this.labelControl1.Text = "are pressed with, sec";
+            this.labelControl1.Visible = false;
             // 
             // chkHideGameEnabled
             // 
@@ -138,10 +167,24 @@
             // 
             this.chkPauseBotHotKey.Location = new System.Drawing.Point(8, 72);
             this.chkPauseBotHotKey.Name = "chkPauseBotHotKey";
-            this.chkPauseBotHotKey.Properties.Caption = "Pause bot while WASD are pressed with                                second(s)";
-            this.chkPauseBotHotKey.Size = new System.Drawing.Size(354, 19);
+            this.chkPauseBotHotKey.Properties.Caption = "Pause bot while W is pressed, second(s)";
+            this.chkPauseBotHotKey.Size = new System.Drawing.Size(220, 19);
             this.chkPauseBotHotKey.TabIndex = 0;
             this.chkPauseBotHotKey.TabStop = false;
+            // 
+            // txtPauseBotHotKey
+            // 
+            this.txtPauseBotHotKey.Location = new System.Drawing.Point(162, 207);
+            this.txtPauseBotHotKey.Name = "txtPauseBotHotKey";
+            this.txtPauseBotHotKey.Properties.AppearanceReadOnly.BackColor = System.Drawing.Color.White;
+            this.txtPauseBotHotKey.Properties.AppearanceReadOnly.Options.UseBackColor = true;
+            this.txtPauseBotHotKey.Properties.ReadOnly = true;
+            this.txtPauseBotHotKey.Size = new System.Drawing.Size(66, 20);
+            this.txtPauseBotHotKey.TabIndex = 1;
+            this.txtPauseBotHotKey.TabStop = false;
+            this.txtPauseBotHotKey.ToolTip = "Click here to bind hotkey";
+            this.txtPauseBotHotKey.Visible = false;
+            this.txtPauseBotHotKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPauseBotHotKey_KeyDown);
             // 
             // txtHideGameString
             // 
@@ -217,41 +260,17 @@
             // 
             this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
             // 
-            // numPauseDelay
-            // 
-            this.numPauseDelay.EditValue = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numPauseDelay.Location = new System.Drawing.Point(262, 72);
-            this.numPauseDelay.Name = "numPauseDelay";
-            this.numPauseDelay.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.numPauseDelay.Properties.IsFloatValue = false;
-            this.numPauseDelay.Properties.Mask.EditMask = "N00";
-            this.numPauseDelay.Properties.MaxValue = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numPauseDelay.Properties.MinValue = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numPauseDelay.Size = new System.Drawing.Size(45, 20);
-            this.numPauseDelay.TabIndex = 8;
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.gctlProfilesStack);
             this.Controls.Add(this.simpleButton2);
+            this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.textEdit1);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.gctrlCommonSettings);
+            this.Controls.Add(this.txtPauseBotHotKey);
             this.MinimumSize = new System.Drawing.Size(370, 372);
             this.Name = "SettingsForm";
             this.Size = new System.Drawing.Size(370, 372);
@@ -260,10 +279,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlCommonSettings)).EndInit();
             this.gctrlCommonSettings.ResumeLayout(false);
-            this.gctrlCommonSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbxHideMinimize.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHideGameEnabled.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkPauseBotHotKey.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtPauseBotHotKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtHideGameString.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcRoleToggleHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcHideGameHotKey)).EndInit();
@@ -272,9 +292,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBotHotKey)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProfilesStack)).EndInit();
             this.gctlProfilesStack.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPauseBot)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -301,5 +321,6 @@
         private DevExpress.LookAndFeel.DefaultLookAndFeel defaultLookAndFeel;
         private DevExpress.XtraEditors.SpinEdit numPauseDelay;
         private System.Windows.Forms.BindingSource bsrcPauseBot;
+        private DevExpress.XtraEditors.TextEdit txtPauseBotHotKey;
     }
 }
