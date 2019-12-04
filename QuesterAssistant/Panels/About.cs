@@ -1,9 +1,8 @@
 ﻿using System;
-using DevExpress.XtraEditors;
 
 namespace QuesterAssistant.Panels
 {
-    public partial class About : XtraUserControl
+    internal partial class About : CoreForm
     {
         public About()
         {

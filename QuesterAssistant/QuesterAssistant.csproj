@@ -42,7 +42,7 @@
     <AssemblyInfoVersionSemVerSettings>
     </AssemblyInfoVersionSemVerSettings>
     <AssemblyFileVersionSettings>None.IncrementOnDemand.MMddStamp.TimeStamp</AssemblyFileVersionSettings>
-    <AssemblyVersionSettings>None.IncrementOnDemand.IncrementOnDemand.IncrementOnDemand</AssemblyVersionSettings>
+    <AssemblyVersionSettings>None.IncrementOnDemand.IncrementOnDemand.IncrementWithResetOnIncrease</AssemblyVersionSettings>
     <PrimaryVersionType>
     </PrimaryVersionType>
     <AssemblyVersion>.</AssemblyVersion>
@@ -310,6 +310,7 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
+    <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />

@@ -149,7 +149,8 @@ namespace QuesterAssistant.UpgradeManager
 
             [XmlIgnore, HashInclude]
             public string FullName => $"{DisplayName} [{ItemId}]";
-            [XmlIgnore, HashInclude]
+            [XmlIgnore]
+            [HashInclude]
             public int CountUnfilled => BagsItems.FindAll(FindUnfilled).Sum(s => (int)s.Item.Count);
             [XmlIgnore]
             public int CountFilled => BagsItems.FindAll(s => FindFullFilled(s) || FindPartiallyFilled(s)).Sum(s => (int)s.Item.Count);
@@ -158,7 +159,7 @@ namespace QuesterAssistant.UpgradeManager
 
             private const int TIME_WAIT = 333;
             private InventorySlot slot;
-            private static List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
+            private List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
             private Result FindResult
             {
                 get
@@ -202,12 +203,25 @@ namespace QuesterAssistant.UpgradeManager
                 }
             }
 
-            public Task() { }
+            public Task()
+            {
+                //List<InventorySlot> SearchDelegate()
+                //{
+                //    var slots = EntityManager.LocalPlayer.BagsItems.FindAll(s =>
+                //        s.Item.ItemDef.InternalName == ItemId);
+                //    EntityManager.LocalPlayer.BaseBagsIds.ForEach(bag =>
+                //        slots.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(bag).Slots.FindAll(slot => !slot.Filled)));
+                //    return slots;
+                //    //EntityManager.LocalPlayer.BagsItems.FindAll(s =>
+                //    //    s.Item.ItemDef.InternalName == ItemId);
+                //}
+                //BagsItems = new CachedList<InventorySlot>(SearchDelegate);
+            }
 
             public static Task New(GetAnItem.ListItem item)
             {
                 Task t = new Task(item);
-                var i = BagsItems.Find(s => t.FindAny(s))?.Item;
+                var i = EntityManager.LocalPlayer.BagsItems.Find(s => t.FindAny(s))?.Item;
                 if (i == null || i.ProgressionLogic.CurrentRankTotalRequiredXP == 0) return null;
                 if (i.ProgressionLogic.CurrentTier.Index == 0)
                 {

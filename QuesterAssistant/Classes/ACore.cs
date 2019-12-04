@@ -19,7 +19,6 @@ namespace QuesterAssistant.Classes
         protected abstract bool IsValid { get; }
         protected abstract bool HookEnableFlag { get; }
         protected virtual void KeyboardHookDown(KeyEventArgs e) { }
-
         protected virtual void KeyboardHookPress(KeyPressEventArgs e) { }
 
         protected ACore()
@@ -28,6 +27,8 @@ namespace QuesterAssistant.Classes
             if (!LoadSettings()) Data.Init();
             Core.KeyboardHook.KeyDown += KeyboardHook_KeyDown;
             Core.KeyboardHook.KeyPress += KeyboardHook_KeyPress;
+            Panel.OnPanelLoad += Data.HashEventEnable;
+            Panel.OnPanelLeave += Data.HashEventDisable;
         }
 
         private void KeyboardHook_KeyPress(object sender, KeyPressEventArgs e)

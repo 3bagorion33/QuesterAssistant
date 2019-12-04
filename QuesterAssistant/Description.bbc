@@ -19,7 +19,7 @@
 [[b][u]Quester Actions[/u][/b]]
 [list]
 [*][b]AuctionSellItems[/b] - sells items using a flexible algorithm, finding the best price, has flexible options
-[*][b]BuyItemRemote[/b] - allows buying in campaign stores remotely through the campaign window
+[*][b]BuyItemRemote[/b] - allows buying in campaign stores remotely through the campaign window (by [b][color=#0080ff]michaelprog[/color][/b])
 [*][b]ChangeSettingsValue[/b] - changes various Astral global settings, saved upon changing the Astral roles
 [*][b]ClearProfilesStack[/b] - completely clears the profiles stack for current char or for all characters
 [*][b]CloseAllFrames[/b] - toggles off ingame cursor mode

@@ -26,9 +26,7 @@ namespace QuesterAssistant.Panels
 
         private void Main_Load(object sender, EventArgs e)
         {
-            //components = new Container();
             sideButtons.Visible = false;
-            //OnPanelLeave += Dispose;
 
             // Init Tabs
             tileSettings.Tag = Core.SettingsCore.Panel;
@@ -36,17 +34,24 @@ namespace QuesterAssistant.Panels
             tilePowersManager.Tag = Core.PowersManagerCore.Panel;
             tilePushNotify.Tag = Core.PushNotifyCore.Panel;
             tileAbout.Tag = new About();
+
+            tileGroup.Items.ForEach(i => (i.Tag as CoreForm).PanelLeave());
+        }
+
+        private void LoadPanel<T>(T form) where T : CoreForm
+        {
+            sideMain.InvokeSafe(() =>
+            {
+                sideMain.Controls.Remove(tileMain);
+                sideMain.Controls.Add(form);
+                form.PanelLoad();
+            });
+            sideButtons.Visible = true;
         }
 
         private void tile_ItemClick(object sender, TileItemEventArgs e)
         {
-            void LoadPanel<T>(T form) where T : XtraUserControl
-            {
-                sideMain.InvokeSafe(() => sideMain.Controls.Remove(tileMain));
-                sideMain.InvokeSafe(() => sideMain.Controls.Add(form));
-                sideButtons.Visible = true;
-            }
-            LoadPanel((sender as TileItem)?.Tag as XtraUserControl);
+            LoadPanel((sender as TileItem)?.Tag as CoreForm);
         }
     }
 }

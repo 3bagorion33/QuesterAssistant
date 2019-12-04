@@ -8,6 +8,8 @@ namespace QuesterAssistant.Panels
     internal class CoreForm : XtraUserControl
     {
         protected ICore core;
+        public event Action OnPanelLoad;
+        public event Action OnPanelLeave;
 
         public void Init(ICore core)
         {
@@ -34,14 +36,17 @@ namespace QuesterAssistant.Panels
             }
         }
 
-        private void InitializeComponent()
-        {
-            SuspendLayout();
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            MinimumSize = new System.Drawing.Size(370, 348);
-            Name = "CoreForm";
-            Size = new System.Drawing.Size(370, 348);
-            ResumeLayout(false);
-        }
+        public void PanelLoad() => OnPanelLoad?.Invoke();
+        public void PanelLeave() => OnPanelLeave?.Invoke();
+
+        //private void InitializeComponent()
+        //{
+        //    SuspendLayout();
+        //    AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+        //    MinimumSize = new System.Drawing.Size(370, 348);
+        //    Name = "CoreForm";
+        //    Size = new System.Drawing.Size(370, 348);
+        //    ResumeLayout(false);
+        //}
     }
 }

@@ -68,7 +68,7 @@ namespace QuesterAssistant
                 }
             }
 
-            //DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
+            DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
 
             Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;

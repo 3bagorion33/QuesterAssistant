@@ -10,8 +10,9 @@ namespace QuesterAssistant.Classes.Common
     [DataContract]
     public abstract class NotifyHashChanged : OverrideHash, INotifyPropertyChanged, IDisposable
     {
+        private bool hashEventEnabled = true;
         private int prevHashCode;
-        private static readonly Timer checkChanged = new Timer { Enabled = true, Interval = 200, AutoReset = true };
+        private readonly Timer checkChanged = new Timer { Enabled = true, Interval = 200, AutoReset = true };
         public event Action HashChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -23,7 +24,8 @@ namespace QuesterAssistant.Classes.Common
 
         private void CheckChanged_Tick(object sender, EventArgs e)
         {
-            Task.Factory.StartNew(Tick);
+            if (hashEventEnabled && (HashChanged != null ||PropertyChanged != null))
+                Task.Factory.StartNew(Tick);
         }
 
         private void Tick()
@@ -51,18 +53,36 @@ namespace QuesterAssistant.Classes.Common
             Dispose(true);
         }
 
+        public void HashEventEnable()
+        {
+            hashEventEnabled = true;
+        }
+
+        public void HashEventDisable()
+        {
+            hashEventEnabled = false;
+        }
+
+        private void PropertyChangedUnsubscribe()
+        {
+            if (PropertyChanged != null)
+                foreach (var d in PropertyChanged.GetInvocationList())
+                    PropertyChanged -= d as PropertyChangedEventHandler;
+        }
+
+        private void HashChangedUnsubscribe()
+        {
+            if (HashChanged != null)
+                foreach (var d in HashChanged.GetInvocationList())
+                    HashChanged -= d as Action;
+        }
+
         private void Dispose(bool disposing)
         {
             if (disposing)
             {
-                if (PropertyChanged != null)
-                    foreach (var d in PropertyChanged.GetInvocationList())
-                        PropertyChanged -= d as PropertyChangedEventHandler;
-
-                if (HashChanged != null)
-                    foreach (var d in HashChanged.GetInvocationList())
-                        HashChanged -= d as Action;
-
+                PropertyChangedUnsubscribe();
+                HashChangedUnsubscribe();
                 checkChanged.Elapsed -= CheckChanged_Tick;
             }
         }
