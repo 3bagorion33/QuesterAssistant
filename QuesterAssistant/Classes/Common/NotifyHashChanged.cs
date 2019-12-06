@@ -24,12 +24,13 @@ namespace QuesterAssistant.Classes.Common
 
         private void CheckChanged_Tick(object sender, EventArgs e)
         {
-            if (hashEventEnabled && (HashChanged != null ||PropertyChanged != null))
+            if (hashEventEnabled && (HashChanged != null || PropertyChanged != null))
                 Task.Factory.StartNew(Tick);
         }
 
         private void Tick()
         {
+            //var hashCode = base.GetHashCode();
             var hashCode = GetHashCode();
             if (prevHashCode != hashCode)
             {

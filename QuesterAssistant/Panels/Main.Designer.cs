@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             DevExpress.XtraEditors.TileItemElement tileItemElement1 = new DevExpress.XtraEditors.TileItemElement();
-            DevExpress.XtraEditors.TileItemElement tileItemElement2 = new DevExpress.XtraEditors.TileItemElement();
-            DevExpress.XtraEditors.TileItemElement tileItemElement3 = new DevExpress.XtraEditors.TileItemElement();
-            DevExpress.XtraEditors.TileItemElement tileItemElement4 = new DevExpress.XtraEditors.TileItemElement();
             DevExpress.XtraEditors.TileItemElement tileItemElement5 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement6 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement3 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement2 = new DevExpress.XtraEditors.TileItemElement();
+            DevExpress.XtraEditors.TileItemElement tileItemElement4 = new DevExpress.XtraEditors.TileItemElement();
             this.btnSave = new DevExpress.XtraEditors.SimpleButton();
             this.btnLoad = new DevExpress.XtraEditors.SimpleButton();
             this.sideButtons = new DevExpress.XtraEditors.SidePanel();
@@ -42,10 +43,11 @@
             this.tileMain = new DevExpress.XtraEditors.TileControl();
             this.tileGroup = new DevExpress.XtraEditors.TileGroup();
             this.tileSettings = new DevExpress.XtraEditors.TileItem();
-            this.tileUpgradeManager = new DevExpress.XtraEditors.TileItem();
             this.tilePushNotify = new DevExpress.XtraEditors.TileItem();
             this.tileAbout = new DevExpress.XtraEditors.TileItem();
             this.tilePowersManager = new DevExpress.XtraEditors.TileItem();
+            this.tileInsigniaManager = new DevExpress.XtraEditors.TileItem();
+            this.tileUpgradeManager = new DevExpress.XtraEditors.TileItem();
             this.sideButtons.SuspendLayout();
             this.sideMain.SuspendLayout();
             this.SuspendLayout();
@@ -122,24 +124,26 @@
             this.tileMain.IndentBetweenGroups = 0;
             this.tileMain.IndentBetweenItems = 10;
             this.tileMain.ItemSize = 110;
-            this.tileMain.Location = new System.Drawing.Point(0, 0);
+            this.tileMain.Location = new System.Drawing.Point(0, 30);
             this.tileMain.Margin = new System.Windows.Forms.Padding(0);
-            this.tileMain.MaxId = 6;
+            this.tileMain.MaxId = 7;
             this.tileMain.Name = "tileMain";
+            this.tileMain.Orientation = System.Windows.Forms.Orientation.Vertical;
             this.tileMain.Padding = new System.Windows.Forms.Padding(0);
             this.tileMain.RowCount = 2;
             this.tileMain.ScrollMode = DevExpress.XtraEditors.TileControlScrollMode.None;
-            this.tileMain.Size = new System.Drawing.Size(370, 372);
+            this.tileMain.Size = new System.Drawing.Size(370, 244);
             this.tileMain.TabIndex = 13;
             this.tileMain.Text = "tileControl1";
             // 
             // tileGroup
             // 
             this.tileGroup.Items.Add(this.tileSettings);
+            this.tileGroup.Items.Add(this.tileInsigniaManager);
+            this.tileGroup.Items.Add(this.tilePowersManager);
             this.tileGroup.Items.Add(this.tileUpgradeManager);
             this.tileGroup.Items.Add(this.tilePushNotify);
             this.tileGroup.Items.Add(this.tileAbout);
-            this.tileGroup.Items.Add(this.tilePowersManager);
             this.tileGroup.Name = "tileGroup";
             // 
             // tileSettings
@@ -150,39 +154,47 @@
             this.tileSettings.Name = "tileSettings";
             this.tileSettings.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
             // 
-            // tileUpgradeManager
-            // 
-            this.tileUpgradeManager.BackgroundImage = global::QuesterAssistant.Properties.Resources.UpgradeManagerIcon;
-            this.tileUpgradeManager.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter;
-            tileItemElement2.Text = "Upgrade Manager";
-            this.tileUpgradeManager.Elements.Add(tileItemElement2);
-            this.tileUpgradeManager.Id = 2;
-            this.tileUpgradeManager.Name = "tileUpgradeManager";
-            this.tileUpgradeManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
-            // 
             // tilePushNotify
             // 
-            tileItemElement3.Text = "Push Notify";
-            this.tilePushNotify.Elements.Add(tileItemElement3);
+            tileItemElement5.Text = "Push Notify";
+            this.tilePushNotify.Elements.Add(tileItemElement5);
             this.tilePushNotify.Id = 4;
             this.tilePushNotify.Name = "tilePushNotify";
             this.tilePushNotify.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
             // 
             // tileAbout
             // 
-            tileItemElement4.Text = "About";
-            this.tileAbout.Elements.Add(tileItemElement4);
+            tileItemElement6.Text = "About";
+            this.tileAbout.Elements.Add(tileItemElement6);
             this.tileAbout.Id = 5;
             this.tileAbout.Name = "tileAbout";
             this.tileAbout.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
             // 
             // tilePowersManager
             // 
-            tileItemElement5.Text = "Powers Manager";
-            this.tilePowersManager.Elements.Add(tileItemElement5);
+            tileItemElement3.Text = "Powers Manager";
+            this.tilePowersManager.Elements.Add(tileItemElement3);
             this.tilePowersManager.Id = 3;
             this.tilePowersManager.Name = "tilePowersManager";
             this.tilePowersManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tileInsigniaManager
+            // 
+            tileItemElement2.Text = "Insignia Manager";
+            this.tileInsigniaManager.Elements.Add(tileItemElement2);
+            this.tileInsigniaManager.Id = 6;
+            this.tileInsigniaManager.Name = "tileInsigniaManager";
+            this.tileInsigniaManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
+            // 
+            // tileUpgradeManager
+            // 
+            this.tileUpgradeManager.BackgroundImage = global::QuesterAssistant.Properties.Resources.UpgradeManagerIcon;
+            this.tileUpgradeManager.BackgroundImageAlignment = DevExpress.XtraEditors.TileItemContentAlignment.MiddleCenter;
+            tileItemElement4.Text = "Upgrade Manager";
+            this.tileUpgradeManager.Elements.Add(tileItemElement4);
+            this.tileUpgradeManager.Id = 2;
+            this.tileUpgradeManager.Name = "tileUpgradeManager";
+            this.tileUpgradeManager.ItemClick += new DevExpress.XtraEditors.TileItemClickEventHandler(this.tile_ItemClick);
             // 
             // Main
             // 
@@ -212,5 +224,6 @@
         private DevExpress.XtraEditors.TileItem tilePushNotify;
         private DevExpress.XtraEditors.TileItem tileAbout;
         private DevExpress.XtraEditors.TileItem tilePowersManager;
+        private DevExpress.XtraEditors.TileItem tileInsigniaManager;
     }
 }

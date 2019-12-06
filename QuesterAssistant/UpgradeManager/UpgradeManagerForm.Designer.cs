@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UpgradeManagerForm));
-            this.toolTipController = new DevExpress.Utils.ToolTipController(this.components);
+            this.toolTipController = new DevExpress.Utils.ToolTipController();
             this.gctrlProfile = new DevExpress.XtraEditors.GroupControl();
             this.lcProfilesList = new QuesterAssistant.Panels.ListControl();
             this.cbxRunCondition = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.bmTasksList = new DevExpress.XtraBars.BarManager(this.components);
+            this.bmTasksList = new DevExpress.XtraBars.BarManager();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -57,10 +56,10 @@
             this.gcolCount = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolChance = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolWard = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.pmTasksList = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.pmTasksList = new DevExpress.XtraBars.PopupMenu();
             this.chkHotKey = new DevExpress.XtraEditors.CheckEdit();
             this.txtHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHotKey = new System.Windows.Forms.BindingSource();
             ((System.ComponentModel.ISupportInitialize)(this.gctrlProfile)).BeginInit();
             this.gctrlProfile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.cbxRunCondition.Properties)).BeginInit();
@@ -104,7 +103,6 @@
             this.lcProfilesList.Name = "lcProfilesList";
             this.lcProfilesList.Size = new System.Drawing.Size(307, 20);
             this.lcProfilesList.TabIndex = 15;
-            this.lcProfilesList.ListChanged += new System.ComponentModel.ListChangedEventHandler(this.lcProfilesList_ListChanged);
             // 
             // cbxRunCondition
             // 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection;
 
 namespace QuesterAssistant.Classes.Common
 {
@@ -34,7 +33,7 @@ namespace QuesterAssistant.Classes.Common
             if (roundFilledBy == RoundType.Last)
             {
                 var mod = result % 10;
-                for (int i = 0; i < (digitsCount - roundDigits); i++)
+                for (int i = 0; i < digitsCount - roundDigits; i++)
                 {
                     result = result * 10 + mod;
                 }

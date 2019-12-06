@@ -271,7 +271,6 @@
       <Name>System</Name>
       <HintPath>System.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data" />
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
       <HintPath>System.Drawing.dll</HintPath>
@@ -291,6 +290,7 @@
     <Compile Include="Actions\ClearProfilesStack.cs" />
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
+    <Compile Include="Actions\LoadInsigniaPreset.cs" />
     <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
     <Compile Include="Actions\MoveItems.cs" />
     <Compile Include="Actions\MoveToSea.cs" />
@@ -312,6 +312,7 @@
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
+    <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
@@ -338,6 +339,14 @@
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />
     <Compile Include="Conditions\PlayerParagon.cs" />
+    <Compile Include="InsigniaManager\InsigniaManagerCore.cs" />
+    <Compile Include="InsigniaManager\InsigniaManagerData.cs" />
+    <Compile Include="InsigniaManager\InsigniaManagerForm.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InsigniaManager\InsigniaManagerForm.Designer.cs">
+      <DependentUpon>InsigniaManagerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Panels\About.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -408,6 +417,9 @@
     </Compile>
     <EmbeddedResource Include="Classes\Patches\AddClass.resx">
       <DependentUpon>AddClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InsigniaManager\InsigniaManagerForm.resx">
+      <DependentUpon>InsigniaManagerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Panels\About.resx">
       <DependentUpon>About.cs</DependentUpon>

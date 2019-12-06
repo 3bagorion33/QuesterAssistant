@@ -1,18 +1,16 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Astral;
 using Astral.Logic.Classes.Map;
 using MyNW.Classes;
 using QuesterAssistant.Classes;
-using QuesterAssistant.PowersManager;
-using static QuesterAssistant.PowersManager.PowersManagerData;
+using QuesterAssistant.InsigniaManager;
+using static QuesterAssistant.InsigniaManager.InsigniaManagerData;
 
 namespace QuesterAssistant.Actions
 {
-    [Serializable]
-    public class LoadPowersPreset : Astral.Quester.Classes.Action
+    public class LoadInsigniaPreset : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => $"{GetType().Name} : {GetLabel()}";
         public override string Category => Core.Category;
@@ -24,32 +22,27 @@ namespace QuesterAssistant.Actions
         public override void InternalReset() { }
         public override void OnMapDraw(GraphicsNW graph) { }
 
-        private PowersManagerData pManager;
+        private InsigniaManagerData iManager;
 
         [Description("Number of preset from list to load. Numeration starts with 1.")]
-        public int PresetNumber { get; set; } 
+        public int PresetNumber { get; set; }
 
-        [Description("Name of preset from list to load. Using Regex.")]
+        [Description("Name of preset from list to load. Using Regex. Type 'Extract' to remove all insignias from active mounts")]
         public string PresetName { get; set; }
 
         protected override bool IntenalConditions
         {
             get
             {
-                if (!Paragon.IsValid)
-                {
-                    Logger.WriteLine(ActionLabel + ": This character haven't a valid paragon!");
-                    return false;
-                }
-                if (!((PresetNumber > 0) ^ !string.IsNullOrEmpty(PresetName)))
+                if (!((PresetNumber > 0) ^ (PresetName != string.Empty)))
                 {
                     Logger.WriteLine(ActionLabel + ": You must determine only one of PresetNumber or PresetName!");
                     return false;
                 }
-                pManager = Core.PowersManagerCore.Data;
-                if (!pManager.ParagonPresets.Any())
+                iManager = Core.InsigniaManagerCore.Data;
+                if (!iManager.Presets.Any())
                 {
-                    Logger.WriteLine(ActionLabel + ": Preset list is empty for this paragon!");
+                    Logger.WriteLine(ActionLabel + ": Preset list is empty!");
                     return false;
                 }
                 return true;
@@ -73,29 +66,35 @@ namespace QuesterAssistant.Actions
         {
             if (IntenalConditions)
             {
-                Preset _pres;
+                Preset pres;
                 if (PresetNumber > 0)
                 {
-                    if (PresetNumber > pManager.ParagonPresets.Count)
+                    if (PresetNumber > iManager.Presets.Count)
                     {
-                        Logger.WriteLine($"{ActionLabel} :\n PresetNumber is superior than preset list for this paragon!");
+                        Logger.WriteLine($"{ActionLabel} :\n PresetNumber is superior than preset list!");
                         return ActionResult.Skip;
                     }
-                    _pres = pManager.ParagonPresets.ElementAtOrDefault(PresetNumber - 1);
-                    if (_pres != null)
+                    pres = iManager.Presets.ElementAtOrDefault(PresetNumber - 1);
+                    if (pres != null)
                     {
-                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{_pres.Name}'...");
-                        Powers.ApplyPowers(_pres.PowersList);
+                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{pres.Name}'...");
+                        pres.Apply();
                         return ActionResult.Completed;
                     }
                 }
-                if (PresetName.Any())
+                if (!string.IsNullOrEmpty(PresetName))
                 {
-                    _pres = pManager.ParagonPresets.ToList().Find(x => Regex.IsMatch(x.Name, PresetName));
-                    if (_pres != null)
+                    if (PresetName.ToLower() == "extract")
                     {
-                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{_pres.Name}'...");
-                        Powers.ApplyPowers(_pres.PowersList);
+                        Logger.WriteLine($"{ActionLabel} :\n Extract all insignias to Inventory'...");
+                        Insignia.ExtractFromEquippedMounts();
+                        return ActionResult.Completed;
+                    }
+                    pres = iManager.Presets.ToList().Find(x => Regex.IsMatch(x.Name, PresetName));
+                    if (pres != null)
+                    {
+                        Logger.WriteLine($"{ActionLabel} :\n Applying preset with name '{pres.Name}'...");
+                        pres.Apply();
                         return ActionResult.Completed;
                     }
                 }

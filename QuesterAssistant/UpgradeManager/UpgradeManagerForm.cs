@@ -22,6 +22,7 @@ namespace QuesterAssistant.UpgradeManager
         {
             InitializeComponent();
             lcProfilesList.EditValueChanged += lcProfilesList_EditValueChanged;
+            lcProfilesList.ListChanged += lcProfilesList_ListChanged;
         }
 
         private void UpgradeManagerForm_Load(object sender, System.EventArgs e)

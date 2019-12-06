@@ -64,6 +64,7 @@ namespace Launcher.Classes
                 }
             }
         };
+        public Patches() => HashEventEnable();
     }
     public class Patch : OverrideHash
     {

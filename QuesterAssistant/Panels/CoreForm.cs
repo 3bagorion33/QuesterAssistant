@@ -39,14 +39,17 @@ namespace QuesterAssistant.Panels
         public void PanelLoad() => OnPanelLoad?.Invoke();
         public void PanelLeave() => OnPanelLeave?.Invoke();
 
-        //private void InitializeComponent()
-        //{
-        //    SuspendLayout();
-        //    AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-        //    MinimumSize = new System.Drawing.Size(370, 348);
-        //    Name = "CoreForm";
-        //    Size = new System.Drawing.Size(370, 348);
-        //    ResumeLayout(false);
-        //}
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // CoreForm
+            // 
+            this.MinimumSize = new System.Drawing.Size(370, 372);
+            this.Name = "CoreForm";
+            this.Size = new System.Drawing.Size(370, 372);
+            this.ResumeLayout(false);
+
+        }
     }
 }

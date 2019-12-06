@@ -49,6 +49,7 @@ namespace QuesterAssistant
         internal static Settings.SettingsCore SettingsCore { get; } = new Settings.SettingsCore();
         internal static PushNotify.PushNotifyCore PushNotifyCore { get; } = new PushNotify.PushNotifyCore();
         internal static UpgradeManager.UpgradeManagerCore UpgradeManagerCore { get; } = new UpgradeManager.UpgradeManagerCore();
+        internal static InsigniaManager.InsigniaManagerCore InsigniaManagerCore { get; } = new InsigniaManager.InsigniaManagerCore();
 
         public override void OnBotStart() { }
         public override void OnBotStop() { }

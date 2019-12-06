@@ -25,6 +25,7 @@ namespace Launcher.Classes
         
         public Instance(IList<Patch> patches)
         {
+            HashEventEnable();
             HashChanged += Delete;
             using (MD5 md5Hash = MD5.Create())
             {

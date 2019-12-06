@@ -1,6 +1,7 @@
 ﻿using Astral.Logic.Classes.Map;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Actions
 {
@@ -23,7 +24,7 @@ namespace QuesterAssistant.Actions
             if (Game.IsCursorModeEnabled)
             {
                 Game.ToggleCursorMode(false);
-                System.Threading.Thread.Sleep(1000);
+                Pause.Sleep(1000);
                 return ActionResult.Completed;
             }
             return ActionResult.Skip;
