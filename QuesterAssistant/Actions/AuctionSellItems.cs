@@ -30,10 +30,11 @@ namespace QuesterAssistant.Actions
         public override void GatherInfos() { }
         public override void OnMapDraw(GraphicsNW graph) { }
         public override void InternalReset() { }
+        protected override bool IntenalConditions => true;
 
         private IDictionary<string, IEnumerable<InventorySlot>> slotsGroupList;
         private double Multiply => PriceType == SellingPriceType.Fixed ? 1 : (double)PricePercent / 100;
-        protected override bool IntenalConditions => true;
+        private bool isFollowedAccount;
 
         protected override ActionValidity InternalValidity
         {
@@ -93,25 +94,32 @@ namespace QuesterAssistant.Actions
                     }
 
                     double itemPrice = 0;
-                    switch (PriceType)
+                    isFollowedAccount = !string.IsNullOrEmpty(OrientToAccount) && validLots.Exists(l => l.Owner.Contains(OrientToAccount));
+                    if (!isFollowedAccount)
                     {
-                        case SellingPriceType.Minimal:
-                            itemPrice = validLots.First().PricePerItem;
-                            break;
-                        case SellingPriceType.Average:
-                            itemPrice = (uint)validLots.Average(x => x.PricePerItem);
-                            break;
-                        case SellingPriceType.Median:
-                            itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
-                            break;
-                        case SellingPriceType.Top3:
-                            itemPrice = validLots.Count > 2 ? validLots.ElementAt(2).PricePerItem : PriceValue;
-                            break;
-                        case SellingPriceType.Top5:
-                            itemPrice = validLots.Count > 4 ? validLots.ElementAt(4).PricePerItem : PriceValue;
-                            break;
+                        switch (PriceType)
+                        {
+                            case SellingPriceType.Minimal:
+                                itemPrice = validLots.First().PricePerItem;
+                                break;
+                            case SellingPriceType.Average:
+                                itemPrice = (uint) validLots.Average(x => x.PricePerItem);
+                                break;
+                            case SellingPriceType.Median:
+                                itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
+                                break;
+                            case SellingPriceType.Top3:
+                                itemPrice = validLots.Count > 2 ? validLots.ElementAt(2).PricePerItem : PriceValue;
+                                break;
+                            case SellingPriceType.Top5:
+                                itemPrice = validLots.Count > 4 ? validLots.ElementAt(4).PricePerItem : PriceValue;
+                                break;
+                        }
                     }
-
+                    else
+                    {
+                        itemPrice = validLots.First(l => l.Owner.Contains(OrientToAccount)).PricePerItem;
+                    }
                     result = itemPrice;
                 }
                 else
@@ -235,7 +243,7 @@ namespace QuesterAssistant.Actions
                                 itemPrice = GetActualPrice(itemToSell);
 
                                 int buyoutPrice = (int) (itemPrice * Multiply * itemCount);
-                                if (buyoutPrice != PriceValue)
+                                if (!isFollowedAccount && buyoutPrice != PriceValue)
                                     buyoutPrice = MathTools.Round(buyoutPrice, RoundDigits, RoundFilledBy);
 
                                 buyoutPrice = MathTools.Max(buyoutPrice, (int) (PriceMinimum * itemCount));
@@ -319,6 +327,9 @@ namespace QuesterAssistant.Actions
         [Description("Sell slot as is if zero")]
         public uint StackSize { get; set; }
 
+        [Category("Price settings")]
+        [Description("Follow price of this account")]
+        public string OrientToAccount { get; set; }
         [Category("Price settings")]
         [Description("Fixed : using PriceValue | Minimal, Average, Median : detecting current price on Auction")]
         public SellingPriceType PriceType { get; set; }

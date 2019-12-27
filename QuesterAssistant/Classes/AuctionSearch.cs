@@ -126,9 +126,10 @@ namespace QuesterAssistant.Classes
             [Serializable]
             public sealed class Lot
             {
+                public string Owner;
                 public uint Price;
                 public uint Count;
-                public double PricePerItem => Price > Count ? Price / Count : 1;
+                public double PricePerItem => (double) Price / Count;
             }
 
             public SearchResult(ItemDef item, List<AuctionLot> auctionLots)
@@ -138,7 +139,7 @@ namespace QuesterAssistant.Classes
                 Lots = new List<Lot>();
                 foreach (var lot in auctionLots)
                 {
-                    Lots.Add(new Lot { Price = lot.Price, Count = lot.Items.First().Item.Count });
+                    Lots.Add(new Lot {Owner = lot.Owner, Price = lot.Price, Count = lot.Items.First().Item.Count});
                 }
                 DateTime = DateTime.Now;
             }

@@ -67,7 +67,8 @@ namespace QuesterAssistant.Classes.Patches
 
         private static double Astral_Logic_Classes_FSM_Navigation_ChangeWPDist =>
             (double)
-            MathTools.Min(Astral.Quester.API.Engine.Navigation.LastWaypoint.Distance2DFromPlayer,
+            MathTools.Min(
+                MathTools.Max(Astral.Quester.API.Engine.Navigation.LastWaypoint.Distance2DFromPlayer, 3.0),
                 cachedWPD);
     }
 }
