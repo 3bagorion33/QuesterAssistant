@@ -293,7 +293,7 @@
     <Compile Include="Actions\LoadInsigniaPreset.cs" />
     <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
     <Compile Include="Actions\MoveItems.cs" />
-    <Compile Include="Actions\MoveToSea.cs" />
+    <Compile Include="Actions\Deprecated\MoveToSea.cs" />
     <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />
@@ -312,6 +312,7 @@
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
+    <Compile Include="Classes\Extensions\CharacterEx.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
@@ -372,6 +373,7 @@
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFile.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
+    <Compile Include="Classes\Patches\WayPointFilter.cs" />
     <Compile Include="UCCActions\UCCLoadPowersPreset.cs" />
     <Compile Include="UIEditors\ConditionListEditor.cs" />
     <Compile Include="UIEditors\DonateTaskEditor.cs" />

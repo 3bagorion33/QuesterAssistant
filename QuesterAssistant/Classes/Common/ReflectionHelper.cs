@@ -157,11 +157,9 @@ namespace QuesterAssistant.Classes.Common
             return false;
         }
 
-        public static bool GetPropertyValue(this object obj, string propName, out object result,
+        public static object GetPropertyValue(this object obj, string propName, 
             BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
-            result = null;
-
             if (obj == null)
                 return false;
             Type type = obj.GetType();
@@ -172,25 +170,22 @@ namespace QuesterAssistant.Classes.Common
             PropertyInfo pi = type.GetProperty(propName, flags);
             if (pi != null)
             {
-                MethodInfo getter = pi.GetGetMethod();
+                MethodInfo getter = pi.GetMethod;
                 if (getter != null)
                 {
-                    object[] arg = new object[] { };
-                    result = getter.Invoke(obj, arg);
-                    return true;
+                    object[] arg = { };
+                    return getter.Invoke(obj, arg);
                 }
             }
             else if (searchBaseRecursive)
-                return GetBasePropertyValue(type.BaseType, obj, propName, out result, flags);
+                return GetBasePropertyValue(type.BaseType, obj, propName, flags);
 
-            return false;
+            return null;
         }
 
-        private static bool GetBasePropertyValue(Type type, object obj, string propName, out object result,
+        private static object GetBasePropertyValue(Type type, object obj, string propName,
             BindingFlags flags = BindingFlags.Default)
         {
-            result = null;
-
             if (obj == null || type == null || type == typeof(object))
                 return false;
 
@@ -199,44 +194,40 @@ namespace QuesterAssistant.Classes.Common
 
             PropertyInfo pi = type.GetProperty(propName, flags);
             if (pi == null)
-                return GetBasePropertyValue(type.BaseType, obj, propName, out result, flags);
+                return GetBasePropertyValue(type.BaseType, obj, propName, flags);
             else
             {
                 MethodInfo[] accessors = pi.GetAccessors(true);
                 if (accessors != null && accessors.Length > 0)
                 {
                     object[] arg = new object[] { };
-                    result = accessors[0]?.Invoke(obj, arg);
-                    return true;
+                    return accessors[0]?.Invoke(obj, arg);
                 }
             }
 
-            return false;
+            return null;
         }
 
-        public static bool GetStaticPropertyValue(this Type type, string propName, out object result,
+        public static object GetStaticPropertyValue(this Type type, string propName,
             BindingFlags flags = BindingFlags.Default, bool searchBaseRecursive = false)
         {
-            result = null;
-
             if (flags == BindingFlags.Default)
                 flags = DefaultFlags | BindingFlags.Static;
 
             PropertyInfo pi = type.GetProperty(propName, flags);
             if (pi != null)
             {
-                MethodInfo getter = pi.GetGetMethod();
+                MethodInfo getter = pi.GetMethod;
                 if (getter != null)
                 {
-                    object[] arg = new object[] { };
-                    result = getter.Invoke(null, arg);
-                    return true;
+                    object[] arg = { };
+                    return getter.Invoke(null, arg);
                 }
             }
             else if (searchBaseRecursive)
-                return GetBasePropertyValue(type.BaseType, null, propName, out result, flags);
+                return GetBasePropertyValue(type.BaseType, null, propName, flags);
 
-            return false;
+            return null;
         }
 
         public static bool SetFieldValue(this object obj, string fieldName, object value,

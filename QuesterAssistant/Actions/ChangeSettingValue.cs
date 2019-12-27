@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Astral.Logic.Classes.Map;
+using Astral.Quester.Classes.Actions;
 using MyNW.Classes;
-using QuesterAssistant.Classes.Common;
 using API = Astral.API;
 
 namespace QuesterAssistant.Actions
@@ -51,13 +51,15 @@ namespace QuesterAssistant.Actions
                 case SProperty.AutoEquip:
                     API.CurrentSettings.EnableAutoEquip = Value;
                     break;
-                //case SProperty.AutoUCC:
-                //    var customClass = Value ? "AutoUCC" : "UCC";
-                //    ReflectionHelper.GetTypeByName("Astral", "CustomClasses")
-                //        ?.ExecStaticMethod("SelectCC", new object[] {customClass, true});
-                //    Astral.Controllers.Settings.Save();
-                //    Astral.Logic.UCC.Entrypoint2.ForceRefresh();
-                //    break;
+                case SProperty.AutoUCC:
+                    var customClass = Value ? "AutoUCC" : "UCC";
+                    if (API.CurrentSettings.LastUCCProfile != customClass)
+                    {
+                        new LoadUCCProfile {ProfileName = customClass}.Run();
+                        Astral.Controllers.Settings.Save();
+                        Astral.Logic.UCC.Entrypoint2.ForceRefresh();
+                    }
+                    break;
                 default:
                     return ActionResult.Fail;
             }

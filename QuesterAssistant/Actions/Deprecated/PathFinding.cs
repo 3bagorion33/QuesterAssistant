@@ -9,7 +9,7 @@ namespace QuesterAssistant.Actions.Deprecated
     public class PathFinding : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => GetType().Name + Value;
-        public override string Category => "Deprecated";
+        public override string Category => Core.Deprecated;
         protected override bool IntenalConditions
         {
             get

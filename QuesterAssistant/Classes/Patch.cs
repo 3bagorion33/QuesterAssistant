@@ -16,6 +16,8 @@ namespace QuesterAssistant.Classes
 
         public void Inject()
         {
+            if (methodToReplace is null || methodToInject is null) return;
+
             RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
             RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);
 

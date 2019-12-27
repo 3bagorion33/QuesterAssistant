@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Patches;
 
 namespace QuesterAssistant
 {
@@ -23,6 +24,7 @@ namespace QuesterAssistant
         internal static string SettingsPath => Path.Combine(Astral.Controllers.Directories.SettingsPath, "QuesterAssistant");
         internal static string ProfilesPath => Astral.Controllers.Directories.ProfilesPath;
         internal static string Category => typeof(Core).Namespace;
+        internal static string Deprecated => "Deprecated";
         internal static Process GameProcess => API.AttachedGameProcess ?? new Process();
         internal static IntPtr GameWindowHandle => GameProcess.MainWindowHandle;
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
@@ -75,7 +77,6 @@ namespace QuesterAssistant
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Task.Factory.StartNew(HooksLoader.SetHook);
-
             Patcher.Apply();
         }
 
@@ -89,8 +90,12 @@ namespace QuesterAssistant
         {
             //Logger.WriteLine("Loading states");
             //Astral.Quester.API.Engine.AddState(new States.Identify());
+            //Astral.Quester.API.Engine.AddState(new States.WayPointFilter());
+            //Astral.Quester.API.Engine.States.Sort();
             //statusMonitor.Enabled = true;
             //Logger.WriteLine("NotifyStatusMonitor Activated");
+
+            new WayPointFilter().Run();
         }
 
         public override void OnUnload()

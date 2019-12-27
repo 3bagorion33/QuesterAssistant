@@ -38,6 +38,7 @@ namespace ClassPatcher
                         enumerator.Current.Name == "Plugins" ||
                         enumerator.Current.Name == "CustomClasses" ||
                         enumerator.Current.Name == "Main" ||
+                        enumerator.Current.Name == "Engine" ||
 
                         action == "/show")
                     {

@@ -9,7 +9,7 @@ namespace Launcher.Classes
         [HashInclude]
         public BindingList<Patch> Items { get; } = new BindingList<Patch>
         {
-            new Patch //Astral.Forms.Main.method_5
+            new Patch //Astral.Forms.Main.\u0002()
             {
                 Name = "RewriteTitle",
                 Desc = "Hides Astral's main title",
@@ -23,7 +23,7 @@ namespace Launcher.Classes
                     },
                     new Bytes
                     {
-                        Orig = new byte[] {0x18, 0x06, 0x72, 0x1F, 0x89, 0x01, 0x70, 0x7D},
+                        Orig = new byte[] {0x18, 0x06, 0x72, 0x8B, 0x89, 0x01, 0x70, 0x7D},
                         Ptch = new byte[] {0x18, 0x06, 0x7E, 0x63, 0x00, 0x00, 0x0A, 0x7D}
                     }
                 }
