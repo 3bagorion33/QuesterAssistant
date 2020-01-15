@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
+using DevExpress.Data.Filtering.Helpers;
 
 namespace QuesterAssistant.Classes.Common
 {
     public static class ReflectionHelper
     {
-        private const BindingFlags DefaultFlags = BindingFlags.Instance
+        public const BindingFlags DefaultFlags = BindingFlags.Instance
                                    | BindingFlags.Static
                                    | BindingFlags.GetProperty
                                    | BindingFlags.SetProperty
@@ -244,7 +245,7 @@ namespace QuesterAssistant.Classes.Common
         }
 
         public static object GetStaticFieldValue(this Type type, string fieldName, 
-            BindingFlags flags = BindingFlags.Default, bool baseType = false)
+            BindingFlags flags = DefaultFlags, bool baseType = false)
         {
             if (baseType)
             {
@@ -307,8 +308,17 @@ namespace QuesterAssistant.Classes.Common
             return methodInfo == null ? null : methodInfo.Invoke(null, arguments);
         }
 
-        public static object GetStaticMethodBySignature<TDelegate>(this Type type, Type returnType, Type[] inputTypes = null,
-            BindingFlags flags = DefaultFlags, bool baseType = false)
+        public static TDelegate GetStaticMethodByName<TDelegate>(this Type type, string methodName,
+            BindingFlags flags = DefaultFlags, bool baseType = false) where TDelegate : class 
+        {
+            if (baseType)
+                type = type.BaseType;
+            MethodInfo methodInfo = type.GetMethod(methodName, flags | BindingFlags.Static);
+            return methodInfo is null ? null : Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
+        }
+
+        public static TDelegate GetStaticMethodBySignature<TDelegate>(this Type type, Type returnType, Type[] inputTypes = null,
+            BindingFlags flags = DefaultFlags, bool baseType = false) where TDelegate : class
         {
             if (baseType)
                 type = type.BaseType;
@@ -324,7 +334,7 @@ namespace QuesterAssistant.Classes.Common
                         if (inputTypes.Count(a => a == argument.ParameterType) != arguments.Count(a => a.ParameterType == argument.ParameterType))
                             return null;
                     }
-                    return Delegate.CreateDelegate(typeof(TDelegate), methodInfo);
+                    return Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
                 }
             }
             return null;

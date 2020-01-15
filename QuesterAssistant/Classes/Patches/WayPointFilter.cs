@@ -45,7 +45,7 @@ namespace QuesterAssistant.Classes.Patches
             var methodToInject = GetType()
                 .GetProperty(nameof(Astral_Logic_Classes_FSM_Navigation_ChangeWPDist),
                     BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic).GetMethod;
-            new Patch(methodToReplace, methodToInject).Inject();
+            new PatchMethod(methodToReplace, methodToInject).Inject();
         }
 
         private static double GetChangeWPDist()

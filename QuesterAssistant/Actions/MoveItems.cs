@@ -28,7 +28,7 @@ namespace QuesterAssistant.Actions
         protected override Vector3 InternalDestination => new Vector3();
 
         protected override bool IntenalConditions => 
-            ItemsToMove.Entries.Any() && SourceBags.Items.Any() && DestinationBag != InvBagIDs.None;
+            ItemsToMove.Entries.Any() && SourceInventory.Slots.Any() && DestinationBag != InvBagIDs.None;
 
         protected override ActionValidity InternalValidity
         {
@@ -37,8 +37,8 @@ namespace QuesterAssistant.Actions
                 if (!ItemsToMove.Entries.Any())
                     return new ActionValidity($"{nameof(ItemsToMove)} empty!");
 
-                if (!SourceBags.Items.Any())
-                    return new ActionValidity($"Need to choose any of {nameof(SourceBags)}!");
+                if (SourceInventory.Pattern == InventorySelect.PatternDef.SpecificBags && SourceInventory.SpecificBags.Items.Count == 0)
+                    return new ActionValidity($"Need to choose any of {nameof(SourceInventory)}!");
 
                 if (DestinationBag == InvBagIDs.None)
                     return new ActionValidity($"Need to choose {nameof(DestinationBag)}!");
@@ -53,9 +53,7 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            var bags = new List<InventorySlot>();
-            SourceBags.Items.ForEach(i => bags.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(i).GetItems));
-            var items = bags.FindAll(s => ItemsToMove.IsMatch(s.Item));
+            var items = SourceInventory.Slots.FindAll(s => ItemsToMove.IsMatch(s.Item));
             if (!items.Any())
             {
                 Logger.WriteLine("No items found to move!");
@@ -86,8 +84,25 @@ namespace QuesterAssistant.Actions
         [Description("Move all if zero")]
         public uint CountToMove { get; set; } = 0;
 
+        private InventorySelect inventory = new InventorySelect();
         [Description("Choose source bags for search")]
-        [Editor(typeof(CheckedListBoxEditor<InvBagIDs>), typeof(UITypeEditor))]
+        [Editor(typeof(InventorySelectEditor), typeof(UITypeEditor))]
+        public InventorySelect SourceInventory
+        {
+            get
+            {
+                if (SourceBags.Items.Count > 0)
+                {
+                    inventory.Pattern = InventorySelect.PatternDef.SpecificBags;
+                    inventory.SpecificBags.Items = new List<InvBagIDs>(SourceBags.Items);
+                    SourceBags.Items.Clear();
+                }
+                return inventory;
+            }
+            set => inventory = value;
+        }
+
+        [Browsable(false)]
         public CheckedListBoxSelector<InvBagIDs> SourceBags { get; set; } = new CheckedListBoxSelector<InvBagIDs>();
 
         [Description("Choose destination bag")]

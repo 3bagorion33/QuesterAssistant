@@ -58,8 +58,7 @@ namespace QuesterAssistant.Settings
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
             chkWayPointPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.Patches.WayPointFilterPatch));
             chkProfessionPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.PatchesDef.ProfessionPatch));
-            numReadyTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchReadyTasksCount));
-            numActiveTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchActiveTasksCount));
+            numReadyTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchFreeTasksSlots));
 
             Data.HashChanged += bsrcRoleToggleHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcHideMode.ResetCurrentItem;

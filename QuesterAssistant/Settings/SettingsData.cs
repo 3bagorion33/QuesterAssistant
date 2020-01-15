@@ -67,9 +67,7 @@ namespace QuesterAssistant.Settings
             [HashInclude]
             public bool ProfessionPatch { get; set; } = true;
             [HashInclude]
-            public uint ProfessionPatchReadyTasksCount { get; set; } = 1;
-            [HashInclude]
-            public uint ProfessionPatchActiveTasksCount { get; set; } = 1;
+            public uint ProfessionPatchFreeTasksSlots { get; set; } = 1;
 
             public void Init() { }
 
@@ -77,8 +75,7 @@ namespace QuesterAssistant.Settings
             {
                 WayPointFilterPatch = source.WayPointFilterPatch;
                 ProfessionPatch = source.ProfessionPatch;
-                ProfessionPatchReadyTasksCount = source.ProfessionPatchReadyTasksCount;
-                ProfessionPatchActiveTasksCount = source.ProfessionPatchActiveTasksCount;
+                ProfessionPatchFreeTasksSlots = source.ProfessionPatchFreeTasksSlots;
             }
         }
     }

@@ -44,6 +44,8 @@ namespace ClassPatcher
                         enumerator.Current.Name == "NPCInfos" ||
                         enumerator.Current.Name == "SharedBankNumericsEditor" ||
                         enumerator.Current.Name == "Tasks" ||
+                        enumerator.Current.Name == "RandomMove" ||
+                        enumerator.Current.Name == "Move" ||
 
                         action == "/show")
                     {

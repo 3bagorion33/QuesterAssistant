@@ -62,6 +62,20 @@ namespace Launcher.Classes
                         Ptch = new byte[] {0x06, 0x02, 0x20, 0xC8, 0x00, 0x00, 0x00, 0x73}
                     }
                 }
+            },
+            new Patch() // Astral.Professions.Controllers.Characters.\u0001()
+            {
+                Name = "ProfessionStatistic",
+                Desc = "Compability to QA patch for professions",
+                Active = true,
+                Bytes = new List<Bytes>
+                {
+                    new Bytes
+                    {
+                        Orig = new byte[] { 0xFE, 0x06, 0xE9, 0x0F },
+                        Ptch = new byte[] { 0xFE, 0x06, 0x0E, 0x1B },
+                    }
+                }
             }
         };
         public Patches() => HashEventEnable();

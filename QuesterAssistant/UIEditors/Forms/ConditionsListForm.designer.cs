@@ -59,8 +59,8 @@
             // splitContainer.Panel2
             // 
             this.splitContainer.Panel2.Controls.Add(this.Properties);
-            this.splitContainer.Size = new System.Drawing.Size(560, 302);
-            this.splitContainer.SplitterDistance = 173;
+            this.splitContainer.Size = new System.Drawing.Size(660, 302);
+            this.splitContainer.SplitterDistance = 203;
             this.splitContainer.TabIndex = 3;
             // 
             // Conditions
@@ -69,7 +69,7 @@
             this.Conditions.FormattingEnabled = true;
             this.Conditions.Location = new System.Drawing.Point(0, 0);
             this.Conditions.Name = "Conditions";
-            this.Conditions.Size = new System.Drawing.Size(173, 302);
+            this.Conditions.Size = new System.Drawing.Size(203, 302);
             this.Conditions.TabIndex = 0;
             this.Conditions.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.Conditions_ItemCheck);
             this.Conditions.SelectedIndexChanged += new System.EventHandler(this.Conditions_SelectedIndexChanged);
@@ -80,7 +80,7 @@
             this.Properties.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Properties.Location = new System.Drawing.Point(0, 0);
             this.Properties.Name = "Properties";
-            this.Properties.Size = new System.Drawing.Size(383, 302);
+            this.Properties.Size = new System.Drawing.Size(453, 302);
             this.Properties.TabIndex = 1;
             this.Properties.PropertyValueChanged += new System.Windows.Forms.PropertyValueChangedEventHandler(this.Properties_PropertyValueChanged);
             // 
@@ -110,7 +110,7 @@
             // 
             this.bntCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.bntCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.bntCancel.Location = new System.Drawing.Point(497, 327);
+            this.bntCancel.Location = new System.Drawing.Point(597, 327);
             this.bntCancel.Name = "bntCancel";
             this.bntCancel.Size = new System.Drawing.Size(75, 23);
             this.bntCancel.TabIndex = 4;
@@ -121,7 +121,7 @@
             // btnSave
             // 
             this.btnSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSave.Location = new System.Drawing.Point(416, 327);
+            this.btnSave.Location = new System.Drawing.Point(516, 327);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 4;
@@ -168,7 +168,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.bntCancel;
-            this.ClientSize = new System.Drawing.Size(584, 362);
+            this.ClientSize = new System.Drawing.Size(684, 362);
             this.ControlBox = false;
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.bntCancel);

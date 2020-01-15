@@ -2,36 +2,70 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Astral;
+using Astral.Logic.NW;
 using Astral.Professions.Classes;
 using Astral.Professions.Controllers;
-using Astral.Professions.Functions;
 using Astral.Professions.FSM.States;
+using Astral.Professions.Functions;
+using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Classes.Patches
 {
-    internal class GetNextTaskInfosPatch
+    internal class ProfessionsPatch
     {
-        private static uint TriggerTasksCount => Core.SettingsCore.Data.Patches.ProfessionPatchReadyTasksCount;
+        private BindingFlags binding = ReflectionHelper.DefaultFlags;
+        private static uint FreeTasksSlots => Core.SettingsCore.Data.Patches.ProfessionPatchFreeTasksSlots;
 
         private static readonly Func<string, string> Characters_smethod_2 =
             typeof(Characters).GetStaticMethodBySignature<Func<string, string>>
-                (typeof(string), new[] { typeof(string) }) as Func<string, string>;
+                (typeof(string), new[] { typeof(string) });
 
         private static readonly Func<string, string, bool> Characters_smethod_7 =
             typeof(Characters).GetStaticMethodBySignature<Func<string, string, bool>>
-                (typeof(bool), new[] { typeof(string), typeof(string) }) as Func<string, string, bool>;
+                (typeof(bool), new[] { typeof(string), typeof(string) });
 
         private static readonly Func<string, string, Characters.SavedCharacter> Characters_smethod_8 =
             typeof(Characters).GetStaticMethodBySignature<Func<string, string, Characters.SavedCharacter>>
-                (typeof(Characters.SavedCharacter), new[] { typeof(string), typeof(string) }) as Func<string, string, Characters.SavedCharacter>;
+                (typeof(Characters.SavedCharacter), new[] { typeof(string), typeof(string) });
 
-        public static object Astral_Professions_Functions_Tasks_GetNextTaskInfos(bool showLogs = false, bool onlyCurrentAccount = false)
+        private static readonly Action Characters_smethod_11 =
+            typeof(Characters).GetStaticMethodByName<Action>("\u0005");
+
+        public void Run()
         {
-            Debug.WriteLine("Astral_Professions_Functions_Tasks_GetNextTaskInfos hacked!");
+            if (typeof(Characters).GetStaticFieldValue("\u0001") is Thread thread && thread.IsAlive)
+                thread.Abort();
+
+            new PatchMethod(typeof(Tasks).GetMethod("GetNextTaskInfos", binding),
+                    GetType().GetMethod(nameof(Astral_Professions_Functions_Tasks_GetNextTaskInfos), binding))
+                .Inject();
+
+            new PatchMethod(typeof(Main).GetMethod("RandomPause", binding),
+                    typeof(ProfessionsPatch).GetMethod(nameof(Astral_Professions_FSM_States_Main_RandomPause), binding))
+                .Inject();
+            new PatchConstructor<Characters.SavedSlot, SavedSlotPatch>
+                    (new[] {typeof(uint), typeof(bool), typeof(Assignment)})
+                .Inject();
+            System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11);
+        }
+
+        private static void Astral_Professions_FSM_States_Main_RandomPause(int min, int max)
+        {
+            if (min != 5 && max == min + 5)
+            {
+                Pause.Sleep(250);
+                return;
+            }
+            Pause.RandomSleep(min * 1000, max * 1000);
+        }
+
+        private static object Astral_Professions_Functions_Tasks_GetNextTaskInfos(bool showLogs = false, bool onlyCurrentAccount = false)
+        {
+            //Debug.WriteLine("Astral_Professions_Functions_Tasks_GetNextTaskInfos hacked!");
 
             CharacterSettings characterSettings = null;
             ProfAccountProfile nextAccount = null;
@@ -58,7 +92,7 @@ namespace QuesterAssistant.Classes.Patches
             {
                 if (!profAccountProfile.Disabled)
                 {
-                    var HaveToConnectMainChar = (bool) profAccountProfile.GetPropertyValue("HaveToConnectMainChar",
+                    var HaveToConnectMainChar = (bool)profAccountProfile.GetPropertyValue("HaveToConnectMainChar",
                         BindingFlags.Instance | BindingFlags.NonPublic);
                     if (HaveToConnectMainChar)
                     {
@@ -88,7 +122,7 @@ namespace QuesterAssistant.Classes.Patches
                                 characterSettings = characterSettings2;
                                 nextAccount = profAccountProfile;
                                 charIntName = text2;
-                                goto IL_2A6;
+                                goto End;
                             }
                             Characters.SavedCharacter savedCharacter = Characters_smethod_8(characterSettings2.Name, profAccountProfile.AccountName);
                             if (Game.GameTimeSec - savedCharacter.SavedTime > 86400)
@@ -98,7 +132,7 @@ namespace QuesterAssistant.Classes.Patches
                                 characterSettings = characterSettings2;
                                 nextAccount = profAccountProfile;
                                 charIntName = text2;
-                                goto IL_2A6;
+                                goto End;
                             }
                             if (Astral.Professions.Core.AccountsProfile.CharSelectionMode > 0 &&
                                 savedCharacter.Invocation.RemainingTimeSec > -1 &&
@@ -114,18 +148,19 @@ namespace QuesterAssistant.Classes.Patches
                             {
                                 var slots = savedCharacter.SavedSlots;
                                 var readySlotsCount = slots.Count(s => s.RemainingTimeSec == 0);
-                                var activeSlotsCount = Core.SettingsCore.Data.Patches.ProfessionPatchActiveTasksCount;
-                                var fastestTask = slots.FindAll(s => s.Duration > 5)
-                                    .Aggregate((a, b) => a.Duration < b.Duration ? a : b);
+                                var activeSlots = slots.FindAll(s => (int)s.SlotID == -1);
+                                var activeSlotsCount = activeSlots.Count;
+                                var speed = activeSlots.Sum(s => 1 / (double) s.Duration);
+                                var latestTask = slots.FindAll(s => s.Duration > 5)
+                                    .Aggregate((a, b) => a.StartedTime > b.StartedTime && a.Duration < b.Duration ? a : b);
+                                var maxSlotsCount = slots.FirstOrDefault().Index;
                                 var estimatedTime =
-                                    TriggerTasksCount <= readySlotsCount + activeSlotsCount
-                                        ? 0
-                                        : ((int) ((TriggerTasksCount - readySlotsCount + 1) / activeSlotsCount *
-                                                  fastestTask.Duration + fastestTask.StartedTime - Game.GameTimeSec))
-                                        .CheckNegative(0);
+                                    ((maxSlotsCount - readySlotsCount - activeSlotsCount - FreeTasksSlots) / speed +
+                                     latestTask.StartedTime + latestTask.Duration - Game.GameTimeSec)
+                                    .CheckNegative(0);
                                 if (estimatedTime < num)
                                 {
-                                    num = estimatedTime;
+                                    num = (int) estimatedTime;
                                     characterSettings = characterSettings2;
                                     text = "complete task";
                                     nextAccount = profAccountProfile;
@@ -136,7 +171,7 @@ namespace QuesterAssistant.Classes.Patches
                     }
                 }
             }
-            IL_2A6:
+            End:
             if (num == 0 && showLogs)
             {
                 switch (text)
@@ -148,7 +183,7 @@ namespace QuesterAssistant.Classes.Patches
                         Logger.WriteLine($"Obsolete information on {characterSettings.Name} character.");
                         break;
                     case "complete task":
-                        Logger.WriteLine($"{characterSettings.Name} have {TriggerTasksCount} or more slots to complete...");
+                        Logger.WriteLine($"{characterSettings.Name} seems to ready to claim tasks...");
                         break;
                     case "start task":
                         Logger.WriteLine($"{characterSettings.Name} have no active task...");
@@ -170,6 +205,31 @@ namespace QuesterAssistant.Classes.Patches
             result.SetPropertyValue(nameof(Tasks.NextTaskInfos.CharIntName), charIntName);
 
             return result;
+        }
+
+        private class SavedSlotComparer : IEqualityComparer<Characters.SavedSlot>
+        {
+            public bool Equals(Characters.SavedSlot x, Characters.SavedSlot y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (x is null || y is null) return false;
+                return x.InternalName == y.InternalName && x.Duration == y.Duration;
+            }
+            public int GetHashCode(Characters.SavedSlot slot)
+            {
+                return slot.InternalName.GetHashCode() ^ slot.Duration.GetHashCode();
+            }
+        }
+
+        public class SavedSlotPatch : Characters.SavedSlot
+        {
+            public SavedSlotPatch(uint slotIndex, bool locked, Assignment assignement = null) :
+                base(slotIndex, locked,assignement)
+            {
+                //Debug.WriteLine("SavedSlot hacked!");
+                Index = (uint) Professions2.MaxSlots;
+                SlotID = (uint) assignement.RepeatCount;
+            }
         }
     }
 }

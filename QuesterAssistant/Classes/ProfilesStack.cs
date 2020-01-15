@@ -14,7 +14,7 @@ namespace QuesterAssistant.Classes
     {
         private static readonly Dictionary<string, List<Item>> Items = new Dictionary<string, List<Item>>();
         private static string CurrentCharacter => EntityManager.LocalPlayer.InternalName;
-        private static string CurrentProfilePath =>
+        public static string CurrentProfilePath =>
             new FileInfo(Astral.Controllers.Settings.Get.LastQuesterProfile).FullName;
 
         public static List<FileInfo> GetProfiles =>
@@ -36,11 +36,11 @@ namespace QuesterAssistant.Classes
             return WinAPI.RelativePath(CurrentProfilePath, destProfile).Replace('\\', '/');
         }
 
-        public static void Add(Guid actionId)
+        public static void Add(string profilePath, Guid actionId)
         {
             if (!Items.ContainsKey(CurrentCharacter))
                 Items.Add(CurrentCharacter, new List<Item>());
-            Items[CurrentCharacter].Add(new Item { ProfilePath = CurrentProfilePath, ActionID = actionId });
+            Items[CurrentCharacter].Add(new Item { ProfilePath = profilePath, ActionID = actionId });
         }
 
         public static void RemoveLast()

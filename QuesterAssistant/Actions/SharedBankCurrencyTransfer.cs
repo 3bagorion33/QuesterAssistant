@@ -80,11 +80,12 @@ namespace QuesterAssistant.Actions
                 VIP.SummonBankingPortal();
                 Astral.Classes.Timeout timeout = new Astral.Classes.Timeout(10000);
                 while (!(VIP.BankingPortalEntity.IsValid && VIP.BankingPortalEntity.NameUntranslated == "Critterdef.Vip_Bank"
-                       && VIP.BankingPortalEntity.CanInteract))
+                       ))//&& VIP.BankingPortalEntity.CanInteract))
                 {
                     if (timeout.IsTimedOut)
                     {
                         timeout.Reset();
+                        VIP.BankingPortalEntity.Location.Face();
                         VIP.SummonBankingPortal();
                     }
                     Pause.Sleep(250);

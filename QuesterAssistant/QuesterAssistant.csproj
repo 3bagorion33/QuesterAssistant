@@ -203,21 +203,13 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(Platform)' == 'x86' ">
-    <Reference Include="Astral">
-      <HintPath>Temp\x86\Astral.exe</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MyNW">
-      <HintPath>Temp\x86\MyNW.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
   <ItemGroup>
-    <Reference Include="Astral">
-      <HintPath>..\..\EntityAddon\References\x64\Astral.exe</HintPath>
+    <Reference Include="AStar">
+      <HintPath>Temp\x64\AStar.dll</HintPath>
+      <Private>False</Private>
     </Reference>
-    <Reference Include="Astral">
+    <Reference Include="Astral, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Temp\x64\Astral.exe</HintPath>
       <Private>False</Private>
     </Reference>
@@ -245,22 +237,21 @@
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="DevExpress.XtraVerticalGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="mscorlib">
       <Name>mscorlib</Name>
       <HintPath>mscorlib.dll</HintPath>
     </Reference>
     <Reference Include="MyMemory-x64">
-      <HintPath>..\References\x64\MyMemory-x64.dll</HintPath>
-    </Reference>
-    <Reference Include="MyMemory-x64">
       <HintPath>Temp\x64\MyMemory-x64.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="MyNW">
-      <HintPath>..\..\EntityAddon\References\x64\MyNW.dll</HintPath>
-    </Reference>
-    <Reference Include="MyNW">
+    <Reference Include="MyNW, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>Temp\x64\MyNW.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -287,7 +278,7 @@
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
-    <Compile Include="Actions\CompleteATaskExt.cs" />
+    <Compile Include="Actions\ManageATask.cs" />
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\LoadInsigniaPreset.cs" />
@@ -314,9 +305,10 @@
     <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
+    <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\Insignia.cs" />
-    <Compile Include="Classes\Patches\GetNextTaskInfosPatch.cs" />
-    <Compile Include="Classes\Patches\Patch.cs" />
+    <Compile Include="Classes\InventorySelect.cs" />
+    <Compile Include="Classes\Patches\PatchMethod.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
     <Compile Include="Classes\Common\MinMaxPair.cs" />
@@ -327,6 +319,7 @@
     <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
     <Compile Include="Classes\Extensions\ItemEx.cs" />
     <Compile Include="Classes\ParagonTools.cs" />
+    <Compile Include="Classes\Patches\PatchConstructor.cs" />
     <Compile Include="Classes\Patches\Patcher.cs" />
     <Compile Include="Classes\Patches\AddClass.cs">
       <SubType>Form</SubType>
@@ -334,7 +327,7 @@
     <Compile Include="Classes\Patches\AddClass.Designer.cs">
       <DependentUpon>AddClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Patches\ProfessionsPausePatch.cs" />
+    <Compile Include="Classes\Patches\ProfessionsPatch.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Common\ReflectionHelper.cs" />
@@ -410,6 +403,13 @@
     <Compile Include="UIEditors\Forms\TargetSelectForm.designer.cs">
       <DependentUpon>TargetSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIEditors\Forms\InventorySelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\InventorySelectForm.Designer.cs">
+      <DependentUpon>InventorySelectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\InventorySelectEditor.cs" />
     <Compile Include="UIEditors\ItemIdFilterEditor.cs" />
     <Compile Include="UIEditors\ParagonListEditor.cs" />
     <Compile Include="UIEditors\PositionNodeEditor.cs" />
@@ -450,6 +450,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\TargetSelectForm.resx">
       <DependentUpon>TargetSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\InventorySelectForm.resx">
+      <DependentUpon>InventorySelectForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UpgradeManager\UpgradeManagerForm.resx">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>

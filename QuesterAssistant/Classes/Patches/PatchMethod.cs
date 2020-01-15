@@ -3,13 +3,13 @@ using System.Runtime.CompilerServices;
 
 namespace QuesterAssistant.Classes.Patches
 {
-    internal class Patch
+    internal class PatchMethod
     {
-        private readonly MethodInfo methodToReplace;
-        private readonly MethodInfo methodToInject;
+        private readonly MethodBase methodToReplace;
+        private readonly MethodBase methodToInject;
         private readonly bool active;
 
-        public Patch(MethodInfo methodToReplace, MethodInfo methodToInject, bool active = true)
+        public PatchMethod(MethodBase methodToReplace, MethodBase methodToInject, bool active = true)
         {
             this.methodToReplace = methodToReplace;
             this.methodToInject = methodToInject;

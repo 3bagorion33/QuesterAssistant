@@ -109,9 +109,11 @@ namespace QuesterAssistant.Actions
                                 itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
                                 break;
                             case SellingPriceType.Top3:
+                                validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
                                 itemPrice = validLots.Count > 2 ? validLots.ElementAt(2).PricePerItem : PriceValue;
                                 break;
                             case SellingPriceType.Top5:
+                                validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
                                 itemPrice = validLots.Count > 4 ? validLots.ElementAt(4).PricePerItem : PriceValue;
                                 break;
                         }
@@ -374,6 +376,25 @@ namespace QuesterAssistant.Actions
             Keep = 0,
             Resell = 1,
             Force = 2
+        }
+
+        private class AuctionLotComparer : IEqualityComparer<AuctionSearch.SearchResult.Lot>
+        {
+            public bool Equals(AuctionSearch.SearchResult.Lot x, AuctionSearch.SearchResult.Lot y)
+            {
+                if (ReferenceEquals(x, y)) return true;
+                if (x is null || y is null) return false;
+                return
+                    x.Owner == y.Owner &&
+                    x.Count == y.Count &&
+                    x.Price == y.Price;
+            }
+            public int GetHashCode(AuctionSearch.SearchResult.Lot slot)
+            {
+                return slot.Owner.GetHashCode() ^
+                       slot.Count.GetHashCode() ^
+                       slot.Price.GetHashCode();
+            }
         }
     }
 }

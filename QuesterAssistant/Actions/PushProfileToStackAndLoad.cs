@@ -34,12 +34,12 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (ProfileName.Length == 0)
-                return ActionResult.Fail;
-
+            if (ProfileName.Length == 0) return ActionResult.Fail;
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
-            ProfilesStack.Add(ActionID);
-            return new LoadProfile {ProfileName = profileName}.Run();
+            var currentProfile = ProfilesStack.CurrentProfilePath;
+            var result = new LoadProfile { ProfileName = profileName }.Run();
+            if (result == ActionResult.Completed) ProfilesStack.Add(currentProfile, ActionID);
+            return result;
         }
 
         [Description("Select profile for loading")]

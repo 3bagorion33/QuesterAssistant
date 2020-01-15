@@ -9,7 +9,7 @@ namespace QuesterAssistant.Classes
     [Serializable]
     public class HotKey : OverrideHash, IParse<HotKey>
     {
-        private static KeysConverter kc = new KeysConverter();
+        private KeysConverter kc = new KeysConverter();
 
         [XmlText, HashInclude]
         public string String { get; set; } = Keys.None.ConvertToString();
