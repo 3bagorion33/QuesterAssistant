@@ -1,7 +1,6 @@
 ﻿using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
-using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using System;
@@ -17,7 +16,7 @@ namespace QuesterAssistant.Actions
     public class DiscardItem : Astral.Quester.Classes.Action
     {
         public override string ActionLabel => GetType().Name;
-        public override string Category => GetType().Namespace.Split(char.Parse("."))[0];
+        public override string Category => Core.Category;
         public override bool NeedToRun => true;
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
@@ -41,10 +40,16 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            EntityManager.LocalPlayer.BagsItems.FindAll
-                (x => !x.Item.ItemDef.CantDiscard &&
-                SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality) &&
-                ItemIdFilter.IsMatch(x.Item)).ForEach(Interact.DiscardItem);
+            bool Finder(InventorySlot x)
+            {
+                var f1 = !x.Item.ItemDef.CantDiscard;
+                var f2 = SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality);
+                var f3 = ItemIdFilter.IsMatch(x.Item);
+
+                return f1 && f2 && f3;
+            }
+
+            EntityManager.LocalPlayer.BagsItems.FindAll(Finder).ForEach(Interact.DiscardItem);
             return ActionResult.Completed;
         }
 

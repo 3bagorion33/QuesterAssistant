@@ -10,7 +10,6 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Patches;
 
 namespace QuesterAssistant
@@ -95,7 +94,8 @@ namespace QuesterAssistant
             //statusMonitor.Enabled = true;
             //Logger.WriteLine("NotifyStatusMonitor Activated");
 
-            new WayPointFilter().Run();
+            if (SettingsCore.Data.Patches.WayPointFilterPatch)
+                new WayPointFilter().Run();
         }
 
         public override void OnUnload()

@@ -85,5 +85,17 @@ namespace QuesterAssistant.Classes.Extensions
                 index += (length - stepsBackward);
             }
         }
+        public static bool FindPattern(this string text, string pattern)
+        {
+            if (pattern == "*")
+                return true;
+            if (pattern.StartsWith("*") && pattern.EndsWith("*"))
+                return text.Contains(pattern.Remove(pattern.Length - 1).Remove(0, 1));
+            if (pattern.StartsWith("*"))
+                return text.EndsWith(pattern.Remove(0, 1));
+            if (pattern.EndsWith("*"))
+                return text.StartsWith(pattern.Remove(pattern.Length - 1));
+            return pattern == text;
+        }
     }
 }

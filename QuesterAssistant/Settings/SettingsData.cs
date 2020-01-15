@@ -13,12 +13,15 @@ namespace QuesterAssistant.Settings
         public HideClientClass HideClient { get; set; } = new HideClientClass();
         [HashInclude]
         public PauseBotClass PauseBot { get; set; } = new PauseBotClass();
+        [HashInclude]
+        public PatchesDef Patches { get; set; } = new PatchesDef();
 
         public void Parse(SettingsData source)
         {
             RoleToggleHotKey.Parse(source.RoleToggleHotKey);
             HideClient.Parse(source.HideClient);
             PauseBot.Parse(source.PauseBot);
+            Patches.Parse(source.Patches);
         }
 
         public void Init() { }
@@ -54,6 +57,28 @@ namespace QuesterAssistant.Settings
             {
                 HotKey.Parse(source.HotKey);
                 Delay = source.Delay;
+            }
+        }
+
+        public class PatchesDef : OverrideHash, IParse<PatchesDef>
+        {
+            [HashInclude]
+            public bool WayPointFilterPatch { get; set; } = true;
+            [HashInclude]
+            public bool ProfessionPatch { get; set; } = true;
+            [HashInclude]
+            public uint ProfessionPatchReadyTasksCount { get; set; } = 1;
+            [HashInclude]
+            public uint ProfessionPatchActiveTasksCount { get; set; } = 1;
+
+            public void Init() { }
+
+            public void Parse(PatchesDef source)
+            {
+                WayPointFilterPatch = source.WayPointFilterPatch;
+                ProfessionPatch = source.ProfessionPatch;
+                ProfessionPatchReadyTasksCount = source.ProfessionPatchReadyTasksCount;
+                ProfessionPatchActiveTasksCount = source.ProfessionPatchActiveTasksCount;
             }
         }
     }

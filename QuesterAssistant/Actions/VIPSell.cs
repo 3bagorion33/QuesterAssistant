@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
+using NPCInfos = Astral.Quester.Classes.NPCInfos;
 
 namespace QuesterAssistant.Actions
 {

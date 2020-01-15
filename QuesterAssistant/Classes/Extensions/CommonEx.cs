@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
@@ -9,23 +8,26 @@ namespace QuesterAssistant.Classes.Extensions
 {
     public static class CommonEx
     {
+        /// <summary>
+        /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
+        /// </summary>
+        public static int CheckZero(this int @int, int value) => DynCheckZero(@int, value);
+        /// <summary>
+        /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
+        /// </summary>
+        public static uint CheckZero(this uint @uint, uint value) => DynCheckZero(@uint, value);
+        private static dynamic DynCheckZero(dynamic @this, dynamic value)
+        {
+            return @this == 0 ? value : @this;
+        }
 
         /// <summary>
         /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
         /// </summary>
-        public static int CheckZero(this int @int, int value)
+        public static int CheckNegative(this int @int, int value) => DynCheckNegative(@int, value);
+        private static dynamic DynCheckNegative(dynamic @this, dynamic value)
         {
-            return DynCheckZero(@int, value);
-        }
-
-        public static uint CheckZero(this uint @uint, uint value)
-        {
-            return DynCheckZero(@uint, value);
-        }
-
-        private static dynamic DynCheckZero(dynamic @this, dynamic value)
-        {
-            return @this == 0 ? value : @this;
+            return @this < 0 ? value : @this;
         }
 
         public static T SerializedClone<T>(this T toClone)

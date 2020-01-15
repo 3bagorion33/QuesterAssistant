@@ -45,6 +45,7 @@ namespace QuesterAssistant.Settings
             bsrcHideMode.DataSource = Data.HideClient;
             bsrcPauseBotHotKey.DataSource = Data.PauseBot.HotKey;
             bsrcPauseBot.DataSource = Data.PauseBot;
+            bsrcPatches.DataSource = Data.Patches;
             cbxHideMinimize.Properties.Items.AddRange(typeof(SettingsData.HideClientClass.Mode).GetEnumValues());
 
             chkRoleToggleEnabled.BindAdd(bsrcRoleToggleHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
@@ -55,12 +56,17 @@ namespace QuesterAssistant.Settings
             chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
             txtPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(TextEdit.Text), nameof(HotKey.String));
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
+            chkWayPointPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.Patches.WayPointFilterPatch));
+            chkProfessionPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.PatchesDef.ProfessionPatch));
+            numReadyTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchReadyTasksCount));
+            numActiveTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchActiveTasksCount));
 
             Data.HashChanged += bsrcRoleToggleHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcHideMode.ResetCurrentItem;
             Data.HashChanged += bsrcHideGameHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcPauseBotHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcPauseBot.ResetCurrentItem;
+            Data.HashChanged += bsrcPatches.ResetCurrentItem;
         }
 
         private void simpleButton1_Click(object sender, EventArgs e)

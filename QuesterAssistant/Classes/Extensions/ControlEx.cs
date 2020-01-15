@@ -10,6 +10,7 @@ namespace QuesterAssistant.Classes.Extensions
         {
             if (source != null)
             {
+                editor.DataBindings.Clear();
                 editor.DataBindings.Add(editorProperty, source, sourceProperty, false, updateMode);
             }
         }

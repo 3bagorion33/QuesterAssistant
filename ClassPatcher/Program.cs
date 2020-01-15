@@ -39,6 +39,11 @@ namespace ClassPatcher
                         enumerator.Current.Name == "CustomClasses" ||
                         enumerator.Current.Name == "Main" ||
                         enumerator.Current.Name == "Engine" ||
+                        enumerator.Current.Name == "ActiveTaskEditor" ||
+                        enumerator.Current.Name == "TaskNameEditor" ||
+                        enumerator.Current.Name == "NPCInfos" ||
+                        enumerator.Current.Name == "SharedBankNumericsEditor" ||
+                        enumerator.Current.Name == "Tasks" ||
 
                         action == "/show")
                     {

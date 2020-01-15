@@ -31,14 +31,13 @@
     <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
     <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
     <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
-    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <UpdateAssemblyInfoVersion>True</UpdateAssemblyInfoVersion>
     <UpdatePackageVersion>False</UpdatePackageVersion>
     <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
     <InheritWinAppVersionFrom>None</InheritWinAppVersionFrom>
     <AssemblyInfoFilePath>
     </AssemblyInfoFilePath>
-    <AssemblyInfoVersionSettings>
-    </AssemblyInfoVersionSettings>
+    <AssemblyInfoVersionSettings>None.IncrementOnDemand.IncrementOnDemand.IncrementWithResetOnIncrease</AssemblyInfoVersionSettings>
     <AssemblyInfoVersionSemVerSettings>
     </AssemblyInfoVersionSemVerSettings>
     <AssemblyFileVersionSettings>None.IncrementOnDemand.MMddStamp.TimeStamp</AssemblyFileVersionSettings>
@@ -288,6 +287,7 @@
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
+    <Compile Include="Actions\CompleteATaskExt.cs" />
     <Compile Include="Actions\DonateToStronghold.cs" />
     <Compile Include="Actions\GroupItems.cs" />
     <Compile Include="Actions\LoadInsigniaPreset.cs" />
@@ -308,13 +308,15 @@
     <Compile Include="Actions\Notify.cs" />
     <Compile Include="Actions\PullProfileFromStack.cs" />
     <Compile Include="Actions\RunUpgradeProfile.cs" />
+    <Compile Include="Actions\SharedBankCurrencyTransfer.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
     <Compile Include="Classes\Insignia.cs" />
-    <Compile Include="Classes\Patch.cs" />
+    <Compile Include="Classes\Patches\GetNextTaskInfosPatch.cs" />
+    <Compile Include="Classes\Patches\Patch.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
     <Compile Include="Classes\Common\MinMaxPair.cs" />
@@ -325,17 +327,18 @@
     <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
     <Compile Include="Classes\Extensions\ItemEx.cs" />
     <Compile Include="Classes\ParagonTools.cs" />
-    <Compile Include="Classes\Patcher.cs" />
+    <Compile Include="Classes\Patches\Patcher.cs" />
     <Compile Include="Classes\Patches\AddClass.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Classes\Patches\AddClass.Designer.cs">
       <DependentUpon>AddClass.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\Patches\Methods.cs" />
+    <Compile Include="Classes\Patches\ProfessionsPausePatch.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Common\ReflectionHelper.cs" />
+    <Compile Include="Conditions\TaskCount.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />
@@ -407,6 +410,7 @@
     <Compile Include="UIEditors\Forms\TargetSelectForm.designer.cs">
       <DependentUpon>TargetSelectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIEditors\ItemIdFilterEditor.cs" />
     <Compile Include="UIEditors\ParagonListEditor.cs" />
     <Compile Include="UIEditors\PositionNodeEditor.cs" />
     <Compile Include="UpgradeManager\UpgradeManagerCore.cs" />

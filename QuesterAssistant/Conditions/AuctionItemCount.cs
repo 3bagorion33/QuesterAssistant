@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
-using Astral;
-using Astral.Classes;
+using System.Windows.Forms;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.NW;
+using Astral.Quester;
 using Astral.Quester.Classes;
 using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
+using QuesterAssistant.Actions;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.ItemFilter;
+using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Conditions
 {
@@ -28,12 +30,20 @@ namespace QuesterAssistant.Conditions
             Value = 1;
             Type = AuctionCountType.AuctionOnly;
             SpecificBag = InvBagIDs.None;
-            ItemsFilter = new ItemFilterCore();
+            GetItemsFromParentAction(out itemsFilter);
         }
 
-        public override string ToString()
+        public override string ToString() => $"{GetType().Name} {Sign} to {Value}";
+        public override void Reset() => AuctionSearch.RequestAuctionsForPlayer();
+        public override string TestInfos => $"Item count : {CurrentCount()}";
+
+        public bool GetItemsFromParentAction(out ItemFilterCore itemFilterCore)
         {
-            return $"{GetType().Name} {Sign} to {Value}";
+            var action = API.SelectedEditorAction as AuctionSellItems;
+            bool result = action != null &&
+                          QMessageBox.ShowDialog("Import items from current action?") == DialogResult.Yes;
+            itemFilterCore = result ? action.ItemsFilter : new ItemFilterCore();
+            return result;
         }
 
         private uint CurrentCount()
@@ -84,15 +94,14 @@ namespace QuesterAssistant.Conditions
             }
         }
 
-        public override string TestInfos => "Item count : " + CurrentCount();
-
-        public override void Reset()
+        private ItemFilterCore itemsFilter;
+        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        public ItemFilterCore ItemsFilter
         {
-            AuctionSearch.RequestAuctionsForPlayer();
+            get => itemsFilter;
+            set => itemsFilter = value;
         }
 
-        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
-        public ItemFilterCore ItemsFilter { get; set; }
         public Relation Sign { get; set; }
         public int Value { get; set; }
         public AuctionCountType Type { get; set; }

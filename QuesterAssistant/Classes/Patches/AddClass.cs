@@ -28,9 +28,8 @@ namespace QuesterAssistant.Classes.Patches
                 }
             }
 
-            typeof(Astral.Controllers.Plugins).ExecStaticMethod("GetTypes", out var pluginsTypes);
-
-            foreach (Type type in pluginsTypes as List<Type>)
+            var pluginsTypes = typeof(Astral.Controllers.Plugins).ExecStaticMethod("GetTypes") as List<Type>;
+            foreach (Type type in pluginsTypes)
             {
                 if (type.BaseType == typeof(UCCAction))
                 {

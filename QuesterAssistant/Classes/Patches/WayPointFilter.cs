@@ -17,7 +17,7 @@ namespace QuesterAssistant.Classes.Patches
         private static uint pGroundAura;
         private IntPtr gameHandle = IntPtr.Zero;
 
-        private static readonly Timer timer = new Timer {AutoReset = true, Interval = 200, Enabled = true};
+        private static readonly Timer timer = new Timer {AutoReset = true, Interval = 1000, Enabled = true};
         private static double cachedWPD = Astral.API.CurrentSettings.ChangeWaypointDist;
 
         public WayPointFilter()

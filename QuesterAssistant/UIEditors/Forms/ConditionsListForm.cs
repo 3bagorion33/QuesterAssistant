@@ -151,12 +151,9 @@ namespace QuesterAssistant.UIEditors.Forms
                 }
             }
 
-            if (qEditor != null)
-            {
-                if (qEditor.GetFieldValue("copiedCondition", out object cond))
-                    return CopyHelper.CreateDeepCopy(cond as Condition);
-            }
-            return null;
+            if (qEditor == null) return null;
+            var cond = qEditor.GetFieldValue("copiedCondition") as Condition;
+            return CopyHelper.CreateDeepCopy(cond);
         }
 
         /// <summary>
@@ -175,15 +172,14 @@ namespace QuesterAssistant.UIEditors.Forms
                 }
             }
 
-            if (qEditor != null)
+            if (qEditor == null) return false;
+            // помещаем копию условия в буфер редактора QuesterEditor
+            if (qEditor.SetFieldValue("copiedCondition", CopyHelper.CreateDeepCopy(cond)))
             {
-                // помещаем копию условия в буфер редактора QuesterEditor
-                if (qEditor.SetFieldValue("copiedCondition", CopyHelper.CreateDeepCopy(cond)))
-                {
-                    // Включаем кнопку "Вставки условия"
-                    if (qEditor.GetFieldValue("b_PasteCond", out object btnPaste))
-                        return btnPaste.SetPropertyValue("Enabled", true, BindingFlags.Instance | BindingFlags.Public, true);
-                }
+                // Включаем кнопку "Вставки условия"
+                var btnPaste = qEditor.GetFieldValue("b_PasteCond");
+                if (btnPaste != null)
+                    return btnPaste.SetPropertyValue("Enabled", true, BindingFlags.Instance | BindingFlags.Public, true);
             }
             return false;
         }

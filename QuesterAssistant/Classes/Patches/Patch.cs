@@ -1,22 +1,24 @@
 ﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Patches
 {
     internal class Patch
     {
         private readonly MethodInfo methodToReplace;
         private readonly MethodInfo methodToInject;
+        private readonly bool active;
 
-        public Patch(MethodInfo methodToReplace, MethodInfo methodToInject)
+        public Patch(MethodInfo methodToReplace, MethodInfo methodToInject, bool active = true)
         {
             this.methodToReplace = methodToReplace;
             this.methodToInject = methodToInject;
+            this.active = active;
         }
 
         public void Inject()
         {
-            if (methodToReplace is null || methodToInject is null) return;
+            if (!active || methodToReplace is null || methodToInject is null) return;
 
             RuntimeHelpers.PrepareMethod(methodToReplace.MethodHandle);
             RuntimeHelpers.PrepareMethod(methodToInject.MethodHandle);

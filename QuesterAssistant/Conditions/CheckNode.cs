@@ -2,9 +2,13 @@
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
+using System.Windows.Forms;
 using Astral.Logic.NW;
+using Astral.Quester;
+using Astral.Quester.Classes.Actions;
 using MyNW.Classes;
 using MyNW.Internals;
+using QuesterAssistant.Panels;
 using QuesterAssistant.UIEditors;
 
 namespace QuesterAssistant.Conditions
@@ -23,13 +27,17 @@ namespace QuesterAssistant.Conditions
     {
         [NonSerialized]
         private Interact.DynaNode currentNode;
-
         public NodeState Tested { get; set; }
 
+        private Vector3 position;
         [Editor(typeof(PositionNodeEditor), typeof(UITypeEditor))]
         [Description("Position of the Node that is checked.\n" +
-            "Координаты проверяемой Ноды.")]
-        public Vector3 Position { get; set; }
+                     "Координаты проверяемой Ноды.")]
+        public Vector3 Position
+        {
+            get => position;
+            set => position = value;
+        }
 
         [Description("The maximum distance at which the bot can detect the Node\r\n" +
             "If the distance from the Player to the 'Position' greater then 'VisibilityDistance' then the condition is considered True\n" +
@@ -39,9 +47,18 @@ namespace QuesterAssistant.Conditions
 
         public CheckNode()
         {
+            GetPositionFromParentAction(out position);
             Tested = NodeState.Exist;
-            Position = new Vector3();
-            VisibilityDistance = 150;
+            VisibilityDistance = 80;
+        }
+
+        public bool GetPositionFromParentAction(out Vector3 pos)
+        {
+            var action = API.SelectedEditorAction as InteractSpecificNode;
+            bool result = action != null &&
+                          QMessageBox.ShowDialog("Import node's coordinates from current action?") == DialogResult.Yes;
+            pos = result ? action.Position : new Vector3();
+            return result;
         }
 
         private Interact.DynaNode GetNode()
