@@ -35,6 +35,7 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             if (ProfileName.Length == 0) return ActionResult.Fail;
+            Pause.Sleep(800);
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
             var currentProfile = ProfilesStack.CurrentProfilePath;
             var result = new LoadProfile { ProfileName = profileName }.Run();
@@ -47,17 +48,9 @@ namespace QuesterAssistant.Actions
         public string ProfileName
         {
             get => profileName;
-            set
-            {
-                if (value.Contains(@"/"))
-                {
-                    profileName = value;
-                }
-                else
-                {
-                    profileName = ProfilesStack.RelativePath(Path.Combine(Core.ProfilesPath, value));
-                }
-            }
+            set => profileName = value.Contains(@"/")
+                ? value
+                : ProfilesStack.RelativePath(Path.Combine(Core.ProfilesPath, value));
         }
 
         [Browsable(false), XmlIgnore]

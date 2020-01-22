@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using Astral.Logic.UCC.Actions;
 using Astral.Logic.UCC.Classes;
@@ -93,7 +92,7 @@ namespace QuesterAssistant.Classes.Patches
                         {
                             Consumables consumables = uccaction as Consumables;
                             string a3 = addClass.valuesList.SelectedItem.ToString();
-                            foreach (InventorySlot inventorySlot in EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.MainArtifact).GetItems)
+                            foreach (InventorySlot inventorySlot in EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.ArtifactPrimary).GetItems)
                             {
                                 if (a3 == inventorySlot.Item.ItemDef.DisplayName)
                                 {
@@ -154,7 +153,7 @@ namespace QuesterAssistant.Classes.Patches
             }
             if (a == typeof(Consumables).Name)
             {
-                foreach (InventorySlot inventorySlot in EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.MainArtifact).GetItems)
+                foreach (InventorySlot inventorySlot in EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.ArtifactPrimary).GetItems)
                 {
                     if (!valuesList.Items.Contains(inventorySlot.Item.ItemDef.DisplayName))
                     {

@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.labelControl5 = new DevExpress.XtraEditors.LabelControl();
             this.tedGlobHotKey = new DevExpress.XtraEditors.TextEdit();
             this.chkHotKeys = new DevExpress.XtraEditors.CheckEdit();
@@ -39,17 +38,16 @@
             this.btnGetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.btnSetPowers = new DevExpress.XtraEditors.SimpleButton();
             this.gridControlPowers = new DevExpress.XtraGrid.GridControl();
-            this.powerListSource = new System.Windows.Forms.BindingSource(this.components);
+            this.powerListSource = new System.Windows.Forms.BindingSource();
             this.gridViewPowers = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gctrlCharInfo = new DevExpress.XtraEditors.GroupControl();
             this.labelCharacterName = new DevExpress.XtraEditors.LabelControl();
             this.labelCharacterClass = new DevExpress.XtraEditors.LabelControl();
-            this.timerCharCheck = new System.Windows.Forms.Timer(this.components);
-            this.bsrcGlobHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcCurrHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.bsrcGlobHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcCurrHotKey = new System.Windows.Forms.BindingSource();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             ((System.ComponentModel.ISupportInitialize)(this.tedGlobHotKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkHotKeys.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gCtrlPowersPresets)).BeginInit();
@@ -270,11 +268,6 @@
             this.labelCharacterClass.TabIndex = 0;
             this.labelCharacterClass.Text = "Class: ";
             // 
-            // timerCharCheck
-            // 
-            this.timerCharCheck.Enabled = true;
-            this.timerCharCheck.Interval = 1000;
-            // 
             // defaultLookAndFeel
             // 
             this.defaultLookAndFeel.LookAndFeel.SkinName = "Office 2013 Light Gray";
@@ -328,7 +321,6 @@
         private DevExpress.XtraEditors.LabelControl labelCharacterName;
         private DevExpress.XtraEditors.LabelControl labelCharacterClass;
         private System.Windows.Forms.BindingSource powerListSource;
-        private System.Windows.Forms.Timer timerCharCheck;
         private Panels.ListControl lcPresetsList;
         private System.Windows.Forms.BindingSource bsrcGlobHotKey;
         private System.Windows.Forms.BindingSource bsrcCurrHotKey;

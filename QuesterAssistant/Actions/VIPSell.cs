@@ -65,10 +65,10 @@ namespace QuesterAssistant.Actions
                 return npc;
             }
 
-            var slot1 = EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.MainArtifact).GetItems.First();
-            var slot2 = EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.SecondaryArtifacts).GetItems.First();
+            var slot1 = EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.ArtifactPrimary).GetItems.First();
+            var slot2 = EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.ArtifactSecondary).GetItems.First();
 
-            slot1.MoveAll(InvBagIDs.SecondaryArtifacts);
+            slot1.MoveAll(InvBagIDs.ArtifactSecondary);
 
             bool flag = API.CurrentSettings.DiscardIfCantSale;
             API.CurrentSettings.DiscardIfCantSale = true;

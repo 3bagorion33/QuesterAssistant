@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
-using DevExpress.Data.Filtering.Helpers;
 
 namespace QuesterAssistant.Classes.Common
 {
@@ -255,6 +253,13 @@ namespace QuesterAssistant.Classes.Common
             return fi == null ? null : fi.GetValue(type);
         }
 
+        public static T GetStaticFieldValue<T>(this Type type, int index = 0, BindingFlags flags = DefaultFlags) where T : class
+        {
+            var fields = type.GetFields(DefaultFlags).Where(f => f.FieldType == typeof(T)).ToArray();
+            var fi = fields[index];
+            return fi == null ? null : fi.GetValue(type) as T;
+        }
+
         public static object ExecMethod(this object obj, string methodName, object[] arguments,
             BindingFlags flags = DefaultFlags, bool baseType = false)
         {
@@ -329,12 +334,14 @@ namespace QuesterAssistant.Classes.Common
                 if (methodInfo.ReturnType == returnType && methodInfo.GetParameters().Length == inputTypes.Length)
                 {
                     var arguments = methodInfo.GetParameters();
+                    bool flag = true;
                     foreach (var argument in arguments)
                     {
                         if (inputTypes.Count(a => a == argument.ParameterType) != arguments.Count(a => a.ParameterType == argument.ParameterType))
-                            return null;
+                            flag = false;
                     }
-                    return Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
+                    if (flag)
+                        return Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
                 }
             }
             return null;

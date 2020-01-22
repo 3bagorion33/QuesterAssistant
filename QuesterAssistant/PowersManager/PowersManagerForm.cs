@@ -10,6 +10,7 @@ using QuesterAssistant.Panels;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Enums;
 using static QuesterAssistant.PowersManager.PowersManagerData;
+using Timer = System.Timers.Timer;
 
 namespace QuesterAssistant.PowersManager
 {
@@ -19,6 +20,7 @@ namespace QuesterAssistant.PowersManager
         private PowersManagerData Data => Core.Data;
         private Preset CurrentPreset => lcPresetsList.CurrentItem as Preset ?? new Preset();
         private ParagonCategory prevCharParagon = ParagonCategory.Unknown;
+        private readonly Timer timerCharCheck = new Timer {Enabled = true, AutoReset = true, Interval = 1000};
 
         public PowersManagerForm()
         {
@@ -35,7 +37,7 @@ namespace QuesterAssistant.PowersManager
             chkHotKeys.BindAdd(bsrcGlobHotKey, nameof(CheckEdit.Checked), nameof(PowersManagerData.HotKey.Enabled));
             tedGlobHotKey.BindAdd(bsrcGlobHotKey, nameof(TextEdit.Text), nameof(PowersManagerData.HotKey.String), DataSourceUpdateMode.OnValidation);
 
-            timerCharCheck.Tick += CharCheck;
+            timerCharCheck.Elapsed += CharCheck;
         }
 
         private void lcPresetsList_EditValueChanged(object sender, EventArgs e)

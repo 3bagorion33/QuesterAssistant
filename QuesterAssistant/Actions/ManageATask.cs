@@ -52,12 +52,9 @@ namespace QuesterAssistant.Actions
         {
             bool Finder(Assignment a)
             {
-                var def = a.Def.InternalName.FindPattern(Task) && !a.ReadyToComplete;
-                if (def && Remaining > 0)
-                    def &= RemainingRelation.Compare(a.Remaining, Remaining);
-                if (def && Duration > 0)
-                    def &= DurationRelation.Compare(a.Duration, Duration);
-                return def;
+                return a.Def.InternalName.FindPattern(Task) && !a.ReadyToComplete &&
+                       (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) &&
+                       (Duration == 0 || DurationRelation.Compare(a.Duration, Duration));
             }
 
             Assignment assignment =

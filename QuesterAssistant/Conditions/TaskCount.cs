@@ -47,16 +47,16 @@ namespace QuesterAssistant.Conditions
         }
 
         private bool AllTasksCount(Assignment a) =>
-            a.Def.Category > 1 &&
+            (!OnlyProfessionsTasks || a.Def.Category > 1) &&
             a.Def.InternalName.FindPattern(Task);
 
         private bool ActiveTasksCount(Assignment a) =>
-            a.Def.Category > 1 &&
+            (!OnlyProfessionsTasks || a.Def.Category > 1) &&
             !a.ReadyToComplete &&
             a.Def.InternalName.FindPattern(Task);
 
         private bool CompletedTasksCount(Assignment a) =>
-            a.Def.Category > 1 &&
+            (!OnlyProfessionsTasks || a.Def.Category > 1) &&
             a.ReadyToComplete &&
             a.Def.InternalName.FindPattern(Task);
 
@@ -99,6 +99,7 @@ namespace QuesterAssistant.Conditions
 
         public Relation Sign { get; set; }
         public int Value { get; set; }
+        public bool OnlyProfessionsTasks { get; set; } = true;
 
         [Description("Can use * character at the start and end as jocker")]
         [Editor(typeof(TaskNameEditor), typeof(UITypeEditor))]

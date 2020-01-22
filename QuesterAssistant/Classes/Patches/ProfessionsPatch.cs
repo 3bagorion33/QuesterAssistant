@@ -51,11 +51,16 @@ namespace QuesterAssistant.Classes.Patches
                     (new[] {typeof(uint), typeof(bool), typeof(Assignment)})
                 .Inject();
             System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11);
+            //var delegat = Characters_smethod_11;
+            //var threadStart = new ThreadStart(delegat);
+            //var thr = new Thread(threadStart);
+            ////new Thread(new ThreadStart(Characters_smethod_11)).Start();
+            //thr.Start();
         }
 
         private static void Astral_Professions_FSM_States_Main_RandomPause(int min, int max)
         {
-            if (min != 5 && max == min + 5)
+            if (max == min + 5)
             {
                 Pause.Sleep(250);
                 return;

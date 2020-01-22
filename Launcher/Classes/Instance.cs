@@ -127,7 +127,10 @@ namespace Launcher.Classes
 
         public void Close()
         {
-            Process.CloseMainWindow();
+            if (Process.Responding)
+                Process.CloseMainWindow();
+            else
+                Process.Kill();
             while (!Process.HasExited)
                 Thread.Sleep(200);
         }

@@ -1,10 +1,12 @@
 ﻿using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
-using Astral.Logic.NW;
 using MyNW.Classes;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Threading.Tasks;
+using Astral;
 using QuesterAssistant.Classes.ItemFilter;
 using QuesterAssistant.UIEditors;
 using MyNW.Patchables.Enums;
@@ -38,18 +40,23 @@ namespace QuesterAssistant.Actions
         public override void InternalReset() {}
         public override void OnMapDraw(GraphicsNW graph) {}
 
+        private void DiscardItems(InventorySlot slot)
+        {
+            slot.RemoveAll();
+            Logger.WriteLine($"Discard '{slot.Item.ItemDef.DisplayName}' ...");
+        }
+
         public override ActionResult Run()
         {
-            bool Finder(InventorySlot x)
-            {
-                var f1 = !x.Item.ItemDef.CantDiscard;
-                var f2 = SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality);
-                var f3 = ItemIdFilter.IsMatch(x.Item);
+            bool Finder(InventorySlot x) =>
+                !x.Item.ItemDef.CantDiscard &&
+                SpecificGrade.Items.Exists(g => g == x.Item.ItemDef.Quality) &&
+                ItemIdFilter.IsMatch(x.Item);
 
-                return f1 && f2 && f3;
-            }
-
-            Inventory.Slots.FindAll(Finder).ForEach(Interact.DiscardItem);
+            List<Task> tasks = new List<Task>();
+            Inventory.Slots.FindAll(Finder).ForEach(s => tasks.Add(Task.Factory.StartNew(() => DiscardItems(s))));
+            Task.WaitAll(tasks.ToArray());
+            Pause.Sleep(800);
             return ActionResult.Completed;
         }
 

@@ -18,7 +18,7 @@ namespace QuesterAssistant.Settings
 
         private void HideGameWindow()
         {
-            if (Core.GameProcess.HasExited) return;
+            if (Core.GameProcess is null && Core.GameProcess.HasExited) return;
 
             if (WinAPI.IsWindowVisible(Core.GameWindowHandle) && !WinAPI.IsWindowMinimize(Core.GameWindowHandle))
             {
@@ -60,7 +60,7 @@ namespace QuesterAssistant.Settings
 
             if (Data.PauseBot.HotKey.Enabled && flag && (e.KeyCode & Keys.W) != 0)
             {
-                e.SuppressKeyPress = false;
+                //e.SuppressKeyPress = false;
                 Task.Factory.StartNew(PauseBot);
             }
         }
