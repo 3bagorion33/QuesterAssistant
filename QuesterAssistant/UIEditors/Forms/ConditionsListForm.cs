@@ -6,7 +6,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
-using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Reflection;
 using QuesterAssistant.Panels;
 using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Condition>;
 

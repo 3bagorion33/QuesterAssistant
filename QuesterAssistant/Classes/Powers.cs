@@ -28,7 +28,7 @@ namespace QuesterAssistant.Classes
             }
         }
 
-        internal static void ApplyPower(Power pwr)
+        private static void ApplyPower(Power pwr)
         {
             MyNW.Classes.Power newPower = GetPowerByInternalName(pwr.InternalName);
             if (!newPower.IsValid)
@@ -38,13 +38,11 @@ namespace QuesterAssistant.Classes
                 return;
 
             var currPower = GetPowerBySlot((int)pwr.TraySlot);
-            while (currPower.RechargeTime > 0 || currPower.SubCombatStatePowers.Exists(x => x.RechargeTime > 0))
-            {
-                Thread.Sleep(200);
-            }
-            Thread.Sleep(400);
+            while (currPower.IsActive || currPower.RechargeTime > 0 ||
+                   currPower.SubCombatStatePowers.Exists(x => x.IsActive || x.RechargeTime > 0))
+                Pause.Sleep(200);
+            Pause.Sleep(400);
             Injection.cmdwrapper_PowerTray_Slot(newPower, pwr.TraySlot);
-            return;
         }
     }
 }

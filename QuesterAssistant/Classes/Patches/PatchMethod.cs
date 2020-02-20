@@ -27,6 +27,8 @@ namespace QuesterAssistant.Classes.Patches
             {
                 long* inj = (long*)methodToInject.MethodHandle.Value.ToPointer() + 1;
                 long* tar = (long*)methodToReplace.MethodHandle.Value.ToPointer() + 1;
+                //long* inj = (long*)methodToInject.MethodHandle.GetFunctionPointer() + 1;
+                //long* tar = (long*)methodToReplace.MethodHandle.GetFunctionPointer() + 1;
 
                 *tar = *inj;
             }

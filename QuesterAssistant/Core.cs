@@ -52,7 +52,11 @@ namespace QuesterAssistant
         internal static UpgradeManager.UpgradeManagerCore UpgradeManagerCore { get; } = new UpgradeManager.UpgradeManagerCore();
         internal static InsigniaManager.InsigniaManagerCore InsigniaManagerCore { get; } = new InsigniaManager.InsigniaManagerCore();
 
-        public override void OnBotStart() { }
+        public override void OnBotStart()
+        {
+            ProfessionsPatch.RunAtPlay();
+        }
+
         public override void OnBotStop() { }
 
         public override void OnLoad()
@@ -76,10 +80,10 @@ namespace QuesterAssistant
             Astral.Professions.API.AfterConnectionEvent += API_AfterConnectionEvent;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
-            Task.Factory.StartNew(HooksLoader.SetHook);
+            Task.Factory.StartNew(HooksLoader.SetHook, TaskCreationOptions.LongRunning);
             Patcher.Apply();
             if (SettingsCore.Data.Patches.ProfessionPatch)
-                new ProfessionsPatch().Run();
+                ProfessionsPatch.RunOnce();
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)

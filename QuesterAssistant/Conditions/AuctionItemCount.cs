@@ -30,7 +30,7 @@ namespace QuesterAssistant.Conditions
             Value = 1;
             Type = AuctionCountType.AuctionOnly;
             SpecificBag = InvBagIDs.None;
-            GetItemsFromParentAction(out itemsFilter);
+            //GetItemsFromParentAction(out itemsFilter);
         }
 
         public override string ToString() => $"{GetType().Name} {Sign} to {Value}";

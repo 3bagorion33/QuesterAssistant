@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Controls;
 
-namespace QuesterAssistant.Classes.Common
+namespace QuesterAssistant.Classes.Reflection
 {
-    public static class ReflectionHelper
+    public static class Helper
     {
         public const BindingFlags DefaultFlags = BindingFlags.Instance
                                    | BindingFlags.Static
@@ -311,40 +311,6 @@ namespace QuesterAssistant.Classes.Common
             else types = new Type[] { };
             MethodInfo methodInfo = type.GetMethod(methodName, flags | BindingFlags.Static, null, types, null);
             return methodInfo == null ? null : methodInfo.Invoke(null, arguments);
-        }
-
-        public static TDelegate GetStaticMethodByName<TDelegate>(this Type type, string methodName,
-            BindingFlags flags = DefaultFlags, bool baseType = false) where TDelegate : class 
-        {
-            if (baseType)
-                type = type.BaseType;
-            MethodInfo methodInfo = type.GetMethod(methodName, flags | BindingFlags.Static);
-            return methodInfo is null ? null : Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
-        }
-
-        public static TDelegate GetStaticMethodBySignature<TDelegate>(this Type type, Type returnType, Type[] inputTypes = null,
-            BindingFlags flags = DefaultFlags, bool baseType = false) where TDelegate : class
-        {
-            if (baseType)
-                type = type.BaseType;
-            if (inputTypes == null || inputTypes.Length == 0)
-                inputTypes = new Type[] { };
-            foreach (MethodInfo methodInfo in type.GetMethods(flags | BindingFlags.Static))
-            {
-                if (methodInfo.ReturnType == returnType && methodInfo.GetParameters().Length == inputTypes.Length)
-                {
-                    var arguments = methodInfo.GetParameters();
-                    bool flag = true;
-                    foreach (var argument in arguments)
-                    {
-                        if (inputTypes.Count(a => a == argument.ParameterType) != arguments.Count(a => a.ParameterType == argument.ParameterType))
-                            flag = false;
-                    }
-                    if (flag)
-                        return Delegate.CreateDelegate(typeof(TDelegate), methodInfo) as TDelegate;
-                }
-            }
-            return null;
         }
 
         private static void SubscribeEvent(this object obj, Type control, Type typeHandler, string eventName, MethodInfo method, bool isConsole = false)

@@ -3,59 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Threading.Tasks;
 using Astral;
 using Astral.Logic.NW;
 using Astral.Professions.Classes;
 using Astral.Professions.Controllers;
 using Astral.Professions.FSM.States;
 using Astral.Professions.Functions;
+using Astral.Quester.Classes.Actions;
 using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Reflection;
 
 namespace QuesterAssistant.Classes.Patches
 {
     internal class ProfessionsPatch
     {
-        private BindingFlags binding = ReflectionHelper.DefaultFlags;
+        private static BindingFlags binding = Helper.DefaultFlags;
         private static uint FreeTasksSlots => Core.SettingsCore.Data.Patches.ProfessionPatchFreeTasksSlots;
+        private static System.Threading.Tasks.Task task;
 
         private static readonly Func<string, string> Characters_smethod_2 =
-            typeof(Characters).GetStaticMethodBySignature<Func<string, string>>
-                (typeof(string), new[] { typeof(string) });
+            typeof(Characters).GetStaticMethod<string, string>();
 
         private static readonly Func<string, string, bool> Characters_smethod_7 =
-            typeof(Characters).GetStaticMethodBySignature<Func<string, string, bool>>
-                (typeof(bool), new[] { typeof(string), typeof(string) });
+            typeof(Characters).GetStaticMethod<string, string, bool>();
 
         private static readonly Func<string, string, Characters.SavedCharacter> Characters_smethod_8 =
-            typeof(Characters).GetStaticMethodBySignature<Func<string, string, Characters.SavedCharacter>>
-                (typeof(Characters.SavedCharacter), new[] { typeof(string), typeof(string) });
-
+            typeof(Characters).GetStaticMethod<string, string, Characters.SavedCharacter>();
         private static readonly Action Characters_smethod_11 =
-            typeof(Characters).GetStaticMethodByName<Action>("\u0005");
+            typeof(Characters).GetStaticVoidMethod("\u0005");
 
-        public void Run()
+        public static void RunOnce()
         {
             if (typeof(Characters).GetStaticFieldValue("\u0001") is Thread thread && thread.IsAlive)
                 thread.Abort();
 
             new PatchMethod(typeof(Tasks).GetMethod("GetNextTaskInfos", binding),
-                    GetType().GetMethod(nameof(Astral_Professions_Functions_Tasks_GetNextTaskInfos), binding))
+                    typeof(ProfessionsPatch).GetMethod(nameof(Astral_Professions_Functions_Tasks_GetNextTaskInfos), binding))
                 .Inject();
-
             new PatchMethod(typeof(Main).GetMethod("RandomPause", binding),
                     typeof(ProfessionsPatch).GetMethod(nameof(Astral_Professions_FSM_States_Main_RandomPause), binding))
                 .Inject();
             new PatchConstructor<Characters.SavedSlot, SavedSlotPatch>
                     (new[] {typeof(uint), typeof(bool), typeof(Assignment)})
                 .Inject();
-            System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11);
-            //var delegat = Characters_smethod_11;
-            //var threadStart = new ThreadStart(delegat);
-            //var thr = new Thread(threadStart);
-            ////new Thread(new ThreadStart(Characters_smethod_11)).Start();
-            //thr.Start();
+
+            task = System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11, TaskCreationOptions.LongRunning);
+        }
+
+        public static void RunAtPlay()
+        {
+            if (task is null || task.Status != TaskStatus.Running)
+                task = System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11, TaskCreationOptions.LongRunning);
+            //new PatchMethod(new StartATask().GetType().GetMethod("Run", binding),
+            //        typeof(StartATaskPatch).GetMethod(nameof(StartATaskPatch.RunPatch), binding))
+            //    .Inject();
         }
 
         private static void Astral_Professions_FSM_States_Main_RandomPause(int min, int max)
@@ -234,6 +238,15 @@ namespace QuesterAssistant.Classes.Patches
                 //Debug.WriteLine("SavedSlot hacked!");
                 Index = (uint) Professions2.MaxSlots;
                 SlotID = (uint) assignement.RepeatCount;
+            }
+        }
+
+        public class StartATaskPatch : StartATask
+        {
+            public static ActionResult RunPatch()
+            {
+                Logger.WriteLine("StartATask hacked");
+                return ActionResult.Completed;
             }
         }
     }

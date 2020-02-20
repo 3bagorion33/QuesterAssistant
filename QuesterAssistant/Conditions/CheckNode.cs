@@ -47,7 +47,7 @@ namespace QuesterAssistant.Conditions
 
         public CheckNode()
         {
-            GetPositionFromParentAction(out position);
+            //GetPositionFromParentAction(out position);
             Tested = NodeState.Exist;
             VisibilityDistance = 80;
         }

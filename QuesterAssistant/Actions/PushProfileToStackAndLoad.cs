@@ -23,10 +23,17 @@ namespace QuesterAssistant.Actions
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
         protected override Vector3 InternalDestination => new Vector3();
-        protected override ActionValidity InternalValidity =>
-            ProfileName.Length == 0
-                ? new ActionValidity("No profile name set.")
-                : new ActionValidity();
+        protected override ActionValidity InternalValidity
+        {
+            get
+            {
+                if (ProfileName.Length == 0)
+                    return new ActionValidity("No profile name set.");
+                if (!new FileInfo(Path.Combine(new FileInfo(ProfilesStack.CurrentProfilePath).DirectoryName, profileName)).Exists)
+                    return new ActionValidity("This profile don't exist!");
+                return new ActionValidity();
+            }
+        }
 
         public override void OnMapDraw(GraphicsNW graph) { }
         public override void InternalReset() { }
@@ -35,7 +42,9 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             if (ProfileName.Length == 0) return ActionResult.Fail;
-            Pause.Sleep(800);
+            Pause.Sleep(500);
+            while (string.IsNullOrEmpty(Astral.Controllers.Settings.Get.LastQuesterProfile))
+                Pause.Sleep(200);
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
             var currentProfile = ProfilesStack.CurrentProfilePath;
             var result = new LoadProfile { ProfileName = profileName }.Run();

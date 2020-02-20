@@ -8,7 +8,7 @@ using DevExpress.XtraEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Reflection;
 using static Astral.Logic.UCC.Ressources.Enums;
 
 namespace QuesterAssistant.Classes.Patches

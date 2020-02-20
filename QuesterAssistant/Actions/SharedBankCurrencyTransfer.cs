@@ -11,6 +11,7 @@ using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Reflection;
 
 namespace QuesterAssistant.Actions
 {
