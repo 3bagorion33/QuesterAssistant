@@ -46,6 +46,7 @@ namespace ClassPatcher
                         enumerator.Current.Name == "Tasks" ||
                         enumerator.Current.Name == "RandomMove" ||
                         enumerator.Current.Name == "Move" ||
+                        enumerator.Current.Name == "TaskEditor" ||
 
                         action == "/show")
                     {

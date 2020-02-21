@@ -185,7 +185,7 @@ _pkginfo.txt
 
 # Others
 ClientBin/
-Temp/
+Temp/x64/*
 ~$*
 *~
 *.dbmdl

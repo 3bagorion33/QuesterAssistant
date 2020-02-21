@@ -10,7 +10,6 @@ using Astral.Professions.Classes;
 using Astral.Professions.Controllers;
 using Astral.Professions.FSM.States;
 using Astral.Professions.Functions;
-using Astral.Quester.Classes.Actions;
 using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
@@ -238,15 +237,6 @@ namespace QuesterAssistant.Classes.Patches
                 //Debug.WriteLine("SavedSlot hacked!");
                 Index = (uint) Professions2.MaxSlots;
                 SlotID = (uint) assignement.RepeatCount;
-            }
-        }
-
-        public class StartATaskPatch : StartATask
-        {
-            public static ActionResult RunPatch()
-            {
-                Logger.WriteLine("StartATask hacked");
-                return ActionResult.Completed;
             }
         }
     }
