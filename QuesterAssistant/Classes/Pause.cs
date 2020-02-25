@@ -9,9 +9,11 @@ namespace QuesterAssistant.Classes
     {
         private static readonly Random random = new Random();
         private readonly Timeout timeout;
-
         private int min;
         private int max;
+
+        public int Left => timeout.Left;
+        public int TimeOut { get; private set; }
 
         public Pause(int @int)
         {
@@ -34,12 +36,13 @@ namespace QuesterAssistant.Classes
 
         private int RandomNext()
         {
-            return random.Next(min, max);
+            TimeOut = random.Next(min, max);
+            return TimeOut;
         }
 
         public static int Random(int min, int max)
         {
-            return random.Next(min, max);
+            return new Pause(min, max).RandomNext();
         }
 
         public static void Sleep(int @int)
@@ -47,9 +50,14 @@ namespace QuesterAssistant.Classes
             Thread.Sleep(@int);
         }
 
+        public static void RandomSleep(MinMaxPair<uint> timeOut)
+        {
+            new Pause(timeOut).Waiting();
+        }
+
         public static void RandomSleep(int min, int max)
         {
-            Thread.Sleep(random.Next(min, max));
+            Thread.Sleep(new Pause(min, max).RandomNext());
         }
 
         public void Waiting()
@@ -57,7 +65,7 @@ namespace QuesterAssistant.Classes
             Thread.Sleep(timeout.Left);
         }
 
-        public void RandomWaiting()
+        public void WaitingRandom()
         {
             Waiting();
             timeout.ChangeTime(RandomNext());
@@ -65,6 +73,12 @@ namespace QuesterAssistant.Classes
 
         public void Reset()
         {
+            timeout.Reset();
+        }
+
+        public void ResetRandom()
+        {
+            timeout.ChangeTime(RandomNext());
             timeout.Reset();
         }
     }

@@ -155,7 +155,7 @@ namespace QuesterAssistant.Actions
                         if (slotNum == null) break;
                         count = MathTools.Min(toDonate, (uint) item.InBags, countByLimit) / cItem.BatchSize * cItem.BatchSize;
                         if (count == 0) break;
-                        pause.RandomWaiting();
+                        pause.WaitingRandom();
                         shCoffer.DonateToCoffer(cofferData, slotNum, count);
                         pause.Reset();
                     }
@@ -167,7 +167,7 @@ namespace QuesterAssistant.Actions
                             if (string.IsNullOrEmpty(slotItem.Item.ItemDef.InternalName)) break;
                             count = MathTools.Min(toDonate, slotItem.Item.Count, countByLimit);
                             if (count == 0) break;
-                            pause.RandomWaiting();
+                            pause.WaitingRandom();
                             shCoffer.DonateToCoffer(cofferData, slotItem, count);
                             pause.Reset();
                             toDonate -= count;

@@ -285,6 +285,7 @@
     <Compile Include="Actions\PushProfileToStackAndLoad.cs" />
     <Compile Include="Actions\MoveItems.cs" />
     <Compile Include="Actions\Deprecated\MoveToSea.cs" />
+    <Compile Include="Actions\RandomPause.cs" />
     <Compile Include="Actions\ReportAD.cs" />
     <Compile Include="Actions\AuctionSellItems.cs" />
     <Compile Include="Actions\ChangeSettingValue.cs" />

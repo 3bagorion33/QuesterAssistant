@@ -260,7 +260,7 @@ namespace QuesterAssistant.Actions
                                     break;
                                 }
 
-                                pause.RandomWaiting();
+                                pause.WaitingRandom();
                                 Logger.WriteLine($"Sell '{itemToSell.DisplayName}' {itemCount} of {itemToSell.Count} for {buyoutPrice}AD".CarryOnLength());
                                 Auction.CreateLot(itemToSell, itemCount, buyoutPrice, startingBid, Duration);
 
