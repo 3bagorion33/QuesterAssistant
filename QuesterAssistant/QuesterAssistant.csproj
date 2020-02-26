@@ -305,6 +305,7 @@
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
+    <Compile Include="Classes\Common\Converters\FileFullNameListConverter.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
@@ -376,6 +377,7 @@
     <Compile Include="Classes\Common\Debug.cs" />
     <Compile Include="Classes\Patches\WayPointFilter.cs" />
     <Compile Include="UCCActions\UCCLoadPowersPreset.cs" />
+    <Compile Include="UCCActions\UCCPushProfileToStackAndLoad.cs" />
     <Compile Include="UIEditors\ConditionListEditor.cs" />
     <Compile Include="UIEditors\DonateTaskEditor.cs" />
     <Compile Include="UIEditors\Forms\ConditionsListForm.cs">

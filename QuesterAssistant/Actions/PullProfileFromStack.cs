@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using Astral;
 using Astral.Logic.Classes.Map;
 using MyNW.Classes;
@@ -18,7 +19,18 @@ namespace QuesterAssistant.Actions
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
         protected override Vector3 InternalDestination => new Vector3();
-        protected override ActionValidity InternalValidity => new ActionValidity();
+        protected override ActionValidity InternalValidity
+        {
+            get
+            {
+                if (Astral.Quester.API.CurrentProfile.MainActionPack.Actions.Count(a => a.GetType() == GetType()) > 1)
+                {
+                    return new ActionValidity("This profile contains more than one such action!");
+                }
+                return new ActionValidity();
+            }
+        }
+
         protected override bool IntenalConditions => ProfilesStack.Any;
         
         public override void OnMapDraw(GraphicsNW graph) { }
@@ -30,13 +42,12 @@ namespace QuesterAssistant.Actions
             if (!IntenalConditions)
                 return ActionResult.Fail;
 
-            if (!lastProfile.Load())
+            if (!ProfilesStack.Pull())
             {
                 Logger.WriteLine($"{lastProfile.ProfilePath} don't exist, skip...".CarryOnLength());
                 return ActionResult.Fail;
             }
 
-            ProfilesStack.RemoveLast();
             if (ClearStack)
                 ProfilesStack.Clear();
             return ActionResult.Completed;

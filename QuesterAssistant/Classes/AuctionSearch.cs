@@ -15,7 +15,7 @@ namespace QuesterAssistant.Classes
 {
     internal class AuctionSearch
     {
-        private static string CachedSearchFile => Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
+        private static readonly string CachedSearchFile = Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
         private static readonly Astral.Classes.Timeout timeOut = new Astral.Classes.Timeout(0);
         private readonly ItemDef itemDef;
         private List<SearchResult> cachedSearch;

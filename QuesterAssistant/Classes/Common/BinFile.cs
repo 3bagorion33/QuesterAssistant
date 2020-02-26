@@ -30,7 +30,7 @@ namespace QuesterAssistant.Classes.Common
         public static T Load<T> (string s)
         {
             T result;
-            using (FileStream fileStream = new FileStream(s, FileMode.Open))
+            using (FileStream fileStream = new FileStream(s, FileMode.OpenOrCreate))
             {
                 try
                 {

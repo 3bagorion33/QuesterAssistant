@@ -11,9 +11,7 @@ namespace QuesterAssistant.Classes.Common.Converters
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
             if (context.Instance is IListConverter converter)
-            {
                 return new StandardValuesCollection(converter.ListConverterData);
-            }
             return new StandardValuesCollection(null);
         }
     }

@@ -117,7 +117,7 @@ namespace QuesterAssistant.Settings
 
         private void btnShowStack_Click(object sender, EventArgs e)
         {
-            Task.Factory.StartNew(() => QMessageBox.ShowInfo(ProfilesStack.Show(), allowHtml: DefaultBoolean.True));
+            ProfilesStack.Show();
         }
     }
 }

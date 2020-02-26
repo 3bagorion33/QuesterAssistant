@@ -5,7 +5,6 @@ using System.IO;
 using System.Xml.Serialization;
 using Astral;
 using Astral.Logic.Classes.Map;
-using Astral.Quester.Classes.Actions;
 using MyNW.Classes;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common.Converters;
@@ -29,7 +28,7 @@ namespace QuesterAssistant.Actions
             {
                 if (ProfileName.Length == 0)
                     return new ActionValidity("No profile name set.");
-                if (!new FileInfo(Path.Combine(new FileInfo(ProfilesStack.CurrentProfilePath).DirectoryName, profileName)).Exists)
+                if (!new FileInfo(Path.Combine(ProfilesStack.CurrentProfileInfo.DirectoryName, profileName)).Exists)
                     return new ActionValidity("This profile don't exist!");
                 return new ActionValidity();
             }
@@ -41,19 +40,29 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (ProfileName.Length == 0) return ActionResult.Fail;
+            if (string.IsNullOrEmpty(ProfileName)) return ActionResult.Fail;
+
             Pause.Sleep(500);
             while (string.IsNullOrEmpty(Astral.Controllers.Settings.Get.LastQuesterProfile))
                 Pause.Sleep(200);
+
+            var fileInfo = new FileInfo(Path.Combine(ProfilesStack.CurrentProfileInfo.DirectoryName, ProfileName));
+
+            if (!fileInfo.Exists)
+            {
+                Logger.WriteLine($"Unable to found profile {fileInfo.FullName}");
+                return ActionResult.Fail;
+            }
+
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
-            var currentProfile = ProfilesStack.CurrentProfilePath;
-            var result = new LoadProfile { ProfileName = profileName }.Run();
-            if (result == ActionResult.Completed) ProfilesStack.Add(currentProfile, ActionID);
-            return result;
+            ProfilesStack.PushAndLoad(fileInfo, ActionID);
+
+
+            return ActionResult.Completed;
         }
 
         [Description("Select profile for loading")]
-        [TypeConverter(typeof(FileInfoListConverter))]
+        [TypeConverter(typeof(FileFullNameListConverter))]
         public string ProfileName
         {
             get => profileName;

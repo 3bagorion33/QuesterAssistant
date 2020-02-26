@@ -3,7 +3,6 @@ using System.Linq;
 using Astral;
 using Astral.Logic.UCC.Classes;
 using Astral.Quester.Classes;
-using MyNW.Internals;
 using QuesterAssistant.Actions;
 using QuesterAssistant.Classes;
 
@@ -70,7 +69,6 @@ namespace QuesterAssistant.UCCActions
 
         public override bool Run()
         {
-            //var hash = presetName.GetHashCode() ^ presetNumber.GetHashCode() ^ EntityManager.LocalPlayer.InternalName.GetHashCode();
             var hash = GetHashCode();
             if (hash != prevHash)
             {

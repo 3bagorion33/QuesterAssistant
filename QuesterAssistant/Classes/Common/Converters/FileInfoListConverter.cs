@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
-using QuesterAssistant.Actions;
 
 namespace QuesterAssistant.Classes.Common.Converters
 {
@@ -10,13 +9,9 @@ namespace QuesterAssistant.Classes.Common.Converters
     {
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (value is FileInfo fileInfo && context.Instance is PushProfileToStackAndLoad converter)
-            {
+            if (value is FileInfo fileInfo && context.Instance is IListConverter)
                 return fileInfo.FullName.Substring(Core.ProfilesPath.Length + 1);
-                //return WinAPI.RelativePath(converter.CurrentProfileName, fileInfo.FullName).Replace('\\', '/');
-            }
             return base.ConvertTo(context, culture, value, destinationType);
         }
-
     }
 }
