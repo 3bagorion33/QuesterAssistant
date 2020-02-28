@@ -12,10 +12,6 @@ namespace QuesterAssistant.Classes.Patches
                 typeof(Astral.Logic.UCC.Forms.AddClass).GetMethod(nameof(Astral.Logic.UCC.Forms.AddClass.Show), binding),
                 typeof(AddClass).GetMethod(nameof(AddClass.Show), binding));
 
-        //private static PatchConstructor<Characters.SavedCharacter, SavedCharacterPatch>
-        //    Astral_Professions_Controllers_Characters_SavedCharacter =
-        //        new PatchConstructor<Characters.SavedCharacter, SavedCharacterPatch>(new Type[0]);
-
         public static void Apply()
         {
             typeof(Patcher).GetFields(BindingFlags.NonPublic | BindingFlags.Static)

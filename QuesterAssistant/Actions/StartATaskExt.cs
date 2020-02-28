@@ -267,6 +267,7 @@ namespace QuesterAssistant.Actions
                 if (orderCount >= Task.OrdersCount && Task.OrdersCount != -1)
                     break;
             }
+            Pause.RandomSleep(1000,1500);
             return ActionResult.Completed;
         }
 

@@ -1,16 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using MyNW;
+using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
+using ChatManager = QuesterAssistant.Classes.ChatManager;
 
 namespace QuesterAssistant.Settings
 {
@@ -118,6 +122,70 @@ namespace QuesterAssistant.Settings
         private void btnShowStack_Click(object sender, EventArgs e)
         {
             ProfilesStack.Show();
+        }
+
+        private void simpleButton3_Click(object sender, EventArgs e)
+        {
+            ChatManager.OnChatMessage += OnChatMessage;
+        }
+
+        private void simpleButton4_Click(object sender, EventArgs e)
+        {
+            ChatManager.OnChatMessage -= OnChatMessage;
+        }
+
+        private void OnChatMessage(ChatManager.ChatLogEntryType chatLogEntryType, List<string> messages)
+        {
+            richTextBox1.AppendText($"[{chatLogEntryType}]: {string.Join(" => ", messages)}\n");
+        }
+
+        private void simpleButton5_Click(object sender, EventArgs e)
+        {
+            //CostumeRef costumeRef = new CostumeRef((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + 8));
+            var costumeDbg = new List<CostumeDbg>();
+            //var idx = new[] {0, 8, 16, 24};
+            //foreach (var i in idx)
+            for (int i = 0; i < 33; i++)
+            {
+                costumeDbg.Add(new CostumeDbg(i));
+            }
+        }
+
+        [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
+        private struct CostumeDbg
+        {
+            private int num;
+            private string p0_string;
+            private int p0_int;
+            private IntPtr p1;
+            private string p1_string;
+            private int p1_int;
+
+            private List<string> p1_strings;
+
+            public CostumeDbg(int i)
+            {
+                num = i;
+                p0_string = Memory.MMemory.ReadString(
+                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)),Encoding.UTF8, 256);
+                p0_int = Memory.MMemory.Read<int>(
+                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)));
+                p1 = Memory.MMemory.Read<IntPtr>(
+                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)));
+                p1_string = Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
+                p1_int = Memory.MMemory.Read<int>(p1);
+
+                p1_strings = new List<string>();
+                for (int j = 0; j < 256; j++)
+                {
+                    p1_strings.Add(Memory.MMemory.ReadString(p1 + j, Encoding.UTF8, 256));
+                }
+            }
+
+            public override string ToString() =>
+                $"{num}|{p0_int}:{p0_string}|{p1_int}:{p1_string}";
         }
     }
 }

@@ -305,6 +305,7 @@
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
+    <Compile Include="Classes\ChatManager.cs" />
     <Compile Include="Classes\Common\Converters\FileFullNameListConverter.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
@@ -331,6 +332,7 @@
       <DependentUpon>AddClass.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\Patches\ProfessionsPatch.cs" />
+    <Compile Include="Classes\Patches\Interact.cs" />
     <Compile Include="Classes\Pause.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Reflection\Helper.cs" />

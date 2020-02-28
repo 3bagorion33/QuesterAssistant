@@ -29,7 +29,7 @@ namespace QuesterAssistant.Conditions
         private Interact.DynaNode currentNode;
         public NodeState Tested { get; set; }
 
-        private Vector3 position;
+        private Vector3 position = new Vector3();
         [Editor(typeof(PositionNodeEditor), typeof(UITypeEditor))]
         [Description("Position of the Node that is checked.\n" +
                      "Координаты проверяемой Ноды.")]

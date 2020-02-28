@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
@@ -37,17 +38,17 @@
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtPauseBotHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.btnClearStack = new DevExpress.XtraEditors.SimpleButton();
             this.btnShowStack = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            this.bsrcPauseBot = new System.Windows.Forms.BindingSource();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabCommon = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.tabProfilesStack = new DevExpress.XtraBars.Navigation.TabNavigationPage();
@@ -57,8 +58,12 @@
             this.chkProfessionPatch = new DevExpress.XtraEditors.CheckEdit();
             this.chkWayPointPatch = new DevExpress.XtraEditors.CheckEdit();
             this.tabTest = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.bsrcPatches = new System.Windows.Forms.BindingSource();
+            this.bsrcPatches = new System.Windows.Forms.BindingSource(this.components);
+            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
@@ -359,6 +364,10 @@
             // tabTest
             // 
             this.tabTest.Caption = "Test";
+            this.tabTest.Controls.Add(this.simpleButton5);
+            this.tabTest.Controls.Add(this.richTextBox1);
+            this.tabTest.Controls.Add(this.simpleButton4);
+            this.tabTest.Controls.Add(this.simpleButton3);
             this.tabTest.Controls.Add(this.labelControl1);
             this.tabTest.Controls.Add(this.txtPauseBotHotKey);
             this.tabTest.Controls.Add(this.simpleButton2);
@@ -366,6 +375,35 @@
             this.tabTest.Controls.Add(this.textEdit1);
             this.tabTest.Name = "tabTest";
             this.tabTest.Size = new System.Drawing.Size(370, 345);
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Location = new System.Drawing.Point(6, 87);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(359, 30);
+            this.richTextBox1.TabIndex = 7;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.Visible = false;
+            // 
+            // simpleButton4
+            // 
+            this.simpleButton4.Location = new System.Drawing.Point(86, 58);
+            this.simpleButton4.Name = "simpleButton4";
+            this.simpleButton4.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton4.TabIndex = 6;
+            this.simpleButton4.Text = "UnSubscribe";
+            this.simpleButton4.Visible = false;
+            this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
+            // 
+            // simpleButton3
+            // 
+            this.simpleButton3.Location = new System.Drawing.Point(5, 58);
+            this.simpleButton3.Name = "simpleButton3";
+            this.simpleButton3.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton3.TabIndex = 6;
+            this.simpleButton3.Text = "Subscribe";
+            this.simpleButton3.Visible = false;
+            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
             // 
             // groupControl1
             // 
@@ -377,6 +415,15 @@
             this.groupControl1.Size = new System.Drawing.Size(370, 372);
             this.groupControl1.TabIndex = 8;
             this.groupControl1.Text = "groupControl1";
+            // 
+            // simpleButton5
+            // 
+            this.simpleButton5.Location = new System.Drawing.Point(6, 124);
+            this.simpleButton5.Name = "simpleButton5";
+            this.simpleButton5.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton5.TabIndex = 8;
+            this.simpleButton5.Text = "CostumeRef";
+            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
             // 
             // SettingsForm
             // 
@@ -452,5 +499,9 @@
         private DevExpress.XtraEditors.CheckEdit chkProfessionPatch;
         private DevExpress.XtraEditors.LabelControl labelControl2;
         private DevExpress.XtraEditors.SpinEdit numReadyTasksCount;
+        private DevExpress.XtraEditors.SimpleButton simpleButton4;
+        private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private DevExpress.XtraEditors.SimpleButton simpleButton5;
     }
 }

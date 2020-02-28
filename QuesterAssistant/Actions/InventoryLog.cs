@@ -16,17 +16,29 @@ using Astral;
 
 namespace QuesterAssistant.Actions
 {
-    [Serializable]
     public class InventoryLog : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().Name;
+        public override string ActionLabel => $"{GetType().Name} : [{LogName}]";
         public override string Category => Core.Category;
         public override string InternalDisplayName => string.Empty;
         public override bool NeedToRun => true;
         public override bool UseHotSpots => false;
         protected override bool IntenalConditions => true;
         protected override Vector3 InternalDestination => new Vector3();
-        protected override ActionValidity InternalValidity => new ActionValidity();
+        protected override ActionValidity InternalValidity
+        {
+            get
+            {
+                foreach (var c in Path.GetInvalidFileNameChars())
+                    if (LogName.Contains(c))
+                        return new ActionValidity($"Invalid char {c} in {nameof(LogName)}!");
+                foreach (var c in Path.GetInvalidPathChars())
+                    if (LogPath.Contains(c))
+                        return new ActionValidity($"Invalid char {c} in {nameof(LogPath)}!");
+                return new ActionValidity();
+            }
+        }
+
         public override void GatherInfos() { }
         public override void InternalReset() { }
         public override void OnMapDraw(GraphicsNW graph) { }
@@ -48,7 +60,7 @@ namespace QuesterAssistant.Actions
         public InventoryLog()
         {
             LogName = "InventoryLog";
-            LogPath = Astral.Controllers.Directories.AstralStartupPath;
+            LogPath = string.Empty;
             Mask = "%displayName%;%internalName%;%isBound%;%itemCount%;%itemPrice%";
         }
 
@@ -59,7 +71,7 @@ namespace QuesterAssistant.Actions
             var curChar = EntityManager.LocalPlayer.Name;
             int AccStart = -1, AccEnd = -1;
             int CharStart = -1, CharEnd = -1;
-            var fullFilePath = Path.Combine(LogPath, LogName + ".txt");
+            var fullFilePath = Path.Combine(Astral.Controllers.Directories.AstralStartupPath, LogPath, LogName + ".txt");
 
             //check or create file 
             try

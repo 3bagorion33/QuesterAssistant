@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using MyNW;
+using MyNW.Patchables.Enums;
 
 namespace QuesterAssistant.UpgradeManager
 {
@@ -203,20 +205,7 @@ namespace QuesterAssistant.UpgradeManager
                 }
             }
 
-            public Task()
-            {
-                //List<InventorySlot> SearchDelegate()
-                //{
-                //    var slots = EntityManager.LocalPlayer.BagsItems.FindAll(s =>
-                //        s.Item.ItemDef.InternalName == ItemId);
-                //    EntityManager.LocalPlayer.BaseBagsIds.ForEach(bag =>
-                //        slots.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(bag).Slots.FindAll(slot => !slot.Filled)));
-                //    return slots;
-                //    //EntityManager.LocalPlayer.BagsItems.FindAll(s =>
-                //    //    s.Item.ItemDef.InternalName == ItemId);
-                //}
-                //BagsItems = new CachedList<InventorySlot>(SearchDelegate);
-            }
+            public Task() { }
 
             public static Task New(GetAnItem.ListItem item)
             {
@@ -272,61 +261,83 @@ namespace QuesterAssistant.UpgradeManager
                 return s.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_");
             }
 
+            bool Feed(InventorySlot s)
+            {
+                ItemProgressionLogic progress = s.Item.ProgressionLogic;
+                int points = (int)(progress.CurrentRankTotalRequiredXP - progress.CurrentRankXP);
+
+                if (EntityManager.LocalPlayer.Inventory.RefinementCurrency >= points)
+                {
+                    s.Feed(points);
+                    Thread.Sleep(TIME_WAIT);
+                    return true;
+                }
+                return false;
+            }
+
+            bool Evolve(InventorySlot s)
+            {
+                InventorySlot catal = null;
+                if (UseWard)
+                {
+                    catal = BagsItems.LastOrDefault(FindCatal);
+                }
+                //s.Evolve(catal);
+                EvolveExecutor(s, catal);
+                Thread.Sleep(TIME_WAIT);
+                if (s.Item.ProgressionLogic.CurrentRankXP > 0) return false;
+                s.Group();
+                return true;
+            }
+
             public Result Run()
             {
                 Result result = Result.Null;
 
                 if (Chance == 0 || string.IsNullOrEmpty(ItemId)) return result;
 
-                bool Feed(InventorySlot s)
-                {
-                    ItemProgressionLogic progress = s.Item.ProgressionLogic;
-                    int points = (int)(progress.CurrentRankTotalRequiredXP - progress.CurrentRankXP);
-
-                    if (EntityManager.LocalPlayer.Inventory.RefinementCurrency >= points)
-                    {
-                        s.Feed(points);
-                        Thread.Sleep(TIME_WAIT);
-                        return true;
-                    }
-                    return false;
-                }
-
-                bool Evolve(InventorySlot s)
-                {
-                    InventorySlot catal = null;
-                    if (UseWard)
-                    {
-                        catal = BagsItems.LastOrDefault(FindCatal);
-                    }
-                    s.Evolve(catal);
-                    Thread.Sleep(TIME_WAIT);
-                    if (s.Item.ProgressionLogic.CurrentRankXP > 0) return false;
-                    s.Group();
-                    return true;
-                }
-
                 switch (result = FindResult)
                 {
                     case Result.Unfilled:
                     case Result.PartFilled:
-                        if (Feed(slot)) result = Run();
-                        else result = Result.HaventRefinimentCurrency;
+                        result = Feed(slot) ? Run() : Result.HaventRefinimentCurrency;
                         break;
                     case Result.FullFilled:
-                        if (!Evolve(slot)) result = Run();
-                        else result = Result.Evolved;
+                        result = !Evolve(slot) ? Run() : Result.Evolved;
                         break;
                 }
                 return result;
             }
 
-            public override string ToString()
+            private static void EvolveExecutor(InventorySlot gemSlot, InventorySlot wardSlot = null)
             {
-                return $"{DisplayName} [{ItemId}]";
+                if (!gemSlot.IsValid)
+                {
+                    return;
+                }
+                string[] mnemonics = {
+                    "sub rsp, 0x40",
+                    "mov rax, 1",
+                    "mov [rsp+0x38], rax",  //0x30
+                    "mov rax, 0",
+                    "mov [rsp+0x30], rax",  //0x28
+                    "mov [rsp+0x28], rax",  //0x20
+                    "mov [rsp+0x20], rax",
+                    "mov r9d, " + (wardSlot?.Slot ?? uint.MaxValue),
+                    "mov r8d, " + (uint)(wardSlot?.BagId ?? (InvBagIDs)uint.MaxValue),
+                    "mov edx, " + gemSlot.Slot,
+                    "mov ecx, " + (uint)gemSlot.BagId,
+                    "mov rax, " + (Memory.BaseAdress + 7675504),
+                    "call rax",
+                    "add rsp, 0x40",
+                    "retn"
+                };
+                Hooks.Executor.Execute<IntPtr>(mnemonics, "cmdwrapper_itemProgression_EvoItem");
             }
 
-            public enum Result : int
+            public override string ToString() => $"{DisplayName} [{ItemId}]";
+
+            public enum Result
             {
                 Null = 0,
                 Unfilled = 1,

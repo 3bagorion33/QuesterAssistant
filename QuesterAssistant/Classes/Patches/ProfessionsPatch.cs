@@ -234,7 +234,6 @@ namespace QuesterAssistant.Classes.Patches
             public SavedSlotPatch(uint slotIndex, bool locked, Assignment assignement = null) :
                 base(slotIndex, locked,assignement)
             {
-                //Debug.WriteLine("SavedSlot hacked!");
                 Index = (uint) Professions2.MaxSlots;
                 SlotID = (uint) assignement.RepeatCount;
             }

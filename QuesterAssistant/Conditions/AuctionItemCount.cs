@@ -94,7 +94,7 @@ namespace QuesterAssistant.Conditions
             }
         }
 
-        private ItemFilterCore itemsFilter;
+        private ItemFilterCore itemsFilter = new ItemFilterCore();
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemsFilter
         {

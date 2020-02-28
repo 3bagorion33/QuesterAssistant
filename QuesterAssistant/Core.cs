@@ -77,13 +77,13 @@ namespace QuesterAssistant
             DevExpress.Utils.Drawing.Helpers.Win32SubclasserException.Allow = false;
 
             Astral.Quester.API.BeforeStartEngine += API_BeforeStartEngine;
-            Astral.Professions.API.AfterConnectionEvent += API_AfterConnectionEvent;
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Task.Factory.StartNew(HooksLoader.SetHook, TaskCreationOptions.LongRunning);
             Patcher.Apply();
             if (SettingsCore.Data.Patches.ProfessionPatch)
                 ProfessionsPatch.RunOnce();
+            Interact.Patch();
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
@@ -103,10 +103,6 @@ namespace QuesterAssistant
 
             if (SettingsCore.Data.Patches.WayPointFilterPatch)
                 new WayPointFilter().Run();
-        }
-
-        private void API_AfterConnectionEvent(object sender, Astral.Professions.API.ProfessionCoreEvent e)
-        {
         }
 
         public override void OnUnload()

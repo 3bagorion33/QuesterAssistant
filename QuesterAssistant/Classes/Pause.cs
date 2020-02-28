@@ -79,7 +79,6 @@ namespace QuesterAssistant.Classes
         public void ResetRandom()
         {
             timeout.ChangeTime(RandomNext());
-            timeout.Reset();
         }
     }
 }
