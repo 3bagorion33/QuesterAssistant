@@ -344,6 +344,7 @@
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />
     <Compile Include="Conditions\PlayerParagon.cs" />
+    <Compile Include="Enums\Offsets.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerCore.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerData.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerForm.cs">

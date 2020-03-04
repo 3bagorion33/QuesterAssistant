@@ -54,27 +54,32 @@ namespace QuesterAssistant.Actions
                 nameof(Astral.Quester.UIEditors.NPCInfos.SetInfos), new object[] {Banker});
         }
 
+        int GetTransferCount()
+        {
+            switch (TransferMode)
+            {
+                case TransferModeDef.Keep:
+                    return MathTools.Max(
+                        MathTools.Min(
+                            EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType) - Math.Abs(MoneyTransfert),
+                            EntityManager.SharedBank.Inventory.GetNumericCount(NumericType) - 50000),
+                        - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
+                case TransferModeDef.Transfer:
+                    return MoneyTransfert > 0
+                        ? (int) MathTools.Min(
+                            MoneyTransfert,
+                            EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType),
+                            EntityManager.SharedBank.Inventory.GetNumericCount(NumericType) - 50000)
+                        : (int) MathTools.Max(
+                            MoneyTransfert,
+                            - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
+                default:
+                    return 0;
+            }
+        }
+
         public override ActionResult Run()
         {
-            int GetTransferCount()
-            {
-                switch (TransferMode)
-                {
-                    case TransferModeDef.Keep:
-                        return MathTools.Max(EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType) -
-                                             Math.Abs(MoneyTransfert),
-                            -EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
-                    case TransferModeDef.Transfer:
-                        return MoneyTransfert > 0
-                            ? (int)MathTools.Min(MoneyTransfert,
-                                EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType))
-                            : (int)MathTools.Max(MoneyTransfert,
-                                -EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
-                    default:
-                        return 0;
-                }
-            }
-
             Entity entity = new Entity(IntPtr.Zero);
             if (VIP.CanSummonBankingPortal)
             {

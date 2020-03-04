@@ -5,7 +5,6 @@ using MyNW.Classes.ItemProgression;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;
@@ -14,8 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using MyNW;
-using MyNW.Patchables.Enums;
+using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.UpgradeManager
 {
@@ -100,7 +98,7 @@ namespace QuesterAssistant.UpgradeManager
                 if (Algorithm == AlgorithmDirection.DownToUp)
                 {
                     int j = 0;
-                    bool runconditions;
+                    bool runConditions;
                     do
                     {
                         for (int i = stopIdx; i >= startIdx; i--)
@@ -113,13 +111,13 @@ namespace QuesterAssistant.UpgradeManager
                                 break;
                             }
                         }
-                        runconditions =
+                        runConditions =
                             RunCondition == ErrorBehavior.StopOnError
                                 ? result > 0
-                                : result > Task.Result.HaventRefinimentCurrency &&
+                                : result > Task.Result.HaventRefinementCurrency &&
                                   Tasks.Exists(t => t.HaveRequiredItems);
                     }
-                    while (j < count && runconditions);
+                    while (j < count && runConditions);
                 }
                 return result;
             }
@@ -191,7 +189,7 @@ namespace QuesterAssistant.UpgradeManager
                 get
                 {
                     if (slot == null) return false;
-                    if (UseWard && !BagsItems.Any(FindCatal)) return false;
+                    if (UseWard && !BagsItems.Any(FindWard)) return false;
                     if (!slot.Item.ProgressionLogic.CurrentTier.CatalystItems.Any()) return true;
                     foreach (var catalyst in slot.Item.ProgressionLogic.CurrentTier.CatalystItems)
                     {
@@ -231,35 +229,23 @@ namespace QuesterAssistant.UpgradeManager
                 DisplayName = item.DisplayName;
             }
 
-            bool FindUnfilled(InventorySlot s)
-            {
-                return s.Item.ItemDef.InternalName == ItemId &&
-                    s.Item.ProgressionLogic.CurrentRankXP == 0;
-            }
+            bool FindUnfilled(InventorySlot s) =>
+                s.Item.ItemDef.InternalName == ItemId &&
+                s.Item.ProgressionLogic.CurrentRankXP == 0;
 
-            bool FindPartiallyFilled(InventorySlot s)
-            {
-                return s.Item.ItemDef.InternalName == ItemId &&
-                    s.Item.ProgressionLogic.CurrentRankXP > 0 &&
-                    s.Item.ProgressionLogic.CurrentRankTotalRequiredXP > s.Item.ProgressionLogic.CurrentRankXP;
-            }
+            bool FindPartiallyFilled(InventorySlot s) =>
+                s.Item.ItemDef.InternalName == ItemId &&
+                s.Item.ProgressionLogic.CurrentRankXP > 0 &&
+                s.Item.ProgressionLogic.CurrentRankTotalRequiredXP > s.Item.ProgressionLogic.CurrentRankXP;
 
-            bool FindFullFilled(InventorySlot s)
-            {
-                return s.Item.ItemDef.InternalName == ItemId &&
-                    s.Item.ProgressionLogic.CurrentTier.Index > 0 &&
-                    s.Item.ProgressionLogic.CurrentRankTotalRequiredXP == s.Item.ProgressionLogic.CurrentRankXP;
-            }
+            bool FindFullFilled(InventorySlot s) =>
+                s.Item.ItemDef.InternalName == ItemId &&
+                s.Item.ProgressionLogic.CurrentTier.Index > 0 &&
+                s.Item.ProgressionLogic.CurrentRankTotalRequiredXP == s.Item.ProgressionLogic.CurrentRankXP;
 
-            bool FindAny(InventorySlot s)
-            {
-                return s.Item.ItemDef.InternalName == ItemId;
-            }
+            bool FindAny(InventorySlot s) => s.Item.ItemDef.InternalName == ItemId;
 
-            bool FindCatal(InventorySlot s)
-            {
-                return s.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_");
-            }
+            bool FindWard(InventorySlot s) => s.Item.ItemDef.InternalName.Contains("Fuse_Ward_Preservation_");
 
             bool Feed(InventorySlot s)
             {
@@ -277,30 +263,24 @@ namespace QuesterAssistant.UpgradeManager
 
             bool Evolve(InventorySlot s)
             {
-                InventorySlot catal = null;
-                if (UseWard)
-                {
-                    catal = BagsItems.LastOrDefault(FindCatal);
-                }
-                //s.Evolve(catal);
-                EvolveExecutor(s, catal);
+                var ward = UseWard ? BagsItems.LastOrDefault(FindWard) : null;
+                s.EvolveBatch(ward);
                 Thread.Sleep(TIME_WAIT);
                 if (s.Item.ProgressionLogic.CurrentRankXP > 0) return false;
-                s.Group();
+                //s.Group();
                 return true;
             }
 
             public Result Run()
             {
                 Result result = Result.Null;
-
                 if (Chance == 0 || string.IsNullOrEmpty(ItemId)) return result;
 
                 switch (result = FindResult)
                 {
                     case Result.Unfilled:
                     case Result.PartFilled:
-                        result = Feed(slot) ? Run() : Result.HaventRefinimentCurrency;
+                        result = Feed(slot) ? Run() : Result.HaventRefinementCurrency;
                         break;
                     case Result.FullFilled:
                         result = !Evolve(slot) ? Run() : Result.Evolved;
@@ -308,33 +288,7 @@ namespace QuesterAssistant.UpgradeManager
                 }
                 return result;
             }
-
-            private static void EvolveExecutor(InventorySlot gemSlot, InventorySlot wardSlot = null)
-            {
-                if (!gemSlot.IsValid)
-                {
-                    return;
-                }
-                string[] mnemonics = {
-                    "sub rsp, 0x40",
-                    "mov rax, 1",
-                    "mov [rsp+0x38], rax",  //0x30
-                    "mov rax, 0",
-                    "mov [rsp+0x30], rax",  //0x28
-                    "mov [rsp+0x28], rax",  //0x20
-                    "mov [rsp+0x20], rax",
-                    "mov r9d, " + (wardSlot?.Slot ?? uint.MaxValue),
-                    "mov r8d, " + (uint)(wardSlot?.BagId ?? (InvBagIDs)uint.MaxValue),
-                    "mov edx, " + gemSlot.Slot,
-                    "mov ecx, " + (uint)gemSlot.BagId,
-                    "mov rax, " + (Memory.BaseAdress + 7675504),
-                    "call rax",
-                    "add rsp, 0x40",
-                    "retn"
-                };
-                Hooks.Executor.Execute<IntPtr>(mnemonics, "cmdwrapper_itemProgression_EvoItem");
-            }
-
+            
             public override string ToString() => $"{DisplayName} [{ItemId}]";
 
             public enum Result
@@ -346,7 +300,7 @@ namespace QuesterAssistant.UpgradeManager
                 Evolved = 4,
                 HaventRequiredItems = -1,
                 HaventFreeBagsSlots = -2,
-                HaventRefinimentCurrency = -3
+                HaventRefinementCurrency = -3
             }
         }
     }

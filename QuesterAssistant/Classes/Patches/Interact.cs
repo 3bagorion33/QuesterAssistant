@@ -31,7 +31,8 @@ namespace QuesterAssistant.Classes.Patches
                 bagsItems.AddRange(EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.FashionItems).GetItems);
 
                 List<Task> tasks = new List<Task>();
-                bagsItems.ForEach(s => tasks.Add(Task.Factory.StartNew(() => SellSlot(s))));
+                //bagsItems.ForEach(s => tasks.Add(Task.Factory.StartNew(() => SellSlot(s))));
+                bagsItems.ForEach(s => SellSlot(s, tasks));
                 Task.WaitAll(tasks.ToArray(), 60000);
                 Pause.Sleep(800);
             }
@@ -114,21 +115,24 @@ namespace QuesterAssistant.Classes.Patches
             return false;
         }
 
-        private static void SellSlot(InventorySlot inventorySlot)
+        private static void SellSlot(InventorySlot inventorySlot, List<Task> tasks)
         {
             if (Astral.Logic.NW.Interact.AllowedToSell(inventorySlot, API.CurrentSettings.SellFilter))
             {
-                var timeout = new Timeout(5000);
                 if (inventorySlot.Item.ItemDef.CantSell)
                 {
                     if (API.CurrentSettings.DiscardIfCantSale && !inventorySlot.Item.ItemDef.CantDiscard)
                     {
                         Logger.WriteLine($"Discard '{inventorySlot.Item.ItemDef.DisplayName}' ...");
-                        while (inventorySlot.Filled && !timeout.IsTimedOut)
+                        tasks.Add(Task.Factory.StartNew(() =>
                         {
-                            inventorySlot.RemoveAll();
-                            Pause.RandomSleep(100, 200);
-                        }
+                            var timeout = new Timeout(5000);
+                            while (inventorySlot.Filled && !timeout.IsTimedOut)
+                            {
+                                inventorySlot.RemoveAll();
+                                Pause.RandomSleep(100, 200);
+                            }
+                        }));
                     }
                 }
                 else
@@ -136,11 +140,15 @@ namespace QuesterAssistant.Classes.Patches
                     if (!EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.SellEnabled)
                         return;
                     Logger.WriteLine($"Sell '{inventorySlot.Item.ItemDef.DisplayName}' ...");
-                    while (inventorySlot.Filled && !timeout.IsTimedOut)
+                    tasks.Add(Task.Factory.StartNew(() =>
                     {
-                        inventorySlot.StoreSellItem();
-                        Pause.RandomSleep(100, 200);
-                    }
+                        var timeout = new Timeout(5000);
+                        while (inventorySlot.Filled && !timeout.IsTimedOut)
+                        {
+                            inventorySlot.StoreSellItem();
+                            Pause.RandomSleep(100, 200);
+                        }
+                    }));
                 }
             }
         }
