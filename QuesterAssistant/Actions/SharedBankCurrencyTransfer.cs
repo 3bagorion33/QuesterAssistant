@@ -25,11 +25,14 @@ namespace QuesterAssistant.Actions
         public override void InternalReset() { }
         protected override ActionValidity InternalValidity => new ActionValidity();
 
+        private const int SHARED_MAX_VALUE = 500000000;
+
         public override bool NeedToRun =>
             VIP.CanSummonBankingPortal || Banker.Position.Distance3DFromPlayer < 30.0;
 
         protected override bool IntenalConditions =>
-            VIP.CanSummonBankingPortal || EntityManager.LocalPlayer.MapState.MapName == Banker.MapName;
+            GetTransferCount() != 0 &&
+            (VIP.CanSummonBankingPortal || EntityManager.LocalPlayer.MapState.MapName == Banker.MapName);
 
         public override void OnMapDraw(GraphicsNW graph)
         {
@@ -54,7 +57,7 @@ namespace QuesterAssistant.Actions
                 nameof(Astral.Quester.UIEditors.NPCInfos.SetInfos), new object[] {Banker});
         }
 
-        int GetTransferCount()
+        private int GetTransferCount()
         {
             switch (TransferMode)
             {
@@ -62,14 +65,14 @@ namespace QuesterAssistant.Actions
                     return MathTools.Max(
                         MathTools.Min(
                             EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType) - Math.Abs(MoneyTransfert),
-                            EntityManager.SharedBank.Inventory.GetNumericCount(NumericType) - 50000),
+                            SHARED_MAX_VALUE - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType)),
                         - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
                 case TransferModeDef.Transfer:
                     return MoneyTransfert > 0
                         ? (int) MathTools.Min(
                             MoneyTransfert,
                             EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType),
-                            EntityManager.SharedBank.Inventory.GetNumericCount(NumericType) - 50000)
+                            SHARED_MAX_VALUE - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType))
                         : (int) MathTools.Max(
                             MoneyTransfert,
                             - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
@@ -117,7 +120,7 @@ namespace QuesterAssistant.Actions
                 Thread.Sleep(1000);
                 if (MoneyTransfert != 0)
                 {
-                    Logger.WriteLine($"[SharedBank] {TransferMode} {MoneyTransfert} coppers ...");
+                    Logger.WriteLine($"[SharedBank] {TransferMode} {MoneyTransfert} {NumericType} ...");
                     int val = GetTransferCount();
                     Logger.WriteLine("[SharedBank] Value to transfer : " + val);
 
@@ -138,7 +141,7 @@ namespace QuesterAssistant.Actions
         public int MoneyTransfert { get; set; }
 
         [Editor(typeof(Astral.Quester.UIEditors.SharedBankNumericsEditor), typeof(UITypeEditor))]
-        [Description("Resources : coppers")]
+        [Description("Resources to transfer")]
         public string NumericType { get; set; }
 
         [Description("Keep determined value in the source during withdraw or store.\nStore or withdraw determined value to the target")]

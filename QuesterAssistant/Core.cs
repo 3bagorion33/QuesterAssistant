@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 
 namespace QuesterAssistant
@@ -84,6 +85,8 @@ namespace QuesterAssistant
             if (SettingsCore.Data.Patches.ProfessionPatch)
                 ProfessionsPatch.RunOnce();
             Interact.Patch();
+
+            Monitor.Start();
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
@@ -108,6 +111,7 @@ namespace QuesterAssistant
         public override void OnUnload()
         {
             KeyboardHook.Dispose();
+            Monitor.Stop();
         }
     }
 }

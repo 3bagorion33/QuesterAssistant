@@ -3,8 +3,9 @@
 namespace QuesterAssistant.Enums
 {
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum Offsets
+    internal enum Offsets
     {
-        itemProgression_EvoItem = 0x751E70
+        itemProgression_EvoItem = 0x751E70,
+        GameCursorMoving = 0x13BDFB0
     }
 }

@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using MyNW;
-using MyNW.Classes;
 using MyNW.Internals;
-using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using ChatManager = QuesterAssistant.Classes.ChatManager;
@@ -47,6 +43,7 @@ namespace QuesterAssistant.Settings
 
         private void SettingsForm_Load(object sender, EventArgs e)
         {
+            bsrcData.DataSource = Data;
             bsrcRoleToggleHotKey.DataSource = Data.RoleToggleHotKey;
             bsrcHideGameHotKey.DataSource = Data.HideClient.HotKey;
             bsrcHideMode.DataSource = Data.HideClient;
@@ -63,6 +60,8 @@ namespace QuesterAssistant.Settings
             chkPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(CheckEdit.Checked), nameof(HotKey.Enabled));
             txtPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(TextEdit.Text), nameof(HotKey.String));
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
+            chkGameCursorMoving.BindAdd(bsrcData, nameof(ComboBoxEdit.EditValue), nameof(Data.GameCursorMoving));
+
             chkWayPointPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.Patches.WayPointFilterPatch));
             chkProfessionPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.PatchesDef.ProfessionPatch));
             numReadyTasksCount.BindAdd(bsrcPatches, nameof(SpinEdit.EditValue), nameof(SettingsData.PatchesDef.ProfessionPatchFreeTasksSlots));
@@ -72,6 +71,7 @@ namespace QuesterAssistant.Settings
             Data.HashChanged += bsrcHideGameHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcPauseBotHotKey.ResetCurrentItem;
             Data.HashChanged += bsrcPauseBot.ResetCurrentItem;
+            Data.HashChanged += bsrcData.ResetCurrentItem;
             Data.HashChanged += bsrcPatches.ResetCurrentItem;
         }
 
@@ -149,6 +149,9 @@ namespace QuesterAssistant.Settings
             {
                 costumeDbg.Add(new CostumeDbg(i));
             }
+
+            var mInfo = typeof(Memory).GetMethod(nameof(Memory.Initialize), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
+            var vars = BitConverter.ToString(mInfo.GetMethodBody().GetILAsByteArray());
         }
 
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]

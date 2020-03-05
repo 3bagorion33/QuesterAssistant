@@ -51,6 +51,7 @@
             this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabCommon = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.chkGameCursorMoving = new DevExpress.XtraEditors.CheckEdit();
             this.tabProfilesStack = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.tabPatches = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
@@ -58,12 +59,13 @@
             this.chkProfessionPatch = new DevExpress.XtraEditors.CheckEdit();
             this.chkWayPointPatch = new DevExpress.XtraEditors.CheckEdit();
             this.tabTest = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.bsrcPatches = new System.Windows.Forms.BindingSource(this.components);
-            this.simpleButton5 = new DevExpress.XtraEditors.SimpleButton();
+            this.bsrcData = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
@@ -81,6 +83,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).BeginInit();
             this.tabPane1.SuspendLayout();
             this.tabCommon.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chkGameCursorMoving.Properties)).BeginInit();
             this.tabProfilesStack.SuspendLayout();
             this.tabPatches.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numReadyTasksCount.Properties)).BeginInit();
@@ -90,6 +93,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPatches)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).BeginInit();
             this.SuspendLayout();
             // 
             // chkRoleToggleEnabled
@@ -278,6 +282,7 @@
             // tabCommon
             // 
             this.tabCommon.Caption = "Common";
+            this.tabCommon.Controls.Add(this.chkGameCursorMoving);
             this.tabCommon.Controls.Add(this.numPauseDelay);
             this.tabCommon.Controls.Add(this.chkRoleToggleEnabled);
             this.tabCommon.Controls.Add(this.cbxHideMinimize);
@@ -289,6 +294,15 @@
             this.tabCommon.Name = "tabCommon";
             this.tabCommon.Padding = new System.Windows.Forms.Padding(3);
             this.tabCommon.Size = new System.Drawing.Size(370, 345);
+            // 
+            // chkGameCursorMoving
+            // 
+            this.chkGameCursorMoving.Location = new System.Drawing.Point(6, 83);
+            this.chkGameCursorMoving.Name = "chkGameCursorMoving";
+            this.chkGameCursorMoving.Properties.Caption = "Advanced Game cursor moving";
+            this.chkGameCursorMoving.Size = new System.Drawing.Size(172, 19);
+            this.chkGameCursorMoving.TabIndex = 10;
+            this.chkGameCursorMoving.ToolTip = "You must enable this in Credentials.xml and relaunch Astral both Client";
             // 
             // tabProfilesStack
             // 
@@ -376,6 +390,15 @@
             this.tabTest.Name = "tabTest";
             this.tabTest.Size = new System.Drawing.Size(370, 345);
             // 
+            // simpleButton5
+            // 
+            this.simpleButton5.Location = new System.Drawing.Point(6, 124);
+            this.simpleButton5.Name = "simpleButton5";
+            this.simpleButton5.Size = new System.Drawing.Size(75, 23);
+            this.simpleButton5.TabIndex = 8;
+            this.simpleButton5.Text = "CostumeRef";
+            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
+            // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(6, 87);
@@ -416,15 +439,6 @@
             this.groupControl1.TabIndex = 8;
             this.groupControl1.Text = "groupControl1";
             // 
-            // simpleButton5
-            // 
-            this.simpleButton5.Location = new System.Drawing.Point(6, 124);
-            this.simpleButton5.Name = "simpleButton5";
-            this.simpleButton5.Size = new System.Drawing.Size(75, 23);
-            this.simpleButton5.TabIndex = 8;
-            this.simpleButton5.Text = "CostumeRef";
-            this.simpleButton5.Click += new System.EventHandler(this.simpleButton5_Click);
-            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -451,6 +465,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.tabPane1)).EndInit();
             this.tabPane1.ResumeLayout(false);
             this.tabCommon.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.chkGameCursorMoving.Properties)).EndInit();
             this.tabProfilesStack.ResumeLayout(false);
             this.tabPatches.ResumeLayout(false);
             this.tabPatches.PerformLayout();
@@ -462,6 +477,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPatches)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -503,5 +519,7 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton3;
         private System.Windows.Forms.RichTextBox richTextBox1;
         private DevExpress.XtraEditors.SimpleButton simpleButton5;
+        private DevExpress.XtraEditors.CheckEdit chkGameCursorMoving;
+        private System.Windows.Forms.BindingSource bsrcData;
     }
 }

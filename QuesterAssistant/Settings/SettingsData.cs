@@ -14,6 +14,8 @@ namespace QuesterAssistant.Settings
         [HashInclude]
         public PauseBotClass PauseBot { get; set; } = new PauseBotClass();
         [HashInclude]
+        public bool GameCursorMoving { get; set; }
+        [HashInclude]
         public PatchesDef Patches { get; set; } = new PatchesDef();
 
         public void Parse(SettingsData source)
@@ -21,6 +23,7 @@ namespace QuesterAssistant.Settings
             RoleToggleHotKey.Parse(source.RoleToggleHotKey);
             HideClient.Parse(source.HideClient);
             PauseBot.Parse(source.PauseBot);
+            GameCursorMoving = source.GameCursorMoving;
             Patches.Parse(source.Patches);
         }
 
