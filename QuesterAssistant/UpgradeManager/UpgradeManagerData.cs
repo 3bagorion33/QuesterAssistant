@@ -157,7 +157,7 @@ namespace QuesterAssistant.UpgradeManager
             [XmlIgnore]
             public string Count => $"{CountUnfilled} | {CountFilled}";
 
-            private const int TIME_WAIT = 333;
+            private const int TIME_WAIT = 250;
             private InventorySlot slot;
             private List<InventorySlot> BagsItems => EntityManager.LocalPlayer.BagsItems;
             private Result FindResult

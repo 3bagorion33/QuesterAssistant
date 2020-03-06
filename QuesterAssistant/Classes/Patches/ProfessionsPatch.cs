@@ -45,6 +45,9 @@ namespace QuesterAssistant.Classes.Patches
             new PatchMethod(typeof(Main).GetMethod("RandomPause", binding),
                     typeof(ProfessionsPatch).GetMethod(nameof(Astral_Professions_FSM_States_Main_RandomPause), binding))
                 .Inject();
+            new PatchMethod(typeof(Professions2).GetProperty(nameof(Professions2.DeliveryBoxAll), binding).GetGetMethod(),
+                typeof(ProfessionsPatch).GetMethod(nameof(GetDeliveryBoxAll), binding))
+                .Inject();
             new PatchConstructor<Characters.SavedSlot, SavedSlotPatch>
                     (new[] {typeof(uint), typeof(bool), typeof(Assignment)})
                 .Inject();
@@ -56,9 +59,6 @@ namespace QuesterAssistant.Classes.Patches
         {
             if (task is null || task.Status != TaskStatus.Running)
                 task = System.Threading.Tasks.Task.Factory.StartNew(Characters_smethod_11, TaskCreationOptions.LongRunning);
-            //new PatchMethod(new StartATask().GetType().GetMethod("Run", binding),
-            //        typeof(StartATaskPatch).GetMethod(nameof(StartATaskPatch.RunPatch), binding))
-            //    .Inject();
         }
 
         private static void Astral_Professions_FSM_States_Main_RandomPause(int min, int max)
@@ -73,8 +73,6 @@ namespace QuesterAssistant.Classes.Patches
 
         private static object Astral_Professions_Functions_Tasks_GetNextTaskInfos(bool showLogs = false, bool onlyCurrentAccount = false)
         {
-            //Debug.WriteLine("Astral_Professions_Functions_Tasks_GetNextTaskInfos hacked!");
-
             CharacterSettings characterSettings = null;
             ProfAccountProfile nextAccount = null;
             int num = int.MaxValue;
@@ -214,6 +212,10 @@ namespace QuesterAssistant.Classes.Patches
 
             return result;
         }
+
+        private static List<Assignment> GetDeliveryBoxAll() =>
+            EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments
+                .FindAll(a => a.Def.Category > 1);
 
         private class SavedSlotComparer : IEqualityComparer<Characters.SavedSlot>
         {

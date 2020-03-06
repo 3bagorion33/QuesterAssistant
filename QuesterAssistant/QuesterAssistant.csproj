@@ -306,6 +306,9 @@
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />
     <Compile Include="Classes\ChatManager.cs" />
+    <Compile Include="Classes\CodeReader\Globals.cs" />
+    <Compile Include="Classes\CodeReader\ILInstruction.cs" />
+    <Compile Include="Classes\CodeReader\MethodBodyReader.cs" />
     <Compile Include="Classes\Common\Converters\FileFullNameListConverter.cs" />
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />

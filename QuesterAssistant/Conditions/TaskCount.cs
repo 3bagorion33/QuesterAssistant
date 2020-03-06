@@ -102,7 +102,7 @@ namespace QuesterAssistant.Conditions
         public bool OnlyProfessionsTasks { get; set; } = true;
 
         [Description("Can use * character at the start and end as jocker")]
-        [Editor(typeof(TaskNameEditor), typeof(UITypeEditor))]
+        [Editor(typeof(ActiveTaskEditor), typeof(UITypeEditor))]
         public string Task { get; set; } = "*";
 
         public enum StatusDef

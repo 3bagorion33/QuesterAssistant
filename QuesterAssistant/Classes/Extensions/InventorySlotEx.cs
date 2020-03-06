@@ -55,12 +55,12 @@ namespace QuesterAssistant.Classes.Extensions
             string[] mnemonics =
             {
                 "sub rsp, 0x40",
-                "mov rax, " + (wardSlot != null && wardSlot.Filled ? wardSlot.Item.Count : 150),
+                "mov rax, 1",   // + (wardSlot != null && wardSlot.Filled ? wardSlot.Item.Count : 150),
                 "mov [rsp+0x38], rax",
                 "mov rax, 2",
                 "mov [rsp+0x28], rax",
                 "mov rax, 0",
-                "mov [rsp+0x30], rax",
+                //"mov [rsp+0x30], rax",
                 "mov [rsp+0x20], rax",
                 "mov r9d, " + (wardSlot?.Slot ?? uint.MaxValue),
                 "mov r8d, " + (uint) (wardSlot?.BagId ?? (InvBagIDs) uint.MaxValue),

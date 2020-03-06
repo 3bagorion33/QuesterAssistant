@@ -12,7 +12,8 @@ namespace QuesterAssistant.Classes
 
         static GameCursorMoving()
         {
-            Memory.MMemory.Write<byte>(pDisable, 0xC3);
+            while (!Memory.MMemory.Write<byte>(pDisable, 0xC3))
+                Pause.Sleep(100);
         }
 
         private static void Enable(object sender = null, EventArgs e = null)

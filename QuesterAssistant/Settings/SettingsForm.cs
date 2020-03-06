@@ -3,12 +3,21 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Astral.Classes;
+using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using MyNW;
+using MyNW.Classes;
 using MyNW.Internals;
+using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.CodeReader;
+using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Reflection;
+using QuesterAssistant.Enums;
 using QuesterAssistant.Panels;
 using ChatManager = QuesterAssistant.Classes.ChatManager;
 
@@ -151,7 +160,12 @@ namespace QuesterAssistant.Settings
             }
 
             var mInfo = typeof(Memory).GetMethod(nameof(Memory.Initialize), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
-            var vars = BitConverter.ToString(mInfo.GetMethodBody().GetILAsByteArray());
+            var vars = mInfo.GetMethodBody().GetILAsByteArray();
+            var str = BitConverter.ToString(vars);
+            Globals.LoadOpCodes();
+            MethodBodyReader mr = new MethodBodyReader(mInfo);
+            var text = mr.GetBodyCode();
+
         }
 
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]

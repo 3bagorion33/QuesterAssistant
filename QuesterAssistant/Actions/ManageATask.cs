@@ -33,7 +33,7 @@ namespace QuesterAssistant.Actions
             {
                 if (string.IsNullOrEmpty(Task))
                     return new ActionValidity("Task not set.");
-                if (Remaining == 0 && Duration == 0)
+                if (Action != ModeDef.Collect && Remaining == 0 && Duration == 0)
                     return new ActionValidity($"Need to determine {nameof(Remaining)} of {nameof(Duration)} conditions");
                 return new ActionValidity();
             }
@@ -50,12 +50,13 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            bool Finder(Assignment a)
-            {
-                return a.Def.InternalName.FindPattern(Task) && !a.ReadyToComplete &&
-                       (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) &&
-                       (Duration == 0 || DurationRelation.Compare(a.Duration, Duration));
-            }
+            bool Finder(Assignment a) =>
+                a.Def.InternalName.FindPattern(Task) &&
+                (Action == ModeDef.Collect ? 
+                    a.ReadyToComplete : 
+                    !a.ReadyToComplete && 
+                    (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) && 
+                    (Duration == 0 || DurationRelation.Compare(a.Duration, Duration)));
 
             Assignment assignment =
                 EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FirstOrDefault(Finder) ??
@@ -70,6 +71,10 @@ namespace QuesterAssistant.Actions
                     break;
                 case ModeDef.Complete:
                     GameCommands.Execute($"ItemAssignmentsCompleteNowById {assignment.ID}");
+                    break;
+                case ModeDef.Collect:
+                    GameCommands.Execute($"ItemAssignmentMarkCompletedAsRead {assignment.ID}");
+                    GameCommands.Execute($"ItemAssignmentCollectRewards {assignment.ID}");
                     break;
             }
             Pause.Sleep(500);
@@ -91,6 +96,6 @@ namespace QuesterAssistant.Actions
         public uint Duration { get; set; } = 0;
         public Condition.Relation DurationRelation { get; set; } = Condition.Relation.Equal;
 
-        public enum ModeDef { Cancel, Complete }
+        public enum ModeDef { Cancel, Complete, Collect }
     }
 }
