@@ -13,15 +13,22 @@ namespace QuesterAssistant.Classes.Extensions
             var actions = API.CurrentProfile.GetFullActionList(API.CurrentProfile.MainActionPack);
             for (int i = actions.IndexOf(action) + 1; i < actions.Count + 1; i++)
             {
-                if (actions[i].GetType() != typeof(ActionPack))
+                if (i < actions.Count && actions[i].GetType() == typeof(ActionPack)) continue;
+                if (i == actions.Count || actions[i].GetType() != type)
                 {
-                    if (actions[i].GetType() != type || i == actions.Count)
+                    if (type == typeof(AuctionSellItems))
                     {
-                        if (type == typeof(AuctionSellItems))
-                            Auction.CloseAuctionFrame();
+                        Auction.CloseAuctionFrame();
+                        return;
                     }
-                    break;
+                    if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
+                    {
+                        EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
+                        return;
+                    }
+                    Game.ToggleCursorMode(false);
                 }
+                break;
             }
         }
     }

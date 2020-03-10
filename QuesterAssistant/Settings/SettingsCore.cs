@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Monitoring;
 using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 
 namespace QuesterAssistant.Settings
@@ -14,27 +15,9 @@ namespace QuesterAssistant.Settings
         protected override bool IsValid => true;
         protected override bool HookEnableFlag => Data.RoleToggleHotKey.Enabled || Data.HideClient.HotKey.Enabled;
 
-        private IntPtr handle;
-
         private void HideGameWindow()
         {
-            if (Core.GameProcess is null && Core.GameProcess.HasExited) return;
-
-            if (WinAPI.IsWindowVisible(Core.GameWindowHandle) && !WinAPI.IsWindowMinimize(Core.GameWindowHandle))
-            {
-                handle = Core.GameWindowHandle;
-                WinAPI.MinimizeWindow(handle);
-                if (Data.HideClient.HideMode == SettingsData.HideClientClass.Mode.Hide)
-                    WinAPI.HideWindow(handle);
-                return;
-            }
-            if (handle != IntPtr.Zero)
-            {
-                if (Data.HideClient.HideMode == SettingsData.HideClientClass.Mode.Hide)
-                    WinAPI.UnhideWindow(handle);
-                WinAPI.RestoreWindow(handle);
-                WinAPI.SetForegroundWindow(handle);
-            }
+            GameClient.ToggleVisibility(Data.HideClient.HideMode == SettingsData.HideClientClass.Mode.Hide);
         }
 
         private void PauseBot()
@@ -56,7 +39,7 @@ namespace QuesterAssistant.Settings
             }
 
             var flag = EntityManager.LocalPlayer.IsValid && !Game.IsCursorModeEnabled &&
-                       Core.GameWindowHandle == WinAPI.GetForegroundWindow();
+                       GameClient.IsForeground;
 
             if (Data.PauseBot.HotKey.Enabled && flag && (e.KeyCode & Keys.W) != 0)
             {

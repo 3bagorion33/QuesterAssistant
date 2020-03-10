@@ -3,6 +3,7 @@ using System.Threading;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Monitoring;
 
 namespace QuesterAssistant.Panels
 {
@@ -56,9 +57,9 @@ namespace QuesterAssistant.Panels
 
         private void InputBox_Load(object sender, EventArgs e)
         {
-            if (center && (Handle != WinAPI.GetForegroundWindow()))
+            if (center && Handle != WinAPI.GetForegroundWindow())
             {
-                WinAPI.SetForegroundWindow(Core.GameWindowHandle);
+                WinAPI.SetForegroundWindow(GameClient.WindowHandle);
                 WinAPI.SetForegroundWindow(Handle);
             }
         }

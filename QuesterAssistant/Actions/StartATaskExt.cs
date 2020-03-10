@@ -152,73 +152,59 @@ namespace QuesterAssistant.Actions
                 List<InventorySlot> assets =
                     Professions2.AssetsBags.OrderByDescending(slot => Professions2.AssetProfessionLevel(slot.Item))
                         .ToList();
-                int i = 0;
                 Task.UsedAssets.RemoveAll(t => t.ItemInternalName == "-");
-                while (i < Task.UsedAssets.Count)
+                
+                for (int i = 0; i < Task.UsedAssets.Count; i++)
                 {
                     TaskAsset taskAsset = Task.UsedAssets[i];
                     Slot slot = definition.Slots[i];
-                    InventorySlot inventorySlot = new InventorySlot(IntPtr.Zero);
-                    InventorySlot inventorySlot2 = new InventorySlot(IntPtr.Zero);
-                    int num2 = int.MaxValue;
-                    using (List<InventorySlot>.Enumerator enumerator3 = assets.GetEnumerator())
+                    var validAssets = assets.FindAll(a => Professions2.AssetCanBeSlotted(definition, slot, a));
+                    if (i < 2 && validAssets.Count == 0)
                     {
-                        while (enumerator3.MoveNext())
-                        {
-                            InventorySlot inventorySlot3 = enumerator3.Current;
-                            if (Professions2.AssetCanBeSlotted(definition, slot, inventorySlot3))
+                        Logger.WriteLine($"Can't find valid asset for slot {i + 1} !");
+                        return ActionResult.Fail;
+                    }
+                    InventorySlot foundAsset = new InventorySlot(IntPtr.Zero);
+                    switch (taskAsset.ItemInternalName)
+                    {
+                        case "AutoBestLevel":
+                            foundAsset = validAssets.First();
+                            break;
+                        case "AutoNearestLevel":
+                            int range = 0;
+                            while (!foundAsset.IsValid)
                             {
-                                if (!inventorySlot2.IsValid)
-                                {
-                                    inventorySlot2 = inventorySlot3;
-                                }
-                                if (taskAsset.ItemInternalName == "AutoBestLevel")
-                                {
-                                    inventorySlot = inventorySlot3;
-                                    break;
-                                }
-                                if (taskAsset.ItemInternalName == "AutoNearestLevel")
-                                {
-                                    long num3 = Math.Abs(
-                                        definition.Requirements.RequiredNumericValue -
-                                        Professions2.AssetProfessionLevel(inventorySlot3.Item));
-                                    if (num3 < num2)
-                                    {
-                                        num2 = (int) num3;
-                                        inventorySlot = inventorySlot3;
-                                    }
-                                }
-                                if (inventorySlot3.Item.ItemDef.InternalName == taskAsset.ItemInternalName)
-                                {
-                                    inventorySlot = inventorySlot3;
-                                    break;
-                                }
+                                var minrange = definition.Requirements.RequiredNumericValue - range;
+                                var maxrange = definition.Requirements.RequiredNumericValue + range;
+                                var nearestAssets = validAssets.FindAll(a =>
+                                    Professions2.AssetProfessionLevel(a.Item) >= minrange &&
+                                    Professions2.AssetProfessionLevel(a.Item) <= maxrange);
+                                if (nearestAssets.Count > 0)
+                                    foundAsset = nearestAssets.First();
+                                range++;
                             }
-                        }
-                        if (inventorySlot.IsValid)
-                        {
-                            usedAssets.Add(inventorySlot);
-                            assets.Remove(inventorySlot);
-                            i++;
-                            continue;
-                        }
-                        if (inventorySlot2.IsValid)
-                        {
-                            Logger.WriteLine($"Can't find asset with parameters for slot {i + 1}, use default one !");
-                            usedAssets.Add(inventorySlot2);
-                            assets.Remove(inventorySlot2);
-                            i++;
-                            continue;
-                        }
+                            break;
+                        default:
+                            foundAsset =
+                                validAssets.FirstOrDefault(a => a.Item.ItemDef.InternalName == taskAsset.ItemInternalName);
+                            break;
+                    }
+                    if (i < 2 && (foundAsset is null || !foundAsset.IsValid))
+                    {
                         Logger.WriteLine($"Can't find required asset for slot {i + 1} !");
                         return ActionResult.Fail;
+                    }
+                    if (foundAsset != null && foundAsset.IsValid)
+                    {
+                        usedAssets.Add(foundAsset);
+                        assets.Remove(foundAsset);
                     }
                 }
 
                 Logger.WriteLine("Start task using " + usedAssets.Count + " assets");
-                for (int j = 0; j < usedAssets.Count; j++)
+                for (int i = 0; i < usedAssets.Count; i++)
                 {
-                    Logger.WriteLine($"{j + 1}. {usedAssets[j].Item.DisplayName}");
+                    Logger.WriteLine($"{i + 1}. {usedAssets[i].Item.DisplayName}");
                 }
 
                 var haveMorale = false;

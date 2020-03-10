@@ -58,27 +58,27 @@ namespace QuesterAssistant.Actions
                     (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) && 
                     (Duration == 0 || DurationRelation.Compare(a.Duration, Duration)));
 
-            Assignment assignment =
-                EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FirstOrDefault(Finder) ??
-                new Assignment(IntPtr.Zero);
-            if (!assignment.IsValid)
+            var assignments =
+                EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FindAll(Finder);
+            if (assignments.Count == 0)
                 return ActionResult.Completed;
 
             switch (Action)
             {
                 case ModeDef.Cancel:
-                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {assignment.ID}");
+                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {assignments[0].ID}");
                     break;
                 case ModeDef.Complete:
-                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {assignment.ID}");
+                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {assignments[0].ID}");
                     break;
                 case ModeDef.Collect:
-                    GameCommands.Execute($"ItemAssignmentMarkCompletedAsRead {assignment.ID}");
-                    GameCommands.Execute($"ItemAssignmentCollectRewards {assignment.ID}");
-                    break;
+                    EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(assignments);
+                    Logger.WriteLine($"{Action} all ready tasks '{Task}' ...");
+                    Pause.Sleep(500);
+                    return ActionResult.Completed;
             }
-            Pause.Sleep(500);
-            Logger.WriteLine($"{Action} task '{assignment}' ...");
+            Logger.WriteLine($"{Action} task '{assignments[0]}' ...");
+            Pause.RandomSleep(300, 500);
             return ActionResult.Running;
         }
 

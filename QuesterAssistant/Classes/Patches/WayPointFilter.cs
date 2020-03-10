@@ -6,16 +6,15 @@ using Astral.Logic.Classes.FSM;
 using MyNW.Internals;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
+using QuesterAssistant.Classes.NwInternals;
 
 namespace QuesterAssistant.Classes.Patches
 {
     internal class WayPointFilter
     {
-        private const string BOAT_AURA_S = "Becritter_Boat_Costume";
-        private const string GROUND_AURA_S = "Volume_Ground_Slippery";
-        private static uint pBoatAura;
+        private const string GROUND_AURA = "Volume_Ground_Slippery";
         private static uint pGroundAura;
-        private IntPtr gameHandle = IntPtr.Zero;
 
         private static readonly Timer timer = new Timer {AutoReset = true, Interval = 1000, Enabled = true};
         private static double cachedWPD = Astral.API.CurrentSettings.ChangeWaypointDist;
@@ -23,23 +22,22 @@ namespace QuesterAssistant.Classes.Patches
         public WayPointFilter()
         {
             timer.Elapsed += UpdateCachedWPD;
+            GameClient.Monitor.OnNew += Update;
+        }
+
+        private void Update(object sender, EventArgs e)
+        {
+            pGroundAura = 0;
         }
 
         private static void UpdateCachedWPD(object sender, ElapsedEventArgs e)
         {
             if (Astral.Quester.API.Engine.Navigation.IsRunning)
-            {
                 cachedWPD = Task.Factory.StartNew(GetChangeWPDist).Result;
-            }
         }
 
         public void Run()
         {
-            if (Core.GameWindowHandle != gameHandle)
-            {
-                gameHandle = Core.GameWindowHandle;
-                pBoatAura = pGroundAura = 0;
-            }
             var methodToReplace = typeof(Navigation)
                 .GetProperty("ChangeWPDist", BindingFlags.Instance | BindingFlags.NonPublic).GetMethod;
             var methodToInject = GetType()
@@ -52,14 +50,19 @@ namespace QuesterAssistant.Classes.Patches
         {
             if (!EntityManager.LocalPlayer.IsMounted)
                 return Astral.API.CurrentSettings.ChangeWaypointDist;
-            if (pBoatAura == 0)
-                pBoatAura = EntityManager.LocalPlayer.Character.Mods
-                    .Find(m => m.PowerDef.InternalName.Contains(BOAT_AURA_S))?.pPowerDef ?? 0;
-            if (EntityManager.LocalPlayer.Character.HasAura(pBoatAura))
-                return 90.0;
+
+            switch (EntityManager.LocalPlayer.GetMountCostume().Type)
+            {
+                case MountCostumeDef.MountType.BoatWhite:
+                    return 100;
+                case MountCostumeDef.MountType.BoatGreen:
+                    return 90;
+                case MountCostumeDef.MountType.BoatPurple:
+                    return 80;
+            }
             if (pGroundAura == 0)
                 pGroundAura = EntityManager.LocalPlayer.Character.Mods
-                    .Find(m => m.PowerDef.InternalName.Contains(GROUND_AURA_S))?.pPowerDef ?? 0;
+                    .Find(m => m.PowerDef.InternalName.Contains(GROUND_AURA))?.pPowerDef ?? 0;
             if (EntityManager.LocalPlayer.Character.HasAura(pGroundAura))
                 return 50.0;
             return Astral.API.CurrentSettings.MountedChangeWPDist;

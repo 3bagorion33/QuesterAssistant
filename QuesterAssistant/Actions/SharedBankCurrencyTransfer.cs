@@ -2,15 +2,16 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Design;
-using System.Threading;
 using Astral;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
 using Astral.Quester.Classes;
 using MyNW.Classes;
 using MyNW.Internals;
+using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.Reflection;
 
 namespace QuesterAssistant.Actions
@@ -83,54 +84,57 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            Entity entity = new Entity(IntPtr.Zero);
-            if (VIP.CanSummonBankingPortal)
+            if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType != ScreenType.Bank)
             {
-                VIP.SummonBankingPortal();
-                Astral.Classes.Timeout timeout = new Astral.Classes.Timeout(10000);
-                while (!(VIP.BankingPortalEntity.IsValid && VIP.BankingPortalEntity.NameUntranslated == "Critterdef.Vip_Bank"
-                       ))//&& VIP.BankingPortalEntity.CanInteract))
+                Entity entity = new Entity(IntPtr.Zero);
+                if (VIP.CanSummonBankingPortal)
                 {
-                    if (timeout.IsTimedOut)
+                    VIP.SummonBankingPortal();
+                    Astral.Classes.Timeout timeout = new Astral.Classes.Timeout(10000);
+                    while (!(VIP.BankingPortalEntity.IsValid &&
+                             VIP.BankingPortalEntity.NameUntranslated == "Critterdef.Vip_Bank"
+                        )) //&& VIP.BankingPortalEntity.CanInteract))
                     {
-                        timeout.Reset();
-                        VIP.BankingPortalEntity.Location.Face();
-                        VIP.SummonBankingPortal();
+                        if (timeout.IsTimedOut)
+                        {
+                            timeout.Reset();
+                            VIP.BankingPortalEntity.Location.Face();
+                            VIP.SummonBankingPortal();
+                        }
+                        Pause.Sleep(250);
                     }
-                    Pause.Sleep(250);
+                    entity = VIP.BankingPortalEntity;
                 }
-                entity = VIP.BankingPortalEntity;
-            }
-            if (!entity.IsValid)
-            {
-                entity = EntityManager.GetEntities().Find(e => Banker.IsMatching(e)) ?? new Entity(IntPtr.Zero);
-            }
-            if (entity.IsValid && Approach.EntityForInteraction(entity))
-            {
-                entity.Interact();
-                Astral.Classes.Timeout timeout2 = new Astral.Classes.Timeout(6000);
-                while (!EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
+                if (!entity.IsValid)
                 {
-                    if (timeout2.IsTimedOut)
+                    entity = EntityManager.GetEntities().Find(e => Banker.IsMatching(e)) ?? new Entity(IntPtr.Zero);
+                }
+                if (entity.IsValid && Approach.EntityForInteraction(entity))
+                {
+                    entity.Interact();
+                    Astral.Classes.Timeout timeout2 = new Astral.Classes.Timeout(6000);
+                    while (!EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
                     {
-                        return ActionResult.Fail;
+                        if (timeout2.IsTimedOut)
+                            return ActionResult.Fail;
+                        Pause.Sleep(500);
                     }
-                    Thread.Sleep(500);
                 }
-                Thread.Sleep(1000);
-                if (MoneyTransfert != 0)
-                {
-                    Logger.WriteLine($"[SharedBank] {TransferMode} {MoneyTransfert} {NumericType} ...");
-                    int val = GetTransferCount();
-                    Logger.WriteLine("[SharedBank] Value to transfer : " + val);
+            }
+            Pause.Sleep(1000);
+            if (MoneyTransfert != 0)
+            {
+                Logger.WriteLine($"[SharedBank] {TransferMode} {MoneyTransfert} {NumericType} ...");
+                int val = GetTransferCount();
+                Logger.WriteLine("[SharedBank] Value to transfer : " + val);
 
-                    EntityManager.LocalPlayer.SharedBankAddNumeric(val, NumericType);
-                }
-                Thread.Sleep(1000);
-                EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
-                return ActionResult.Completed;
+                EntityManager.LocalPlayer.SharedBankAddNumeric(val, NumericType);
             }
-            return ActionResult.Fail;
+
+            Pause.Sleep(1000);
+            //EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
+            this.CloseFrames();
+            return ActionResult.Completed;
         }
 
         [Editor(typeof(Astral.Quester.UIEditors.NPCInfos), typeof(UITypeEditor))]

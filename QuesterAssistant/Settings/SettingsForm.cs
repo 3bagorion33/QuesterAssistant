@@ -150,14 +150,16 @@ namespace QuesterAssistant.Settings
 
         private void simpleButton5_Click(object sender, EventArgs e)
         {
-            //CostumeRef costumeRef = new CostumeRef((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + 8));
-            var costumeDbg = new List<CostumeDbg>();
-            //var idx = new[] {0, 8, 16, 24};
-            //foreach (var i in idx)
-            for (int i = 0; i < 33; i++)
-            {
-                costumeDbg.Add(new CostumeDbg(i));
-            }
+            ////CostumeRef costumeRef = new CostumeRef((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + 8));
+            //var costumeDbg = new List<CostumeDbg>();
+            ////var idx = new[] {0, 8, 16, 24};
+            ////foreach (var i in idx)
+            //for (int i = -128; i < 256; i++)
+            //{
+            //    costumeDbg.Add(new CostumeDbg(i));
+            //}
+
+            var mCostume = EntityManager.LocalPlayer.GetMountCostume();
 
             var mInfo = typeof(Memory).GetMethod(nameof(Memory.Initialize), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
             var vars = mInfo.GetMethodBody().GetILAsByteArray();

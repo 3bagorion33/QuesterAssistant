@@ -314,14 +314,15 @@
     <Compile Include="Classes\Common\OverrideHash.cs" />
     <Compile Include="Classes\Extensions\ActionEx.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
+    <Compile Include="Classes\Extensions\EntityEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\InventorySelect.cs" />
     <Compile Include="Classes\Monitoring\AMonitor.cs" />
-    <Compile Include="Classes\Monitoring\Foreground.cs" />
     <Compile Include="Classes\Monitoring\GameClient.cs" />
     <Compile Include="Classes\Monitoring\Monitor.cs" />
+    <Compile Include="Classes\NwInternals\MountCostumeDef.cs" />
     <Compile Include="Classes\Patches\PatchMethod.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />

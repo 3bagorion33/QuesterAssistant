@@ -24,8 +24,8 @@ namespace QuesterAssistant.Classes.Monitoring
             if (Core.SettingsCore.Data.GameCursorMoving)
             {
                 GameClient.Monitor.OnNew += Allocate;
-                Foreground.Monitor.OnForeground += Enable;
-                Foreground.Monitor.OnBackground += Disable;
+                GameClient.Monitor.OnForeground += Enable;
+                GameClient.Monitor.OnBackground += Disable;
             }
         }
 
@@ -39,8 +39,8 @@ namespace QuesterAssistant.Classes.Monitoring
         public static void Stop()
         {
             GameClient.Monitor.OnNew -= Allocate;
-            Foreground.Monitor.OnForeground -= Enable;
-            Foreground.Monitor.OnBackground -= Disable;
+            GameClient.Monitor.OnForeground -= Enable;
+            GameClient.Monitor.OnBackground -= Disable;
             Enable();
         }
     }

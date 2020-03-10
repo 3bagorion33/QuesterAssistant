@@ -10,8 +10,10 @@ namespace QuesterAssistant.Classes
     {
         public static List<Power> GetSlottedPowers()
         {
-            List<Power> slottedPowers = new List<Power>();
-            slottedPowers.Add(new Power(TraySlot.Mechanic, GetPowerBySlot((int)TraySlot.Mechanic).PowerDef.InternalName));
+            var slottedPowers = new List<Power>
+            {
+                new Power(TraySlot.Mechanic, GetPowerBySlot((int) TraySlot.Mechanic).PowerDef.InternalName)
+            };
             for (int i = 0; i < 9; i++)
             {
                 slottedPowers.Add(new Power((TraySlot)i, GetPowerBySlot(i).PowerDef.InternalName));
@@ -21,28 +23,27 @@ namespace QuesterAssistant.Classes
 
         public static void ApplyPowers(List<Power> powers)
         {
-            foreach (var pwr in powers)
-            {
-                Task.Factory.StartNew(() => ApplyPower(pwr));
-            }
+            foreach (var pwr in powers) Task.Factory.StartNew(() => ApplyPower(pwr));
         }
 
         private static void ApplyPower(Power pwr)
         {
-            MyNW.Classes.Power newPower = GetPowerByInternalName(pwr.InternalName);
-            if (!newPower.IsValid)
+            var newPower = GetPowerByInternalName(pwr.InternalName);
+            if (!newPower.IsValid || newPower.TraySlot == (uint)pwr.TraySlot)
                 return;
 
-            if (newPower.TraySlot == (uint)pwr.TraySlot)
-                return;
-
-            var currPower = GetPowerBySlot((int) pwr.TraySlot);
-            while (currPower.TraySlot != (uint) TraySlot.ClassFeature1 &&
-                   currPower.TraySlot != (uint) TraySlot.ClassFeature2 &&
-                   (currPower.IsActive || currPower.RechargeTime > 0 || 
-                    currPower.SubCombatStatePowers.Exists(x => x.IsActive || x.RechargeTime > 0)))
-                Pause.Sleep(200);
-            Pause.Sleep(200);
+            var cPower = GetPowerBySlot((int) pwr.TraySlot);
+            if (cPower.TraySlot != (uint) TraySlot.ClassFeature1 &&
+                cPower.TraySlot != (uint) TraySlot.ClassFeature2)
+            {
+                do
+                {
+                    do Pause.Sleep(200);
+                    while (cPower.IsActive || cPower.RechargeTime > 0 ||
+                           cPower.SubCombatStatePowers.Exists(x => x.IsActive || x.RechargeTime > 0));
+                }
+                while (EntityManager.LocalPlayer.IsLoading);
+            }
             Injection.cmdwrapper_PowerTray_Slot(newPower, pwr.TraySlot);
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.UpgradeManager
@@ -89,7 +90,7 @@ namespace QuesterAssistant.UpgradeManager
 
         protected override void KeyboardHookDown(KeyEventArgs e)
         {
-            if ((Core.IsAstralForeground || Core.IsGameForeground) && (Data.ToggleHotKey.Keys == e.KeyData))
+            if ((Core.IsAstralForeground || GameClient.IsForeground) && (Data.ToggleHotKey.Keys == e.KeyData))
             {
                 ToggleTasks();
             }

@@ -25,10 +25,7 @@ namespace QuesterAssistant
         internal static string ProfilesPath => Astral.Controllers.Directories.ProfilesPath;
         internal static string Category => typeof(Core).Namespace;
         internal static string Deprecated => "Deprecated";
-        internal static Process GameProcess => API.AttachedGameProcess;
-        internal static IntPtr GameWindowHandle => GameProcess?.MainWindowHandle ?? new IntPtr();
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
-        internal static bool IsGameForeground => GameWindowHandle == WinAPI.GetForegroundWindow();
         internal static bool IsAstralForeground => AstralHandle == WinAPI.GetForegroundWindow();
         internal static string SkinName => "Office 2013 Light Gray";
 
@@ -92,7 +89,11 @@ namespace QuesterAssistant
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
         {
             // Эта херня нужна для избежания ошибок загрузки ресурсов и работы BinaryFormatter
-            return args.Name.Contains($"{Category}.resources") ? typeof(Astral.Forms.Main).Assembly : typeof(Core).Assembly;
+            if (args.Name.Contains($"{Category}.resources"))
+                return typeof(Astral.Forms.Main).Assembly;
+            if (args.Name.Contains(Category))
+                return typeof(Core).Assembly;
+            return null;
         }
 
         private void API_BeforeStartEngine(object sender, Astral.Logic.Classes.FSM.BeforeEngineStart e)
