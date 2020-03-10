@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace QuesterAssistant.Classes.Monitoring
 {
-    internal class Foreground : AMonitor
+    internal class Foreground : AMonitor<Foreground>
     {
         public event EventHandler OnForeground;
         public event EventHandler OnBackground;

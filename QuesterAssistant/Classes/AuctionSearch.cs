@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Astral;
 using DevExpress.Utils.Extensions;
 using MyNW.Classes;
@@ -23,13 +22,13 @@ namespace QuesterAssistant.Classes
         private string loggerMessage;
         public SearchResult Result { get; }
 
-        public AuctionSearch(ItemDef itemDef, bool checkInternalName = true)
+        public AuctionSearch(ItemDef itemDef, bool checkInternalName = true, uint cacheLifeTime = 10)
         {
             this.itemDef = itemDef;
-            Result = GetResult(checkInternalName);
+            Result = GetResult(checkInternalName, cacheLifeTime);
         }
         
-        private SearchResult GetResult(bool checkInternalName = true)
+        private SearchResult GetResult(bool checkInternalName = true, uint cacheLifeTime = 10)
         {
             if (string.IsNullOrEmpty(itemDef.DisplayName))
                 return new SearchResult(null, null);
@@ -49,7 +48,7 @@ namespace QuesterAssistant.Classes
             }
 
             cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
-            var cachedValue = cachedSearch.Find(l => ResultFilter(l) && l.DateTime.Subtract(DateTime.Now).TotalHours > -1);
+            var cachedValue = cachedSearch.Find(l => ResultFilter(l) && l.DateTime.Subtract(DateTime.Now).TotalMinutes > -cacheLifeTime);
 
             if (cachedValue != null)
             {
@@ -64,9 +63,9 @@ namespace QuesterAssistant.Classes
             {
                 searchTrying++;
                 Auction.LotsSearch(itemDef.DisplayName);
-                Thread.Sleep(2500);
+                Pause.Sleep(2500);
                 while (Auction.SearchWaiting)
-                    Thread.Sleep(250);
+                    Pause.Sleep(250);
             }
             while (!(availableLots = Auction.AuctionLotList.Lots).Any() && searchTrying < 3);
 

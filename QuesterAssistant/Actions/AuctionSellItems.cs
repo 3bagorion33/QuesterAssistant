@@ -7,6 +7,7 @@ using Astral;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
+using Astral.Quester.Classes;
 using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Classes.Auction;
@@ -16,6 +17,7 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.ItemFilter;
+using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
@@ -72,7 +74,7 @@ namespace QuesterAssistant.Actions
 
             if (PriceType > SellingPriceType.Fixed)
             {
-                var availableLots = new AuctionSearch(item.ItemDef, CheckInternalName).Result.Lots;
+                var availableLots = new AuctionSearch(item.ItemDef, CheckInternalName, CacheLifeTime).Result.Lots;
                 if (availableLots.Any())
                 {
                     var validLots = new List<AuctionSearch.SearchResult.Lot>();
@@ -224,7 +226,7 @@ namespace QuesterAssistant.Actions
                 foreach (KeyValuePair<string, IEnumerable<InventorySlot>> slotsList in slotsGroupList)
                 {
                     var item = slotsList.Value.First().Item;
-                    var auctionSearch = new AuctionSearch(item.ItemDef);
+                    var auctionSearch = new AuctionSearch(item.ItemDef, CheckInternalName, CacheLifeTime);
                     auctionSearch.WriteLogMessage();
                     var itemPrice = GetActualPrice(item);
                     Logger.WriteLine($"Best price for '{item.DisplayName}' is {itemPrice}AD".CarryOnLength());
@@ -274,8 +276,9 @@ namespace QuesterAssistant.Actions
             }
 
             Exit:
-            if (Auction.IsAuctionFrameVisible() && !DontCloseAuctionFrame)
-                Auction.CloseAuctionFrame();
+            if (!DontCloseAuctionFrame && Auction.IsAuctionFrameVisible())
+                this.CloseFrames();
+
             return ActionResult.Completed;
         }
 
@@ -311,6 +314,9 @@ namespace QuesterAssistant.Actions
             }
             set => timeOut = value;
         }
+        [Category("Interaction")]
+        [Description("In minutes, zero disables cache.")]
+        public uint CacheLifeTime { get; set; } = 60;
 
         [Category("Items")]
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]

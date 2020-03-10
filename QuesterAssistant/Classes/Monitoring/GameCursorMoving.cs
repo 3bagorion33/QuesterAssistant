@@ -1,20 +1,13 @@
 ﻿using System;
 using MyNW;
-using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Enums;
 
-namespace QuesterAssistant.Classes
+namespace QuesterAssistant.Classes.Monitoring
 {
     internal static class GameCursorMoving
     {
         private static readonly IntPtr pEnable = Memory.MMemory.Read<IntPtr>(Memory.BaseAdress + (int) Offsets.GameCursorMoving);
-        private static readonly IntPtr pDisable = Memory.MMemory.AllocateRawMemory(1);
-
-        static GameCursorMoving()
-        {
-            while (!Memory.MMemory.Write<byte>(pDisable, 0xC3))
-                Pause.Sleep(100);
-        }
+        private static IntPtr pDisable;
 
         private static void Enable(object sender = null, EventArgs e = null)
         {
@@ -30,15 +23,24 @@ namespace QuesterAssistant.Classes
         {
             if (Core.SettingsCore.Data.GameCursorMoving)
             {
-                Monitor.Foreground.OnForeground += Enable;
-                Monitor.Foreground.OnBackground += Disable;
+                GameClient.Monitor.OnNew += Allocate;
+                Foreground.Monitor.OnForeground += Enable;
+                Foreground.Monitor.OnBackground += Disable;
             }
+        }
+
+        private static void Allocate(object sender, EventArgs e)
+        {
+            pDisable = Memory.MMemory.AllocateRawMemory(1);
+            while (!Memory.MMemory.Write<byte>(pDisable, 0xC3))
+                Pause.Sleep(100);
         }
 
         public static void Stop()
         {
-            Monitor.Foreground.OnForeground -= Enable;
-            Monitor.Foreground.OnBackground -= Disable;
+            GameClient.Monitor.OnNew -= Allocate;
+            Foreground.Monitor.OnForeground -= Enable;
+            Foreground.Monitor.OnBackground -= Disable;
             Enable();
         }
     }
