@@ -12,6 +12,7 @@ using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
+using DevExpress.XtraGrid;
 using Launcher.Properties;
 using QuesterAssistant.Classes.Common;
 
@@ -104,7 +105,7 @@ namespace Launcher
 
             if (settings.Patches != null)
             {
-                for (int i = 0; i < settings.Patches.Count; i++)
+                for (int i = 0; i < MathTools.Min(patches.Items.Count, settings.Patches.Count); i++)
                 {
                     patches.Items[i].Active = settings.Patches[i];
                 }
@@ -135,15 +136,13 @@ namespace Launcher
             settings.Save();
         }
 
-        private void btnClose_ButtonClick(object sender, DevExpress.XtraEditors.Controls.ButtonPressedEventArgs e)
+        private void gctlProcessList_DoubleClick(object sender, EventArgs e)
         {
-            var instance = bsrcInstancesList.Current as Instance;
-            logEvents.Add(new LogEvent($"Closing Instance #{instance.Process.ProcessName}"));
-            instance.Close();
-        }
-
-        private void gridControl1_DoubleClick(object sender, EventArgs e)
-        {
+            if (((sender as GridControl).FocusedView as GridView).FocusedColumn.AbsoluteIndex == 2)
+            {
+                (bsrcInstancesList.Current as Instance).ForeGroundAttach();
+                return;
+            }
             (bsrcInstancesList.Current as Instance).ForeGround();
         }
 
@@ -201,6 +200,31 @@ namespace Launcher
         private void cbxPriority_SelectedIndexChanged(object sender, EventArgs e)
         {
             instances.ForEach(i => i.Process.PriorityClass = (ProcessPriorityClass) cbxPriority.SelectedItem);
+        }
+
+        private void gridInstances_PopupMenuShowing(object sender, PopupMenuShowingEventArgs e)
+        {
+            GridView view = sender as GridView;
+            GridHitInfo hitInfo = view.CalcHitInfo(e.Point);
+            if (hitInfo.InRowCell)
+            {
+                view.FocusedRowHandle = hitInfo.RowHandle;
+                menuInstances.ShowPopup(barInstances, view.GridControl.PointToScreen(e.Point));
+            }
+        }
+
+        private void miCloseProcess_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            var instance = bsrcInstancesList.Current as Instance;
+
+            if (gridInstances.FocusedColumn.AbsoluteIndex == 2)
+            {
+                logEvents.Add(new LogEvent($"Closing attached GameClient #{instance.PID}"));
+                instance.CloseAttach();
+                return;
+            }
+            logEvents.Add(new LogEvent($"Closing Instance #{instance.Process.ProcessName}"));
+            instance.Close();
         }
     }
 }

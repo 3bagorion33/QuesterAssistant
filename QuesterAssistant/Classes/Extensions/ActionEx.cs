@@ -13,7 +13,7 @@ namespace QuesterAssistant.Classes.Extensions
             var actions = API.CurrentProfile.GetFullActionList(API.CurrentProfile.MainActionPack);
             for (int i = actions.IndexOf(action) + 1; i < actions.Count + 1; i++)
             {
-                if (i < actions.Count && actions[i].GetType() == typeof(ActionPack)) continue;
+                if (i < actions.Count && (actions[i].Disabled || actions[i].GetType() == typeof(ActionPack))) continue;
                 if (i == actions.Count || actions[i].GetType() != type)
                 {
                     if (type == typeof(AuctionSellItems))

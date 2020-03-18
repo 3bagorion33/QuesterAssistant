@@ -9,27 +9,6 @@ namespace Launcher.Classes
         [HashInclude]
         public BindingList<Patch> Items { get; } = new BindingList<Patch>
         {
-            new Patch //Astral.Forms.Main.\u0002()
-            {
-                Name = "RewriteTitle",
-                Desc = "Hides Astral's main title",
-                Active = true,
-                Bytes = new List<Bytes>
-                {
-                    new Bytes
-                    {
-                        Orig = new byte[] {0x06, 0x6F, 0x17, 0x01, 0x00, 0x0A, 0x28, 0xD2},
-                        Ptch = new byte[] {0x06, 0x6F, 0xB0, 0x01, 0x00, 0x0A, 0x28, 0xD2},
-                    },
-                    new Bytes
-                    {
-                        Orig = new byte[] {0x18, 0x06, 0x72, 0x2F, 0x8A, 0x01, 0x70, 0x7D},
-                        Ptch = new byte[] {0x18, 0x06, 0x7E, 0x63, 0x00, 0x00, 0x0A, 0x7D}
-                        //Orig = new byte[] {0x8A, 0x01, 0x70, 0x7D},
-                        //Ptch = new byte[] {0x00, 0x00, 0x0A, 0x7D}
-                    }
-                }
-            },
             new Patch
             {
                 Name = "AssemblyInfo",
@@ -65,7 +44,7 @@ namespace Launcher.Classes
                     }
                 }
             },
-            new Patch() // Astral.Professions.Controllers.Characters.\u0001()
+            new Patch // Astral.Professions.Controllers.Characters.\u0001()
             {
                 Name = "ProfessionStatistic",
                 Desc = "Compability with QA patch for professions",

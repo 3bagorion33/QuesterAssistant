@@ -323,6 +323,7 @@
     <Compile Include="Classes\Monitoring\GameClient.cs" />
     <Compile Include="Classes\Monitoring\Monitor.cs" />
     <Compile Include="Classes\NwInternals\MountCostumeDef.cs" />
+    <Compile Include="Classes\Patches\MainTitlePatch.cs" />
     <Compile Include="Classes\Patches\PatchMethod.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />

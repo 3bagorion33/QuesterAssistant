@@ -1,6 +1,5 @@
 ﻿using DevExpress.Utils.Extensions;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;
@@ -12,16 +11,17 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Launcher.Classes
 {
     sealed class Instance : NotifyHashChanged
     {
         public Process Process { get; } = new Process();
-        public string OriginalTitle { get; set; } = string.Empty;
-        public string NewTitle { get; set; } = string.Empty;
+        public string Title { get; set; } = string.Empty;
+        public int PID { get; set; }
+        public Process AttachedProcess => PID != 0 ? Process.GetProcessById(PID) : null;
         private const int HASH_SIZE = 4;
-        private readonly bool doRename;
         
         public Instance(IList<Patch> patches)
         {
@@ -46,7 +46,6 @@ namespace Launcher.Classes
                 }
                 finally
                 {
-                    doRename = patches[0].Active;
                     Delete();
                 }
             }
@@ -61,7 +60,7 @@ namespace Launcher.Classes
                 for (int i = 0; i < c; i++)
                 {
                     if (src[i] != pattern[0]) continue;
-                    for (j = pattern.Length - 1; j >= 1 && src[i + j] == pattern[j]; j--) ;
+                    for (j = pattern.Length - 1; j >= 1 && src[i + j] == pattern[j]; j--);
                     if (j == 0) yield return i;
                 }
             }
@@ -70,12 +69,8 @@ namespace Launcher.Classes
             {
                 var idx3 = Search(stream, patch.Orig);
                 foreach (var i in idx3)
-                {
                     for (int j = 0; j < patch.Orig.Length; j++)
-                    {
                         stream[i + j] = patch.Ptch[j];
-                    }
-                }
             }
         }
 
@@ -84,8 +79,7 @@ namespace Launcher.Classes
             int hash = 0;
             try
             {
-                hash = OriginalTitle.GetSafeHashCode() ^
-                NewTitle.GetSafeHashCode() ^
+                hash = Title.GetSafeHashCode() ^
                 Process.ProcessName.GetSafeHashCode() ^
                 Process.HasExited.GetSafeHashCode();
             }
@@ -93,46 +87,35 @@ namespace Launcher.Classes
             return hash;
         }
 
-        public void ForeGround()
-        {
-            WinAPI.SetForegroundWindow(Process.MainWindowHandle);
-        }
+        public void ForeGround() => WinAPI.SetForegroundWindow(Process.MainWindowHandle);
+        public void ForeGroundAttach() => WinAPI.SetForegroundWindow(AttachedProcess?.MainWindowHandle ?? IntPtr.Zero);
 
         public void Rename()
         {
-            if (!doRename) return;
             try
             {
-                void SetNewTitle()
-                {
-                    string origTitle = WinAPI.GetWindowText(Process.MainWindowHandle);
-                    if (origTitle.Contains("@"))
-                    {
-                        OriginalTitle = origTitle;
-                        NewTitle = OriginalTitle.Split('@')[0].Hide();
-                        return;
-                    }
-                    if (origTitle.Contains("Astral") || origTitle.Contains("Offline"))
-                    {
-                        OriginalTitle = origTitle;
-                        NewTitle = string.Empty;
-                        return;
-                    }
-                }
-                SetNewTitle();
-                WinAPI.SetWindowText(Process.MainWindowHandle, NewTitle);
+                var split = WinAPI.GetWindowText(Process.MainWindowHandle).Split(new []{" - PID:"}, StringSplitOptions.None);
+                Title = split[0];
+                PID = split.Length > 1 ? int.Parse(split[1]) : 0;
             }
             catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
         }
 
-        public void Close()
+        public void Close() => Close(Process);
+        public void CloseAttach() => Close(AttachedProcess);
+
+        private static void Close(Process process)
         {
-            if (Process.Responding)
-                Process.CloseMainWindow();
-            else
-                Process.Kill();
-            while (!Process.HasExited)
-                Thread.Sleep(200);
+            Task.Factory.StartNew(() =>
+            {
+                if (process.Responding)
+                    process.CloseMainWindow();
+                Thread.Sleep(500);
+                if (!process.HasExited)
+                    process.Kill();
+                while (!process.HasExited)
+                    Thread.Sleep(200);
+            });
         }
 
         private void Delete()

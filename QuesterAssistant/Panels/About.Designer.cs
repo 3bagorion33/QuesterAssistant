@@ -151,12 +151,12 @@
             // 
             this.labelAuthor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAuthor.Location = new System.Drawing.Point(223, 19);
+            this.labelAuthor.Location = new System.Drawing.Point(282, 19);
             this.labelAuthor.Name = "labelAuthor";
             this.labelAuthor.Padding = new System.Windows.Forms.Padding(3);
-            this.labelAuthor.Size = new System.Drawing.Size(135, 19);
+            this.labelAuthor.Size = new System.Drawing.Size(79, 19);
             this.labelAuthor.TabIndex = 6;
-            this.labelAuthor.Text = "by DartKotik && MichaelProg";
+            this.labelAuthor.Text = "by AсTpoK0TbI";
             // 
             // About
             // 

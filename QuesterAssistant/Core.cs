@@ -78,9 +78,11 @@ namespace QuesterAssistant
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Task.Factory.StartNew(HooksLoader.SetHook, TaskCreationOptions.LongRunning);
+
             Patcher.Apply();
             if (SettingsCore.Data.Patches.ProfessionPatch)
                 ProfessionsPatch.RunOnce();
+            MainTitlePatch.RunOnce();
             Interact.Patch();
 
             Monitor.Start();
