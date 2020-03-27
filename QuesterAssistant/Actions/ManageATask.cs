@@ -1,7 +1,5 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
-using System.Linq;
 using Astral;
 using Astral.Logic.Classes.Map;
 using Astral.Quester.Classes;

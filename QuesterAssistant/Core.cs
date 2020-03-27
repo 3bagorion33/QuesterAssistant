@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 
@@ -86,6 +87,8 @@ namespace QuesterAssistant
             Interact.Patch();
 
             Monitor.Start();
+
+            //ChatManager.Load();
         }
 
         private System.Reflection.Assembly AssemblyResolve(object sender, ResolveEventArgs args)
@@ -115,6 +118,7 @@ namespace QuesterAssistant
         {
             KeyboardHook.Dispose();
             Monitor.Stop();
+            //ChatManager.UnLoad();
         }
     }
 }

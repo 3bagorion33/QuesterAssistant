@@ -135,17 +135,23 @@ namespace QuesterAssistant.Settings
 
         private void simpleButton3_Click(object sender, EventArgs e)
         {
+            ChatManager.Load();
             ChatManager.OnChatMessage += OnChatMessage;
+            simpleButton3.Enabled = false;
+            simpleButton4.Enabled = true;
         }
 
         private void simpleButton4_Click(object sender, EventArgs e)
         {
             ChatManager.OnChatMessage -= OnChatMessage;
+            ChatManager.UnLoad();
+            simpleButton4.Enabled = false;
+            simpleButton3.Enabled = true;
         }
 
         private void OnChatMessage(ChatManager.ChatLogEntryType chatLogEntryType, List<string> messages)
         {
-            richTextBox1.AppendText($"[{chatLogEntryType}]: {string.Join(" => ", messages)}\n");
+            richTextBox1.AppendText($"[{chatLogEntryType}]: {string.Join(" => ", messages)}\n\r");
         }
 
         private void simpleButton5_Click(object sender, EventArgs e)

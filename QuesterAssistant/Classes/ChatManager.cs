@@ -24,7 +24,16 @@ namespace QuesterAssistant.Classes
 
         public static void Load()
         {
-            //hookJmp = hooks_smethod_0(6463344, 15, Notifier, true);
+            foreach (var hook in MyNW.Hooks.HookList)
+            {
+                var m_addr = (IntPtr)(hook as HookJmp)?.GetFieldValue("m_address");
+                if (m_addr != IntPtr.Zero && m_addr == (IntPtr)0x62A6B0)
+                {
+                    (hook as HookJmp).Remove();
+                }
+            }
+            hookJmp = hooks_smethod_0(0x62A6B0, 15, Notifier, true);
+            //hookJmp = hooks_smethod_0(0x62A6B0, 15, Notifier, true);
         }
 
         public static void UnLoad()
@@ -43,6 +52,11 @@ namespace QuesterAssistant.Classes
             }
 
             ChatLogEntryType chatLogEntryType = (ChatLogEntryType)(int)notifyArgs.Registers.R8;
+
+            if (chatLogEntryType != ChatLogEntryType.Guild)
+            {
+                return;
+            }
 
             //MessageAdd(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rsp + 0x8));    //descriptor
             //MessageAdd(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rsp + 0x10));   //full name
@@ -99,6 +113,57 @@ namespace QuesterAssistant.Classes
 
             for (int i = 0; i < 0x100; i++)
                 MessageAdd(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rsp + i));
+
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R15 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R14 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R13 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R12 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R11 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R10 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R9 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.R8 + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rdi + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rsi + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rdx + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rcx + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rbx + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rax + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rbp + i)));
+
+            for (int i = 0; i < 0x100; i++)
+                MessageAdd(Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(notifyArgs.Registers.Rsp + i)));
+
+
 
             if (messages.Count > 0)
                 OnChatMessage?.Invoke(chatLogEntryType, messages);

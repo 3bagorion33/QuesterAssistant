@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
@@ -38,17 +37,17 @@
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtPauseBotHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
             this.btnClearStack = new DevExpress.XtraEditors.SimpleButton();
             this.btnShowStack = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.bsrcPauseBot = new System.Windows.Forms.BindingSource();
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabCommon = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.chkGameCursorMoving = new DevExpress.XtraEditors.CheckEdit();
@@ -64,8 +63,8 @@
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.bsrcPatches = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcData = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcPatches = new System.Windows.Forms.BindingSource();
+            this.bsrcData = new System.Windows.Forms.BindingSource();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
@@ -392,7 +391,7 @@
             // 
             // simpleButton5
             // 
-            this.simpleButton5.Location = new System.Drawing.Point(6, 124);
+            this.simpleButton5.Location = new System.Drawing.Point(290, 58);
             this.simpleButton5.Name = "simpleButton5";
             this.simpleButton5.Size = new System.Drawing.Size(75, 23);
             this.simpleButton5.TabIndex = 8;
@@ -403,19 +402,18 @@
             // 
             this.richTextBox1.Location = new System.Drawing.Point(6, 87);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(359, 30);
+            this.richTextBox1.Size = new System.Drawing.Size(359, 253);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "";
-            this.richTextBox1.Visible = false;
             // 
             // simpleButton4
             // 
+            this.simpleButton4.Enabled = false;
             this.simpleButton4.Location = new System.Drawing.Point(86, 58);
             this.simpleButton4.Name = "simpleButton4";
             this.simpleButton4.Size = new System.Drawing.Size(75, 23);
             this.simpleButton4.TabIndex = 6;
             this.simpleButton4.Text = "UnSubscribe";
-            this.simpleButton4.Visible = false;
             this.simpleButton4.Click += new System.EventHandler(this.simpleButton4_Click);
             // 
             // simpleButton3
@@ -425,7 +423,6 @@
             this.simpleButton3.Size = new System.Drawing.Size(75, 23);
             this.simpleButton3.TabIndex = 6;
             this.simpleButton3.Text = "Subscribe";
-            this.simpleButton3.Visible = false;
             this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
             // 
             // groupControl1

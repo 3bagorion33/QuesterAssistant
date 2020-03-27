@@ -62,7 +62,7 @@ namespace QuesterAssistant.Actions
                 }
                 if (!Task.Instant)
                 {
-                    if (Professions2.TaskIsOrder(Task.InternalName) && Professions2.CurrentOrders.Count >= 3)
+                    if (Professions2.TaskIsOrder(Task.InternalName) && Task.Type != Task.TaskType.InstantOnly && Professions2.CurrentOrders.Count >= 3)
                     {
                         Logger.WriteLine("Can't start an order, all slots in use.");
                         return false;
@@ -84,11 +84,9 @@ namespace QuesterAssistant.Actions
             SendingStone = StartATask.SendingStoneUsage.None;
         }
 
-        private bool ShouldUseSendingStone()
-        {
-            return SendingStone != StartATask.SendingStoneUsage.None && Professions2.TaskIsOrder(Task.InternalName) &&
-                   Professions2.HaveSendingStone;
-        }
+        private bool ShouldUseSendingStone() =>
+            SendingStone != StartATask.SendingStoneUsage.None && Professions2.TaskIsOrder(Task.InternalName) &&
+            Professions2.HaveSendingStone;
 
         public override ActionResult Run()
         {
@@ -132,8 +130,12 @@ namespace QuesterAssistant.Actions
             var orderCount = 0;
             for (;;)
             {
-                EntityManager.LocalPlayer.Player.RefreshAssignments();
-                Pause.Sleep(500);
+                //EntityManager.LocalPlayer.Player.RefreshAssignments();
+                //Pause.Sleep(500);
+                if (!ConditionsAreOK)
+                {
+                    return ActionResult.Skip;
+                }
                 if (Task.SkipIfAlreadyActive && Professions2.HaveActiveTask(definition.InternalName))
                 {
                     Logger.WriteLine("Task already active, skip.");
