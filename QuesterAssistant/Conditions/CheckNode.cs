@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
 using System.Windows.Forms;
@@ -25,19 +24,13 @@ namespace QuesterAssistant.Conditions
 
     public class CheckNode : Astral.Quester.Classes.Condition
     {
-        [NonSerialized]
         private Interact.DynaNode currentNode;
-        public NodeState Tested { get; set; }
 
-        private Vector3 position = new Vector3();
+        public NodeState Tested { get; set; }
         [Editor(typeof(PositionNodeEditor), typeof(UITypeEditor))]
         [Description("Position of the Node that is checked.\n" +
                      "Координаты проверяемой Ноды.")]
-        public Vector3 Position
-        {
-            get => position;
-            set => position = value;
-        }
+        public Vector3 Position { get; set; } = new Vector3();
 
         [Description("The maximum distance at which the bot can detect the Node\r\n" +
             "If the distance from the Player to the 'Position' greater then 'VisibilityDistance' then the condition is considered True\n" +
@@ -78,11 +71,8 @@ namespace QuesterAssistant.Conditions
             {
                 if (Position.Distance3DFromPlayer > VisibilityDistance)
                     return true;
-
                 if (currentNode == null || !currentNode.Node.IsValid)
-                {
                     currentNode = GetNode();
-                }
 
                 switch(Tested)
                 {
@@ -104,10 +94,7 @@ namespace QuesterAssistant.Conditions
             }
         }
 
-        public override void Reset()
-        {
-            currentNode = null;
-        }
+        public override void Reset() => currentNode = null;
 
         public override string ToString()
         {

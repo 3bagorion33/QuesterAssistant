@@ -47,6 +47,10 @@ namespace ClassPatcher
                         enumerator.Current.Name == "RandomMove" ||
                         enumerator.Current.Name == "Move" ||
                         enumerator.Current.Name == "TaskEditor" ||
+                        enumerator.Current.Name == "MainMissionEditor" ||
+                        enumerator.Current.Name == "PositionNodeListEditorr" ||
+                        enumerator.Current.Name == "NPCId" ||
+                        enumerator.Current.Name == "NPCId2" ||
 
                         action == "/show")
                     {
