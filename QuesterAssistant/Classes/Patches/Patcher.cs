@@ -10,7 +10,8 @@ namespace QuesterAssistant.Classes.Patches
         private static PatchMethod Astral_Logic_UCC_Forms_AddClass_Show =
             new PatchMethod(
                 typeof(Astral.Logic.UCC.Forms.AddClass).GetMethod(nameof(Astral.Logic.UCC.Forms.AddClass.Show), binding),
-                typeof(AddClass).GetMethod(nameof(AddClass.Show), binding));
+                typeof(AddClass).GetMethod(nameof(AddClass.Show), binding),
+                !Core.IsEToolsPresent);
 
         public static void Apply()
         {

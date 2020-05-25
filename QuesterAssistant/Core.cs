@@ -10,7 +10,6 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 
@@ -29,6 +28,8 @@ namespace QuesterAssistant
         internal static IntPtr AstralHandle => Process.GetCurrentProcess().MainWindowHandle;
         internal static bool IsAstralForeground => AstralHandle == WinAPI.GetForegroundWindow();
         internal static string SkinName => "Office 2013 Light Gray";
+        internal static bool IsEToolsPresent =>
+            File.Exists(Path.Combine(Astral.Controllers.Directories.PluginsPath, "EntityTools.dll"));
 
         /// <summary>
         /// Объект, отслеживающий изменение состояний бота

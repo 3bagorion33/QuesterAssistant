@@ -14,7 +14,10 @@ namespace QuesterAssistant.UIEditors.Forms
 {
     public partial class ConditionListForm : XtraForm
     {
-        private Condition conditionCopy;
+        //private Condition conditionCopy;
+        // Индекс элемента списка условий Conditions.Items
+        // в котором допускается изменение состояния "Checked"
+        private int allowConditionsItemCheckedChangeInd = -1;
 
         public ConditionListForm()
         {
@@ -44,7 +47,7 @@ namespace QuesterAssistant.UIEditors.Forms
         {
             if (Conditions.SelectedItem is Condition cond && SetConditionCopy(cond))
                 QMessageBox.ShowInfo($"Condition {cond} copied!");
-            else QMessageBox.ShowError($"Error while copying of the condition!");
+            else QMessageBox.ShowError("Error while copying of the condition!");
         }
 
         private void btnPaste_Click(object sender, EventArgs e)
@@ -71,6 +74,20 @@ namespace QuesterAssistant.UIEditors.Forms
             }
         }
 
+        private void btnTestAll_Click(object sender, EventArgs e)
+        {
+            if(Conditions.Items.Count > 0)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (Condition cond in Conditions.Items)
+                    sb.Append(cond.TestInfos).Append(" | Result: ").AppendLine(cond.IsValid.ToString());
+
+                if (sb.Length > 0)
+                    XtraMessageBox.Show(sb.ToString());
+            }
+            XtraMessageBox.Show("Something wrong!\n\rIs the Condition list empty?");
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
@@ -90,20 +107,25 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void Conditions_ItemCheck(object sender, ItemCheckEventArgs e)
         {
-            if (Conditions.SelectedItem is Condition condition)
+            // изменение состояния Checked у элемента разрешено, 
+            // если его индекс совпадает с allowConditionsItemCheckedChangeInd
+            if (e.Index != allowConditionsItemCheckedChangeInd
+                || allowConditionsItemCheckedChangeInd < 0)
             {
-                condition.Locked = (e.NewValue == CheckState.Checked);
-                Properties.Refresh();
+                // запрет изменения состояния Чекбокса
+                e.NewValue = e.CurrentValue;
             }
+            allowConditionsItemCheckedChangeInd = -1;
         }
 
         private void Properties_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
             if (e.ChangedItem.Label == "Locked")
             {
+                allowConditionsItemCheckedChangeInd = Conditions.SelectedIndex;
                 Conditions.SetItemChecked(Conditions.SelectedIndex, e.ChangedItem.Value.Equals(true));
-                Conditions.Refresh();
             }
+            Conditions.Refresh();
         }
 
         public ConditionList GetConditionList(ConditionList conditions = null)
@@ -139,7 +161,7 @@ namespace QuesterAssistant.UIEditors.Forms
         /// Получении копии Condition из приватного поля copiedCondition в QuesterEditor'е
         /// </summary>
         /// <returns></returns>
-        protected Condition GetConditionCopy()
+        private Condition GetConditionCopy()
         {
             Editor qEditor = null;
             foreach (Form form in Application.OpenForms)
@@ -160,7 +182,7 @@ namespace QuesterAssistant.UIEditors.Forms
         /// Сохранение копии Condition в приватное поле copiedCondition в QuesterEditor
         /// </summary>
         /// <returns></returns>
-        protected bool SetConditionCopy(Condition cond)
+        private bool SetConditionCopy(Condition cond)
         {
             Editor qEditor = null;
             foreach (Form form in Application.OpenForms)
