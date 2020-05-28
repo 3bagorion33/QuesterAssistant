@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
+using MyNW.Internals;
+using QuesterAssistant.Classes.Common;
 
 namespace QuesterAssistant.Classes.CodeReader
 {
@@ -237,7 +239,36 @@ namespace QuesterAssistant.Classes.CodeReader
                 }
             }
             return result;
+        }
 
+        /// <summary>
+        /// Gets the ILInstruction by number
+        /// </summary>
+        /// <returns></returns>
+        public ILInstruction GetInstructionByIndex(int number)
+        {
+            return instructions[number];
+        }
+
+        /// <summary>
+        /// Gets the ILInstruction by name and number of matching
+        /// </summary>
+        /// <returns></returns>
+        public ILInstruction GetInstructionByName(string name, int number = 0)
+        {
+            var instructions = this.instructions.FindAll(i => i.Code.Name == name);
+            return instructions.Count > 0
+                ? instructions[MathTools.Min(number, instructions.Count - 1)]
+                : new ILInstruction();
+        }
+
+        /// <summary>
+        /// Gets the ILInstruction by offset
+        /// </summary>
+        /// <returns></returns>
+        public ILInstruction GetInstructionByOffset(int offset)
+        {
+            return instructions.Find(i => i.Offset == offset) ?? new ILInstruction();
         }
 
         /// <summary>

@@ -1,7 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing.Design;
 using Astral;
 using Astral.Logic.Classes.Map;
+using Astral.Logic.NW;
 using Astral.Quester.Classes;
 using Astral.Quester.Forms;
 using Astral.Quester.UIEditors;
@@ -13,8 +15,10 @@ using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Actions
 {
-    public class ManageATask : Astral.Quester.Classes.Action
+    public class ManageATask : Action
     {
+        private List<Assignment> Assignments =>
+            EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FindAll(Finder);
         public override string ActionLabel => $"{GetType().Name} : {Action} [{Task}]";
         public override string Category => "Tasks";
         public override string InternalDisplayName => string.Empty;
@@ -23,7 +27,10 @@ namespace QuesterAssistant.Actions
         protected override Vector3 InternalDestination => new Vector3();
         public override void OnMapDraw(GraphicsNW graph) { }
         public override void InternalReset() { }
-        protected override bool IntenalConditions => true;
+
+        protected override bool IntenalConditions =>
+            Action != ModeDef.Complete || 
+            Assignments.Count > 0 && Assignments[0].Def.ForceCompleteCost <= Professions2.Morale;
 
         protected override ActionValidity InternalValidity
         {
@@ -46,36 +53,36 @@ namespace QuesterAssistant.Actions
             }
         }
 
+        private bool Finder(Assignment a) =>
+            a.Def.InternalName.FindPattern(Task) &&
+            (Action == ModeDef.Collect ?
+                a.ReadyToComplete :
+                !a.ReadyToComplete &&
+                (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) &&
+                (Duration == 0 || DurationRelation.Compare(a.Duration, Duration)));
+
         public override ActionResult Run()
         {
-            bool Finder(Assignment a) =>
-                a.Def.InternalName.FindPattern(Task) &&
-                (Action == ModeDef.Collect ? 
-                    a.ReadyToComplete : 
-                    !a.ReadyToComplete && 
-                    (Remaining == 0 || RemainingRelation.Compare(a.Remaining, Remaining)) && 
-                    (Duration == 0 || DurationRelation.Compare(a.Duration, Duration)));
-
-            var assignments =
-                EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FindAll(Finder);
-            if (assignments.Count == 0)
+            if (Assignments.Count == 0)
                 return ActionResult.Completed;
 
             switch (Action)
             {
                 case ModeDef.Cancel:
-                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {assignments[0].ID}");
+                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {Assignments[0].ID}");
                     break;
                 case ModeDef.Complete:
-                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {assignments[0].ID}");
+                    if (Assignments[0].Def.ForceCompleteCost > Professions2.Morale)
+                        return ActionResult.Completed;
+                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {Assignments[0].ID}");
                     break;
                 case ModeDef.Collect:
-                    EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(assignments);
+                    EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(Assignments);
                     Logger.WriteLine($"{Action} all ready tasks '{Task}' ...");
                     Pause.Sleep(500);
                     return ActionResult.Completed;
             }
-            Logger.WriteLine($"{Action} task '{assignments[0]}' ...");
+            Logger.WriteLine($"{Action} task '{Assignments[0]}' ...");
             Pause.RandomSleep(300, 500);
             return ActionResult.Running;
         }

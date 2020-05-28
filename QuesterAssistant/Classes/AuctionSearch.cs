@@ -17,6 +17,7 @@ namespace QuesterAssistant.Classes
         private static readonly string CachedSearchFile = Path.Combine(Core.SettingsPath, "AuctionSearchCache.bin");
         private static readonly Astral.Classes.Timeout timeOut = new Astral.Classes.Timeout(0);
         private readonly ItemDef itemDef;
+        private readonly bool checkInternalName;
         private List<SearchResult> cachedSearch;
 
         private string loggerMessage;
@@ -25,10 +26,11 @@ namespace QuesterAssistant.Classes
         public AuctionSearch(ItemDef itemDef, bool checkInternalName = true, uint cacheLifeTime = 10)
         {
             this.itemDef = itemDef;
-            Result = GetResult(checkInternalName, cacheLifeTime);
+            this.checkInternalName = checkInternalName;
+            Result = GetResult(cacheLifeTime);
         }
         
-        private SearchResult GetResult(bool checkInternalName = true, uint cacheLifeTime = 10)
+        private SearchResult GetResult(uint cacheLifeTime = 10)
         {
             if (string.IsNullOrEmpty(itemDef.DisplayName))
                 return new SearchResult(null, null);
@@ -48,7 +50,7 @@ namespace QuesterAssistant.Classes
             }
 
             cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
-            var cachedValue = cachedSearch.Find(l => ResultFilter(l) && l.DateTime.Subtract(DateTime.Now).TotalMinutes > -cacheLifeTime);
+            var cachedValue = cachedSearch.Find(l => l.DateTime.Subtract(DateTime.Now).TotalMinutes > -cacheLifeTime && ResultFilter(l));
 
             if (cachedValue != null)
             {
@@ -112,6 +114,37 @@ namespace QuesterAssistant.Classes
                 timeOut.ChangeTime(Pause.Random(1000, 2000));
                 timeOut.Reset();
             }
+        }
+
+        public static int GetCharacterLotsCount(ItemDef itemDef, uint stackSize = 0)
+        {
+            bool Selector(AuctionLot l)
+            {
+                var i = l.Items[0].Item;
+                return i.ItemDef.InternalName == itemDef.InternalName && (stackSize == 0 || i.Count == stackSize);
+            }
+
+            return Auction.AuctionSellList.Lots.Count(Selector);
+        }
+
+        public int GetAccountLotsCount(uint stackSize = 0)
+        {
+            bool Selector(AuctionLot l)
+            {
+                var i = l.Items[0].Item;
+                return l.OptionalData.OwnerHandle == EntityManager.LocalPlayer.AccountLoginUsername &&
+                       i.ItemDef.InternalName == itemDef.InternalName && 
+                       (stackSize == 0 || i.Count == stackSize);
+            }
+            GetResult(1);
+            return Auction.AuctionLotList.LotsCount == 0 ? 0 : Auction.AuctionLotList.Lots.Count(Selector);
+        }
+
+        public static int GetSellItemsCount(Item item)
+        {
+            return Auction.AuctionSellList.Lots
+                .FindAll(l => l.Items.First().Item.ItemDef.InternalName == item.ItemDef.InternalName)
+                .Sum(l => (int)l.Items.First().Item.Count);
         }
 
         [Serializable]

@@ -12,13 +12,13 @@ using Astral.Quester.UIEditors;
 using Astral.Quester.UIEditors.Forms;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using Action = Astral.Quester.Classes.Action;
-using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class InteractSpecificNPCExt : Action
+    public class InteractSpecificNPCExt : Action, IIgnoreCombat
     {
 		private bool combat;
         private Entity target = new Entity(IntPtr.Zero);
@@ -113,10 +113,8 @@ namespace QuesterAssistant.Actions
         {
             get
             {
-                if (IgnoreCombat)
-                    API.IgnoreCombat = true;
-                if (GetNPC())
-                    return true;
+                this.IgnoreCombat();
+                if (GetNPC()) return true;
                 if (Position.Distance3DFromPlayer < InteractDistance)
                 {
                     Astral.Classes.Timeout timeout = new Astral.Classes.Timeout(5000);
@@ -134,7 +132,7 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (IgnoreCombat) API.IgnoreCombat = false;
+            this.EnableCombat();
             if (!target.IsValid)
             {
                 Logger.WriteLine("NPC Not founded.");

@@ -12,12 +12,13 @@ using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
 using Action = Astral.Quester.Classes.Action;
 
 namespace QuesterAssistant.Actions
 {
-    public class InteractNodeExt : Action
+    public class InteractNodeExt : Action, IIgnoreCombat
     {
 		private List<string> interacted = new List<string>();
         private Interact.DynaNode currentNode;
@@ -81,7 +82,7 @@ namespace QuesterAssistant.Actions
                         }
                     }
                 }
-                if (IgnoreCombat) API.IgnoreCombat = true;
+                this.IgnoreCombat();
                 return currentNode != null && currentNode.Node.IsValid &&
                        Astral.Logic.General.ZAxisDiffFromPlayer(currentNode.Node.WorldInteractionNode
                            .InteractLocation) < 10.0 &&
@@ -146,8 +147,7 @@ namespace QuesterAssistant.Actions
         
         public override ActionResult Run()
         {
-            if (IgnoreCombat)
-                API.IgnoreCombat = false;
+            this.EnableCombat();
             if (currentNode == null || !currentNode.Node.IsValid)
                 return ActionResult.Running;
             Interact.DynaNode dynaNode = currentNode;

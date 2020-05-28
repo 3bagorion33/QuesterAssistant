@@ -1,4 +1,5 @@
-﻿using Astral.Quester;
+﻿using Astral.Logic.NW;
+using Astral.Quester;
 using Astral.Quester.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Actions;
@@ -29,6 +30,21 @@ namespace QuesterAssistant.Classes.Extensions
                     Game.ToggleCursorMode(false);
                 }
                 break;
+            }
+        }
+
+        public static void IgnoreCombat(this Action action)
+        {
+            if (action is IIgnoreCombat a)
+                API.IgnoreCombat = a.IgnoreCombat;
+        }
+
+        public static void EnableCombat(this Action action)
+        {
+            if (action is IIgnoreCombat a && a.IgnoreCombat)
+            {
+                Attackers.List.Clear();
+                API.IgnoreCombat = false;
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using MyNW;
 using MyNW.Patchables.Enums;
-using QuesterAssistant.Enums;
+using QuesterAssistant.Classes.Patches;
 
 namespace QuesterAssistant.Classes.Extensions
 {
@@ -25,7 +25,7 @@ namespace QuesterAssistant.Classes.Extensions
 
             if (!slot.Filled || !slot.Item.IsValid) return;
 
-            List<InventorySlot> slots = EntityManager.LocalPlayer.BagsItems.FindAll(Find);
+            List<InventorySlot> slots = EntityManager.LocalPlayer.GetBagsForSale().FindAll(Find);
             if (!slots.Any()) return;
 
             InventorySlot sFirst = slots.FirstOrDefault(s => s.Item.Count < s.Item.ItemDef.StackLimit);
@@ -66,7 +66,7 @@ namespace QuesterAssistant.Classes.Extensions
                 "mov r8d, " + (uint) (wardSlot?.BagId ?? (InvBagIDs) uint.MaxValue),
                 "mov edx, " + gemSlot.Slot,
                 "mov ecx, " + (uint) gemSlot.BagId,
-                "mov rax, " + (Memory.BaseAdress + (int) Offsets.itemProgression_EvoItem),
+                "mov rax, " + (Memory.BaseAdress + Offsets.itemProgression_EvoItem),
                 "call rax",
                 "add rsp, 0x40",
                 "retn"

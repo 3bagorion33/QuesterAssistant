@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Astral.Classes;
 using DevExpress.Utils;
+using DevExpress.Utils.Helpers;
 using DevExpress.XtraEditors;
 using MyNW;
 using MyNW.Classes;
@@ -16,6 +17,7 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.CodeReader;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Patches;
 using QuesterAssistant.Classes.Reflection;
 using QuesterAssistant.Enums;
 using QuesterAssistant.Panels;
@@ -164,15 +166,6 @@ namespace QuesterAssistant.Settings
             //{
             //    costumeDbg.Add(new CostumeDbg(i));
             //}
-
-            var mCostume = EntityManager.LocalPlayer.GetMountCostume();
-
-            var mInfo = typeof(Memory).GetMethod(nameof(Memory.Initialize), BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public);
-            var vars = mInfo.GetMethodBody().GetILAsByteArray();
-            var str = BitConverter.ToString(vars);
-            Globals.LoadOpCodes();
-            MethodBodyReader mr = new MethodBodyReader(mInfo);
-            var text = mr.GetBodyCode();
 
         }
 

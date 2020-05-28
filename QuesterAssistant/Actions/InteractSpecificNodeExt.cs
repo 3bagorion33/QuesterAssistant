@@ -13,6 +13,7 @@ using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Conditions;
 using QuesterAssistant.Panels;
 using Action = Astral.Quester.Classes.Action;
@@ -20,7 +21,7 @@ using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class InteractSpecificNodeExt : Action
+    public class InteractSpecificNodeExt : Action, IIgnoreCombat
     {
         private Interact.DynaNode currentNode;
 
@@ -52,7 +53,7 @@ namespace QuesterAssistant.Actions
         {
             get
             {
-                if (IgnoreCombat) API.IgnoreCombat = true;
+                this.IgnoreCombat();
                 if ((currentNode == null || !currentNode.Node.IsValid) && !GetNode() &&
                     (SkipTimeout > 0 || Common.Enabled) && Position.Distance3DFromPlayer < 15.0)
                 {
@@ -123,7 +124,7 @@ namespace QuesterAssistant.Actions
             RewardItemChoose = string.Empty;
             SkipTimeout = 0;
             IgnoreCombat = true;
-            VisibilityDistance = 80;
+            VisibilityDistance = 40;
         }
 
         private bool GetNode()
@@ -141,7 +142,7 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (IgnoreCombat) API.IgnoreCombat = false;
+            this.EnableCombat();
             if (currentNode == null || !currentNode.Node.IsValid)
             {
                 Logger.WriteLine("Node not founded.");

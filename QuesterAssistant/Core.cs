@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuesterAssistant.Classes.CodeReader;
 using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 
@@ -80,6 +81,8 @@ namespace QuesterAssistant
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Task.Factory.StartNew(HooksLoader.SetHook, TaskCreationOptions.LongRunning);
+
+            Globals.LoadOpCodes();
 
             Patcher.Apply();
             if (SettingsCore.Data.Patches.ProfessionPatch)

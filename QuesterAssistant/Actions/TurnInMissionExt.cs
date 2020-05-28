@@ -13,11 +13,10 @@ using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Panels;
-using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class TurnInMissionExt : Action
+    public class TurnInMissionExt : Action, IIgnoreCombat
     {
         private Astral.Classes.Timeout failTo;
 
@@ -44,7 +43,7 @@ namespace QuesterAssistant.Actions
                         return true;
                     }
                 }
-                if (IgnoreCombat) API.IgnoreCombat = true;
+                this.IgnoreCombat();
                 return false;
             }
         }
@@ -92,13 +91,12 @@ namespace QuesterAssistant.Actions
             GiverPosition = new Vector3();
             MissionId = string.Empty;
             IgnoreCombat = true;
-            InteractDistance = 20;
+            InteractDistance = 5;
         }
 
         public override ActionResult Run()
         {
-            if (IgnoreCombat)
-                API.IgnoreCombat = false;
+            this.EnableCombat();
             foreach (ContactInfo contactInfo in EntityManager.LocalPlayer.Player.InteractInfo.NearbyContacts)
             {
                 Entity entity = contactInfo.Entity;
@@ -107,7 +105,6 @@ namespace QuesterAssistant.Actions
                     if (Missions.TurnInMission(entity, MissionId) == Missions.MissionInteractResult.Success)
                     {
                         failTo = null;
-                        this.CloseFrames();
                         return ActionResult.Completed;
                     }
                     EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();

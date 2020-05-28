@@ -1,22 +1,22 @@
 ﻿using System;
 using MyNW;
-using QuesterAssistant.Enums;
+using QuesterAssistant.Classes.Patches;
 
 namespace QuesterAssistant.Classes.Monitoring
 {
     internal static class GameCursorMoving
     {
-        private static readonly IntPtr pEnable = Memory.MMemory.Read<IntPtr>(Memory.BaseAdress + (int) Offsets.GameCursorMoving);
+        private static readonly IntPtr pEnable = Memory.MMemory.Read<IntPtr>(Memory.BaseAdress + Offsets.GameCursorMoving);
         private static IntPtr pDisable;
 
         private static void Enable(object sender = null, EventArgs e = null)
         {
-            Memory.MMemory.Write(Memory.BaseAdress + (int) Offsets.GameCursorMoving, pEnable);
+            Memory.MMemory.Write(Memory.BaseAdress + Offsets.GameCursorMoving, pEnable);
         }
 
         private static void Disable(object sender = null, EventArgs e = null)
         {
-            Memory.MMemory.Write(Memory.BaseAdress + (int) Offsets.GameCursorMoving, pDisable);
+            Memory.MMemory.Write(Memory.BaseAdress + Offsets.GameCursorMoving, pDisable);
         }
 
         public static void Start()

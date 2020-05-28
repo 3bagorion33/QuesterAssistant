@@ -57,7 +57,6 @@ namespace QuesterAssistant.Actions
             Logger.WriteLine($"Push profile to stack : {ProfilesStack.CurrentProfileName}");
             ProfilesStack.PushAndLoad(fileInfo, ActionID);
 
-
             return ActionResult.Completed;
         }
 

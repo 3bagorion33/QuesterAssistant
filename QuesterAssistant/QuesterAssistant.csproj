@@ -279,6 +279,7 @@
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
+    <Compile Include="Classes\Extensions\IIgnoreCombat.cs" />
     <Compile Include="Actions\InteractNodeExt.cs" />
     <Compile Include="Actions\InteractSpecificNodeExt.cs" />
     <Compile Include="Actions\InteractSpecificNPCExt.cs" />
@@ -321,6 +322,7 @@
     <Compile Include="Classes\Extensions\ActionEx.cs" />
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
     <Compile Include="Classes\Extensions\EntityEx.cs" />
+    <Compile Include="Classes\Extensions\LocalPlayerEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
@@ -330,6 +332,7 @@
     <Compile Include="Classes\Monitoring\Monitor.cs" />
     <Compile Include="Classes\NwInternals\MountCostumeDef.cs" />
     <Compile Include="Classes\Patches\MainTitlePatch.cs" />
+    <Compile Include="Classes\Patches\Offsets.cs" />
     <Compile Include="Classes\Patches\PatchMethod.cs" />
     <Compile Include="Classes\Common\Converters\CollectionTypeConverter.cs" />
     <Compile Include="Classes\Common\Converters\FileInfoListConverter.cs" />
@@ -338,7 +341,6 @@
     <Compile Include="Classes\Common\PropertySorter.cs" />
     <Compile Include="Classes\CopyHelper.cs" />
     <Compile Include="Classes\Extensions\InventorySlotEx.cs" />
-    <Compile Include="Classes\Extensions\ItemEx.cs" />
     <Compile Include="Classes\ParagonTools.cs" />
     <Compile Include="Classes\Patches\PatchConstructor.cs" />
     <Compile Include="Classes\Patches\Patcher.cs" />
@@ -361,7 +363,6 @@
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />
     <Compile Include="Conditions\PlayerParagon.cs" />
-    <Compile Include="Enums\Offsets.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerCore.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerData.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerForm.cs">

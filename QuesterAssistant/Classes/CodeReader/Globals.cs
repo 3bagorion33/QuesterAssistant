@@ -105,9 +105,7 @@ namespace QuesterAssistant.Classes.CodeReader
     //    PostIncrement,
     //    PostDecrement
     //}
-
-
-
+    
     public static class Globals
     {
         public static Dictionary<int, object> Cache = new Dictionary<int, object>();
