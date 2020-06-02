@@ -16,6 +16,8 @@ namespace QuesterAssistant.Settings
         [HashInclude]
         public bool GameCursorMoving { get; set; }
         [HashInclude]
+        public uint StackLifeTime { get; set; } = 1440;
+        [HashInclude]
         public PatchesDef Patches { get; set; } = new PatchesDef();
 
         public void Parse(SettingsData source)
@@ -24,6 +26,7 @@ namespace QuesterAssistant.Settings
             HideClient.Parse(source.HideClient);
             PauseBot.Parse(source.PauseBot);
             GameCursorMoving = source.GameCursorMoving;
+            StackLifeTime = source.StackLifeTime;
             Patches.Parse(source.Patches);
         }
 

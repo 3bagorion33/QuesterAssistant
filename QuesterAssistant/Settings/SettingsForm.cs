@@ -72,6 +72,7 @@ namespace QuesterAssistant.Settings
             txtPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(TextEdit.Text), nameof(HotKey.String));
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
             chkGameCursorMoving.BindAdd(bsrcData, nameof(ComboBoxEdit.EditValue), nameof(Data.GameCursorMoving));
+            numStackLifeTime.BindAdd(bsrcData, nameof(SpinEdit.EditValue), nameof(Data.StackLifeTime));
 
             chkWayPointPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.Patches.WayPointFilterPatch));
             chkProfessionPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.PatchesDef.ProfessionPatch));

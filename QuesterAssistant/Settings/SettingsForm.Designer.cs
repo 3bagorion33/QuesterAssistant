@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
@@ -37,21 +38,23 @@
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtPauseBotHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
             this.btnClearStack = new DevExpress.XtraEditors.SimpleButton();
             this.btnShowStack = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
-            this.bsrcPauseBot = new System.Windows.Forms.BindingSource();
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabCommon = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.chkGameCursorMoving = new DevExpress.XtraEditors.CheckEdit();
             this.tabProfilesStack = new DevExpress.XtraBars.Navigation.TabNavigationPage();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.numStackLifeTime = new DevExpress.XtraEditors.SpinEdit();
             this.tabPatches = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.numReadyTasksCount = new DevExpress.XtraEditors.SpinEdit();
@@ -63,8 +66,8 @@
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.bsrcPatches = new System.Windows.Forms.BindingSource();
-            this.bsrcData = new System.Windows.Forms.BindingSource();
+            this.bsrcPatches = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcData = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
@@ -84,6 +87,7 @@
             this.tabCommon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chkGameCursorMoving.Properties)).BeginInit();
             this.tabProfilesStack.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numStackLifeTime.Properties)).BeginInit();
             this.tabPatches.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numReadyTasksCount.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chkProfessionPatch.Properties)).BeginInit();
@@ -237,7 +241,7 @@
             // 
             // btnClearStack
             // 
-            this.btnClearStack.Location = new System.Drawing.Point(86, 6);
+            this.btnClearStack.Location = new System.Drawing.Point(86, 47);
             this.btnClearStack.Name = "btnClearStack";
             this.btnClearStack.Size = new System.Drawing.Size(75, 23);
             this.btnClearStack.TabIndex = 0;
@@ -246,7 +250,7 @@
             // 
             // btnShowStack
             // 
-            this.btnShowStack.Location = new System.Drawing.Point(5, 6);
+            this.btnShowStack.Location = new System.Drawing.Point(5, 47);
             this.btnShowStack.Name = "btnShowStack";
             this.btnShowStack.Size = new System.Drawing.Size(75, 23);
             this.btnShowStack.TabIndex = 0;
@@ -306,12 +310,43 @@
             // tabProfilesStack
             // 
             this.tabProfilesStack.Caption = "Profiles Stack";
+            this.tabProfilesStack.Controls.Add(this.labelControl3);
+            this.tabProfilesStack.Controls.Add(this.numStackLifeTime);
             this.tabProfilesStack.Controls.Add(this.btnClearStack);
             this.tabProfilesStack.Controls.Add(this.btnShowStack);
             this.tabProfilesStack.Margin = new System.Windows.Forms.Padding(0);
             this.tabProfilesStack.Name = "tabProfilesStack";
             this.tabProfilesStack.Padding = new System.Windows.Forms.Padding(3);
             this.tabProfilesStack.Size = new System.Drawing.Size(370, 345);
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(6, 6);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(189, 13);
+            this.labelControl3.TabIndex = 10;
+            this.labelControl3.Text = "Life time in minutes. Zero means infinite";
+            // 
+            // numStackLifeTime
+            // 
+            this.numStackLifeTime.EditValue = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
+            this.numStackLifeTime.Location = new System.Drawing.Point(201, 3);
+            this.numStackLifeTime.Name = "numStackLifeTime";
+            this.numStackLifeTime.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.numStackLifeTime.Properties.IsFloatValue = false;
+            this.numStackLifeTime.Properties.Mask.EditMask = "N00";
+            this.numStackLifeTime.Properties.MaxValue = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+            this.numStackLifeTime.Size = new System.Drawing.Size(59, 20);
+            this.numStackLifeTime.TabIndex = 9;
             // 
             // tabPatches
             // 
@@ -464,6 +499,8 @@
             this.tabCommon.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chkGameCursorMoving.Properties)).EndInit();
             this.tabProfilesStack.ResumeLayout(false);
+            this.tabProfilesStack.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numStackLifeTime.Properties)).EndInit();
             this.tabPatches.ResumeLayout(false);
             this.tabPatches.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numReadyTasksCount.Properties)).EndInit();
@@ -518,5 +555,7 @@
         private DevExpress.XtraEditors.SimpleButton simpleButton5;
         private DevExpress.XtraEditors.CheckEdit chkGameCursorMoving;
         private System.Windows.Forms.BindingSource bsrcData;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
+        private DevExpress.XtraEditors.SpinEdit numStackLifeTime;
     }
 }
