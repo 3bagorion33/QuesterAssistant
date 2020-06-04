@@ -400,7 +400,7 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Classes\AuctionSearch.cs" />
-    <Compile Include="Classes\Common\BinFile.cs" />
+    <Compile Include="Classes\Common\BinFileHelper.cs" />
     <Compile Include="Classes\Common\Debug.cs" />
     <Compile Include="Classes\Patches\WayPointFilter.cs" />
     <Compile Include="UCCActions\UCCLoadPowersPreset.cs" />

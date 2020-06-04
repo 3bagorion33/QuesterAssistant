@@ -22,7 +22,7 @@ namespace QuesterAssistant.Classes
         private static readonly string StatusFile =
             Path.Combine(Core.SettingsPath, $"{nameof(ProfilesStack)}Status.bin");
         private static readonly Dictionary<string, StackDef> Stack =
-            BinFile.Load<Dictionary<string, StackDef>>(StatusFile);
+            BinFileHelper.Load<Dictionary<string, StackDef>>(StatusFile);
         private static string CurrentCharacter => EntityManager.LocalPlayer.InternalName;
         private static readonly Editor editorForm =
             typeof(Editor).GetStaticFieldValue("editorForm", BindingFlags.NonPublic | BindingFlags.Static) as Editor;
@@ -75,7 +75,7 @@ namespace QuesterAssistant.Classes
 
         private static void SaveState()
         {
-            BinFile.Save(Stack, StatusFile);
+            BinFileHelper.Save(Stack, StatusFile);
         }
 
         private static void RemoveLast()

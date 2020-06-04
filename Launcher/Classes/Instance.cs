@@ -27,6 +27,7 @@ namespace Launcher.Classes
         {
             HashEventEnable();
             HashChanged += Delete;
+            ClearZoneIdentifier();
             using (MD5 md5Hash = MD5.Create())
             {
                 string procName = GetMd5Hash(md5Hash, DateTime.Now.Ticks.ToString()) + ".exe";
@@ -48,6 +49,18 @@ namespace Launcher.Classes
                 {
                     Delete();
                 }
+            }
+        }
+
+        private void ClearZoneIdentifier()
+        {
+            var dir = new DirectoryInfo("Plugins");
+            var files = dir.GetFiles("*.dll");
+            foreach (var file in files)
+            {
+                var streamName = file.FullName + ":Zone.Identifier";
+                if (BinFileHelper.FileExists(streamName))
+                    BinFileHelper.Delete(streamName);
             }
         }
 

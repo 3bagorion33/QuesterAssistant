@@ -49,7 +49,7 @@ namespace QuesterAssistant.Classes
                     : l.DisplayName == itemDef.DisplayName;
             }
 
-            cachedSearch = File.Exists(CachedSearchFile) ? BinFile.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
+            cachedSearch = File.Exists(CachedSearchFile) ? BinFileHelper.Load<List<SearchResult>>(CachedSearchFile) : new List<SearchResult>();
             var cachedValue = cachedSearch.Find(l => l.DateTime.Subtract(DateTime.Now).TotalMinutes > -cacheLifeTime && ResultFilter(l));
 
             if (cachedValue != null)
@@ -97,7 +97,7 @@ namespace QuesterAssistant.Classes
                 cachedSearch.AddOrReplace(l => l.InternalName == itemDef.InternalName,
                     new SearchResult(itemDef, new List<AuctionLot>()));
             }
-            BinFile.Save(cachedSearch, CachedSearchFile);
+            BinFileHelper.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(ResultFilter) ?? new SearchResult(itemDef, new List<AuctionLot>());
         }
 
