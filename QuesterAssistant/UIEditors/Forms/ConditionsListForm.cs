@@ -14,7 +14,6 @@ namespace QuesterAssistant.UIEditors.Forms
 {
     public partial class ConditionListForm : XtraForm
     {
-        //private Condition conditionCopy;
         // Индекс элемента списка условий Conditions.Items
         // в котором допускается изменение состояния "Checked"
         private int allowConditionsItemCheckedChangeInd = -1;
@@ -83,9 +82,9 @@ namespace QuesterAssistant.UIEditors.Forms
                     sb.Append(cond.TestInfos).Append(" | Result: ").AppendLine(cond.IsValid.ToString());
 
                 if (sb.Length > 0)
-                    XtraMessageBox.Show(sb.ToString());
+                    QMessageBox.ShowInfo(sb.ToString());
             }
-            XtraMessageBox.Show("Something wrong!\n\rIs the Condition list empty?");
+            else QMessageBox.ShowError("Something wrong!\n\rIs the Condition list empty?");
         }
 
         private void btnSave_Click(object sender, EventArgs e)

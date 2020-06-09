@@ -109,11 +109,11 @@ namespace QuesterAssistant.Actions
                                 itemPrice = validLots.ElementAt(validLots.Count / 2).PricePerItem;
                                 break;
                             case PriceTypeDef.Top3:
-                                validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
+                                //validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
                                 itemPrice = validLots.Count > 2 ? validLots.ElementAt(2).PricePerItem : PriceValue;
                                 break;
                             case PriceTypeDef.Top5:
-                                validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
+                                //validLots = validLots.Distinct(new AuctionLotComparer()).ToList();
                                 itemPrice = validLots.Count > 4 ? validLots.ElementAt(4).PricePerItem : PriceValue;
                                 break;
                         }
