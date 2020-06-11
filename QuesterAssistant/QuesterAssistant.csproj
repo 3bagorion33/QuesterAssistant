@@ -353,11 +353,13 @@
     <Compile Include="Classes\Patches\ProfessionsPatch.cs" />
     <Compile Include="Classes\Patches\Interact.cs" />
     <Compile Include="Classes\Pause.cs" />
+    <Compile Include="Classes\ProfessionsHelper.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Reflection\Helper.cs" />
     <Compile Include="Classes\Reflection\StaticMethod.cs" />
     <Compile Include="Classes\Reflection\StaticPropertyAccessor.cs" />
     <Compile Include="Classes\Reflection\StaticVoidMethod.cs" />
+    <Compile Include="Conditions\TaskMoraleAndLevel.cs" />
     <Compile Include="Conditions\TaskCount.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
     <Compile Include="Conditions\CheckNode.cs" />

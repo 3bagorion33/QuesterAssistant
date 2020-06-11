@@ -19,7 +19,7 @@ namespace QuesterAssistant.Actions
     {
         private List<Assignment> Assignments =>
             EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FindAll(Finder);
-        public override string ActionLabel => $"{GetType().Name} : {Action} [{Task}]";
+        public override string ActionLabel => $"{GetType().Name} : {Action} [{ProfessionsHelper.GetDisplayName(Task)}]";
         public override string Category => "Tasks";
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;

@@ -7,6 +7,7 @@ using Astral.Quester.Classes;
 using Astral.Quester.UIEditors;
 using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Conditions
@@ -24,8 +25,8 @@ namespace QuesterAssistant.Conditions
             SetTasksCountMethod();
         }
 
-        public override string TestInfos => $"{Task} {Status} tasks : {TasksCount()}";
-        public override string ToString() => $"{Task} {Status} tasks {Sign} to {Value}";
+        public override string TestInfos => $"[{ProfessionsHelper.GetDisplayName(Task)}] {Status} task count : {TasksCount()}";
+        public override string ToString() => $"[{ProfessionsHelper.GetDisplayName(Task)}] {Status} task count {Sign} to {Value}";
 
         private int TasksCount() =>
             EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.Count(tasksCountFinder);
@@ -34,7 +35,7 @@ namespace QuesterAssistant.Conditions
         {
             switch (Status)
             {
-                case StatusDef.All:
+                case StatusDef.Any:
                     tasksCountFinder = AllTasksCount;
                     break;
                 case StatusDef.Active:
@@ -107,7 +108,7 @@ namespace QuesterAssistant.Conditions
 
         public enum StatusDef
         {
-            All,
+            Any,
             Active,
             Completed
         }
