@@ -9,15 +9,13 @@ using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Con
 
 namespace QuesterAssistant.Conditions
 {
-    [Serializable]
     public enum ConditionCheck
     {
         Conjunction,
         Disjunction
     }
 
-    [Serializable]
-    public class ConditionPack : Astral.Quester.Classes.Condition
+    public class ConditionPack : Condition
     {
         [Description("Displayed name of the ConditionPack")]
         public string Name { get; set; }
@@ -80,7 +78,7 @@ namespace QuesterAssistant.Conditions
                     result = lockTrue && (Conditions.Count == trueNumLock || trueNumUnlock > 0);
                 }
                 
-                return (Not)? !result : result;
+                return Not ^ result;
             }
         }
 

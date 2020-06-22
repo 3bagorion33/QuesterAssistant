@@ -1,8 +1,8 @@
 ﻿using Astral;
 using Astral.Logic.Classes.Map;
 using MyNW.Classes;
-using QuesterAssistant.Classes.Common;
 using System;
+using QuesterAssistant.Classes;
 using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Actions.Deprecated

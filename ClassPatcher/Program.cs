@@ -51,6 +51,7 @@ namespace ClassPatcher
                         enumerator.Current.Name == "PositionNodeListEditorr" ||
                         enumerator.Current.Name == "NPCId" ||
                         enumerator.Current.Name == "NPCId2" ||
+                        enumerator.Current.Name == "Debug" ||
 
                         action == "/show")
                     {

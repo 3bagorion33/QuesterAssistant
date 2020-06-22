@@ -35,13 +35,9 @@ namespace QuesterAssistant.Actions
             get
             {
                 if (Task.InternalName == string.Empty)
-                {
                     return new ActionValidity("Task is not set.");
-                }
                 if (SendingStone != StartATask.SendingStoneUsage.None && !Professions2.TaskIsOrder(Task.InternalName))
-                {
                     return new ActionValidity("Sending stone can be used for orders only (not gathering).");
-                }
                 return new ActionValidity();
             }
         }
@@ -126,7 +122,7 @@ namespace QuesterAssistant.Actions
                 //}
             }
 
-            Logger.WriteLine($"{definition} task found !");
+            Logger.WriteLine($"[{definition}] task found !");
             var orderCount = 0;
             for (;;)
             {
@@ -141,9 +137,9 @@ namespace QuesterAssistant.Actions
                     Logger.WriteLine("Task already active, skip.");
                     return ActionResult.Skip;
                 }
-                if (!Professions2.HaveRequiredConsumables(definition, Task.GetHQMatsAsDic()))
+                if (!ProfessionsHelper.HaveRequiredConsumables(definition, Task.GetHQMatsAsDic()))
                 {
-                    if (!Professions2.HaveRequiredConsumables(definition))
+                    if (!ProfessionsHelper.HaveRequiredConsumables(definition))
                     {
                         Logger.WriteLine("Don't have required materials for this task...");
                         return ActionResult.Fail;

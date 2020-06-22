@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace QuesterAssistant.Classes.Common
+namespace QuesterAssistant.Classes
 {
     internal static class Debug
     {

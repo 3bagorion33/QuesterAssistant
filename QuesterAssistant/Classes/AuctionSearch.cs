@@ -20,7 +20,8 @@ namespace QuesterAssistant.Classes
         private readonly bool checkInternalName;
         private List<SearchResult> cachedSearch;
 
-        private string loggerMessage;
+        public string LoggerMessage { get; private set; } = string.Empty;
+
         public SearchResult Result { get; }
 
         public AuctionSearch(ItemDef itemDef, bool checkInternalName = true, uint cacheLifeTime = 10)
@@ -54,8 +55,8 @@ namespace QuesterAssistant.Classes
 
             if (cachedValue != null)
             {
-                loggerMessage = $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}"
-                    .CarryOnLength();
+                LoggerMessage =
+                    $"Use cached search for '{cachedValue.DisplayName}' at {cachedValue.DateTime.GetDateTimeFormats('t').First()}";
                 return cachedValue;
             }
 
@@ -75,7 +76,8 @@ namespace QuesterAssistant.Classes
                 .FindAll(l => l.Items.First().Item.ItemDef.DisplayName == itemDef.DisplayName && l.Price > 0)
                 .OrderBy(PricePerItem).ToList();
 
-            Logger.WriteLine($"Try to search actual price for '{itemDef.DisplayName}'... Result contains {availableLots.Count} items.".CarryOnLength());
+            LoggerMessage =
+                $"Try to search actual price for '{itemDef.DisplayName}'... Result contains {availableLots.Count} items.";
 
             if (availableLots.Any())
             {
@@ -99,11 +101,6 @@ namespace QuesterAssistant.Classes
             }
             BinFileHelper.Save(cachedSearch, CachedSearchFile);
             return cachedSearch.Find(ResultFilter) ?? new SearchResult(itemDef, new List<AuctionLot>());
-        }
-
-        public void WriteLogMessage()
-        {
-            if (loggerMessage != null) Logger.WriteLine(loggerMessage);
         }
 
         public static void RequestAuctionsForPlayer()

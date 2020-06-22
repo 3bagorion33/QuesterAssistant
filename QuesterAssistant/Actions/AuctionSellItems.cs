@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
+using System.Xml.Serialization;
 using Astral;
 using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
-using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Classes.Auction;
 using MyNW.Internals;
@@ -16,10 +16,12 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.ItemFilter;
+using QuesterAssistant.UIEditors;
+using ItemIdFilterEditor = Astral.Quester.UIEditors.ItemIdFilterEditor;
 
 namespace QuesterAssistant.Actions
 {
-    public class AuctionSellItems : Astral.Quester.Classes.Action
+    public class AuctionSellItems : Astral.Quester.Classes.Action, IDebugAction
     {
         public override string ActionLabel => GetType().Name;
         public override string Category => Core.Category;
@@ -35,6 +37,8 @@ namespace QuesterAssistant.Actions
         private IDictionary<string, IEnumerable<InventorySlot>> slotsGroupList;
         private double Multiply => PriceType == PriceTypeDef.Fixed ? 1 : (double)PricePercent / 100;
         private bool isFollowedAccount;
+        private bool isTest = false;
+        private readonly DebugAction debug = new DebugAction();
 
         protected override ActionValidity InternalValidity
         {
@@ -66,7 +70,9 @@ namespace QuesterAssistant.Actions
 
         private double GetActualPrice(Item item)
         {
+            debug.AddInfo($"Calculating best price:", +1);
             double result = 0;
+            debug.AddInfo($"Algorithm is '{PriceType}'");
             if (PriceType == PriceTypeDef.Fixed)
                 result = PriceValue;
 
@@ -75,6 +81,10 @@ namespace QuesterAssistant.Actions
                 var availableLots = new AuctionSearch(item.ItemDef, CheckInternalName, CacheLifeTime).Result.Lots;
                 if (availableLots.Any())
                 {
+                    debug.AddInfo($"Total found {availableLots.Count} lots", +1);
+                    debug.AddInfo($"Min price: {availableLots.First().PricePerItem}");
+                    debug.AddInfo($"Max price: {availableLots.Last().PricePerItem}", -1);
+                    debug.AddInfo($"Detection range algorithm is '{PriceDetectionRange}'");
                     var validLots = new List<AuctionSearch.SearchResult.Lot>();
                     if (PriceDetectionRange == PriceDetectionRangeDef.Full)
                     {
@@ -92,7 +102,9 @@ namespace QuesterAssistant.Actions
                             range++;
                         }
                     }
-
+                    debug.AddInfo($"Finally range: {validLots.Count} lots", +1);
+                    debug.AddInfo($"Min price: {validLots.First().PricePerItem}");
+                    debug.AddInfo($"Max price: {validLots.Last().PricePerItem}", -1);
                     double itemPrice = 0;
                     isFollowedAccount = !string.IsNullOrEmpty(OrientToAccount) && validLots.Exists(l => l.Owner.Contains(OrientToAccount));
                     if (!isFollowedAccount)
@@ -120,6 +132,7 @@ namespace QuesterAssistant.Actions
                     }
                     else
                     {
+                        debug.AddInfo($"Lots for account '{OrientToAccount}' was founded");
                         itemPrice = validLots.First(l => l.Owner.Contains(OrientToAccount)).PricePerItem;
                     }
                     result = itemPrice;
@@ -129,7 +142,58 @@ namespace QuesterAssistant.Actions
                     result = PriceValue;
                 }
             }
+            debug.AddInfo($"Finally price per item is {result}", -1);
             return result;
+        }
+
+        private bool GetItemsToSell()
+        {
+            slotsGroupList = EntityManager.LocalPlayer.GetBagsForSale().FindAll
+                (s => !s.Item.IsBound &&
+                      !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
+                      !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
+                      ItemsFilter.IsMatch(s.Item))
+                .GroupBy(s => s.Item.ItemDef.InternalName, (g, s) => new KeyValuePair<string, IEnumerable<InventorySlot>>(g, s))
+                .ToDictionary(s => s.Key, s => s.Value);
+            if (slotsGroupList.Any())
+                return true;
+            if(!isTest)
+                Logger.WriteLine("No items to sell.");
+            debug.AddInfo("No items to sell.");
+            return false;
+        }
+
+        private int GetStacksCount(Item item)
+        {
+            var stacksToSell = 0;
+            var accLotsCount = 0;
+
+            if (SellStacks == 0)
+            {
+                stacksToSell =  Auction.GetRemainingPostings();
+            }
+            // Для подсчета собственных лотов нужен активный список лотов.
+            // Предполагаем, что для обработки одного персонажа нужно более 1 минуты.
+            if (SellStacks < 0)
+            {
+                accLotsCount = new AuctionSearch(item.ItemDef, CheckInternalName, 0).GetAccountLotsCount(StackSize);
+                debug.AddInfo($"Found {accLotsCount} stack on account");
+            }
+            if (SellStacks > 0)
+            {
+                stacksToSell = Math.Abs(SellStacks) - accLotsCount - AuctionSearch.GetCharacterLotsCount(item.ItemDef, StackSize);
+            }
+            debug.AddInfo($"Total stacks to sell is {stacksToSell}");
+            return stacksToSell;
+        }
+
+        private uint GetItemsCount(Item item)
+        {
+            // Если размер стака не определен, продаем как есть.
+            if (StackSize == 0)
+                return item.Count;
+            // Если размер стака указан, возвращаем StackSize или 0, если нет нужного кол-ва
+            return StackSize <= item.Count ? StackSize : 0;
         }
 
         public override ActionResult Run()
@@ -143,78 +207,50 @@ namespace QuesterAssistant.Actions
                 AuctionSearch.RequestAuctionsForPlayer();
                 return true;
             }
-            
-            if (ActiveLots != ActiveLotType.Keep && OpenFrame())
+
+            if (!isTest)
             {
-                bool IsSellLotMatch(AuctionLot l)
+                if (ActiveLots != ActiveLotType.Keep && OpenFrame())
                 {
-                    var item = l.Items.First().Item;
-                    if (!ItemsFilter.IsMatch(item) || l.BiddingInfo.CurrentBid != 0)
-                        return false;
-                    var lotPrice = (double) l.Price / item.Count;
-                    bool CheckLotPrice()
+                    bool IsSellLotMatch(AuctionLot l)
                     {
-                        var actualPrice = Math.Max(GetActualPrice(item) * Multiply, PriceMinimum);
-                        return lotPrice * (1 - Tolerance) > actualPrice || (1 + Tolerance) * lotPrice < actualPrice;
+                        var item = l.Items.First().Item;
+                        if (!ItemsFilter.IsMatch(item) || l.BiddingInfo.CurrentBid != 0)
+                            return false;
+                        var lotPrice = (double) l.Price / item.Count;
+
+                        bool CheckLotPrice()
+                        {
+                            var actualPrice = Math.Max(GetActualPrice(item) * Multiply, PriceMinimum);
+                            return lotPrice * (1 - Tolerance) > actualPrice || (1 + Tolerance) * lotPrice < actualPrice;
+                        }
+
+                        return
+                            ActiveLots == ActiveLotType.Force ||
+                            l.TimeLeft < (uint) Duration / 5 ||
+                            item.Count == StackSize && CheckLotPrice();
                     }
-                    return
-                        ActiveLots == ActiveLotType.Force ||
-                        l.TimeLeft < (uint) Duration / 5 ||
-                        item.Count == StackSize && CheckLotPrice();
-                }
-
-                Pause.Sleep(2000);
-                while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
-                {
-                    var prevLotsCount = Auction.AuctionSellList.LotsCount;
-                    var lot = Auction.AuctionSellList.Lots.Find(IsSellLotMatch);
-                    Logger.WriteLine($"Collect '{lot.Items.First().Item.DisplayName}' with price {lot.Price}AD".CarryOnLength());
-                    lot.Remove();
                     Pause.Sleep(2000);
-                    if (Auction.AuctionSellList.LotsCount == prevLotsCount)
-                        AuctionSearch.RequestAuctionsForPlayer();
+                    while (Auction.AuctionSellList.Lots.Exists(IsSellLotMatch))
+                    {
+                        var prevLotsCount = Auction.AuctionSellList.LotsCount;
+                        var lot = Auction.AuctionSellList.Lots.Find(IsSellLotMatch);
+                        Logger.WriteLine($"Collect '{lot.Items.First().Item.DisplayName}' with price {lot.Price}AD"
+                            .CarryOnLength());
+                        lot.Remove();
+                        Pause.Sleep(2000);
+                        if (Auction.AuctionSellList.LotsCount == prevLotsCount)
+                            AuctionSearch.RequestAuctionsForPlayer();
+                    }
                 }
-            }
 
-            if (Auction.GetRemainingPostings() <= 0)
-            {
-                Logger.WriteLine("No slots available to place, skip...");
-                goto Exit;
-            }
+                if (Auction.GetRemainingPostings() <= 0)
+                {
+                    Logger.WriteLine("No slots available to place, skip...");
+                    goto Exit;
+                }
 
-            new GroupItems { ItemIdFilter = ItemsFilter }.Run();
-
-            bool GetItemsToSell()
-            {
-                slotsGroupList = EntityManager.LocalPlayer.GetBagsForSale().FindAll
-                    (s => !s.Item.IsBound &&
-                          !s.Item.IsItemFlagActive(ItemFlags.BoundToAccount) &&
-                          !s.Item.IsItemFlagActive(ItemFlags.ProtectedItem) &&
-                          ItemsFilter.IsMatch(s.Item))
-                          .GroupBy(s => s.Item.ItemDef.InternalName, (g, s) => new KeyValuePair<string, IEnumerable<InventorySlot>>(g, s))
-                          .ToDictionary(s => s.Key, s => s.Value);
-                if (slotsGroupList.Any())
-                    return true;
-                Logger.WriteLine("No items to sell.");
-                return false;
-            }
-
-            int GetStacksCount(Item item)
-            {
-                // Для подсчета собственных лотов нужен активный список лотов.
-                // Предполагаем, что для обработки одного персонажа нужно более 1 минуты.
-                var accLotsCount = SellStacks < 0 ? new AuctionSearch(item.ItemDef, CheckInternalName, 0).GetAccountLotsCount(StackSize) : 0;
-                var stacksToSell = Math.Abs(SellStacks) - accLotsCount - AuctionSearch.GetCharacterLotsCount(item.ItemDef, StackSize);
-                return stacksToSell;
-            }
-
-            uint GetItemsCount(Item item)
-            {
-                // Если размер стака не определен, продаем как есть.
-                if (StackSize == 0)
-                    return item.Count;
-                // Если размер стака указан, возвращаем StackSize или 0, если нет нужного кол-ва
-                return StackSize <= item.Count ? StackSize : 0;
+                new GroupItems {ItemIdFilter = ItemsFilter}.Run();
             }
 
             if (GetItemsToSell() && OpenFrame())
@@ -222,13 +258,17 @@ namespace QuesterAssistant.Actions
                 foreach (KeyValuePair<string, IEnumerable<InventorySlot>> slotsList in slotsGroupList)
                 {
                     var item = slotsList.Value.First().Item;
+                    debug.AddInfo($"[{item.DisplayName}]:", +1);
                     int stacksCount;
                     if ((stacksCount = GetStacksCount(item)) > 0)
                     {
                         var auctionSearch = new AuctionSearch(item.ItemDef, CheckInternalName, CacheLifeTime);
-                        auctionSearch.WriteLogMessage();
+                        debug.AddInfo(auctionSearch.LoggerMessage);
+                        if (!isTest)
+                            Logger.WriteLine(auctionSearch.LoggerMessage.CarryOnLength());
                         var itemPrice = GetActualPrice(item);
-                        Logger.WriteLine($"Best price for '{item.DisplayName}' is {itemPrice}AD".CarryOnLength());
+                        if (!isTest)
+                            Logger.WriteLine($"Best price for '{item.DisplayName}' is {itemPrice}AD".CarryOnLength());
                         foreach (InventorySlot slot in slotsList.Value)
                         {
                             var itemToSell = slot.Item;
@@ -242,40 +282,56 @@ namespace QuesterAssistant.Actions
                                 if (Auction.GetRemainingPostings() <= 0)
                                     goto Exit;
 
-                                itemPrice = GetActualPrice(itemToSell);
+                                //itemPrice = GetActualPrice(itemToSell);
 
                                 int buyoutPrice = (int) (itemPrice * Multiply * itemsCount);
+                                debug.AddInfo($"Calculated BuyOut price: {buyoutPrice}", +1);
                                 if (!isFollowedAccount && buyoutPrice != PriceValue)
+                                {
                                     buyoutPrice = MathTools.Round(buyoutPrice, RoundDigits, RoundFilledBy);
+                                    debug.AddInfo($"Should be rounded: {buyoutPrice}");
+                                }
 
                                 buyoutPrice = MathTools.Max(buyoutPrice, (int) (PriceMinimum * itemsCount));
+                                debug.AddInfo($"Comparison with minimum value: {buyoutPrice}", -1);
 
                                 int startingBid = MathTools.Round((int) ((double) PriceStartingBid / 100 * buyoutPrice),
                                     RoundDigits, RoundFilledBy);
+                                debug.AddInfo($"Starting bid value: {startingBid}");
 
                                 if ((VIP.Rank < 8 || VIP.ExpirationSecondsLeft == 0) &&
                                     EntityManager.LocalPlayer.Inventory.AstralDiamonds <
                                     (int) (startingBid.CheckZero(buyoutPrice) * 0.02))
                                 {
-                                    Logger.WriteLine(
-                                        $"Not enough AD to pay posting fee for '{itemToSell.DisplayName}'x{itemsCount}"
-                                            .CarryOnLength());
+                                    debug.AddInfo($"Not enough AD to pay posting fee: {startingBid.CheckZero(buyoutPrice) * 0.02}AD needed");
+                                    if (!isTest)
+                                        Logger.WriteLine($"Not enough AD to pay posting fee for '{itemToSell.DisplayName}'x{itemsCount}"
+                                                .CarryOnLength());
                                     break;
                                 }
 
-                                pause.WaitingRandom();
-                                Logger.WriteLine(
-                                    $"Sell '{itemToSell.DisplayName}' {itemsCount} of {itemToSell.Count} for {buyoutPrice}AD"
-                                        .CarryOnLength());
-                                Auction.CreateLot(itemToSell, itemsCount, buyoutPrice, startingBid, Duration);
-                                stacksCount--;
+                                if (!isTest)
+                                {
+                                    pause.WaitingRandom();
+                                    Logger.WriteLine(
+                                        $"Sell '{itemToSell.DisplayName}' {itemsCount} of {itemToSell.Count} for {buyoutPrice}AD"
+                                            .CarryOnLength());
+                                    Auction.CreateLot(itemToSell, itemsCount, buyoutPrice, startingBid, Duration);
+                                    stacksCount--;
 
-                                pause.Reset();
-                                Pause.Sleep(1500);
-                                slot.Group();
+                                    pause.Reset();
+                                    Pause.Sleep(1000);
+                                    slot.Group();
+                                }
+                                else
+                                {
+                                    break;
+                                }
                             }
                         }
                     }
+                    debug.AddInfo($"\n", -1);
+                    Pause.Sleep(500);
                 }
             }
 
@@ -285,6 +341,16 @@ namespace QuesterAssistant.Actions
 
             return ActionResult.Completed;
         }
+
+        public void GatherDebugInfos()
+        {
+            isTest = true;
+            debug.ClearInfos();
+            Run();
+            isTest = false;
+        }
+
+        public string GetDebugInfos() => debug.Infos;
 
         [Browsable(false), DefaultValue(0)]
         public uint TimeOutMin { get; set; }
@@ -366,6 +432,12 @@ namespace QuesterAssistant.Actions
         [Category("Price settings")]
         [Description("Zero : price = 123000 | Nine : price = 122999 | Last : price = 123333")]
         public MathTools.RoundType RoundFilledBy { get; set; }
+
+        [XmlIgnore]
+        [Category("Price settings")]
+        [Editor(typeof(DebugActionEditor), typeof(UITypeEditor))]
+        [Description("Press '...' to see test information")]
+        public string TestInfo { get; } = "Press '...' to see more =>";
 
         public enum PriceTypeDef
         {

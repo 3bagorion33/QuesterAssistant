@@ -13,6 +13,7 @@ using QuesterAssistant.Classes;
 using Astral.Classes.ItemFilter;
 using QuesterAssistant.Classes.ItemFilter;
 using Astral;
+using QuesterAssistant.Classes.Extensions;
 
 namespace QuesterAssistant.Actions
 {
@@ -215,7 +216,7 @@ namespace QuesterAssistant.Actions
                         {
                             var auctionSearch = new AuctionSearch(item.ItemDef);
                             var lots = auctionSearch.Result.Lots;
-                            auctionSearch.WriteLogMessage();
+                            Logger.WriteLine(auctionSearch.LoggerMessage.CarryOnLength());
                             var price = lots.Any() ? lots.First().PricePerItem.ToString() : "null";
                             line = line.Replace("%itemPrice%", price);
                         }

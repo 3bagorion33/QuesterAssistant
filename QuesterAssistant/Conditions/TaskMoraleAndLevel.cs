@@ -13,7 +13,7 @@ namespace QuesterAssistant.Conditions
     {
         private Definition Definition =>
             Professions.AllTasks.Find(d => d.InternalName == Task) ?? new Definition(IntPtr.Zero);
-        private uint Cost => Professions2.TaskIsOrder(Task) ? Definition.ForceCompleteCost : 0;
+        private uint Cost => Professions2.TaskIsOrder(Task) ? Definition.ForceCompleteCost : 999;
         private uint RequiredLevel => Definition.Requirements.RequiredNumericValue - 5;
         private int ActualLevel =>
             EntityManager.LocalPlayer.Inventory.GetNumericCount(Definition.Requirements.RequiredNumericItem.InternalName);
@@ -23,7 +23,7 @@ namespace QuesterAssistant.Conditions
         public override bool IsValid =>
             Definition.IsValid &&
             (!CheckLevel || RequiredLevel <= ActualLevel) &&
-            (IsMoraleEnough ? Definition.ForceCompleteCost <= Professions2.Morale : Definition.ForceCompleteCost > Professions2.Morale);
+            IsMoraleEnough ^ Cost > Professions2.Morale;
 
         public override string TestInfos => 
             $"[{Definition}] task:\n" +

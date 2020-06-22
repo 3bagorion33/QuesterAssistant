@@ -279,6 +279,8 @@
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
+    <Compile Include="Classes\Debug.cs" />
+    <Compile Include="Classes\DebugAction.cs" />
     <Compile Include="Classes\Extensions\IIgnoreCombat.cs" />
     <Compile Include="Actions\InteractNodeExt.cs" />
     <Compile Include="Actions\InteractSpecificNodeExt.cs" />
@@ -324,6 +326,7 @@
     <Compile Include="Classes\Extensions\EntityEx.cs" />
     <Compile Include="Classes\Extensions\LocalPlayerEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
+    <Compile Include="Classes\IDebugAction.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\InventorySelect.cs" />
@@ -403,11 +406,11 @@
     </Compile>
     <Compile Include="Classes\AuctionSearch.cs" />
     <Compile Include="Classes\Common\BinFileHelper.cs" />
-    <Compile Include="Classes\Common\Debug.cs" />
     <Compile Include="Classes\Patches\WayPointFilter.cs" />
     <Compile Include="UCCActions\UCCLoadPowersPreset.cs" />
     <Compile Include="UCCActions\UCCPushProfileToStackAndLoad.cs" />
     <Compile Include="UIEditors\ConditionListEditor.cs" />
+    <Compile Include="UIEditors\DebugActionEditor.cs" />
     <Compile Include="UIEditors\DonateTaskEditor.cs" />
     <Compile Include="UIEditors\Forms\ConditionsListForm.cs">
       <SubType>Form</SubType>
