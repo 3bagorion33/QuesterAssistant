@@ -48,17 +48,18 @@ namespace QuesterAssistant.Classes.Patches
 
         private static double GetChangeWPDist()
         {
-            if (!EntityManager.LocalPlayer.IsMounted)
-                return Astral.API.CurrentSettings.ChangeWaypointDist;
-
             switch (EntityManager.LocalPlayer.GetMountCostume().Type)
             {
+                case MountCostumeDef.MountType.InfernalCar:
+                    return 400;
                 case MountCostumeDef.MountType.BoatWhite:
                     return 100;
                 case MountCostumeDef.MountType.BoatGreen:
                     return 90;
                 case MountCostumeDef.MountType.BoatPurple:
                     return 80;
+                case MountCostumeDef.MountType.None:
+                    return Astral.API.CurrentSettings.ChangeWaypointDist;
             }
             if (pGroundAura == 0)
                 pGroundAura = EntityManager.LocalPlayer.Character.Mods

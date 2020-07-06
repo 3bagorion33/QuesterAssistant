@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
-using Astral.Classes;
 using Astral.Quester.Classes;
 using Astral.Quester.UIEditors;
 using MyNW.Classes.ItemAssignment;
@@ -14,7 +13,6 @@ namespace QuesterAssistant.Conditions
 {
     public class TaskCount : Condition
     {
-        private Timeout refreshTo = new Timeout(1500);
         private Func<Assignment, bool> tasksCountFinder;
         private StatusDef status = StatusDef.Active;
 
@@ -65,12 +63,7 @@ namespace QuesterAssistant.Conditions
         {
             get
             {
-                if (refreshTo.IsTimedOut)
-                {
-                    EntityManager.LocalPlayer.Player.RefreshAssignments();
-                    refreshTo.Reset();
-                }
-
+                ProfessionsHelper.RefreshAssignments();
                 int num = TasksCount();
                 switch (Sign)
                 {

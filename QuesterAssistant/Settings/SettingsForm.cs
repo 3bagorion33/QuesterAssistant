@@ -167,7 +167,7 @@ namespace QuesterAssistant.Settings
             //{
             //    costumeDbg.Add(new CostumeDbg(i));
             //}
-
+            var costume = EntityManager.LocalPlayer.GetMountCostume();
         }
 
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]

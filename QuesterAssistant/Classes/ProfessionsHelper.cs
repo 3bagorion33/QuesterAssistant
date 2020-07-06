@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Astral.Classes;
 using Astral.Logic.NW;
 using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
@@ -7,6 +8,8 @@ namespace QuesterAssistant.Classes
 {
     internal static class ProfessionsHelper
     {
+        private static readonly Timeout refreshTo = new Timeout(500);
+
         public static string GetDisplayName(string taskName) =>
             Professions.AllTasks.Find(d => d.InternalName == taskName)?.ToString() ?? taskName;
 
@@ -31,6 +34,15 @@ namespace QuesterAssistant.Classes
                 }
             }
             return true;
+        }
+
+        public static void RefreshAssignments()
+        {
+            if (refreshTo.IsTimedOut)
+            {
+                EntityManager.LocalPlayer.Player.RefreshAssignments();
+                refreshTo.Reset();
+            }
         }
     }
 }

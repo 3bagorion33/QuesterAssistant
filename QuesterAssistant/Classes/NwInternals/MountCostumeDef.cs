@@ -1,6 +1,7 @@
 ﻿using System;
 using MyNW;
 using MyNW.Classes;
+using MyNW.Internals;
 
 namespace QuesterAssistant.Classes.NwInternals
 {
@@ -16,7 +17,12 @@ namespace QuesterAssistant.Classes.NwInternals
             get
             {
                 if (!IsValid)
+                {
+                    if (EntityManager.LocalPlayer.CostumeRef.CostumeName == "Infernal_Machine_Car_Becritter_01")
+                        return MountType.InfernalCar;
                     return MountType.None;
+                }
+
                 if (Category != "Nw_Boat_Mount")
                     return MountType.Mount;
                 switch (InternalName)
@@ -41,7 +47,8 @@ namespace QuesterAssistant.Classes.NwInternals
             Mount,
             BoatWhite,
             BoatGreen,
-            BoatPurple
+            BoatPurple,
+            InfernalCar
         }
     }
 }

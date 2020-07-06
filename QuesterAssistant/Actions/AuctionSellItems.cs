@@ -202,8 +202,8 @@ namespace QuesterAssistant.Actions
 
             bool OpenFrame()
             {
-                //if (!Auction.IsAuctionFrameVisible() && !Interact.Auctions())
-                //    return false;
+                if (ShowAuctionFrame && !Auction.IsAuctionFrameVisible() && !Interact.Auctions())
+                    return false;
                 AuctionSearch.RequestAuctionsForPlayer();
                 return true;
             }
@@ -387,7 +387,8 @@ namespace QuesterAssistant.Actions
         [Category("Interaction")]
         [Description("In minutes, zero disables cache.")]
         public uint CacheLifeTime { get; set; } = 60;
-
+        [Category("Interaction")]
+        public bool ShowAuctionFrame { get; set; } = false;
         [Category("Items")]
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         [Description("Item to sell filter")]

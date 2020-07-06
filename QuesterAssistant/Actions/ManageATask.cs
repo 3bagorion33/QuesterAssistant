@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
+using System.Linq;
 using Astral;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
@@ -19,6 +20,7 @@ namespace QuesterAssistant.Actions
     {
         private List<Assignment> Assignments =>
             EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.FindAll(Finder);
+        private Assignment FirstAssignment => Assignments[0];
         public override string ActionLabel => $"{GetType().Name} : {Action} [{ProfessionsHelper.GetDisplayName(Task)}]";
         public override string Category => "Tasks";
         public override string InternalDisplayName => string.Empty;
@@ -30,7 +32,7 @@ namespace QuesterAssistant.Actions
 
         protected override bool IntenalConditions =>
             Action != ModeDef.Complete || 
-            Assignments.Count > 0 && Assignments[0].Def.ForceCompleteCost <= Professions2.Morale;
+            Assignments.Count > 0 && FirstAssignment.Def.ForceCompleteCost <= Professions2.Morale;
 
         protected override ActionValidity InternalValidity
         {
@@ -66,15 +68,24 @@ namespace QuesterAssistant.Actions
             if (Assignments.Count == 0)
                 return ActionResult.Completed;
 
+            if (EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.Any(a =>
+                a.Def.InternalName.FindPattern(Task) &&
+                !a.ReadyToComplete &&
+                a.Duration == 5))
+            {
+                Pause.Sleep(6000);
+                return ActionResult.Running;
+            }
+
             switch (Action)
             {
                 case ModeDef.Cancel:
-                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {Assignments[0].ID}");
+                    GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {FirstAssignment.ID}");
                     break;
                 case ModeDef.Complete:
-                    if (Assignments[0].Def.ForceCompleteCost > Professions2.Morale)
+                    if (FirstAssignment.Def.ForceCompleteCost > Professions2.Morale)
                         return ActionResult.Completed;
-                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {Assignments[0].ID}");
+                    GameCommands.Execute($"ItemAssignmentsCompleteNowById {FirstAssignment.ID}");
                     break;
                 case ModeDef.Collect:
                     EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(Assignments);
@@ -82,7 +93,7 @@ namespace QuesterAssistant.Actions
                     Pause.Sleep(500);
                     return ActionResult.Completed;
             }
-            Logger.WriteLine($"{Action} task '{Assignments[0]}' ...");
+            Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
             Pause.RandomSleep(300, 500);
             return ActionResult.Running;
         }

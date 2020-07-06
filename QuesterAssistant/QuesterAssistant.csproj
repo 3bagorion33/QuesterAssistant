@@ -362,6 +362,8 @@
     <Compile Include="Classes\Reflection\StaticMethod.cs" />
     <Compile Include="Classes\Reflection\StaticPropertyAccessor.cs" />
     <Compile Include="Classes\Reflection\StaticVoidMethod.cs" />
+    <Compile Include="Conditions\FreeGatherSlots.cs" />
+    <Compile Include="Conditions\FreeOrderSlots.cs" />
     <Compile Include="Conditions\TaskMoraleAndLevel.cs" />
     <Compile Include="Conditions\TaskCount.cs" />
     <Compile Include="Conditions\AuctionItemCount.cs" />
