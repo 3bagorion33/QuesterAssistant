@@ -61,7 +61,7 @@ namespace QuesterAssistant.Actions
                     foreach (TargetableNode targetableNode in EntityManager.LocalPlayer.Player.InteractStatus
                         .TargetableNodes.OrderBy(n => n.WorldInteractionNode.Location.Distance3DFromPlayer))
                     {
-                        if (!OneInteractionByNode || !interacted.Contains(targetableNode.WorldInteractionNode.Key))
+                        if (!(OneInteractionByNode || SkipNearbyPlayer) || !interacted.Contains(targetableNode.WorldInteractionNode.Key))
                         {
                             var loc = targetableNode.WorldInteractionNode.Location;
                             if (targetableNode.RequirementName.Length > 0 && !Kits.HaveRequiredKit(new Interact.DynaNode(targetableNode.WorldInteractionNode.Key)))
@@ -144,6 +144,11 @@ namespace QuesterAssistant.Actions
             WhiteList = new List<Vector3>();
             IgnoreCombat = true;
         }
+
+        private bool IsPlayersNear() =>
+            EntityManager.GetEntities()
+            .Any(e => e.IsPlayer &&
+                e.Pointer != EntityManager.LocalPlayer.Pointer && currentNode.Node.WorldInteractionNode.Location.Distance3D(e.Location) < 15.0);
         
         public override ActionResult Run()
         {
@@ -155,6 +160,12 @@ namespace QuesterAssistant.Actions
             Approach.NodeForInteraction(dynaNode);
             if (Attackers.InCombat)
                 return ActionResult.Running;
+            if (SkipNearbyPlayer && IsPlayersNear())
+            {
+                interacted.Add(currentNode.Node.WorldInteractionNode.Key);
+                currentNode = null;
+                return ActionResult.Running;
+            }
             API.Engine.Navigation.Stop();
             Pause.Sleep(500);
             dynaNode.Node.WorldInteractionNode.Interact();
@@ -162,10 +173,7 @@ namespace QuesterAssistant.Actions
             dynaNode.Node.WorldInteractionNode.Interact();
             if (OneInteractionByNode)
                 interacted.Add(dynaNode.Node.WorldInteractionNode.Key);
-            int num = InteractTime;
-            if (num < 1000)
-                num = 1000;
-            Pause.Sleep(num);
+            Pause.Sleep(InteractTime);
             Interact.WaitForInteraction();
             if (Dialogs.Count > 0)
             {
@@ -209,6 +217,8 @@ namespace QuesterAssistant.Actions
         public int InteractTime { get; set; }
         [Description("Maximum distance of node from path")]
         public int ReactionRange { get; set; }
+        [Description("Skip if any player is nearby")]
+        public bool SkipNearbyPlayer { get; set; }
         [Description("Only the nodes in this list will be interacted, loot all if empty. Green on map.")]
         [Editor(typeof(PositionNodeListEditorr), typeof(UITypeEditor))]
         public List<Vector3> WhiteList { get; set; }
