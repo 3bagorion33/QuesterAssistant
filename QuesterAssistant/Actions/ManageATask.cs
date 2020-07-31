@@ -65,6 +65,7 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
+            EntityManager.LocalPlayer.Player.RefreshAssignments();
             if (Assignments.Count == 0)
                 return ActionResult.Completed;
 
@@ -80,20 +81,20 @@ namespace QuesterAssistant.Actions
             switch (Action)
             {
                 case ModeDef.Cancel:
+                    Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
                     GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {FirstAssignment.ID}");
                     break;
                 case ModeDef.Complete:
                     if (FirstAssignment.Def.ForceCompleteCost > Professions2.Morale)
                         return ActionResult.Completed;
+                    Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
                     GameCommands.Execute($"ItemAssignmentsCompleteNowById {FirstAssignment.ID}");
                     break;
                 case ModeDef.Collect:
-                    EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(Assignments);
                     Logger.WriteLine($"{Action} all ready tasks '{Task}' ...");
-                    Pause.Sleep(500);
-                    return ActionResult.Completed;
+                    EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(Assignments);
+                    break;
             }
-            Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
             Pause.RandomSleep(300, 500);
             return ActionResult.Running;
         }

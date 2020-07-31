@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing.Design;
 using System.Text;
 using Astral.Quester.Classes;
@@ -19,6 +18,9 @@ namespace QuesterAssistant.Conditions
     {
         [Description("Displayed name of the ConditionPack")]
         public string Name { get; set; }
+
+        [Description("Minimum count 'true' for Disjunction logic")]
+        public uint MinCount { get; set; } = 1;
 
         [Description("The negation of the result of the ConditionPack")]
         public bool Not { get; set; }
@@ -40,7 +42,7 @@ namespace QuesterAssistant.Conditions
                 if (Conditions.Count == 0)
                     return false;
 
-                bool result = (Tested == ConditionCheck.Conjunction);
+                bool result = Tested == ConditionCheck.Conjunction;
 
                 if (Tested == ConditionCheck.Conjunction)
                 {
@@ -75,7 +77,7 @@ namespace QuesterAssistant.Conditions
                         }
                     }
 
-                    result = lockTrue && (Conditions.Count == trueNumLock || trueNumUnlock > 0);
+                    result = lockTrue && (Conditions.Count == trueNumLock || trueNumUnlock > MinCount - 1);
                 }
                 
                 return Not ^ result;
@@ -105,7 +107,7 @@ namespace QuesterAssistant.Conditions
                         if (cond.Locked)
                             sb.Append("\t[L] ");
                         else sb.Append("\t[U] ");
-                        sb.Append(cond.ToString()).Append(" | Result: ").Append(cond.IsValid).AppendLine();
+                        sb.Append(cond).Append(" | Result: ").Append(cond.IsValid).AppendLine();
                     }
                     sb.Append("Negation flag (Not): ").Append(Not).AppendLine();
                     return sb.ToString();

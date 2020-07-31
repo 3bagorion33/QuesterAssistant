@@ -163,11 +163,32 @@ namespace QuesterAssistant.Settings
             //var costumeDbg = new List<CostumeDbg>();
             ////var idx = new[] {0, 8, 16, 24};
             ////foreach (var i in idx)
-            //for (int i = -128; i < 256; i++)
-            //{
-            //    costumeDbg.Add(new CostumeDbg(i));
-            //}
-            var costume = EntityManager.LocalPlayer.GetMountCostume();
+            ////for (int i = 0; i < 256; i++)
+            ////{
+            ////    costumeDbg.Add(new CostumeDbg(i));
+            ////}
+            //costumeDbg.Add(new CostumeDbg(32));
+            //var costume = EntityManager.LocalPlayer.GetMountCostume();
+            var items = Email.Mails[3].Message.GetAttachedItems();
+        }
+
+        private class MailSlot : NativeObject
+        {
+            public MailSlot(IntPtr pointer) : base(pointer)
+            {
+            }
+
+            public Item Item => new MyItem(Pointer);
+        }
+
+        private class MyItem : Item
+        {
+            public MyItem(IntPtr pointer) : base(pointer) { }
+
+            public override string ToString()
+            {
+                return base.DisplayName;
+            }
         }
 
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
@@ -175,36 +196,49 @@ namespace QuesterAssistant.Settings
         [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
         private struct CostumeDbg
         {
+            //private static IntPtr baseAddr = (IntPtr) EntityManager.LocalPlayer.CostumeRef.pMountCostume;
+            private static IntPtr baseAddr = Email.Mails[3].Message.Pointer;
+
             private int num;
             private string p0_string;
             private int p0_int;
             private IntPtr p1;
+            private List<MailSlot> p1_mSlots;
+            private List<Item> p1_Items;
+            //private List<InventorySlot> p1_iSlots;
             private string p1_string;
             private int p1_int;
 
-            private List<string> p1_strings;
+            //private List<string> p1_strings;
 
             public CostumeDbg(int i)
             {
                 num = i;
-                p0_string = Memory.MMemory.ReadString(
-                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)),Encoding.UTF8, 256);
-                p0_int = Memory.MMemory.Read<int>(
-                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)));
-                p1 = Memory.MMemory.Read<IntPtr>(
-                    Memory.MMemory.Read<IntPtr>((IntPtr) (EntityManager.LocalPlayer.CostumeRef.pMountCostume + i)));
-                p1_string = Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
-                p1_int = Memory.MMemory.Read<int>(p1);
+                //p0_string = Memory.MMemory.ReadString(Memory.MMemory.Read<IntPtr>(baseAddr + i),Encoding.UTF8, 256);
+                //p0_int = Memory.MMemory.Read<int>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
+                //p1 = Memory.MMemory.Read<IntPtr>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
+                //p1_string = Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
+                //p1_int = Memory.MMemory.Read<int>(p1);
+                //p1_strings = new List<string>();
+                //for (int j = 0; j < 256; j++)
+                //{
+                //    p1_strings.Add(Memory.MMemory.ReadString(p1 + j, Encoding.UTF8, 256));
+                //}
 
-                p1_strings = new List<string>();
-                for (int j = 0; j < 256; j++)
-                {
-                    p1_strings.Add(Memory.MMemory.ReadString(p1 + j, Encoding.UTF8, 256));
-                }
+                p0_string = Memory.MMemory.ReadString(baseAddr + i, Encoding.UTF8, 256);
+                p0_int = Memory.MMemory.Read<int>(baseAddr + i);
+                p1 = Memory.MMemory.Read<IntPtr>(baseAddr + i);
+                p1_mSlots = NWList.Get<MailSlot>(p1);
+                p1_Items = NWList.Get<Item>(p1);
+                //p1_iSlots = NWList.Get<InventorySlot>(p1);
+                p1_string = (p1_mSlots.Count > 0) ? "" : "<Empty>"; // Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
+                p1_int = p1_mSlots.Count; //Memory.MMemory.Read<int>(p1);
+
             }
 
             public override string ToString() =>
-                $"{num}|{p0_int}:{p0_string}|{p1_int}:{p1_string}";
+                //$"{num}|{p0_int}:{p0_string}|{p1_int}:{p1_string}";
+                $"{num}|{p1_int}:{p1_string}";
         }
     }
 }
