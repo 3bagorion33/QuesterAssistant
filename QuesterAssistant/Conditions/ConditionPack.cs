@@ -3,17 +3,12 @@ using System.Drawing.Design;
 using System.Text;
 using Astral.Quester.Classes;
 using QuesterAssistant.Classes.Common.Converters;
+using QuesterAssistant.Enums;
 using QuesterAssistant.UIEditors;
 using ConditionList = System.Collections.Generic.List<Astral.Quester.Classes.Condition>;
 
 namespace QuesterAssistant.Conditions
 {
-    public enum ConditionCheck
-    {
-        Conjunction,
-        Disjunction
-    }
-
     public class ConditionPack : Condition
     {
         [Description("Displayed name of the ConditionPack")]
@@ -28,7 +23,7 @@ namespace QuesterAssistant.Conditions
         [Description("Logical rule of the Conditions checks\n" +
             "Conjunction: All Conditions have to be True (Logical AND)\n" +
             "Disjunction: At least one of the Conditions have to be True (Logical OR)")]
-        public ConditionCheck Tested { get; set; }
+        public LogicType Tested { get; set; }
 
         [Description("The list of the Conditions")]
         [TypeConverter(typeof(CollectionTypeConverter))]
@@ -42,9 +37,9 @@ namespace QuesterAssistant.Conditions
                 if (Conditions.Count == 0)
                     return false;
 
-                bool result = Tested == ConditionCheck.Conjunction;
+                bool result = Tested == LogicType.Conjunction;
 
-                if (Tested == ConditionCheck.Conjunction)
+                if (Tested == LogicType.Conjunction)
                 {
                     foreach (Condition cond in Conditions)
                         if (!cond.IsValid)

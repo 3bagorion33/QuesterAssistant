@@ -4,19 +4,22 @@ using System.Drawing.Design;
 using System.Linq;
 using Astral;
 using Astral.Classes;
+using Astral.Classes.ItemFilter;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
 using Astral.Quester.Classes;
-using Astral.Quester.Classes.Actions;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Enums;
+using QuesterAssistant.UIEditors;
+using Action = Astral.Quester.Classes.Action;
 using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class MailCollectExt : Action
+    public class MailCollectEntityExt : Action, IMailAction
     {
         public override string ActionLabel => GetType().Name;
         public override string Category => Core.Category;
@@ -58,13 +61,13 @@ namespace QuesterAssistant.Actions
             graph.drawFillEllipse(MailEntity.Position, new Size(10, 10), beige);
         }
 
-        public MailCollectExt()
+        public MailCollectEntityExt()
         {
             MailEntity = new NPCInfos();
             CleanUpRegex = ".*";
             OnlyDeleteEmptyMails = false;
             MinFreeBagsSlots = 4;
-            FilterType = MailCollectFilterType.Body;
+            FilterType = MailCollectFilterTypeExt.Body;
         }
 
         public override ActionResult Run()
@@ -80,7 +83,6 @@ namespace QuesterAssistant.Actions
                         Pause.Sleep(500);
                     VIP.InteractMailbox();
                 }
-
                 if (!VIP.MailBoxEntity.IsValid)
                 {
                     var contactInfo = EntityManager.LocalPlayer.Player.InteractInfo.NearbyContacts
@@ -91,28 +93,32 @@ namespace QuesterAssistant.Actions
                         Logger.WriteLine("Not found " + MailEntity.DisplayName);
                         return ActionResult.Fail;
                     }
+
                     contactInfo.Entity.Interact();
                 }
                 Pause.Sleep(1500);
-
-                while ((EntityManager.LocalPlayer.BagsFreeSlots > MinFreeBagsSlots || OnlyDeleteEmptyMails) &&
-                       EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType == ScreenType.MailBox)
-                {
-                    API.Engine.Navigation.Stop();
-
-                    var mails = Email.Mails;
-                }
             }
 
-            return ActionResult.Completed;
+            if ((EntityManager.LocalPlayer.BagsFreeSlots > MinFreeBagsSlots || OnlyDeleteEmptyMails) &&
+                EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType == ScreenType.MailBox)
+                {
+                    API.Engine.Navigation.Stop();
+                    return EmailHelper.Process(this);
+                }
+            return ActionResult.Running;
         }
 
         [Description(".* = Collect all items from Mailbox and remove all mails")]
         public string CleanUpRegex { get; set; }
-        public MailCollectFilterType FilterType { get; set; }
-        [Editor(typeof(NPCInfos), typeof(UITypeEditor))]
+        public MailCollectFilterTypeExt FilterType { get; set; }
+        [Editor(typeof(Astral.Quester.UIEditors.NPCInfos), typeof(UITypeEditor))]
         public NPCInfos MailEntity { get; set; }
         public bool OnlyDeleteEmptyMails { get; set; }
         public int MinFreeBagsSlots { get; set; }
+        [Description("Items to search")]
+        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        public ItemFilterCore ItemFilter { get; set; } = new ItemFilterCore();
+        [Description("Junction matches of CleanUpRegex and ItemFilter")]
+        public LogicType Logic { get; set; } = LogicType.Conjunction;
     }
 }

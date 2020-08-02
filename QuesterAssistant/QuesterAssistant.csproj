@@ -279,9 +279,10 @@
   <ItemGroup>
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
-    <Compile Include="Actions\MailCollectExt.cs" />
+    <Compile Include="Actions\MailCollectEntityExt.cs" />
     <Compile Include="Classes\Debug.cs" />
     <Compile Include="Classes\DebugAction.cs" />
+    <Compile Include="Classes\EmailHelper.cs" />
     <Compile Include="Classes\Extensions\EmailMessageEx.cs" />
     <Compile Include="Classes\Extensions\IIgnoreCombat.cs" />
     <Compile Include="Actions\InteractNodeExt.cs" />
@@ -329,6 +330,7 @@
     <Compile Include="Classes\Extensions\LocalPlayerEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\IDebugAction.cs" />
+    <Compile Include="Classes\IMailAction.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\InventorySelect.cs" />
@@ -372,6 +374,8 @@
     <Compile Include="Conditions\CheckNode.cs" />
     <Compile Include="Conditions\ConditionPack.cs" />
     <Compile Include="Conditions\PlayerParagon.cs" />
+    <Compile Include="Enums\LogicType.cs" />
+    <Compile Include="Enums\MailCollectFilterTypeExt.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerCore.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerData.cs" />
     <Compile Include="InsigniaManager\InsigniaManagerForm.cs">
