@@ -8,7 +8,6 @@ using Astral.Classes.ItemFilter;
 using Astral.Logic.NW;
 using Astral.Quester;
 using Astral.Quester.Classes;
-using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
@@ -16,6 +15,7 @@ using QuesterAssistant.Actions;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.ItemFilter;
 using QuesterAssistant.Panels;
+using QuesterAssistant.UIEditors;
 
 namespace QuesterAssistant.Conditions
 {

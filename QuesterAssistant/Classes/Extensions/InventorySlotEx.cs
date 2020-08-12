@@ -18,7 +18,7 @@ namespace QuesterAssistant.Classes.Extensions
             {
                 return
                     s.Item.ItemDef.StackLimit > 1 &&
-                    s.Item.ProgressionLogic.CurrentRankXP == 0 &&
+                    (int) s.Item.ProgressionLogic.CurrentRankXP == 0 &&
                     s.Item.Flags == slot.Item.Flags &&
                     s.Item.ItemDef.InternalName == slot.Item.ItemDef.InternalName;
             }

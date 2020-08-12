@@ -22,12 +22,11 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             if (Game.IsCursorModeEnabled)
-            {
                 Game.ToggleCursorMode(false);
-                Pause.Sleep(1000);
-                return ActionResult.Completed;
-            }
-            return ActionResult.Skip;
+            if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
+                EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
+            Pause.Sleep(1000);
+            return ActionResult.Completed;
         }
     }
 }

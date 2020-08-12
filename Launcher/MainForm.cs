@@ -58,7 +58,7 @@ namespace Launcher
 
                 if (chkClose.Checked)
                 {
-                    string crashTitle = "Невервинтер Crash";
+                    string crashTitle = "GameClient.exe";
                     var handle = WinAPI.FindWindow(null, crashTitle);
                     if (handle != IntPtr.Zero)
                     {

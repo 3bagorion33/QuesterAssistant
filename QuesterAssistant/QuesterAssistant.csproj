@@ -237,6 +237,10 @@
       <Private>False</Private>
       <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
+    <Reference Include="DevExpress.XtraLayout.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="DevExpress.XtraVerticalGrid.v18.1, Version=18.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
@@ -330,7 +334,14 @@
     <Compile Include="Classes\Extensions\LocalPlayerEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\IDebugAction.cs" />
-    <Compile Include="Classes\IMailAction.cs" />
+    <Compile Include="Classes\IMailCollectAction.cs" />
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterAddEntry.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterAddEntry.Designer.cs">
+      <DependentUpon>ItemFilterAddEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\ItemFilter\ItemFilterCollection.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\InventorySelect.cs" />
@@ -363,7 +374,7 @@
     <Compile Include="Classes\ProfessionsHelper.cs" />
     <Compile Include="Classes\ProfilesStack.cs" />
     <Compile Include="Classes\Reflection\Helper.cs" />
-    <Compile Include="Classes\Reflection\StaticMethod.cs" />
+    <Compile Include="Classes\Reflection\StaticMethodDelegateFactory.cs" />
     <Compile Include="Classes\Reflection\StaticPropertyAccessor.cs" />
     <Compile Include="Classes\Reflection\StaticVoidMethod.cs" />
     <Compile Include="Conditions\FreeGatherSlots.cs" />
@@ -432,6 +443,18 @@
     <Compile Include="UIEditors\Forms\DonateTaskEditorForm.Designer.cs">
       <DependentUpon>DonateTaskEditorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterUC.Designer.cs">
+      <DependentUpon>ItemFilterUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UIEditors\Forms\GetAnItem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\GetAnItem.Designer.cs">
+      <DependentUpon>GetAnItem.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIEditors\Forms\PlayerParagonSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -457,6 +480,7 @@
       <DependentUpon>InventorySelectForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UIEditors\InventorySelectEditor.cs" />
+    <Compile Include="UIEditors\ItemIdEditor.cs" />
     <Compile Include="UIEditors\ItemIdFilterEditor.cs" />
     <Compile Include="UIEditors\ParagonListEditor.cs" />
     <Compile Include="UIEditors\PositionNodeEditor.cs" />
@@ -468,6 +492,9 @@
     <Compile Include="UpgradeManager\UpgradeManagerForm.Designer.cs">
       <DependentUpon>UpgradeManagerForm.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Classes\ItemFilter\Forms\ItemFilterAddEntry.resx">
+      <DependentUpon>ItemFilterAddEntry.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Classes\Patches\AddClass.resx">
       <DependentUpon>AddClass.cs</DependentUpon>
     </EmbeddedResource>
@@ -488,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\DonateTaskEditorForm.resx">
       <DependentUpon>DonateTaskEditorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\GetAnItem.resx">
+      <DependentUpon>GetAnItem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\PlayerParagonSelectForm.resx">
       <DependentUpon>PlayerParagonSelectForm.cs</DependentUpon>
@@ -566,10 +596,10 @@
     </Compile>
     <None Include="States\Identify.cs" />
     <Compile Include="UIEditors\CheckedListBoxEditor.cs" />
-    <Compile Include="UIEditors\Forms\ItemFilterForm.cs">
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UIEditors\Forms\ItemFilterForm.Designer.cs">
+    <Compile Include="Classes\ItemFilter\Forms\ItemFilterForm.Designer.cs">
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </Compile>
     <Compile Include="UIEditors\ItemFilterEditor.cs" />
@@ -588,7 +618,7 @@
     <EmbeddedResource Include="Settings\SettingsForm.resx">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UIEditors\Forms\ItemFilterForm.resx">
+    <EmbeddedResource Include="Classes\ItemFilter\Forms\ItemFilterForm.resx">
       <DependentUpon>ItemFilterForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Classes\Hooks\KeyboardSimulator.cs" />

@@ -59,7 +59,7 @@ namespace QuesterAssistant.Conditions
                         if (cond.IsValid)
                         {
                             if (cond.Locked)
-                            { trueNumLock++;}
+                                trueNumLock++;
                             else trueNumUnlock++;
                         }
                         else
@@ -71,10 +71,8 @@ namespace QuesterAssistant.Conditions
                             }
                         }
                     }
-
                     result = lockTrue && (Conditions.Count == trueNumLock || trueNumUnlock > MinCount - 1);
                 }
-                
                 return Not ^ result;
             }
         }
@@ -107,9 +105,8 @@ namespace QuesterAssistant.Conditions
                     sb.Append("Negation flag (Not): ").Append(Not).AppendLine();
                     return sb.ToString();
                 }
-                else return "The list 'Conditions' is empty";
+                return "The list 'Conditions' is empty";
             }
         }
-
     }
 }

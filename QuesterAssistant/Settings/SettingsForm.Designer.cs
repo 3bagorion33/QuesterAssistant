@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.chkRoleToggleEnabled = new DevExpress.XtraEditors.CheckEdit();
             this.txtRoleToggleString = new DevExpress.XtraEditors.TextEdit();
             this.numPauseDelay = new DevExpress.XtraEditors.SpinEdit();
@@ -38,17 +37,17 @@
             this.txtHideGameString = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             this.txtPauseBotHotKey = new DevExpress.XtraEditors.TextEdit();
-            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcHideMode = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcRoleToggleHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideGameHotKey = new System.Windows.Forms.BindingSource();
+            this.bsrcHideMode = new System.Windows.Forms.BindingSource();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
-            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcPauseBotHotKey = new System.Windows.Forms.BindingSource();
             this.btnClearStack = new DevExpress.XtraEditors.SimpleButton();
             this.btnShowStack = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
-            this.bsrcPauseBot = new System.Windows.Forms.BindingSource(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
+            this.bsrcPauseBot = new System.Windows.Forms.BindingSource();
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabCommon = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.chkGameCursorMoving = new DevExpress.XtraEditors.CheckEdit();
@@ -66,8 +65,9 @@
             this.simpleButton4 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
-            this.bsrcPatches = new System.Windows.Forms.BindingSource(this.components);
-            this.bsrcData = new System.Windows.Forms.BindingSource(this.components);
+            this.bsrcPatches = new System.Windows.Forms.BindingSource();
+            this.bsrcData = new System.Windows.Forms.BindingSource();
+            this.chkGameCrashMonitoring = new DevExpress.XtraEditors.CheckEdit();
             ((System.ComponentModel.ISupportInitialize)(this.chkRoleToggleEnabled.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.txtRoleToggleString.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numPauseDelay.Properties)).BeginInit();
@@ -97,6 +97,7 @@
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPatches)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkGameCrashMonitoring.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // chkRoleToggleEnabled
@@ -285,6 +286,7 @@
             // tabCommon
             // 
             this.tabCommon.Caption = "Common";
+            this.tabCommon.Controls.Add(this.chkGameCrashMonitoring);
             this.tabCommon.Controls.Add(this.chkGameCursorMoving);
             this.tabCommon.Controls.Add(this.numPauseDelay);
             this.tabCommon.Controls.Add(this.chkRoleToggleEnabled);
@@ -471,6 +473,14 @@
             this.groupControl1.TabIndex = 8;
             this.groupControl1.Text = "groupControl1";
             // 
+            // chkGameCrashMonitoring
+            // 
+            this.chkGameCrashMonitoring.Location = new System.Drawing.Point(6, 108);
+            this.chkGameCrashMonitoring.Name = "chkGameCrashMonitoring";
+            this.chkGameCrashMonitoring.Properties.Caption = "Advanced Game crash monitoring";
+            this.chkGameCrashMonitoring.Size = new System.Drawing.Size(186, 19);
+            this.chkGameCrashMonitoring.TabIndex = 10;
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -512,6 +522,7 @@
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bsrcPatches)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chkGameCrashMonitoring.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -557,5 +568,6 @@
         private System.Windows.Forms.BindingSource bsrcData;
         private DevExpress.XtraEditors.LabelControl labelControl3;
         private DevExpress.XtraEditors.SpinEdit numStackLifeTime;
+        private DevExpress.XtraEditors.CheckEdit chkGameCrashMonitoring;
     }
 }

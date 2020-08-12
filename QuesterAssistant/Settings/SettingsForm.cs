@@ -17,6 +17,7 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.CodeReader;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 using QuesterAssistant.Classes.Reflection;
 using QuesterAssistant.Enums;
@@ -72,6 +73,7 @@ namespace QuesterAssistant.Settings
             txtPauseBotHotKey.BindAdd(bsrcPauseBotHotKey, nameof(TextEdit.Text), nameof(HotKey.String));
             numPauseDelay.BindAdd(bsrcPauseBot, nameof(SpinEdit.EditValue), nameof(SettingsData.PauseBot.Delay));
             chkGameCursorMoving.BindAdd(bsrcData, nameof(ComboBoxEdit.EditValue), nameof(Data.GameCursorMoving));
+            chkGameCrashMonitoring.BindAdd(bsrcData, nameof(ComboBoxEdit.EditValue), nameof(Data.GameCrashMonitoring));
             numStackLifeTime.BindAdd(bsrcData, nameof(SpinEdit.EditValue), nameof(Data.StackLifeTime));
 
             chkWayPointPatch.BindAdd(bsrcPatches, nameof(CheckEdit.Checked), nameof(SettingsData.Patches.WayPointFilterPatch));
@@ -169,7 +171,30 @@ namespace QuesterAssistant.Settings
             ////}
             //costumeDbg.Add(new CostumeDbg(32));
             //var costume = EntityManager.LocalPlayer.GetMountCostume();
-            var items = Email.Mails[3].Message.GetAttachedItems();
+            //var items = Email.Mails[3].Message.GetAttachedItems();
+
+            //var flag1 = WinAPI.IsWindowHung(GameClient.WindowHandle);
+            //var flag2 = WinAPI.IsWindow(GameClient.WindowHandle);
+            //Pause.Sleep(5000);
+            Injection.Crash();
+            //Pause.Sleep(5000);
+            //flag1 = WinAPI.IsWindowHung(GameClient.WindowHandle);
+            //flag2 = WinAPI.IsWindow(GameClient.WindowHandle);
+
+            //var shCoffer = EntityManager.LocalPlayer.Player.PlayerGuild.GroupProjectContainer.ProjectList
+            //    .Find(p => p.ProjectDef.Name == "Nw_Stronghold");
+            //var cofferFay = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == "Coffer_Supplies_Fey");
+            //var cofferLabor = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == "Coffer_Labor");
+
+            //var offsetListFay = new List<OffsetSearcher>();
+            //var offsetListLabor = new List<OffsetSearcher>();
+            //for (int i = 0; i < 128; i++)
+            //{
+            //    offsetListFay.Add(new OffsetSearcher(cofferFay.Pointer, i));
+            //    offsetListLabor.Add(new OffsetSearcher(cofferLabor.Pointer, i));
+
+            //}
+            //var offset = new OffsetSearcher(cofferData.Pointer, 32);
         }
 
         private class MailSlot : NativeObject
@@ -194,10 +219,10 @@ namespace QuesterAssistant.Settings
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
-        private struct CostumeDbg
+        private struct OffsetSearcher
         {
             //private static IntPtr baseAddr = (IntPtr) EntityManager.LocalPlayer.CostumeRef.pMountCostume;
-            private static IntPtr baseAddr = Email.Mails[3].Message.Pointer;
+            //private static IntPtr baseAddr = Email.Mails[3].Message.Pointer;
 
             private int num;
             private string p0_string;
@@ -211,7 +236,7 @@ namespace QuesterAssistant.Settings
 
             //private List<string> p1_strings;
 
-            public CostumeDbg(int i)
+            public OffsetSearcher(IntPtr baseAddr, int i)
             {
                 num = i;
                 //p0_string = Memory.MMemory.ReadString(Memory.MMemory.Read<IntPtr>(baseAddr + i),Encoding.UTF8, 256);
@@ -232,13 +257,14 @@ namespace QuesterAssistant.Settings
                 p1_Items = NWList.Get<Item>(p1);
                 //p1_iSlots = NWList.Get<InventorySlot>(p1);
                 p1_string = (p1_mSlots.Count > 0) ? "" : "<Empty>"; // Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
-                p1_int = p1_mSlots.Count; //Memory.MMemory.Read<int>(p1);
+                //p1_int = p1_mSlots.Count; 
+                p1_int = Memory.MMemory.Read<int>(p1);
 
             }
 
             public override string ToString() =>
                 //$"{num}|{p0_int}:{p0_string}|{p1_int}:{p1_string}";
-                $"{num}|{p1_int}:{p1_string}";
+                $"{num}|{p0_int}:{p1_int}";
         }
     }
 }

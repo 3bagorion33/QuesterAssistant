@@ -8,9 +8,9 @@ using System.Drawing.Design;
 using System.Threading.Tasks;
 using Astral;
 using QuesterAssistant.Classes.ItemFilter;
-using QuesterAssistant.UIEditors;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.UIEditors;
 
 namespace QuesterAssistant.Actions
 {
@@ -61,7 +61,7 @@ namespace QuesterAssistant.Actions
         }
 
         [Description("Items to discard")]
-        [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
+        [Editor(typeof(Astral.Quester.UIEditors.ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemIdFilter { get; set; } = new ItemFilterCore();
 
         [Description("Discard selected grade only")]

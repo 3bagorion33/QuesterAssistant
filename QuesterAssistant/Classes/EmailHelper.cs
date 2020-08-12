@@ -11,9 +11,38 @@ namespace QuesterAssistant.Classes
 {
     internal static class EmailHelper
     {
-        public static Action.ActionResult Process(IMailAction a)
+        public static string CollectLabel(IMailCollectAction a)
         {
-            foreach (var email in Email.Mails)
+            var label = "MailCollect : ";
+            if (!string.IsNullOrEmpty(a.CleanUpRegex))
+                label += $"[{a.CleanUpRegex}]";
+            if (!string.IsNullOrEmpty(a.CleanUpRegex) && !string.IsNullOrEmpty(a.ItemPattern))
+                label += a.Logic == LogicType.Conjunction ? " && " : " || ";
+            if (!string.IsNullOrEmpty(a.ItemPattern))
+                label += $"[{a.ItemPattern}]";
+
+            return label;
+        }
+
+        public static Action.ActionValidity CollectValidity(IMailCollectAction a)
+        {
+            switch (a.Logic)
+            {
+                case LogicType.Conjunction:
+                    if (string.IsNullOrEmpty(a.CleanUpRegex) || string.IsNullOrEmpty(a.ItemPattern))
+                        return new Action.ActionValidity($"{nameof(a.CleanUpRegex)} and {nameof(a.ItemPattern)} should be not empty!");
+                    break;
+                case LogicType.Disjunction:
+                    if (string.IsNullOrEmpty(a.CleanUpRegex) && string.IsNullOrEmpty(a.ItemPattern))
+                        return new Action.ActionValidity($"{nameof(a.CleanUpRegex)} or {nameof(a.ItemPattern)} should be not empty!");
+                    break;
+            }
+            return new Action.ActionValidity();
+        }
+
+        public static Action.ActionResult CollectProcess(IMailCollectAction a)
+        {
+            foreach (var email in Email.Mails.OrderByDescending(m => m.MessageId))
             {
                 if (a.OnlyDeleteEmptyMails && email.NumAttachedItems == 0)
                 {
@@ -35,13 +64,15 @@ namespace QuesterAssistant.Classes
                         break;
                 }
                 bool isMatch = false;
+                //bool isAttached = email.Message.GetAttachedItems().Any(i => a.ItemFilter.IsMatch(i));
+                bool isAttached = email.Message.GetAttachedItems().Any(i => Regex.IsMatch(i.ItemDef.InternalName, a.ItemPattern));
                 switch (a.Logic)
                 {
                     case LogicType.Conjunction:
-                        isMatch = Regex.IsMatch(input, a.CleanUpRegex) && email.Message.GetAttachedItems().Any(i => a.ItemFilter.IsMatch(i));
+                        isMatch = Regex.IsMatch(input, a.CleanUpRegex) && isAttached;
                         break;
                     case LogicType.Disjunction:
-                        isMatch = Regex.IsMatch(input, a.CleanUpRegex) || email.Message.GetAttachedItems().Any(i => a.ItemFilter.IsMatch(i));
+                        isMatch = Regex.IsMatch(input, a.CleanUpRegex) || isAttached;
                         break;
                 }
                 if (email != null && email.IsValid && isMatch)
@@ -55,7 +86,7 @@ namespace QuesterAssistant.Classes
                     {
                         Logger.WriteLine("Failed to collect items ...");
                     }
-                    Pause.Sleep(300);
+                    Pause.Sleep(500);
                     try
                     {
                         if (email.NumAttachedItems == 0)
@@ -65,7 +96,7 @@ namespace QuesterAssistant.Classes
                         }
                     }
                     catch { }
-                    Pause.Sleep(300);
+                    Pause.Sleep(500);
                     return Action.ActionResult.Running;
                 }
             }

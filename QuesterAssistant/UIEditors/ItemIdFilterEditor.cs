@@ -2,8 +2,8 @@
 using System.ComponentModel;
 using System.Drawing.Design;
 using Astral.Classes.ItemFilter;
+using QuesterAssistant.Classes.ItemFilter.Forms;
 using QuesterAssistant.Conditions;
-using QuesterAssistant.UIEditors.Forms;
 
 namespace QuesterAssistant.UIEditors
 {
@@ -12,7 +12,7 @@ namespace QuesterAssistant.UIEditors
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
             if (context.Instance is AuctionItemCount checkNode && checkNode.GetItemsFromParentAction(out var items))
-                return items;
+                value = items;
             ItemFilterForm.Show(value as ItemFilterCore, ItemFilterCoreType.ItemsID);
             return value;
         }

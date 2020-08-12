@@ -52,6 +52,7 @@ namespace ClassPatcher
                         enumerator.Current.Name == "NPCId" ||
                         enumerator.Current.Name == "NPCId2" ||
                         enumerator.Current.Name == "Debug" ||
+                        enumerator.Current.Name == "Relogger" ||
 
                         action == "/show")
                     {

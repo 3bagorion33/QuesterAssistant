@@ -44,11 +44,6 @@ namespace QuesterAssistant.Panels
         private void Main_OnPanelLeave(object sender, EventArgs e)
         {
             tileGroup.Items.ForEach(i => (i.Tag as CoreForm).PanelLeave());
-            //Core.SettingsCore.Panel.PanelLeave();
-            //Core.UpgradeManagerCore.Panel.PanelLeave();
-            //Core.PowersManagerCore.Panel.PanelLeave();
-            //Core.PushNotifyCore.Panel.PanelLeave();
-            //Core.InsigniaManagerCore.Panel.PanelLeave();
         }
 
         private void LoadPanel<T>(T form) where T : CoreForm

@@ -9,19 +9,19 @@ namespace QuesterAssistant.Classes.ItemFilter
 {
     internal static class ItemFilterEntryEx
     {
-        public static bool StrType(this ItemFilterEntry itemFilterEntry, Item item)
+        public static bool IsMatch(this ItemFilterEntry itemFilterEntry, Item item)
         {
             switch (itemFilterEntry.StringType)
             {
                 case ItemFilterStringType.Simple:
-                    return itemFilterEntry.ItemType(item).Any(x => x.FindPattern(itemFilterEntry.Text));
+                    return itemFilterEntry.GetStringsByFilterType(item).Any(x => x.FindPattern(itemFilterEntry.Text));
                 case ItemFilterStringType.Regex:
-                    return itemFilterEntry.ItemType(item).Any(x => Regex.IsMatch(x, itemFilterEntry.Text));
+                    return itemFilterEntry.GetStringsByFilterType(item).Any(x => Regex.IsMatch(x, itemFilterEntry.Text));
             }
             return false;
         }
 
-        public static List<string> ItemType(this ItemFilterEntry itemFilterEntry, Item item)
+        public static List<string> GetStringsByFilterType(this ItemFilterEntry itemFilterEntry, Item item)
         {
             var _tmp = new List<string>();
             switch (itemFilterEntry.Type)

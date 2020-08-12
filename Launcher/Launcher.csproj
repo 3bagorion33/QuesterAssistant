@@ -48,7 +48,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -157,6 +157,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Assemblies.cs" />
+    <None Include="Classes\CMemoryExecute.cs" />
+    <Compile Include="Classes\FileHelper.cs" />
     <Compile Include="Classes\Firewall.cs" />
     <Compile Include="Classes\Instance.cs" />
     <Compile Include="Classes\LogEvent.cs" />

@@ -1,10 +1,10 @@
-﻿using Astral.Classes.ItemFilter;
-using DevExpress.XtraEditors;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
+using Astral.Classes.ItemFilter;
+using DevExpress.XtraEditors;
 
-namespace QuesterAssistant.UIEditors.Forms
+namespace QuesterAssistant.Classes.ItemFilter.Forms
 {
     partial class ItemFilterForm : XtraForm
     {

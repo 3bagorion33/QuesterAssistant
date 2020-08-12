@@ -18,15 +18,11 @@ namespace QuesterAssistant.Classes.Extensions
                 if (i == actions.Count || actions[i].GetType() != type)
                 {
                     if (type == typeof(AuctionSellItems))
-                    {
                         Auction.CloseAuctionFrame();
-                        return;
-                    }
+
                     if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
-                    {
                         EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
-                        return;
-                    }
+
                     Game.ToggleCursorMode(false);
                 }
                 break;

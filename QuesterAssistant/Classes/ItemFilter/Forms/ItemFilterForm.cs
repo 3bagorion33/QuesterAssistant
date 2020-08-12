@@ -1,7 +1,7 @@
 ﻿using Astral.Classes.ItemFilter;
 using DevExpress.XtraEditors;
 
-namespace QuesterAssistant.UIEditors.Forms
+namespace QuesterAssistant.Classes.ItemFilter.Forms
 {
     internal partial class ItemFilterForm : XtraForm
     {
@@ -14,11 +14,7 @@ namespace QuesterAssistant.UIEditors.Forms
         {
             new ItemFilterForm
             {
-                itemFilterUC =
-                {
-                    Type = itemFilterCoreType,
-                    Filter = itemFilterCore
-                }
+                itemFilterUC = {Type = itemFilterCoreType, Filter = itemFilterCore}
             }.ShowDialog();
         }
     }

@@ -12,6 +12,7 @@ using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
+using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Enums;
 using QuesterAssistant.UIEditors;
 using Action = Astral.Quester.Classes.Action;
@@ -19,9 +20,9 @@ using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class MailCollectEntityExt : Action, IMailAction
+    public class MailCollectEntityExt : Action, IMailCollectAction
     {
-        public override string ActionLabel => GetType().Name;
+        public override string ActionLabel => EmailHelper.CollectLabel(this);
         public override string Category => Core.Category;
         protected override bool IntenalConditions
         {
@@ -46,7 +47,7 @@ namespace QuesterAssistant.Actions
                 ? new Vector3()
                 : MailEntity.Position;
 
-        protected override ActionValidity InternalValidity => new ActionValidity();
+        protected override ActionValidity InternalValidity => EmailHelper.CollectValidity(this);
 
         public override void InternalReset() { }
         public override void GatherInfos() { }
@@ -65,6 +66,7 @@ namespace QuesterAssistant.Actions
         {
             MailEntity = new NPCInfos();
             CleanUpRegex = ".*";
+            ItemPattern = ".*";
             OnlyDeleteEmptyMails = false;
             MinFreeBagsSlots = 4;
             FilterType = MailCollectFilterTypeExt.Body;
@@ -74,6 +76,7 @@ namespace QuesterAssistant.Actions
         {
             if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType != ScreenType.MailBox)
             {
+                new CloseAllFrames().Run();
                 if (VIP.CanSummonMailbox)
                 {
                     API.Engine.Navigation.Stop();
@@ -93,7 +96,6 @@ namespace QuesterAssistant.Actions
                         Logger.WriteLine("Not found " + MailEntity.DisplayName);
                         return ActionResult.Fail;
                     }
-
                     contactInfo.Entity.Interact();
                 }
                 Pause.Sleep(1500);
@@ -103,7 +105,10 @@ namespace QuesterAssistant.Actions
                 EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType == ScreenType.MailBox)
                 {
                     API.Engine.Navigation.Stop();
-                    return EmailHelper.Process(this);
+                    var result = ConditionsAreOK ? EmailHelper.CollectProcess(this) : ActionResult.Completed;
+                    if (result == ActionResult.Completed)
+                        this.CloseFrames();
+                    return result;
                 }
             return ActionResult.Running;
         }
@@ -115,9 +120,13 @@ namespace QuesterAssistant.Actions
         public NPCInfos MailEntity { get; set; }
         public bool OnlyDeleteEmptyMails { get; set; }
         public int MinFreeBagsSlots { get; set; }
+        [Browsable(false)]
         [Description("Items to search")]
         [Editor(typeof(ItemIdFilterEditor), typeof(UITypeEditor))]
         public ItemFilterCore ItemFilter { get; set; } = new ItemFilterCore();
+        [Description("Regex pattern to search")]
+        [Editor(typeof(ItemIdEditor), typeof(UITypeEditor))]
+        public string ItemPattern { get; set; }
         [Description("Junction matches of CleanUpRegex and ItemFilter")]
         public LogicType Logic { get; set; } = LogicType.Conjunction;
     }

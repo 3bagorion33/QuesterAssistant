@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -22,6 +23,7 @@ namespace Launcher.Classes
         public int PID { get; set; }
         public Process AttachedProcess => PID != 0 ? Process.GetProcessById(PID) : null;
         private const int HASH_SIZE = 4;
+        private const string ASTRAL = "Astral.exe";
         
         public Instance(IList<Patch> patches)
         {
@@ -33,7 +35,7 @@ namespace Launcher.Classes
                 string procName = GetMd5Hash(md5Hash, DateTime.Now.Ticks.ToString()) + ".exe";
                 try
                 {
-                    File.Copy("Astral.exe", procName);
+                    File.Copy(ASTRAL, procName);
 
                     var stream = File.ReadAllBytes(procName);
                     patches.ToList().FindAll(p => p.Active).ForEach(p => Rewrite(ref stream, p.Bytes));
@@ -47,8 +49,29 @@ namespace Launcher.Classes
                 }
                 finally
                 {
+                    Thread.Sleep(500);
                     Delete();
                 }
+
+                //var stream = File.ReadAllBytes(ASTRAL);
+                //patches.ToList().FindAll(p => p.Active).ForEach(p => Rewrite(ref stream, p.Bytes));
+
+                ////    //var a = Assembly.Load(stream);
+                ////    //var ep = a.EntryPoint;
+                ////    //if (ep != null)
+                ////    //{
+                ////    //    var o = a.CreateInstance(ep.Name);
+                ////    //    Task.Factory.StartNew(() => ep.Invoke(a, new object[] { new[] { Path.GetFullPath(ASTRAL) } }));
+                ////    //}
+                //CMemoryExecute.Run(stream, Path.GetFullPath(ASTRAL));
+                //Thread.Sleep(1000);
+                //var processes = Process.GetProcesses().Where(p => p.ProcessName == "Astral");
+                //Process = processes.First();
+
+                //    //IntPtr buf = MemoryExecute.VirtualAlloc(IntPtr.Zero, (uint) stream.Length);
+                //    //Marshal.Copy(stream, 0, buf, stream.Length);
+                //    //var ptr = (MemoryExecute.IntReturner)Marshal.GetDelegateForFunctionPointer(buf, typeof(MemoryExecute.IntReturner));
+                //    //ptr();
             }
         }
 
@@ -59,8 +82,8 @@ namespace Launcher.Classes
             foreach (var file in files)
             {
                 var streamName = file.FullName + ":Zone.Identifier";
-                if (BinFileHelper.FileExists(streamName))
-                    BinFileHelper.Delete(streamName);
+                if (FileHelper.FileExists(streamName))
+                    FileHelper.Delete(streamName);
             }
         }
 
@@ -111,7 +134,8 @@ namespace Launcher.Classes
                 Title = split[0];
                 PID = split.Length > 1 ? int.Parse(split[1]) : 0;
             }
-            catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
+            //catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
+            catch { }
         }
 
         public void Close() => Close(Process);
@@ -133,15 +157,14 @@ namespace Launcher.Classes
 
         private void Delete()
         {
-            while (Process != null && Process.HasExited && File.Exists($"{Process.ProcessName}.exe"))
+            try
             {
-                Thread.Sleep(100);
-                try
-                {
-                    File.Delete($"{Process.ProcessName}.exe");
-                }
-                catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
+                while (Process != null && Process.HasExited && File.Exists($"{Process.ProcessName}.exe"))
+                    Thread.Sleep(100);
+                File.Delete($"{Process.ProcessName}.exe");
             }
+            //catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
+            catch { }
         }
 
         public static void Clean()

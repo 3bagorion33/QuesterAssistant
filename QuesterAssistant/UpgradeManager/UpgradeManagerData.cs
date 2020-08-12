@@ -209,7 +209,7 @@ namespace QuesterAssistant.UpgradeManager
             {
                 Task t = new Task(item);
                 var i = EntityManager.LocalPlayer.BagsItems.Find(s => t.FindAny(s))?.Item;
-                if (i == null || i.ProgressionLogic.CurrentRankTotalRequiredXP == 0) return null;
+                if (i == null || (int) i.ProgressionLogic.CurrentRankTotalRequiredXP == 0) return null;
                 if (i.ProgressionLogic.CurrentTier.Index == 0)
                 {
                     t.Chance = 100;
@@ -231,7 +231,7 @@ namespace QuesterAssistant.UpgradeManager
 
             bool FindUnfilled(InventorySlot s) =>
                 s.Item.ItemDef.InternalName == ItemId &&
-                s.Item.ProgressionLogic.CurrentRankXP == 0;
+                (int) s.Item.ProgressionLogic.CurrentRankXP == 0;
 
             bool FindPartiallyFilled(InventorySlot s) =>
                 s.Item.ItemDef.InternalName == ItemId &&
@@ -241,7 +241,7 @@ namespace QuesterAssistant.UpgradeManager
             bool FindFullFilled(InventorySlot s) =>
                 s.Item.ItemDef.InternalName == ItemId &&
                 s.Item.ProgressionLogic.CurrentTier.Index > 0 &&
-                s.Item.ProgressionLogic.CurrentRankTotalRequiredXP == s.Item.ProgressionLogic.CurrentRankXP;
+                (int) s.Item.ProgressionLogic.CurrentRankTotalRequiredXP == (int) s.Item.ProgressionLogic.CurrentRankXP;
 
             bool FindAny(InventorySlot s) => s.Item.ItemDef.InternalName == ItemId;
 
