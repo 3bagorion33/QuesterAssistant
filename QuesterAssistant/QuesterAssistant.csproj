@@ -342,6 +342,7 @@
       <DependentUpon>ItemFilterAddEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Classes\ItemFilter\ItemFilterCollection.cs" />
+    <Compile Include="Classes\Monitoring\Frames.cs" />
     <Compile Include="Classes\Monitoring\GameCursorMoving.cs" />
     <Compile Include="Classes\Insignia.cs" />
     <Compile Include="Classes\InventorySelect.cs" />

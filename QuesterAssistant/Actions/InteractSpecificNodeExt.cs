@@ -14,6 +14,7 @@ using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Conditions;
 using QuesterAssistant.Panels;
 using Action = Astral.Quester.Classes.Action;
@@ -21,7 +22,7 @@ using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
-    public class InteractSpecificNodeExt : Action, IIgnoreCombat
+    public class InteractSpecificNodeExt : Action, IIgnoreCombat, Frames.IActionCloseFrame
     {
         private Interact.DynaNode currentNode;
 
@@ -181,7 +182,6 @@ namespace QuesterAssistant.Actions
                     EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.SelectOptionByKey(key, RewardItemChoose);
                     Pause.Sleep(1500);
                 }
-                EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
             }
             if (Game.IsLootFrameVisible())
             {
@@ -232,5 +232,8 @@ namespace QuesterAssistant.Actions
         public NodeState Tested { get; set; }
         [Category("NodeCheck")]
         public double VisibilityDistance { get; set; }
+
+        [Category("Interaction")]
+        public bool CloseFrame { get; set; } = true;
     }
 }

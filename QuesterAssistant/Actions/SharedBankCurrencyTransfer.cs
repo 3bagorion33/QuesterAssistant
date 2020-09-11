@@ -11,7 +11,6 @@ using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
-using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.Reflection;
 
 namespace QuesterAssistant.Actions
@@ -132,8 +131,6 @@ namespace QuesterAssistant.Actions
             }
 
             Pause.Sleep(1000);
-            //EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
-            this.CloseFrames();
             return ActionResult.Completed;
         }
 

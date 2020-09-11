@@ -16,12 +16,13 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.ItemFilter;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.UIEditors;
 using ItemIdFilterEditor = Astral.Quester.UIEditors.ItemIdFilterEditor;
 
 namespace QuesterAssistant.Actions
 {
-    public class AuctionSellItems : Astral.Quester.Classes.Action, IDebugAction
+    public class AuctionSellItems : Astral.Quester.Classes.Action, IDebugAction, Frames.IActionCloseFrame
     {
         public override string ActionLabel => GetType().Name;
         public override string Category => Core.Category;
@@ -336,9 +337,6 @@ namespace QuesterAssistant.Actions
             }
 
             Exit:
-            if (!DontCloseAuctionFrame && Auction.IsAuctionFrameVisible())
-                this.CloseFrames();
-
             return ActionResult.Completed;
         }
 
@@ -365,7 +363,7 @@ namespace QuesterAssistant.Actions
         public double Tolerance { get; set; } = 0.01;
         [Category("Interaction")]
         [Description("Leave Auction frame opening, improve cascade selling")]
-        public bool DontCloseAuctionFrame { get; set; } = false;
+        public bool CloseFrame { get; set; } = false;
         private MinMaxPair<uint> timeOut = new MinMaxPair<uint>(2000, 3000);
         [Category("Interaction")]
         [TypeConverter(typeof(PropertySorter))]

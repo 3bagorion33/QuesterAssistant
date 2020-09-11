@@ -13,12 +13,12 @@ using Astral.Quester.UIEditors.Forms;
 using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Actions
 {
-    public class BuyItemRemote : Action
+    public class BuyItemRemote : Action, Frames.IActionCloseFrame
     {
         public override string ActionLabel => GetType().Name;
         public override string Category => Core.Category;
@@ -101,7 +101,6 @@ namespace QuesterAssistant.Actions
                     }
                 }
 
-                this.CloseFrames();
                 return ActionResult.Completed;
             }
 
@@ -120,5 +119,8 @@ namespace QuesterAssistant.Actions
         [Editor(typeof(BuyOptionsEditor), typeof(UITypeEditor))]
         [Category("Purchase")]
         public List<BuyItemsOption> BuyOptions { get; set; }
+
+        [Category("Interaction")]
+        public bool CloseFrame { get; set; } = false;
     }
 }

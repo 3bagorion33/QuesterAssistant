@@ -12,7 +12,6 @@ using MyNW.Classes;
 using MyNW.Internals;
 using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
-using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Enums;
 using QuesterAssistant.UIEditors;
 using Action = Astral.Quester.Classes.Action;
@@ -76,7 +75,6 @@ namespace QuesterAssistant.Actions
         {
             if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType != ScreenType.MailBox)
             {
-                new CloseAllFrames().Run();
                 if (VIP.CanSummonMailbox)
                 {
                     API.Engine.Navigation.Stop();
@@ -105,10 +103,7 @@ namespace QuesterAssistant.Actions
                 EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.ScreenType == ScreenType.MailBox)
                 {
                     API.Engine.Navigation.Stop();
-                    var result = ConditionsAreOK ? EmailHelper.CollectProcess(this) : ActionResult.Completed;
-                    if (result == ActionResult.Completed)
-                        this.CloseFrames();
-                    return result;
+                    return ConditionsAreOK ? EmailHelper.CollectProcess(this) : ActionResult.Completed;
                 }
             return ActionResult.Running;
         }

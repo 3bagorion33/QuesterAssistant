@@ -1,13 +1,12 @@
 ﻿using Astral.Logic.Classes.Map;
 using MyNW.Classes;
-using MyNW.Internals;
 using QuesterAssistant.Classes;
 
 namespace QuesterAssistant.Actions
 {
     public class CloseAllFrames : Astral.Quester.Classes.Action
     {
-        public override string ActionLabel => GetType().Name;
+        public override string ActionLabel => $"{GetType().Name} : {Value}";
         public override string Category => Core.Category;
         public override string InternalDisplayName => string.Empty;
         public override bool UseHotSpots => false;
@@ -21,12 +20,10 @@ namespace QuesterAssistant.Actions
 
         public override ActionResult Run()
         {
-            if (Game.IsCursorModeEnabled)
-                Game.ToggleCursorMode(false);
-            if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
-                EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
             Pause.Sleep(1000);
             return ActionResult.Completed;
         }
+
+        public bool Value { get; set; } = true;
     }
 }

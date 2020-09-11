@@ -13,12 +13,13 @@ using Astral.Quester.UIEditors.Forms;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Panels;
 using Action = Astral.Quester.Classes.Action;
 
 namespace QuesterAssistant.Actions
 {
-    public class InteractSpecificNPCExt : Action, IIgnoreCombat
+    public class InteractSpecificNPCExt : Action, IIgnoreCombat, Frames.IActionCloseFrame
     {
 		private bool combat;
         private Entity target = new Entity(IntPtr.Zero);
@@ -185,5 +186,8 @@ namespace QuesterAssistant.Actions
         public string NPCUntranslatedName { get; set; }
         public uint InteractDistance { get; set; }
         public bool IgnoreCombat { get; set; }
+
+        [Category("Interaction")]
+        public bool CloseFrame { get; set; } = true;
     }
 }
