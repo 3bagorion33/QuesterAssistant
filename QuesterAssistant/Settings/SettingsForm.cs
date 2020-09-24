@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -176,7 +177,7 @@ namespace QuesterAssistant.Settings
             //var flag1 = WinAPI.IsWindowHung(GameClient.WindowHandle);
             //var flag2 = WinAPI.IsWindow(GameClient.WindowHandle);
             //Pause.Sleep(5000);
-            Injection.Crash();
+            //Injection.Crash();
             //Pause.Sleep(5000);
             //flag1 = WinAPI.IsWindowHung(GameClient.WindowHandle);
             //flag2 = WinAPI.IsWindow(GameClient.WindowHandle);
@@ -186,15 +187,13 @@ namespace QuesterAssistant.Settings
             //var cofferFay = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == "Coffer_Supplies_Fey");
             //var cofferLabor = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == "Coffer_Labor");
 
-            //var offsetListFay = new List<OffsetSearcher>();
-            //var offsetListLabor = new List<OffsetSearcher>();
-            //for (int i = 0; i < 128; i++)
-            //{
-            //    offsetListFay.Add(new OffsetSearcher(cofferFay.Pointer, i));
-            //    offsetListLabor.Add(new OffsetSearcher(cofferLabor.Pointer, i));
+            var contactDialog = EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog;
 
-            //}
-            //var offset = new OffsetSearcher(cofferData.Pointer, 32);
+            var offsetListReward = new List<OffsetSearcher>();
+            for (int i = 0; i < 1024; i++)
+            {
+                offsetListReward.Add(new OffsetSearcher(contactDialog.Pointer, i));
+            }
         }
 
         private class MailSlot : NativeObject
@@ -216,6 +215,12 @@ namespace QuesterAssistant.Settings
             }
         }
 
+        private class MySlot : NativeObject
+        {
+            public MySlot(IntPtr pointer) : base(pointer)
+            {}
+        }
+
         [SuppressMessage("ReSharper", "FieldCanBeMadeReadOnly.Local")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [SuppressMessage("ReSharper", "PrivateFieldCanBeConvertedToLocalVariable")]
@@ -228,7 +233,9 @@ namespace QuesterAssistant.Settings
             private string p0_string;
             private int p0_int;
             private IntPtr p1;
-            private List<MailSlot> p1_mSlots;
+            private List<InventoryBag> p1_Bags;
+            private List<InventoryBagLite> p1_LiteBags;
+            private List<InventorySlot> p1_Slots;
             private List<Item> p1_Items;
             //private List<InventorySlot> p1_iSlots;
             private string p1_string;
@@ -252,11 +259,13 @@ namespace QuesterAssistant.Settings
 
                 p0_string = Memory.MMemory.ReadString(baseAddr + i, Encoding.UTF8, 256);
                 p0_int = Memory.MMemory.Read<int>(baseAddr + i);
-                p1 = Memory.MMemory.Read<IntPtr>(baseAddr + i);
-                p1_mSlots = NWList.Get<MailSlot>(p1);
-                p1_Items = NWList.Get<Item>(p1);
+                p1 = Memory.MMemory.Read<IntPtr>(baseAddr);
+                p1_Bags = NWList.Get<InventoryBag>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
+                p1_LiteBags = NWList.Get<InventoryBagLite>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
+                p1_Slots = NWList.Get<InventorySlot>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
+                p1_Items = NWList.Get<Item>(Memory.MMemory.Read<IntPtr>(baseAddr + i));
                 //p1_iSlots = NWList.Get<InventorySlot>(p1);
-                p1_string = (p1_mSlots.Count > 0) ? "" : "<Empty>"; // Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
+                p1_string = "<Empty>"; // Memory.MMemory.ReadString(p1, Encoding.UTF8, 256);
                 //p1_int = p1_mSlots.Count; 
                 p1_int = Memory.MMemory.Read<int>(p1);
 
@@ -264,7 +273,7 @@ namespace QuesterAssistant.Settings
 
             public override string ToString() =>
                 //$"{num}|{p0_int}:{p0_string}|{p1_int}:{p1_string}";
-                $"{num}|{p0_int}:{p1_int}";
+                $"{num}|{p1_Items.Count}";
         }
     }
 }

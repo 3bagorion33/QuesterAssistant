@@ -496,6 +496,9 @@
     <EmbeddedResource Include="Classes\ItemFilter\Forms\ItemFilterAddEntry.resx">
       <DependentUpon>ItemFilterAddEntry.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Classes\ItemFilter\Forms\ItemFilterUC.resx">
+      <DependentUpon>ItemFilterUC.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Classes\Patches\AddClass.resx">
       <DependentUpon>AddClass.cs</DependentUpon>
     </EmbeddedResource>

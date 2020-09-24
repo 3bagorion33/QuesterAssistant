@@ -20,7 +20,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
     {
         private ItemFilterCoreType itemFilterCoreType;
 
-        private ItemFilterCore itemFilterCore_0;
+        private ItemFilterCore itemFilterCore;
 
         public ItemFilterCoreType Type
         {
@@ -46,16 +46,16 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         [Browsable(false)]
         public ItemFilterCore Filter
         {
-            get => itemFilterCore_0;
+            get => itemFilterCore;
             set
             {
-                itemFilterCore_0 = value;
+                itemFilterCore = value;
                 if (value != null)
                 {
-                    bindingSource_0.DataSource = value.Entries;
+                    bindingSource.DataSource = value.Entries;
                     return;
                 }
-                bindingSource_0.DataSource = null;
+                bindingSource.DataSource = null;
             }
         }
 
@@ -69,13 +69,13 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         {
             InitializeComponent();
             RepositoryItemComboBox repositoryItemComboBox = new RepositoryItemComboBox();
-            repositoryItemComboBox.QueryPopUp += this.method_0;
+            repositoryItemComboBox.QueryPopUp += FillItems;
             repositoryItemComboBox.TextEditStyle = TextEditStyles.DisableTextEditor;
             bReverse.Visible = false;
             colFilterType.ColumnEdit = repositoryItemComboBox;
         }
 
-        private void method_0(object sender, CancelEventArgs e)
+        private void FillItems(object sender, CancelEventArgs e)
         {
             ComboBoxEdit comboBoxEdit = sender as ComboBoxEdit;
             comboBoxEdit.Properties.Items.Clear();
@@ -87,9 +87,9 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
 
         private void bRemoveEntry_Click(object sender, EventArgs e)
         {
-            if (bindingSource_0.Current != null && QMessageBox.ShowDialog("Are you sure to delete this entry ?") == DialogResult.OK)
+            if (bindingSource.Current != null && QMessageBox.ShowDialog("Are you sure to delete this entry ?") == DialogResult.Yes)
             {
-                bindingSource_0.RemoveCurrent();
+                bindingSource.RemoveCurrent();
             }
         }
 
@@ -114,18 +114,18 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
                         itemFilterEntry.Type = ItemFilterType.ItemID;
                         break;
                 }
-                this.method_2(itemFilterEntry);
+                AddFilterEntry(itemFilterEntry);
                 return;
             }
             XtraMessageBox.Show("Item name is empty !");
         }
 
-        private void method_2(ItemFilterEntry itemFilterEntry)
+        private void AddFilterEntry(ItemFilterEntry itemFilterEntry)
         {
             if (itemFilterEntry != null)
             {
-                bindingSource_0.Add(itemFilterEntry);
-                bindingSource_0.Position = bindingSource_0.IndexOf(itemFilterEntry);
+                bindingSource.Add(itemFilterEntry);
+                bindingSource.Position = bindingSource.IndexOf(itemFilterEntry);
             }
         }
 
@@ -182,8 +182,8 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             ItemFilterEntry itemFilterEntry = ItemFilterAddEntry.Show(itemFilterCoreType);
             if (itemFilterEntry != null)
             {
-                bindingSource_0.Add(itemFilterEntry);
-                bindingSource_0.Position = bindingSource_0.IndexOf(itemFilterEntry);
+                bindingSource.Add(itemFilterEntry);
+                bindingSource.Position = bindingSource.IndexOf(itemFilterEntry);
             }
         }
 
@@ -210,13 +210,13 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         {
             if (QMessageBox.ShowDialog("Are you sure to clear the filter list ?") == DialogResult.OK)
             {
-                method_3();
+                ClearSource();
             }
         }
 
-        private void method_3()
+        private void ClearSource()
         {
-            bindingSource_0.Clear();
+            bindingSource.Clear();
         }
 
         private void bExport_Click(object sender, EventArgs e)
@@ -254,13 +254,13 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
                     {
                         if (dialogResult != DialogResult.Yes)
                         {
-                            method_3();
+                            ClearSource();
                             using (List<ItemFilterEntry>.Enumerator enumerator = itemFilterCore.Entries.GetEnumerator())
                             {
                                 while (enumerator.MoveNext())
                                 {
                                     ItemFilterEntry itemFilterEntry = enumerator.Current;
-                                    method_2(itemFilterEntry);
+                                    AddFilterEntry(itemFilterEntry);
                                 }
                                 return;
                             }
@@ -271,7 +271,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
                         while (enumerator.MoveNext())
                         {
                             ItemFilterEntry itemFilterEntry = enumerator.Current;
-                            method_2(itemFilterEntry);
+                            AddFilterEntry(itemFilterEntry);
                         }
                         return;
                     }
@@ -283,9 +283,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         private void bExpand_Click(object sender, EventArgs e)
         {
             ItemFilterForm.Show(Filter, itemFilterCoreType);
-            bindingSource_0.ResetBindings(true);
+            bindingSource.ResetBindings(true);
         }
-
-        private void ItemFilterUC_Load(object sender, EventArgs e) { }
     }
 }
