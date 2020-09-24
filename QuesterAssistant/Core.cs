@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using QuesterAssistant.Classes.CodeReader;
+using QuesterAssistant.Classes.ItemFilter.Forms;
 using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Classes.Patches;
 

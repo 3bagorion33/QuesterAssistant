@@ -1,46 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Forms;
 using Astral.Classes.ItemFilter;
 using Astral.Controllers;
 using Astral.Functions;
-using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraEditors.Controls;
 using DevExpress.XtraEditors.Repository;
 using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Panels;
+using QuesterAssistant.UIEditors.Forms;
 
 namespace QuesterAssistant.Classes.ItemFilter.Forms
 {
     public partial class ItemFilterUC : UserControl
     {
         private ItemFilterCoreType itemFilterCoreType;
-
         private ItemFilterCore itemFilterCore;
 
         public ItemFilterCoreType Type
         {
             get => itemFilterCoreType;
-            set
-            {
-                this.itemFilterCoreType = value;
-                bReverse.Visible = value == ItemFilterCoreType.ItemsID;
-                ItemFilterCoreType itemFilterCoreType = this.itemFilterCoreType;
-                if (itemFilterCoreType == ItemFilterCoreType.Items)
-                {
-                    addTypeLabel.Text = "Add item :";
-                    return;
-                }
-                if (itemFilterCoreType != ItemFilterCoreType.Loots)
-                {
-                    return;
-                }
-                addTypeLabel.Text = "Add loot :";
-            }
+            set => itemFilterCoreType = value;
+            //{
+            //    this.itemFilterCoreType = value;
+            //    bReverse.Visible = value == ItemFilterCoreType.ItemsID;
+            //    ItemFilterCoreType itemFilterCoreType = this.itemFilterCoreType;
+            //    if (itemFilterCoreType == ItemFilterCoreType.Items)
+            //    {
+            //        addTypeLabel.Text = "Add item :";
+            //        return;
+            //    }
+            //    if (itemFilterCoreType != ItemFilterCoreType.Loots)
+            //    {
+            //        return;
+            //    }
+            //    addTypeLabel.Text = "Add loot :";
+            //}
         }
 
         [Browsable(false)]
@@ -71,7 +69,6 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             RepositoryItemComboBox repositoryItemComboBox = new RepositoryItemComboBox();
             repositoryItemComboBox.QueryPopUp += FillItems;
             repositoryItemComboBox.TextEditStyle = TextEditStyles.DisableTextEditor;
-            bReverse.Visible = false;
             colFilterType.ColumnEdit = repositoryItemComboBox;
         }
 
@@ -93,33 +90,6 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             }
         }
 
-        private void bAddItem_Click(object sender, EventArgs e)
-        {
-            string text = itemListCombo.Text;
-            if (text.Length > 0)
-            {
-                ItemFilterEntry itemFilterEntry = new ItemFilterEntry
-                {
-                    Text = text
-                };
-                switch (Type)
-                {
-                    case ItemFilterCoreType.Items:
-                        itemFilterEntry.Type = ItemFilterType.ItemName;
-                        break;
-                    case ItemFilterCoreType.Loots:
-                        itemFilterEntry.Type = ItemFilterType.Loot;
-                        break;
-                    case ItemFilterCoreType.ItemsID:
-                        itemFilterEntry.Type = ItemFilterType.ItemID;
-                        break;
-                }
-                AddFilterEntry(itemFilterEntry);
-                return;
-            }
-            XtraMessageBox.Show("Item name is empty !");
-        }
-
         private void AddFilterEntry(ItemFilterEntry itemFilterEntry)
         {
             if (itemFilterEntry != null)
@@ -129,66 +99,33 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             }
         }
 
-        private void itemListCombo_QueryPopUp(object sender, CancelEventArgs e)
+        private void AddNewFilterEntry(bool showGetAnItemForm = false)
         {
-            itemListCombo.Properties.Items.Clear();
+            ItemFilterType entryFilterType;
             switch (itemFilterCoreType)
             {
                 case ItemFilterCoreType.Items:
-                    itemListCombo.Properties.Items.AddRange(ItemFilterCoreEx.GetFilterCollection(ItemFilterType.ItemName).Values);
-                    return;
+                    entryFilterType = ItemFilterType.ItemName;
+                    break;
                 case ItemFilterCoreType.Loots:
-                    itemListCombo.Properties.Items.AddRange(ItemFilterCoreEx.GetFilterCollection(ItemFilterType.Loot).Values);
-                    return;
-                case ItemFilterCoreType.ItemsID:
-                    itemListCombo.Properties.Items.AddRange(ItemFilterCoreEx.GetFilterCollection(ItemFilterType.ItemID, bReverse.Checked).Values);
-                    return;
+                    entryFilterType = ItemFilterType.Loot;
+                    break;
                 default:
-                    return;
+                    entryFilterType = ItemFilterType.ItemID;
+                    break;
             }
-        }
-
-        private void itemListCombo_EditValueChanging(object sender, ChangingEventArgs e)
-        {
-            string text = e.NewValue.ToString();
-            if (text.Contains('['))
+            var text = string.Empty;
+            if (showGetAnItemForm)
             {
-                if (bReverse.Checked)
-                {
-                    int num = text.IndexOf(']');
-                    if (num > 1)
-                    {
-                        string newValue = text.Remove(0, num + 2);
-                        e.NewValue = newValue;
-                    }
-                }
-                else
-                {
-                    int num2 = text.IndexOf('[');
-                    if (num2 > 1)
-                    {
-                        string newValue2 = text.Remove(num2 - 1);
-                        e.NewValue = newValue2;
-                    }
-                }
+                var item = GetAnItem.Show(entryFilterType);
+                if (item is null) return;
+                text = GetEntryText(item, entryFilterType);
             }
+            AddFilterEntry(new ItemFilterEntry {Type = entryFilterType, Text = text});
         }
 
-        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e) { }
-
-        private void bAddEntryAdvanced_Click(object sender, EventArgs e)
-        {
-            addEntryPop.HidePopup();
-            ItemFilterEntry itemFilterEntry = ItemFilterAddEntry.Show(itemFilterCoreType);
-            if (itemFilterEntry != null)
-            {
-                bindingSource.Add(itemFilterEntry);
-                bindingSource.Position = bindingSource.IndexOf(itemFilterEntry);
-            }
-        }
-
-        private void addEntryMenu_Popup(object sender, EventArgs e) { }
-        private void addEntryMenu_BeforePopup(object sender, CancelEventArgs e) { }
+        private string GetEntryText(GetAnItem.ListItem item, ItemFilterType filter) => 
+            filter == ItemFilterType.ItemName ? item.DisplayName : item.ItemId;
 
         private void bShowItems_Click(object sender, EventArgs e)
         {
@@ -284,6 +221,28 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         {
             ItemFilterForm.Show(Filter, itemFilterCoreType);
             bindingSource.ResetBindings(true);
+        }
+
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            AddNewFilterEntry();
+        }
+
+        private void riFilterTextEdit_ButtonClick(object sender, ButtonPressedEventArgs e)
+        {
+            if (gridView2.FocusedRowHandle < 0)
+            {
+                AddNewFilterEntry(true);
+            }
+            else
+            {
+                var entry = bindingSource.Current as ItemFilterEntry;
+                if (entry is null) return;
+                var item = GetAnItem.Show(entry.Type);
+                if (item is null) return;
+                entry.Text = entry.Type == ItemFilterType.ItemName ? item.DisplayName : item.ItemId;
+            }
+            gridView2.FocusedRowHandle = -1;
         }
     }
 }

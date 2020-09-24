@@ -32,7 +32,7 @@ namespace QuesterAssistant.Classes.Patches
         private static readonly Func<string, string, Characters.SavedCharacter> Characters_smethod_8 =
             typeof(Characters).GetStaticMethod<string, string, Characters.SavedCharacter>();
         private static readonly Action Characters_smethod_11 =
-            typeof(Characters).GetStaticVoidMethod("\u0005");
+            typeof(Characters).GetStaticAction("\u0005");
 
         public static void RunOnce()
         {

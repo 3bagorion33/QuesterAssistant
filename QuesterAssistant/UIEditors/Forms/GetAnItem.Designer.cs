@@ -47,14 +47,14 @@ namespace QuesterAssistant.UIEditors.Forms
             | System.Windows.Forms.AnchorStyles.Right)));
             this.lbItemsSource.Location = new System.Drawing.Point(12, 12);
             this.lbItemsSource.Name = "lbItemsSource";
-            this.lbItemsSource.Size = new System.Drawing.Size(537, 225);
+            this.lbItemsSource.Size = new System.Drawing.Size(537, 231);
             this.lbItemsSource.TabIndex = 0;
             // 
             // b_Select
             // 
             this.b_Select.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.b_Select.Location = new System.Drawing.Point(12, 272);
+            this.b_Select.Location = new System.Drawing.Point(12, 297);
             this.b_Select.Name = "b_Select";
             this.b_Select.Size = new System.Drawing.Size(500, 23);
             this.b_Select.TabIndex = 1;
@@ -65,18 +65,20 @@ namespace QuesterAssistant.UIEditors.Forms
             // 
             this.itemListChoice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.itemListChoice.Location = new System.Drawing.Point(12, 243);
+            this.itemListChoice.Location = new System.Drawing.Point(12, 249);
             this.itemListChoice.Name = "itemListChoice";
             this.itemListChoice.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Player Bags"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Inventory"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Vendor"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Consumables"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Equiped"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Rewards"),
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "All bags"),
-            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Mail")});
-            this.itemListChoice.Size = new System.Drawing.Size(537, 23);
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Mail"),
+            new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Auction")});
+            this.itemListChoice.Size = new System.Drawing.Size(537, 42);
             this.itemListChoice.TabIndex = 3;
+            this.itemListChoice.Visible = false;
             this.itemListChoice.SelectedIndexChanged += new System.EventHandler(this.itemListChoice_SelectedIndexChanged);
             // 
             // b_Refresh
@@ -84,7 +86,7 @@ namespace QuesterAssistant.UIEditors.Forms
             this.b_Refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_Refresh.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.miniRefresh;
             this.b_Refresh.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleCenter;
-            this.b_Refresh.Location = new System.Drawing.Point(518, 272);
+            this.b_Refresh.Location = new System.Drawing.Point(518, 297);
             this.b_Refresh.Name = "b_Refresh";
             this.b_Refresh.Size = new System.Drawing.Size(30, 23);
             this.b_Refresh.TabIndex = 2;
@@ -98,7 +100,7 @@ namespace QuesterAssistant.UIEditors.Forms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(561, 307);
+            this.ClientSize = new System.Drawing.Size(561, 332);
             this.Controls.Add(this.itemListChoice);
             this.Controls.Add(this.b_Refresh);
             this.Controls.Add(this.b_Select);
