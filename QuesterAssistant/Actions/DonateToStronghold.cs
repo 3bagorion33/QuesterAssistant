@@ -144,16 +144,18 @@ namespace QuesterAssistant.Actions
                     uint toDonate = (uint) item.Donate;
                     var cItem = cofferData.CofferNumericDef.ItemConversion
                         .Find(i => i.Item.InternalName == item.InternalName);
-                    uint countByLimit = IgnoreGuildMarksLimit
+                    uint countByGuildMarksLimit = IgnoreGuildMarksLimit
                             ? uint.MaxValue
-                            : (uint) (GUILD_MARK_LIMIT - GuildMark.Count) / cItem.ValuePerBatch * cItem.ValuePerBatch *
-                              cItem.BatchSize;
+                            : (uint) (GUILD_MARK_LIMIT - GuildMark.Count) * cItem.BatchSize;
+
+                    uint countByMaxValueLimit = (uint) shCoffer.CofferNumericGetMaxValue(cofferData) /
+                                                cItem.ValuePerBatch * cItem.BatchSize;
                     
                     if (item.Type == ItemType.Numeric)
                     {
                         var slotNum = NumericList.Find(s => s.Name == item.InternalName);
                         if (slotNum == null) break;
-                        count = MathTools.Min(toDonate, (uint) item.InBags, countByLimit) / cItem.BatchSize * cItem.BatchSize;
+                        count = MathTools.Min(toDonate, (uint) item.InBags, countByGuildMarksLimit, countByMaxValueLimit);
                         if (count == 0) break;
                         pause.WaitingRandom();
                         shCoffer.DonateToCoffer(cofferData, slotNum, count);
@@ -165,7 +167,7 @@ namespace QuesterAssistant.Actions
                         while (toDonate > 0 && (slotItem = SlotList.LastOrDefault(s => s.Item.ItemDef.InternalName == item.InternalName)) != null)
                         {
                             if (string.IsNullOrEmpty(slotItem.Item.ItemDef.InternalName)) break;
-                            count = MathTools.Min(toDonate, slotItem.Item.Count, countByLimit);
+                            count = MathTools.Min(toDonate, slotItem.Item.Count, countByGuildMarksLimit, countByMaxValueLimit);
                             if (count == 0) break;
                             pause.WaitingRandom();
                             shCoffer.DonateToCoffer(cofferData, slotItem, count);

@@ -30,12 +30,11 @@ namespace QuesterAssistant.UIEditors.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.lbItemsSource = new DevExpress.XtraEditors.ListBoxControl();
             this.b_Select = new DevExpress.XtraEditors.SimpleButton();
             this.itemListChoice = new DevExpress.XtraEditors.RadioGroup();
             this.b_Refresh = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             ((System.ComponentModel.ISupportInitialize)(this.lbItemsSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemListChoice.Properties)).BeginInit();
             this.SuspendLayout();
@@ -65,6 +64,7 @@ namespace QuesterAssistant.UIEditors.Forms
             // 
             this.itemListChoice.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.itemListChoice.Enabled = false;
             this.itemListChoice.Location = new System.Drawing.Point(12, 249);
             this.itemListChoice.Name = "itemListChoice";
             this.itemListChoice.Properties.Items.AddRange(new DevExpress.XtraEditors.Controls.RadioGroupItem[] {
@@ -78,7 +78,6 @@ namespace QuesterAssistant.UIEditors.Forms
             new DevExpress.XtraEditors.Controls.RadioGroupItem(null, "Auction")});
             this.itemListChoice.Size = new System.Drawing.Size(537, 42);
             this.itemListChoice.TabIndex = 3;
-            this.itemListChoice.Visible = false;
             this.itemListChoice.SelectedIndexChanged += new System.EventHandler(this.itemListChoice_SelectedIndexChanged);
             // 
             // b_Refresh

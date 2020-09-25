@@ -15,6 +15,7 @@ namespace QuesterAssistant.UIEditors.Forms
 {
     public partial class GetAnItem : XtraForm
     {
+        private bool isLoaded;
         private bool valid;
         private ItemFilterType itemFilterType;
 
@@ -62,12 +63,13 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void refreshList()
         {
+            if (!isLoaded) return;
             lbItemsSource.Items.Clear();
             switch (itemFilterType)
             {
                 case ItemFilterType.ItemName:
                 case ItemFilterType.ItemID:
-                    itemListChoice.Visible = true;
+                    itemListChoice.Enabled = true;
                     switch (itemListChoice.SelectedIndex)
                     {
                         case 0:
@@ -135,6 +137,7 @@ namespace QuesterAssistant.UIEditors.Forms
 
         private void GetAnId_Load(object sender, EventArgs e)
         {
+            isLoaded = true;
             refreshList();
         }
 
