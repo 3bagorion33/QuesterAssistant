@@ -54,6 +54,12 @@ namespace QuesterAssistant.Classes.Monitoring
             if (EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.IsValid)
                 EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Close();
 
+            if (Game.IsRewardpackviewerFrameVisible())
+                Game.CloseRewardpackviewerFrame();
+
+            if (Game.IsInvocationResultsFrameVisible())
+                Game.CloseInvocationResultsFrame();
+
             Game.ToggleCursorMode(false);
         }
 

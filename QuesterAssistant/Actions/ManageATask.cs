@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
 using Astral;
+using Astral.Classes;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
 using Astral.Quester.Classes;
@@ -11,8 +12,10 @@ using Astral.Quester.UIEditors;
 using MyNW.Classes;
 using MyNW.Classes.ItemAssignment;
 using MyNW.Internals;
+using MyNW.Patchables.Enums;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
+using Inventory = Astral.Logic.NW.Inventory;
 
 namespace QuesterAssistant.Actions
 {
@@ -29,10 +32,7 @@ namespace QuesterAssistant.Actions
         protected override Vector3 InternalDestination => new Vector3();
         public override void OnMapDraw(GraphicsNW graph) { }
         public override void InternalReset() { }
-
-        protected override bool IntenalConditions =>
-            Action != ModeDef.Complete || 
-            Assignments.Count > 0 && FirstAssignment.Def.ForceCompleteCost <= Professions2.Morale;
+        protected override bool IntenalConditions => true;
 
         protected override ActionValidity InternalValidity
         {
@@ -66,36 +66,51 @@ namespace QuesterAssistant.Actions
         public override ActionResult Run()
         {
             EntityManager.LocalPlayer.Player.RefreshAssignments();
-            if (Assignments.Count == 0)
-                return ActionResult.Completed;
+            Pause.RandomSleep(300, 500);
 
             if (EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ActiveAssignments.Any(a =>
                 a.Def.InternalName.FindPattern(Task) &&
                 !a.ReadyToComplete &&
                 a.Duration == 5))
             {
-                Pause.Sleep(6000);
+                Pause.Sleep(1000);
                 return ActionResult.Running;
             }
 
+            if (Assignments.Count == 0)
+                return ActionResult.Completed;
+            
             switch (Action)
             {
                 case ModeDef.Cancel:
                     Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
                     GameCommands.Execute($"ItemAssignmentCancelActiveAssignment {FirstAssignment.ID}");
                     break;
+
                 case ModeDef.Complete:
                     if (FirstAssignment.Def.ForceCompleteCost > Professions2.Morale)
                         return ActionResult.Completed;
                     Logger.WriteLine($"{Action} task '{FirstAssignment}' ...");
                     GameCommands.Execute($"ItemAssignmentsCompleteNowById {FirstAssignment.ID}");
                     break;
+
                 case ModeDef.Collect:
+                    var timer = new Timeout(5000);
+                    while (EntityManager.LocalPlayer.GetInventoryBagById(InvBagIDs.Overflow).FilledSlots > 0)
+                    {
+                        if (timer.IsTimedOut)
+                        {
+                            Logger.WriteLine("Can't clear the overflow bag ...");
+                            return ActionResult.Fail;
+                        }
+                        Inventory.FreeOverFlowBags();
+                        Pause.Sleep(500);
+                    }
                     Logger.WriteLine($"{Action} all ready tasks '{Task}' ...");
                     EntityManager.LocalPlayer.Player.ItemAssignmentPersistedData.ItemAssignmentCollectAllRewards(Assignments);
                     break;
             }
-            Pause.RandomSleep(300, 500);
+
             return ActionResult.Running;
         }
 

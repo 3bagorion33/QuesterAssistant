@@ -41,11 +41,10 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode1 = new DevExpress.XtraGrid.GridLevelNode();
             DevExpress.XtraGrid.GridLevelNode gridLevelNode2 = new DevExpress.XtraGrid.GridLevelNode();
             this.purchaseOptions = new DevExpress.XtraGrid.GridControl();
-            this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource = new System.Windows.Forms.BindingSource();
             this.gridView2 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colStringType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFilterType = new DevExpress.XtraGrid.Columns.GridColumn();
@@ -53,18 +52,18 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             this.colText = new DevExpress.XtraGrid.Columns.GridColumn();
             this.riFilterTextEdit = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.bRemoveEntry = new DevExpress.XtraEditors.SimpleButton();
-            this.barManager = new DevExpress.XtraBars.BarManager(this.components);
+            this.barManager = new DevExpress.XtraBars.BarManager();
             this.barDockControl_0 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl_1 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl_2 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl_3 = new DevExpress.XtraBars.BarDockControl();
             this.fastAddItemCombo = new DevExpress.XtraEditors.Repository.RepositoryItemComboBox();
-            this.bShowItems = new DevExpress.XtraEditors.SimpleButton();
+            this.bTest = new DevExpress.XtraEditors.SimpleButton();
             this.bClear = new DevExpress.XtraEditors.SimpleButton();
             this.bExport = new DevExpress.XtraEditors.SimpleButton();
             this.bImport = new DevExpress.XtraEditors.SimpleButton();
             this.bExpand = new DevExpress.XtraEditors.SimpleButton();
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnAddNew = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.purchaseOptions)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
@@ -222,17 +221,17 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             this.fastAddItemCombo.Name = "fastAddItemCombo";
             this.fastAddItemCombo.Sorted = true;
             // 
-            // bShowItems
+            // bTest
             // 
-            this.bShowItems.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.bShowItems.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.miniPlay;
-            this.bShowItems.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
-            this.bShowItems.Location = new System.Drawing.Point(244, 347);
-            this.bShowItems.Name = "bShowItems";
-            this.bShowItems.Size = new System.Drawing.Size(65, 23);
-            this.bShowItems.TabIndex = 19;
-            this.bShowItems.Text = "Test";
-            this.bShowItems.Click += new System.EventHandler(this.bShowItems_Click);
+            this.bTest.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.bTest.ImageOptions.Image = global::QuesterAssistant.Properties.Resources.miniPlay;
+            this.bTest.ImageOptions.Location = DevExpress.XtraEditors.ImageLocation.MiddleLeft;
+            this.bTest.Location = new System.Drawing.Point(244, 347);
+            this.bTest.Name = "bTest";
+            this.bTest.Size = new System.Drawing.Size(65, 23);
+            this.bTest.TabIndex = 19;
+            this.bTest.Text = "Test";
+            this.bTest.Click += new System.EventHandler(this.bTest_Click);
             // 
             // bClear
             // 
@@ -307,7 +306,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
             this.Controls.Add(this.bImport);
             this.Controls.Add(this.bExport);
             this.Controls.Add(this.bClear);
-            this.Controls.Add(this.bShowItems);
+            this.Controls.Add(this.bTest);
             this.Controls.Add(this.bRemoveEntry);
             this.Controls.Add(this.purchaseOptions);
             this.Controls.Add(this.barDockControl_2);
@@ -341,7 +340,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         private BarDockControl barDockControl_2;
         private BarDockControl barDockControl_3;
         private RepositoryItemComboBox fastAddItemCombo;
-        private SimpleButton bShowItems;
+        private SimpleButton bTest;
         private SimpleButton bClear;
         private SimpleButton bImport;
         private SimpleButton bExport;

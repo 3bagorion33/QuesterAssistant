@@ -91,13 +91,8 @@ namespace QuesterAssistant.Classes.Patches
                     }
                     if (!flag2)
                     {
-                        using (List<ContactDialogOption>.Enumerator enumerator = EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Options.GetEnumerator())
-                        {
-                            if (enumerator.MoveNext())
-                            {
-                                enumerator.Current.Select();
-                            }
-                        }
+                        foreach (var o in EntityManager.LocalPlayer.Player.InteractInfo.ContactDialog.Options)
+                            o.Select();
                     }
                 }
                 timeout.Reset();

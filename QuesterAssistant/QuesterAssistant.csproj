@@ -284,6 +284,7 @@
     <Compile Include="Actions\BuyItemRemote.cs" />
     <Compile Include="Actions\ClearProfilesStack.cs" />
     <Compile Include="Actions\MailCollectEntityExt.cs" />
+    <Compile Include="Actions\UseItemExt.cs" />
     <Compile Include="Classes\Debug.cs" />
     <Compile Include="Classes\DebugAction.cs" />
     <Compile Include="Classes\EmailHelper.cs" />

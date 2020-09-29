@@ -7,32 +7,26 @@ namespace QuesterAssistant.Classes.Common
         /// <summary>
         /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
         /// </summary>
-        public static int CheckZero(this int @int, int value) => DynCheckZero(@int, value);
+        public static int CheckZero(this int @int, int value) => 
+            @int == 0 ? value : @int;
 
         /// <summary>
         /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
         /// </summary>
-        public static uint CheckZero(this uint @uint, uint value) => DynCheckZero(@uint, value);
-
-        private static dynamic DynCheckZero(dynamic @this, dynamic value)
-        {
-            return @this == 0 ? value : @this;
-        }
+        public static uint CheckZero(this uint @uint, uint value) =>
+            @uint == 0 ? value : @uint;
 
         /// <summary>
         /// Check <see cref="@int"/> for zero and returns <see cref="value"/> if true
         /// </summary>
-        public static int CheckNegative(this int @int, int value) => DynCheckNegative(@int, value);
+        public static int CheckNegative(this int @int, int value) =>
+            @int < 0 ? value : @int;
 
         /// <summary>
         /// Check <see cref="@double"/> for zero and returns <see cref="value"/> if true
         /// </summary>
-        public static double CheckNegative(this double @int, double value) => DynCheckNegative(@int, value);
-
-        private static dynamic DynCheckNegative(dynamic @this, dynamic value)
-        {
-            return @this < 0 ? value : @this;
-        }
+        public static double CheckNegative(this double @double, double value) =>
+            @double < 0 ? value : @double;
 
         public static int Round(int number, uint roundDigits, RoundType roundFilledBy)
         {
@@ -72,7 +66,7 @@ namespace QuesterAssistant.Classes.Common
             return result;
         }
 
-        public static dynamic Min(params dynamic[] num)
+        public static uint Min(params uint[] num)
         {
             if (num.Length == 1) return num[0];
             var value = Math.Min(num[0], num[1]);
@@ -81,7 +75,43 @@ namespace QuesterAssistant.Classes.Common
             return value;
         }
 
-        public static dynamic Max(params dynamic[] num)
+        public static int Min(params int[] num)
+        {
+            if (num.Length == 1) return num[0];
+            var value = Math.Min(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Min(value, num[i]);
+            return value;
+        }
+
+        public static double Min(params double[] num)
+        {
+            if (num.Length == 1) return num[0];
+            var value = Math.Min(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Min(value, num[i]);
+            return value;
+        }
+
+        public static uint Max(params uint[] num)
+        {
+            if (num.Length == 1) return num[0];
+            var value = Math.Max(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Max(value, num[i]);
+            return value;
+        }
+
+        public static int Max(params int[] num)
+        {
+            if (num.Length == 1) return num[0];
+            var value = Math.Max(num[0], num[1]);
+            for (int i = 2; i < num.Length - 2; i++)
+                value = Math.Max(value, num[i]);
+            return value;
+        }
+
+        public static double Max(params double[] num)
         {
             if (num.Length == 1) return num[0];
             var value = Math.Max(num[0], num[1]);

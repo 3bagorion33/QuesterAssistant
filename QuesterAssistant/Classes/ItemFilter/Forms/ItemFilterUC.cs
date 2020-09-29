@@ -127,7 +127,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
         private string GetEntryText(GetAnItem.ListItem item, ItemFilterType filter) => 
             filter == ItemFilterType.ItemName ? item.DisplayName : item.ItemId;
 
-        private void bShowItems_Click(object sender, EventArgs e)
+        private void bTest_Click(object sender, EventArgs e)
         {
             string text = string.Empty;
             List<string> list = new List<string>();
@@ -145,7 +145,7 @@ namespace QuesterAssistant.Classes.ItemFilter.Forms
 
         private void bClear_Click(object sender, EventArgs e)
         {
-            if (QMessageBox.ShowDialog("Are you sure to clear the filter list ?") == DialogResult.OK)
+            if (QMessageBox.ShowDialog("Are you sure to clear the filter list ?") == DialogResult.Yes)
             {
                 ClearSource();
             }

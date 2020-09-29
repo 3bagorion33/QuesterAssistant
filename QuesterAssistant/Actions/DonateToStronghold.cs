@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Linq;
-using System.Threading;
 using Astral;
 using Astral.Logic.Classes.Map;
 using Astral.Logic.NW;
@@ -15,6 +14,7 @@ using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Common;
 using QuesterAssistant.UIEditors;
 using Action = Astral.Quester.Classes.Action;
+using API = Astral.Quester.API;
 
 namespace QuesterAssistant.Actions
 {
@@ -115,6 +115,7 @@ namespace QuesterAssistant.Actions
             {
                 if (!Approach.EntityForInteraction(entity)) return false;
 
+                API.Engine.Navigation.Stop();
                 entity.Interact();
                 var timeout = new Astral.Classes.Timeout(6000);
                 while (Player.InteractInfo.ContactDialog.ScreenType != screenType)
@@ -124,17 +125,19 @@ namespace QuesterAssistant.Actions
                         Logger.WriteLine("Interaction fail !");
                         return false;
                     }
-                    Thread.Sleep(250);
+                    Pause.Sleep(250);
                 }
                 return true;
             }
 
             if (!Interact(CofferEntity, ScreenType.GarrisonCoffer)) return ActionResult.Fail;
 
-            var shCoffer = Player.PlayerGuild.GroupProjectContainer.ProjectList
-                .Find(p => p.ProjectDef.Name == "Nw_Stronghold");
+            Pause.Sleep(1000);
 
+            GroupProjectState shCoffer = Player.PlayerGuild.GroupProjectContainer.ProjectList
+                .Find(p => p.ProjectDef.Name == "Nw_Stronghold");
             GroupProjectCofferNumericData cofferData = shCoffer?.CofferNumericData.Find(d => d.CofferNumericDef.Name == Coffer.InternalName);
+
             if (cofferData != null)
             {
                 var pause = new Pause(InteractionTimeOut);
