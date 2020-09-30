@@ -28,24 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel(this.components);
+            this.defaultLookAndFeel = new DevExpress.LookAndFeel.DefaultLookAndFeel();
             this.btnStart = new DevExpress.XtraEditors.SimpleButton();
-            this.timerDelete = new System.Windows.Forms.Timer(this.components);
+            this.timerDelete = new System.Windows.Forms.Timer();
             this.gctlProcessList = new DevExpress.XtraGrid.GridControl();
-            this.bsrcInstancesList = new System.Windows.Forms.BindingSource(this.components);
-            this.toolTipController1 = new DevExpress.Utils.ToolTipController(this.components);
+            this.bsrcInstancesList = new System.Windows.Forms.BindingSource();
+            this.toolTipController1 = new DevExpress.Utils.ToolTipController();
             this.gridInstances = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.gcolProcess = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolTitle = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gcolPID = new DevExpress.XtraGrid.Columns.GridColumn();
             this.dbtnWindowsFirewall = new DevExpress.XtraEditors.DropDownButton();
-            this.menuFirewall = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.menuFirewall = new DevExpress.XtraBars.PopupMenu();
             this.menuFirewallDenyApps = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDenyAddress = new DevExpress.XtraBars.BarButtonItem();
             this.menuFirewallDeleteRules = new DevExpress.XtraBars.BarButtonItem();
-            this.barFirewall = new DevExpress.XtraBars.BarManager(this.components);
+            this.barFirewall = new DevExpress.XtraBars.BarManager();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
@@ -53,7 +52,13 @@
             this.tabPane1 = new DevExpress.XtraBars.Navigation.TabPane();
             this.tabNavigationPage1 = new DevExpress.XtraBars.Navigation.TabNavigationPage();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
+            this.spinOffsetX = new DevExpress.XtraEditors.SpinEdit();
+            this.spinOffsetY = new DevExpress.XtraEditors.SpinEdit();
+            this.labelControl4 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl3 = new DevExpress.XtraEditors.LabelControl();
+            this.labelControl2 = new DevExpress.XtraEditors.LabelControl();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
+            this.cbxPosotion = new DevExpress.XtraEditors.ComboBoxEdit();
             this.cbxPriority = new DevExpress.XtraEditors.ComboBoxEdit();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.chkClose = new DevExpress.XtraEditors.CheckEdit();
@@ -69,8 +74,8 @@
             this.gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.notifyTray = new System.Windows.Forms.NotifyIcon(this.components);
-            this.barInstances = new DevExpress.XtraBars.BarManager(this.components);
+            this.notifyTray = new System.Windows.Forms.NotifyIcon();
+            this.barInstances = new DevExpress.XtraBars.BarManager();
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.bar2 = new DevExpress.XtraBars.Bar();
             this.barDockControl1 = new DevExpress.XtraBars.BarDockControl();
@@ -78,7 +83,7 @@
             this.barDockControl3 = new DevExpress.XtraBars.BarDockControl();
             this.barDockControl4 = new DevExpress.XtraBars.BarDockControl();
             this.miCloseProcess = new DevExpress.XtraBars.BarButtonItem();
-            this.menuInstances = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.menuInstances = new DevExpress.XtraBars.PopupMenu();
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridInstances)).BeginInit();
@@ -89,6 +94,9 @@
             this.tabNavigationPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).BeginInit();
             this.groupControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spinOffsetX.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinOffsetY.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPosotion.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -136,10 +144,10 @@
             this.gctlProcessList.EmbeddedNavigator.ToolTip = "Tooltip";
             this.gctlProcessList.EmbeddedNavigator.ToolTipController = this.toolTipController1;
             this.gctlProcessList.EmbeddedNavigator.ToolTipTitle = "TooltipTitle";
-            this.gctlProcessList.Location = new System.Drawing.Point(12, 109);
+            this.gctlProcessList.Location = new System.Drawing.Point(12, 112);
             this.gctlProcessList.MainView = this.gridInstances;
             this.gctlProcessList.Name = "gctlProcessList";
-            this.gctlProcessList.Size = new System.Drawing.Size(360, 200);
+            this.gctlProcessList.Size = new System.Drawing.Size(360, 197);
             this.gctlProcessList.TabIndex = 1;
             this.gctlProcessList.ToolTipController = this.toolTipController1;
             this.gctlProcessList.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
@@ -335,13 +343,75 @@
             // 
             // groupControl2
             // 
+            this.groupControl2.Controls.Add(this.spinOffsetX);
+            this.groupControl2.Controls.Add(this.spinOffsetY);
+            this.groupControl2.Controls.Add(this.labelControl4);
+            this.groupControl2.Controls.Add(this.labelControl3);
+            this.groupControl2.Controls.Add(this.labelControl2);
             this.groupControl2.Controls.Add(this.labelControl1);
+            this.groupControl2.Controls.Add(this.cbxPosotion);
             this.groupControl2.Controls.Add(this.cbxPriority);
             this.groupControl2.Location = new System.Drawing.Point(12, 3);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(177, 100);
+            this.groupControl2.Size = new System.Drawing.Size(177, 103);
             this.groupControl2.TabIndex = 9;
             this.groupControl2.Text = "Astral\'s Instances";
+            // 
+            // spinOffsetX
+            // 
+            this.spinOffsetX.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinOffsetX.Location = new System.Drawing.Point(55, 78);
+            this.spinOffsetX.Name = "spinOffsetX";
+            this.spinOffsetX.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.spinOffsetX.Properties.IsFloatValue = false;
+            this.spinOffsetX.Properties.Mask.EditMask = "N00";
+            this.spinOffsetX.Size = new System.Drawing.Size(46, 20);
+            this.spinOffsetX.TabIndex = 9;
+            // 
+            // spinOffsetY
+            // 
+            this.spinOffsetY.EditValue = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.spinOffsetY.Location = new System.Drawing.Point(126, 78);
+            this.spinOffsetY.Name = "spinOffsetY";
+            this.spinOffsetY.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.spinOffsetY.Properties.IsFloatValue = false;
+            this.spinOffsetY.Properties.Mask.EditMask = "N00";
+            this.spinOffsetY.Size = new System.Drawing.Size(46, 20);
+            this.spinOffsetY.TabIndex = 9;
+            // 
+            // labelControl4
+            // 
+            this.labelControl4.Location = new System.Drawing.Point(107, 81);
+            this.labelControl4.Name = "labelControl4";
+            this.labelControl4.Size = new System.Drawing.Size(13, 13);
+            this.labelControl4.TabIndex = 0;
+            this.labelControl4.Text = "Y :";
+            // 
+            // labelControl3
+            // 
+            this.labelControl3.Location = new System.Drawing.Point(5, 81);
+            this.labelControl3.Name = "labelControl3";
+            this.labelControl3.Size = new System.Drawing.Size(47, 13);
+            this.labelControl3.TabIndex = 0;
+            this.labelControl3.Text = "Offset X :";
+            // 
+            // labelControl2
+            // 
+            this.labelControl2.Location = new System.Drawing.Point(5, 55);
+            this.labelControl2.Name = "labelControl2";
+            this.labelControl2.Size = new System.Drawing.Size(44, 13);
+            this.labelControl2.TabIndex = 0;
+            this.labelControl2.Text = "Position :";
             // 
             // labelControl1
             // 
@@ -351,15 +421,26 @@
             this.labelControl1.TabIndex = 0;
             this.labelControl1.Text = "Priority :";
             // 
+            // cbxPosotion
+            // 
+            this.cbxPosotion.Location = new System.Drawing.Point(55, 52);
+            this.cbxPosotion.Name = "cbxPosotion";
+            this.cbxPosotion.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbxPosotion.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.cbxPosotion.Size = new System.Drawing.Size(117, 20);
+            this.cbxPosotion.TabIndex = 8;
+            this.cbxPosotion.SelectedIndexChanged += new System.EventHandler(this.cbxPriority_SelectedIndexChanged);
+            // 
             // cbxPriority
             // 
-            this.cbxPriority.Location = new System.Drawing.Point(52, 26);
+            this.cbxPriority.Location = new System.Drawing.Point(55, 26);
             this.cbxPriority.MenuManager = this.barFirewall;
             this.cbxPriority.Name = "cbxPriority";
             this.cbxPriority.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.cbxPriority.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-            this.cbxPriority.Size = new System.Drawing.Size(120, 20);
+            this.cbxPriority.Size = new System.Drawing.Size(117, 20);
             this.cbxPriority.TabIndex = 8;
             this.cbxPriority.SelectedIndexChanged += new System.EventHandler(this.cbxPriority_SelectedIndexChanged);
             // 
@@ -372,7 +453,7 @@
             this.groupControl1.Controls.Add(this.dbtnWindowsFirewall);
             this.groupControl1.Location = new System.Drawing.Point(195, 3);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(177, 100);
+            this.groupControl1.Size = new System.Drawing.Size(177, 103);
             this.groupControl1.TabIndex = 8;
             this.groupControl1.Text = "CrypticError";
             // 
@@ -664,8 +745,8 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "Launcher";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Move += new System.EventHandler(this.MainForm_Move);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             ((System.ComponentModel.ISupportInitialize)(this.gctlProcessList)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsrcInstancesList)).EndInit();
@@ -678,6 +759,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.groupControl2)).EndInit();
             this.groupControl2.ResumeLayout(false);
             this.groupControl2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.spinOffsetX.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.spinOffsetY.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cbxPosotion.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbxPriority.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
@@ -747,6 +831,12 @@
         private DevExpress.XtraBars.BarDockControl barDockControl4;
         private DevExpress.XtraBars.PopupMenu menuInstances;
         private DevExpress.XtraBars.BarButtonItem miCloseProcess;
+        private DevExpress.XtraEditors.LabelControl labelControl2;
+        private DevExpress.XtraEditors.ComboBoxEdit cbxPosotion;
+        private DevExpress.XtraEditors.SpinEdit spinOffsetY;
+        private DevExpress.XtraEditors.SpinEdit spinOffsetX;
+        private DevExpress.XtraEditors.LabelControl labelControl4;
+        private DevExpress.XtraEditors.LabelControl labelControl3;
     }
 }
 

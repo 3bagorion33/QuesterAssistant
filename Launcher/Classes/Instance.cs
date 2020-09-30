@@ -4,10 +4,10 @@ using QuesterAssistant.Panels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace Launcher.Classes
 {
-    sealed class Instance : NotifyHashChanged
+    public sealed class Instance : NotifyHashChanged
     {
         public Process Process { get; } = new Process();
         public string Title { get; set; } = string.Empty;
@@ -24,12 +24,14 @@ namespace Launcher.Classes
         public Process AttachedProcess => PID != 0 ? Process.GetProcessById(PID) : null;
         private const int HASH_SIZE = 4;
         private const string ASTRAL = "Astral.exe";
+        private readonly LockPosition position;
         
-        public Instance(IList<Patch> patches)
+        public Instance(IList<Patch> patches, LockPosition position)
         {
             HashEventEnable();
             HashChanged += Delete;
             ClearZoneIdentifier();
+            this.position = position;
             using (MD5 md5Hash = MD5.Create())
             {
                 string procName = GetMd5Hash(md5Hash, DateTime.Now.Ticks.ToString()) + ".exe";
@@ -42,6 +44,11 @@ namespace Launcher.Classes
                     File.WriteAllBytes(procName, stream);
 
                     Process = Process.Start(procName);
+
+                    while (Process.MainWindowHandle == IntPtr.Zero)
+                        Thread.Sleep(250);
+
+                    Move();
                 }
                 catch (Exception)
                 {
@@ -73,6 +80,24 @@ namespace Launcher.Classes
                 //    //var ptr = (MemoryExecute.IntReturner)Marshal.GetDelegateForFunctionPointer(buf, typeof(MemoryExecute.IntReturner));
                 //    //ptr();
             }
+        }
+
+        public void Move()
+        {
+            var point = Point.Empty;
+            switch (position.PositionType)
+            {
+                case PositionType.Right:
+                    point = new Point(Program.FormRectangle.Right, Program.FormRectangle.Y);
+                    break;
+                case PositionType.Bottom:
+                    point = new Point(Program.FormRectangle.X, Program.FormRectangle.Bottom);
+                    break;
+                case PositionType.Cascade:
+                    point = new Point(Program.FormRectangle.X + position.OffsetX, Program.FormRectangle.Y + position.OffsetY);
+                    break;
+            }
+            WinAPI.MoveWindow(Process.MainWindowHandle, point);
         }
 
         private void ClearZoneIdentifier()
@@ -160,8 +185,10 @@ namespace Launcher.Classes
             try
             {
                 while (Process != null && Process.HasExited && File.Exists($"{Process.ProcessName}.exe"))
+                {
                     Thread.Sleep(100);
-                File.Delete($"{Process.ProcessName}.exe");
+                    File.Delete($"{Process.ProcessName}.exe");
+                }
             }
             //catch (Exception ex) { QMessageBox.ShowError(ex.ToString()); }
             catch { }
@@ -182,6 +209,20 @@ namespace Launcher.Classes
                 sBuilder.Append(data[i].ToString("x2"));
             }
             return sBuilder.ToString();
+        }
+
+        public enum PositionType
+        {
+            Right,
+            Bottom,
+            Cascade
+        }
+
+        public class LockPosition
+        {
+            public PositionType PositionType;
+            public int OffsetX;
+            public int OffsetY;
         }
     }
 }

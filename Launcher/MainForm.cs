@@ -7,6 +7,7 @@ using Launcher.Classes;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Security;
 using System.Text.RegularExpressions;
@@ -15,6 +16,7 @@ using System.Windows.Forms;
 using DevExpress.XtraGrid;
 using Launcher.Properties;
 using QuesterAssistant.Classes.Common;
+using QuesterAssistant.Classes.Extensions;
 
 namespace Launcher
 {
@@ -32,7 +34,13 @@ namespace Launcher
 
         private void btnStart_Click(object sender, EventArgs e)
         {
-            var instance = new Instance(patches.Items);
+            var instance = new Instance(patches.Items,
+                new Instance.LockPosition
+                {
+                    PositionType = (Instance.PositionType) cbxPosotion.EditValue,
+                    OffsetX = (int) spinOffsetX.Value * (instances.Count + 1),
+                    OffsetY = (int) spinOffsetY.Value * (instances.Count + 1)
+                });
             instance.Process.PriorityClass = (ProcessPriorityClass) cbxPriority.SelectedItem;
             logEvents.Add(new LogEvent($"Starting new Instance #{instance.Process.ProcessName}"));
             instances.Add(instance);
@@ -93,11 +101,6 @@ namespace Launcher
             });
         }
 
-        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            instances.ForEach(i => i.Close());
-        }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
             Closing += MainForm_Closing;
@@ -112,6 +115,7 @@ namespace Launcher
             }
 
             Instance.Clean();
+
             bsrcInstancesList.DataSource = instances;
             gctlLogEventList.DataSource = logEvents;
             gctlPatchesList.DataSource = patches.Items;
@@ -123,17 +127,55 @@ namespace Launcher
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.BelowNormal);
             cbxPriority.Properties.Items.Add(ProcessPriorityClass.Idle);
 
+            cbxPosotion.Properties.Items.Add(Instance.PositionType.Right);
+            cbxPosotion.Properties.Items.Add(Instance.PositionType.Bottom);
+            cbxPosotion.Properties.Items.Add(Instance.PositionType.Cascade);
+
             cbxPriority.DataBindings.Add(nameof(ComboBoxEdit.EditValue), settings, nameof(Settings.Priority));
+            cbxPosotion.DataBindings.Add(nameof(ComboBoxEdit.EditValue), settings, nameof(Settings.InstancePositionType));
             chkKill.DataBindings.Add(nameof(CheckEdit.EditValue), settings, nameof(Settings.KillCrypticError));
             chkClose.DataBindings.Add(nameof(CheckEdit.EditValue), settings, nameof(Settings.CloseCrashError));
+            spinOffsetX.DataBindings.Add(nameof(SpinEdit.Value), settings, nameof(Settings.InstancePositionOffsetX));
+            spinOffsetY.DataBindings.Add(nameof(SpinEdit.Value), settings, nameof(Settings.InstancePositionOffsetY));
 
-            logEvents.Add(new LogEvent("Launcher is started"));
+            spinOffsetX.Value = settings.InstancePositionOffsetX;
+            spinOffsetY.Value = settings.InstancePositionOffsetY;
+
+            logEvents.Add(new LogEvent("Launcher has been started"));
+
+            if (Screen.AllScreens.Any(s => s.WorkingArea.Contains(new Rectangle(settings.Location, Size))))
+                Location = settings.Location;
+            else
+            {
+                var bounds = new Rectangle(settings.Location, Size);
+                var screens = Screen.AllScreens.Where(s => s.WorkingArea.IntersectsWith(bounds));
+                if (screens.Any())
+                    Location = screens.OrderByDescending(s =>
+                        {
+                            var area = s.WorkingArea;
+                            area.Intersect(bounds);
+                            return area.Area();
+                        })
+                        .First().WorkingArea.Location;
+                else
+                    Location = Screen.PrimaryScreen.Bounds.Location;
+            }
         }
 
         private void MainForm_Closing(object sender, CancelEventArgs e)
         {
+            instances.ForEach(i => i.Close());
             settings.Patches = patches.Items.Select(p => p.Active).ToList();
+            settings.Location = Location;
             settings.Save();
+            Thread.Sleep(500);
+            Instance.Clean();
+        }
+
+        private void MainForm_Move(object sender, EventArgs e)
+        {
+            if (ModifierKeys != Keys.Control)
+                instances.ForEach(i => i.Move());
         }
 
         private void gctlProcessList_DoubleClick(object sender, EventArgs e)

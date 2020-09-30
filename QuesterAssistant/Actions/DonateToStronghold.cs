@@ -151,15 +151,15 @@ namespace QuesterAssistant.Actions
                             ? uint.MaxValue
                             : (uint) (GUILD_MARK_LIMIT - GuildMark.Count) * cItem.BatchSize;
 
-                    uint countByMaxValueLimit = (uint) shCoffer.CofferNumericGetMaxValue(cofferData) /
-                                                cItem.ValuePerBatch * cItem.BatchSize;
+                    uint countByMaxValueLimit = uint.MaxValue; // (uint) shCoffer.CofferNumericGetMaxValue(cofferData) /
+                                                //cItem.ValuePerBatch * cItem.BatchSize;
                     
                     if (item.Type == ItemType.Numeric)
                     {
                         var slotNum = NumericList.Find(s => s.Name == item.InternalName);
-                        if (slotNum == null) break;
+                        if (slotNum == null) continue;
                         count = MathTools.Min(toDonate, (uint) item.InBags, countByGuildMarksLimit, countByMaxValueLimit);
-                        if (count == 0) break;
+                        if (count == 0) continue;
                         pause.WaitingRandom();
                         shCoffer.DonateToCoffer(cofferData, slotNum, count);
                         pause.Reset();
@@ -179,8 +179,9 @@ namespace QuesterAssistant.Actions
                         }
                     }
                 }
+                return ActionResult.Completed;
             }
-            return ActionResult.Completed;
+            return ActionResult.Fail;
         }
 
         [Editor(typeof(DonateTaskEditor), typeof(UITypeEditor))]

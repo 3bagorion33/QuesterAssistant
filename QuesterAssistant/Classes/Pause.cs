@@ -17,6 +17,8 @@ namespace QuesterAssistant.Classes
 
         public Pause(int @int)
         {
+            min = @int * 9 / 10;
+            max = @int * 11 / 10;
             timeout = new Timeout(@int);
         }
 

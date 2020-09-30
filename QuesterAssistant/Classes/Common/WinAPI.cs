@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -78,19 +79,10 @@ namespace QuesterAssistant.Classes.Common
             NativeMethods.ShowWindowAsync(hWnd, NativeMethods.SW_HIDE);
 
         public static bool IsWindowHung(IntPtr hWnd) =>
-            //NativeMethods.IsWindow(hWnd) && NativeMethods.IsHungAppWindow(hWnd);
             NativeMethods.IsHungAppWindow(hWnd);
 
         public static bool IsWindow(IntPtr hWnd) =>
             NativeMethods.IsWindow(hWnd);
-
-        //public static bool IsWindowHung(IntPtr hWnd)
-        //{
-        //    var @out = IntPtr.Zero;
-        //    //IntPtr result = NativeMethods.SendMessageTimeoutA(hWnd, NativeMethods.WM_NULL, 0, 0, NativeMethods.SMTO_ABORTIFHUNG, 0, out @out);
-        //    IntPtr result = NativeMethods.SendMessageTimeoutA(hWnd, NativeMethods.WM_NULL, 0, 0, 0, 5000, out @out);
-        //    return result == IntPtr.Zero;
-        //}
 
         public static int GetProcessId(IntPtr hWnd) => 
             NativeMethods.GetProcessId(hWnd);
@@ -101,6 +93,10 @@ namespace QuesterAssistant.Classes.Common
             NativeMethods.GetWindowPlacement(hWnd, ref wp);
             return wp.showCmd; // 1- Normal; 2 - Minimize; 3 - Maximize;
         }
+
+        public static bool MoveWindow(IntPtr hWnd, Point location) => 
+            NativeMethods.MoveWindow(hWnd, location.X, location.Y, 0, 0, true);
+
         public static bool IsWindowMinimize(IntPtr hWnd) => 
             GetWindowState(hWnd) == 2;
 
@@ -158,6 +154,9 @@ namespace QuesterAssistant.Classes.Common
             [DllImport(USER)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SetWindowPlacement(IntPtr hWnd, ref WINDOWPLACEMENT lpwndpl);
+            [DllImport(USER)]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool MoveWindow(IntPtr hWnd, int x, int y, int nWidth, int nHeight, bool bRepaint);
             [DllImport(USER, CharSet = CharSet.Unicode, BestFitMapping = false, ThrowOnUnmappableChar = true)]
             public static extern bool SetWindowText(IntPtr hWnd, string text);
             [DllImport(USER, SetLastError = true)]
@@ -197,26 +196,14 @@ namespace QuesterAssistant.Classes.Common
                 [In] FileAttributes dwAttrTo
             );
 
-            public struct POINTAPI
-            {
-                public int x;
-                public int y;
-            }
-            public struct RECT
-            {
-                public int left;
-                public int top;
-                public int right;
-                public int bottom;
-            }
             public struct WINDOWPLACEMENT
             {
                 public int length;
                 public int flags;
                 public int showCmd;
-                public POINTAPI ptMinPosition;
-                public POINTAPI ptMaxPosition;
-                public RECT rcNormalPosition;
+                public Point ptMinPosition;
+                public Point ptMaxPosition;
+                public Rectangle rcNormalPosition;
             }
         }
     }

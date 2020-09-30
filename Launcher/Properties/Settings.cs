@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using Launcher.Classes;
 using QuesterAssistant.Panels;
 using XmlSerializer = Launcher.Classes.XmlSerializer;
 
@@ -18,6 +20,10 @@ namespace Launcher.Properties
         public bool CloseCrashError { get; set; }
         [XmlArrayItem(ElementName = "Active")]
         public List<bool> Patches { get; set; }
+        public Point Location { get; set; }
+        public Instance.PositionType InstancePositionType { get; set; } = Instance.PositionType.Right;
+        public int InstancePositionOffsetX { get; set; } = 30;
+        public int InstancePositionOffsetY { get; set; } = 30;
 
         public void Load()
         {
@@ -32,6 +38,10 @@ namespace Launcher.Properties
                         KillCrypticError = data.KillCrypticError;
                         CloseCrashError = data.CloseCrashError;
                         Patches = data.Patches;
+                        Location = data.Location;
+                        InstancePositionType = data.InstancePositionType;
+                        InstancePositionOffsetX = data.InstancePositionOffsetX;
+                        InstancePositionOffsetY = data.InstancePositionOffsetY;
                     }
                 }
                 catch (Exception ex)

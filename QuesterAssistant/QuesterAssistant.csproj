@@ -333,6 +333,7 @@
     <Compile Include="Classes\Extensions\CharacterEx.cs" />
     <Compile Include="Classes\Extensions\EntityEx.cs" />
     <Compile Include="Classes\Extensions\LocalPlayerEx.cs" />
+    <Compile Include="Classes\Extensions\RectangleEx.cs" />
     <Compile Include="Classes\Extensions\RelationEx.cs" />
     <Compile Include="Classes\IDebugAction.cs" />
     <Compile Include="Classes\IMailCollectAction.cs" />
@@ -450,6 +451,12 @@
     <Compile Include="UIEditors\Forms\GetAnItem.Designer.cs">
       <DependentUpon>GetAnItem.cs</DependentUpon>
     </Compile>
+    <Compile Include="UIEditors\Forms\GetMissionId.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UIEditors\Forms\GetMissionId.Designer.cs">
+      <DependentUpon>GetMissionId.cs</DependentUpon>
+    </Compile>
     <Compile Include="UIEditors\Forms\PlayerParagonSelectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -513,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\GetAnItem.resx">
       <DependentUpon>GetAnItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UIEditors\Forms\GetMissionId.resx">
+      <DependentUpon>GetMissionId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UIEditors\Forms\PlayerParagonSelectForm.resx">
       <DependentUpon>PlayerParagonSelectForm.cs</DependentUpon>

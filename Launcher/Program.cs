@@ -1,11 +1,16 @@
 ﻿using Launcher.Classes;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Launcher
 {
     static class Program
     {
+        private static MainForm form;
+        public static Rectangle FormRectangle =>
+            new Rectangle(form.Location, form.Size);
+        
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -26,7 +31,8 @@ namespace Launcher
             DevExpress.Data.CurrencyDataController.DisableThreadingProblemsDetection = true;
             try
             {
-                Application.Run(new MainForm());
+                form = new MainForm();
+                Application.Run(form);
             }
             catch (Exception ex)
             {

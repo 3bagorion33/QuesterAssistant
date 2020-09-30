@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Reflection;
 using Astral.Classes.ItemFilter;
-using Astral.Quester.Forms;
 using QuesterAssistant.Classes.ItemFilter.Forms;
 using QuesterAssistant.Classes.Reflection;
 
@@ -20,7 +19,7 @@ namespace QuesterAssistant.Classes.Patches
 
         private static PatchMethod Astral_Classes_ItemFilter_ItemFilterForm_Show =
             new PatchMethod(
-                Assembly.GetAssembly(typeof(Main)).GetType("\u001B.\u0003")
+                Assembly.GetAssembly(typeof(Astral.Quester.Forms.Main)).GetType("\u001B.\u0003")
                     .GetStaticAction<ItemFilterCore, ItemFilterCoreType>().Method,
                 typeof(ItemFilterForm).GetStaticAction<ItemFilterCore, ItemFilterCoreType>().Method
             );
@@ -29,6 +28,12 @@ namespace QuesterAssistant.Classes.Patches
             new PatchMethod(
                 typeof(Astral.Classes.ItemFilter.ItemFilterUC).GetConstructor(new Type[0]),
                 typeof(ItemFilter.Forms.ItemFilterUC).GetConstructor(new Type[0])
+            );
+
+        private static PatchMethod Astral_Quester_Forms_GetMissionId_Show =
+            new PatchMethod(
+                typeof(Astral.Quester.Forms.GetMissionId).GetMethod(nameof(Astral.Quester.Forms.GetMissionId.Show), BindingFlags.Public | BindingFlags.Static),
+                typeof(UIEditors.Forms.GetMissionId).GetMethod(nameof(UIEditors.Forms.GetMissionId.Show), BindingFlags.Public | BindingFlags.Static)
             );
 
         public static void Apply()
