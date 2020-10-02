@@ -147,15 +147,8 @@ namespace QuesterAssistant.UIEditors.Forms
             Close();
         }
 
-        private void b_Refresh_Click(object sender, EventArgs e)
-        {
-            refreshList();
-        }
-
-        private void itemListChoice_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            refreshList();
-        }
+        private void b_Refresh_Click(object sender, EventArgs e) => refreshList();
+        private void itemListChoice_SelectedIndexChanged(object sender, EventArgs e) => refreshList();
 
         public class ListItem
         {
