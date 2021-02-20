@@ -1,5 +1,6 @@
 ﻿using Astral.Quester;
 using Astral.Quester.Classes;
+using Astral.Quester.Classes.Actions;
 using MyNW.Internals;
 using QuesterAssistant.Actions;
 
@@ -27,7 +28,6 @@ namespace QuesterAssistant.Classes.Monitoring
                 return;
             if (actionToPlay is ActionPack || actionToPlay.Disabled)
                 return;
-
             if (prevAction is ActionPack || prevAction.Disabled)
                 goto Exit;
             if (prevAction is IActionCloseFrame a2 && !a2.CloseFrame)
@@ -35,6 +35,8 @@ namespace QuesterAssistant.Classes.Monitoring
             if (prevAction is CloseAllFrames a3 && !a3.Value)
                 goto Exit;
             if (actionToPlay is CloseAllFrames a4 && !a4.Value)
+                goto Exit;
+            if (prevAction is TurnInMission || prevAction is TurnInMissionExt)
                 goto Exit;
             if (actionToPlay.GetType() != prevAction.GetType())
                 Close();

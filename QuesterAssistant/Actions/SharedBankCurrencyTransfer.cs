@@ -25,7 +25,9 @@ namespace QuesterAssistant.Actions
         public override void InternalReset() { }
         protected override ActionValidity InternalValidity => new ActionValidity();
 
-        private const int SHARED_MAX_VALUE = 500000000;
+        private const int RESOURCES_MAX_VALUE = 500000000;
+        private const int AD_MAX_VALUE = 100000000;
+        private int SharedMaxValue => NumericType == "Resources" ? RESOURCES_MAX_VALUE : AD_MAX_VALUE;
 
         public override bool NeedToRun =>
             VIP.CanSummonBankingPortal || Banker.Position.Distance3DFromPlayer < 30.0;
@@ -65,14 +67,14 @@ namespace QuesterAssistant.Actions
                     return MathTools.Max(
                         MathTools.Min(
                             EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType) - Math.Abs(MoneyTransfert),
-                            SHARED_MAX_VALUE - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType)),
+                            SharedMaxValue - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType)),
                         - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));
                 case TransferModeDef.Transfer:
                     return MoneyTransfert > 0
                         ? (int) MathTools.Min(
                             MoneyTransfert,
                             EntityManager.LocalPlayer.Inventory.GetNumericCount(NumericType),
-                            SHARED_MAX_VALUE - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType))
+                            SharedMaxValue - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType))
                         : (int) MathTools.Max(
                             MoneyTransfert,
                             - EntityManager.SharedBank.Inventory.GetNumericCount(NumericType));

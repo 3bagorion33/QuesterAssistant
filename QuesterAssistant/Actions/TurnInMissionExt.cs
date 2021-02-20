@@ -12,11 +12,12 @@ using MyNW.Classes;
 using MyNW.Internals;
 using QuesterAssistant.Classes;
 using QuesterAssistant.Classes.Extensions;
+using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Panels;
 
 namespace QuesterAssistant.Actions
 {
-    public class TurnInMissionExt : Action, IIgnoreCombat
+    public class TurnInMissionExt : Action, IIgnoreCombat, Frames.IActionCloseFrame
     {
         private Astral.Classes.Timeout failTo;
 
@@ -91,6 +92,7 @@ namespace QuesterAssistant.Actions
             GiverPosition = new Vector3();
             MissionId = string.Empty;
             IgnoreCombat = true;
+            CloseFrame = false;
             InteractDistance = 5;
         }
 
@@ -132,5 +134,6 @@ namespace QuesterAssistant.Actions
         [Editor(typeof(PositionEditor), typeof(UITypeEditor))]
         public Vector3 GiverPosition { get; set; }
         public bool IgnoreCombat { get; set; }
+        public bool CloseFrame { get; set; }
     }
 }
