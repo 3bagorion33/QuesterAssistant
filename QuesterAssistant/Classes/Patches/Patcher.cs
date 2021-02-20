@@ -19,7 +19,7 @@ namespace QuesterAssistant.Classes.Patches
 
         private static PatchMethod Astral_Classes_ItemFilter_ItemFilterForm_Show =
             new PatchMethod(
-                Assembly.GetAssembly(typeof(Astral.Quester.Forms.Main)).GetType("\u001B.\u0003")
+                Assembly.GetAssembly(typeof(Astral.Quester.Forms.Main)).GetType("\u000F.\u0006")
                     .GetStaticAction<ItemFilterCore, ItemFilterCoreType>().Method,
                 typeof(ItemFilterForm).GetStaticAction<ItemFilterCore, ItemFilterCoreType>().Method
             );
