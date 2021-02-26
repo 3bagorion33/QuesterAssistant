@@ -1,4 +1,5 @@
-﻿using Astral.Quester;
+﻿using Astral.Classes;
+using Astral.Quester;
 using Astral.Quester.Classes;
 using Astral.Quester.Classes.Actions;
 using MyNW.Internals;
@@ -9,6 +10,8 @@ namespace QuesterAssistant.Classes.Monitoring
     internal static class Frames
     {
         private static Action prevAction = new ActionPack();
+        private static Timeout pause = new Timeout(0);
+        public static int SleepLeft => pause.Left;
 
         public static void Start()
         {
@@ -20,8 +23,17 @@ namespace QuesterAssistant.Classes.Monitoring
             API.BeforePlayingAction -= API_BeforePlayingAction;
         }
 
+        public static void Sleep(int msec)
+        {
+            pause.ChangeTime(msec);
+            pause.Reset();
+        }
+
         private static void API_BeforePlayingAction(object sender, API.BeforePlayingActionEventArgs e)
         {
+            if (!pause.IsTimedOut)
+                return;
+
             var actionToPlay = e.ActionToPlay;
 
             if (prevAction.ActionID == actionToPlay.ActionID)
@@ -36,7 +48,7 @@ namespace QuesterAssistant.Classes.Monitoring
                 goto Exit;
             if (actionToPlay is CloseAllFrames a4 && !a4.Value)
                 goto Exit;
-            if (prevAction is TurnInMission || prevAction is TurnInMissionExt)
+            if (prevAction is TurnInMission)// || prevAction is TurnInMissionExt)
                 goto Exit;
             if (actionToPlay.GetType() != prevAction.GetType())
                 Close();

@@ -323,7 +323,7 @@
     <Compile Include="Actions\RunUpgradeProfile.cs" />
     <Compile Include="Actions\SharedBankCurrencyTransfer.cs" />
     <Compile Include="Actions\StartATaskExt.cs" />
-    <Compile Include="Actions\TurnInMissionExt.cs" />
+    <None Include="Actions\Deprecated\TurnInMissionExt.cs" />
     <Compile Include="Actions\UseConsumable.cs" />
     <Compile Include="Actions\VIPRewards.cs" />
     <None Include="Classes\Common\CachedList.cs" />

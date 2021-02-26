@@ -15,7 +15,7 @@ using QuesterAssistant.Classes.Extensions;
 using QuesterAssistant.Classes.Monitoring;
 using QuesterAssistant.Panels;
 
-namespace QuesterAssistant.Actions
+namespace QuesterAssistant.Actions.Deprecated
 {
     public class TurnInMissionExt : Action, IIgnoreCombat, Frames.IActionCloseFrame
     {
